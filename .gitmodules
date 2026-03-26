@@ -1,0 +1,3 @@
+[submodule "domaingen"]
+	path = domaingen
+	url = https://github.com/xxozzi/domaingen
