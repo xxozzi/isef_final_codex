@@ -1,0 +1,21 @@
+\begin{table}[h]
+\centering
+\small
+% \caption{\small {\bf Comparison in other robustness benchmarks.} The numbers in ImageNet-C column indicate mCE and the other numbers indicate accuracy. The first column and the others indicate in-domain validation accuracy and the benchmark results, respectively.
+% }
+\caption{\small {\bf ImageNet robustness benchmarks.} We show the ImageNet generalization performances on ImageNet-C, background challenge (BGC), and ImageNet-R.}
+\vspace{.5em}
+\renewcommand{\arraystretch}{1.1}
+\label{table:exploring_other_applications}
+\begin{tabular}{lcccc} 
+\toprule
+                        % & \multicolumn{4}{c|}{Configuration}   & \multicolumn{3}{c|}{Out-of-domain} & \multicolumn{3}{c}{In-domain}  \\
+% & \multicolumn{1}{c|}{In-domain} & \multicolumn{3}{c}{Robustness benchmarks} \\
+\textbf{Method}       & ImageNet (\%) ↑ & ImageNet-C (mCE) ↓ & BGC (\%) ↑    & ImageNet-R (\%) ↑  \\
+\midrule
+ERM         & 76.5            & 57.6               & 8.7           & 36.7               \\
+SWA         & 76.9            & 56.8               & 10.9          & 37.5               \\
+SWAD (ours) & \textbf{77.0}   & \textbf{55.7}      & \textbf{11.8} & \textbf{38.8}      \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,22 @@
+Despite many benefits from SWAD, such as the significant performance improvements, model selection-free property, working plug-and-play manner for various methods, there are some potential limitations.
+Here, we discuss the limitations of SWAD for further improvements.
+
+\textbf{Confidence error in Theorem~\ref{thm:gen_bnd_dg}.}
+While the confidence error in Theorem~\ref{thm:gen_bnd_dg} tells the effect of $\gamma$ on generalization error bound, there exists a limitation in that the confidence error term shows improper behavior with respect to $\gamma$ if $\gamma$ is close to zero. The behavior we expect is that the confidence error of RRM converges to the confidence error of ERM as $\gamma$ decreases to zero, however, the current theorem does not show such tendency since the confidence bound diverges to infinity when $\gamma$ goes to zero. However, we would like to note that this limitation is not a drawback of RRM, but it is caused by the looseness of the union bound which is a mathematical technique used to derive the confidence error of RRM.
+Our RRM formulation has a similarity to previous works~\cite{norton2019diametrical, foret2020sharpness} and we note that the counter-intuitive behavior of the confidence bound and $\gamma$ also appears in \citet{foret2020sharpness}.
+% SWAD is an approximation -> there can be a better solution.
+
+\textbf{SWAD is not a perfect flatness-aware optimization method.}
+Note that SWAD is not a perfect and theoretically guaranteed solver for flat minima, but a heuristic approximation with empirical benefits.
+% SWAD is an approximation to seek flat minima. We do not argue that SWAD is a perfect solution for seeking the flat minima. 
+However, even if a better flatness-aware optimization method is proposed, our theoretical contribution still holds: showing the relationship between flat minima and DG.
+
+
+\textbf{SWAD does not strongly utilize domain-specific information.}
+In Theorem~\ref{thm:gen_bnd_dg_final}, the domain generalization gap is bounded by three factors: flat minima, domain discrepancy, and confidence bound. Most of the existing approaches focus on domain discrepancy, reducing the difference between the source domains and the target domain by domain invariant learning~\cite{muandet2013icml_DIFL,ganin2016dann,li2018cdann,bahng2019rebias,zhao2020er_entropy_regularization}.
+SWAD focuses on the first factor, the flat minima. While the domain labels are used to construct a mini-batch, SWAD does not strongly utilize domain-specific information. It implies that if one can consider both flatness and domain discrepancy, better domain generalization can be achievable.
+Table~\ref{table:swad_combination} gives us a clue: the combination of CORAL (utilizing domain-specific information) and SWAD (seeking flat minima) shows the best performance among all comparison methods.
+As a future research direction, we encourage studying a method that can achieve both flat optima and small domain discrepancy.
+
+% \jb{\textbf{Domain generalization in the wild.}
+% Even though handling distribution shift is very important in the real world, most of domain generalization algorithm have limitations to use in the wild; they usually restrict model architecture, or painfully slow down training or inference. Utilizing domain label also becomes another constraint, as domain labels often do not exist in the real world. However, SWAD is free from the limitations: SWAD is domain-free, does not impose any constraints on model architecture, and does not slow down inference speed. That is, SWAD is widely, easily, and practically applicable solution in the wild.}

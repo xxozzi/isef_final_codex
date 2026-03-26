@@ -1,0 +1,11 @@
+\section{Conclusion}
+In this paper, we propose a new explanation for the success of WA in \ood by leveraging its ensembling nature.
+Our analysis is based on a new bias-variance-covariance-locality decomposition for WA, where we theoretically relate bias to correlation shift and variance to diversity shift. It also shows that diversity is key to improve generalization.
+This motivates our DiWA approach that averages in weights models trained independently.
+DiWA improves the state of the art on DomainBed, the reference benchmark for \ood generalization.
+Critically, DiWA has no additional inference cost --- removing a key limitation of standard ensembling.
+Our work may encourage the community to further create diverse learning procedures and objectives --- whose models may be averaged in weights.
+
+\subsection*{Acknowledgements}
+We would like to thank Jean-Yves Franceschi for his helpful comments and discussions on our paper.
+This work was granted access to the HPC resources of IDRIS under the allocation AD011011953 made by GENCI. We acknowledge the financial support by the French National Research Agency (ANR) in the chair VISA-DEEP (project number ANR-20-CHIA-0022-01) and the ANR projects DL4CLIM ANR-19-CHIA-0018-01, RAIMO ANR-20-CHIA-0021-01, OATMIL ANR-17-CE23-0012 and LEAUDS ANR-18-CE23-0020.

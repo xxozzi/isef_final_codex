@@ -1,0 +1,141 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cha2021swad}
+\citation{arpit2022diwa}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{gulrajani2021domainbed}
+\citation{izmailov2018swa}
+\citation{cha2021swad}
+\citation{shen2022eoa}
+\citation{arpit2022diwa}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Overview of D-COLA. Dense checkpoints from one training trajectory are scored by per-domain validation loss, anchored at the checkpoint minimizing worst-domain risk, filtered by a low interpolation barrier, and reweighted by a convex objective over cached predictions. The output remains a single model, not an ensemble.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:overview}{{1}{2}{Overview of D-COLA. Dense checkpoints from one training trajectory are scored by per-domain validation loss, anchored at the checkpoint minimizing worst-domain risk, filtered by a low interpolation barrier, and reweighted by a convex objective over cached predictions. The output remains a single model, not an ensemble}{figure.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Domain generalization.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc averaging for generalization.}{2}{section*.2}\protected@file@percent }
+\citation{wortsman2022soups,frankle2020linear}
+\citation{cha2021swad}
+\@writefile{toc}{\contentsline {paragraph}{Checkpoint soups and mode connectivity.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{How D-COLA differs from SWAD.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Method}{3}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{3}{Method}{section.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Detailed visual methodology for D-COLA. The method first computes per-domain validation losses and selects the checkpoint minimizing worst-domain loss, then filters checkpoints by interpolation barriers, estimates redundancy through a covariance proxy on cached losses, and finally solves a simplex optimization to produce one weight soup. This figure is schematic but calculation-faithful: each panel corresponds directly to a quantity in Eqs.~\eqref  {eq:anchor}--\eqref  {eq:objective}.}}{4}{figure.2}\protected@file@percent }
+\newlabel{fig:methodology}{{2}{4}{Detailed visual methodology for D-COLA. The method first computes per-domain validation losses and selects the checkpoint minimizing worst-domain loss, then filters checkpoints by interpolation barriers, estimates redundancy through a covariance proxy on cached losses, and finally solves a simplex optimization to produce one weight soup. This figure is schematic but calculation-faithful: each panel corresponds directly to a quantity in Eqs.~\eqref {eq:anchor}--\eqref {eq:objective}}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Worst-domain anchor}{5}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:anchor}{{1}{5}{Worst-domain anchor}{equation.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Connected-valley filter}{5}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:barrier}{{2}{5}{Connected-valley filter}{equation.2}{}}
+\newlabel{eq:candidates}{{3}{5}{Connected-valley filter}{equation.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Convex weighting on cached predictions}{5}{subsection.4.3}\protected@file@percent }
+\newlabel{eq:ensloss}{{4}{5}{Convex weighting on cached predictions}{equation.4}{}}
+\newlabel{eq:cov}{{5}{5}{Convex weighting on cached predictions}{equation.5}{}}
+\newlabel{eq:jopt}{{6}{5}{Convex weighting on cached predictions}{equation.6}{}}
+\newlabel{eq:objective}{{7}{5}{Convex weighting on cached predictions}{equation.7}{}}
+\newlabel{eq:finalsoup}{{8}{5}{Convex weighting on cached predictions}{equation.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces What D-COLA is computing at each step. Left: the anchor is chosen by minimizing the maximum source-domain validation loss across checkpoints. Right: candidates are screened by interpolation barriers, redundant checkpoints are exposed by the covariance matrix, and the final simplex weights concentrate on low-barrier, nonredundant checkpoints. All panels are schematic and meant to build intuition, not to report experimental results.}}{6}{figure.3}\protected@file@percent }
+\newlabel{fig:selection}{{3}{6}{What D-COLA is computing at each step. Left: the anchor is chosen by minimizing the maximum source-domain validation loss across checkpoints. Right: candidates are screened by interpolation barriers, redundant checkpoints are exposed by the covariance matrix, and the final simplex weights concentrate on low-barrier, nonredundant checkpoints. All panels are schematic and meant to build intuition, not to report experimental results}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces SWAD versus D-COLA. SWAD uniformly averages a contiguous interval. D-COLA reweights a filtered candidate set around a worst-domain anchor; weights need not be uniform and support need not be contiguous in time.}}{6}{figure.4}\protected@file@percent }
+\newlabel{fig:timeline}{{4}{6}{SWAD versus D-COLA. SWAD uniformly averages a contiguous interval. D-COLA reweights a filtered candidate set around a worst-domain anchor; weights need not be uniform and support need not be contiguous in time}{figure.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Theory}{6}{section.5}\protected@file@percent }
+\newlabel{sec:theory}{{5}{6}{Theory}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Worst-domain robust risk}{6}{subsection.5.1}\protected@file@percent }
+\newlabel{thm:worstbound}{{1}{6}{Worst-domain robust-risk bound}{theorem.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Implementation summary of D-COLA.}}{7}{figure.5}\protected@file@percent }
+\newlabel{alg:dcola}{{5}{7}{Implementation summary of D-COLA}{figure.5}{}}
+\newlabel{eq:worstbound}{{9}{7}{Worst-domain robust-risk bound}{equation.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{Proof sketch.}{7}{section*.5}\protected@file@percent }
+\newlabel{thm:suboptimality}{{2}{7}{Worst-domain suboptimality certificate}{theorem.2}{}}
+\newlabel{eq:suboptimality}{{10}{7}{Worst-domain suboptimality certificate}{equation.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{Interpretation.}{7}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Why covariance and locality belong in the objective}{7}{subsection.5.2}\protected@file@percent }
+\newlabel{prop:psd}{{1}{8}{Variance representation and positive semidefiniteness}{proposition.1}{}}
+\newlabel{eq:psd}{{11}{8}{Variance representation and positive semidefiniteness}{equation.11}{}}
+\@writefile{toc}{\contentsline {paragraph}{Implication.}{8}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Convexity and optimization}{8}{subsection.5.3}\protected@file@percent }
+\newlabel{thm:convex}{{3}{8}{Convexity of the D-COLA objective}{theorem.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Proof sketch.}{8}{section*.8}\protected@file@percent }
+\newlabel{thm:convergence}{{4}{8}{Projected subgradient convergence}{theorem.4}{}}
+\newlabel{eq:convergence}{{12}{8}{Projected subgradient convergence}{equation.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}From predictive mixtures to a single soup}{8}{subsection.5.4}\protected@file@percent }
+\newlabel{ass:locality}{{1}{8}{Second-order locality}{assumption.1}{}}
+\newlabel{thm:soupmix}{{5}{8}{Soup-mixture approximation}{theorem.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Corner-view 3D schematic of the loss landscape. The anchor and retained candidate checkpoints lie inside one connected valley. A uniform interval soup can drift toward a worse point if it averages too broadly, whereas D-COLA biases the soup toward a lower-loss location by combining worst-domain selection with locality-aware weighting. This is an illustrative geometry figure, not an empirical measurement.}}{9}{figure.6}\protected@file@percent }
+\newlabel{fig:landscape3d}{{6}{9}{Corner-view 3D schematic of the loss landscape. The anchor and retained candidate checkpoints lie inside one connected valley. A uniform interval soup can drift toward a worse point if it averages too broadly, whereas D-COLA biases the soup toward a lower-loss location by combining worst-domain selection with locality-aware weighting. This is an illustrative geometry figure, not an empirical measurement}{figure.6}{}}
+\newlabel{eq:vectorbound}{{13}{9}{Soup-mixture approximation}{equation.13}{}}
+\newlabel{eq:celossbound}{{14}{9}{Soup-mixture approximation}{equation.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Conditional domination over SWAD-style uniform averaging}{9}{subsection.5.5}\protected@file@percent }
+\newlabel{ass:certificate}{{2}{9}{Transferable target-risk certificate}{assumption.2}{}}
+\newlabel{eq:certificate}{{15}{9}{Transferable target-risk certificate}{equation.15}{}}
+\citation{gulrajani2021domainbed}
+\newlabel{fig:valley}{{5.5}{10}{Conditional domination over SWAD-style uniform averaging}{equation.16}{}}
+\newlabel{fig:certificate}{{5.5}{10}{Conditional domination over SWAD-style uniform averaging}{equation.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Why D-COLA adds locality and covariance to worst-domain fit. Left: averaging across a barrier can leave the low-loss basin. Right: the target-risk certificate is modeled as worst-domain fit plus redundancy and locality penalties, up to constants not controllable without target labels.}}{10}{figure.7}\protected@file@percent }
+\newlabel{fig:theoryfigs}{{7}{10}{Why D-COLA adds locality and covariance to worst-domain fit. Left: averaging across a barrier can leave the low-loss basin. Right: the target-risk certificate is modeled as worst-domain fit plus redundancy and locality penalties, up to constants not controllable without target labels}{figure.7}{}}
+\newlabel{thm:domination}{{6}{10}{No-worse certificate than any feasible uniform interval}{theorem.6}{}}
+\newlabel{eq:domination}{{16}{10}{No-worse certificate than any feasible uniform interval}{equation.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Experimental Protocol and Prior Published Results}{10}{section.6}\protected@file@percent }
+\newlabel{sec:experiments}{{6}{10}{Experimental Protocol and Prior Published Results}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Planned protocol}{10}{subsection.6.1}\protected@file@percent }
+\citation{cha2021swad}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Published DomainBed accuracies ($\%$) from SWAD and DiWA sources. Numbers are copied from the original tables available in the local literature directory. `LP' denotes linear-probe initialization reported by DiWA.}}{11}{table.1}\protected@file@percent }
+\newlabel{tab:published}{{1}{11}{Published DomainBed accuracies ($\%$) from SWAD and DiWA sources. Numbers are copied from the original tables available in the local literature directory. `LP' denotes linear-probe initialization reported by DiWA}{table.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Published average DomainBed accuracies from prior post-hoc averaging methods. The bar to beat is no longer only SWAD's $66.9$; the strongest nearby published target in the local sources is DiWA with LP initialization at $68.0$.}}{11}{figure.8}\protected@file@percent }
+\newlabel{fig:priorbar}{{8}{11}{Published average DomainBed accuracies from prior post-hoc averaging methods. The bar to beat is no longer only SWAD's $66.9$; the strongest nearby published target in the local sources is DiWA with LP initialization at $68.0$}{figure.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Published results that define the bar}{11}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Results}{11}{section.7}\protected@file@percent }
+\newlabel{sec:results}{{7}{11}{Results}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Main DomainBed results}{11}{subsection.7.1}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{d_cola_refs}
+\bibcite{arpit2022diwa}{{1}{2022{a}}{{Arpit et~al.}}{{Arpit, D'Ascoli, Nguyen, Yu, Chin, Bengio, and Hjelm}}}
+\bibcite{shen2022eoa}{{2}{2022{b}}{{Arpit et~al.}}{{Arpit, Wang, Zhou, and Xiong}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}IID versus OOD trade-off}{12}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Ablation studies}{12}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Soup-versus-ensemble agreement}{12}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{12}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{12}{section.9}\protected@file@percent }
+\bibcite{cha2021swad}{{3}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{frankle2020linear}{{4}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{gulrajani2021domainbed}{{5}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{izmailov2018swa}{{6}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{wortsman2022soups}{{7}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Proofs and Details}{13}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Theorem~\ref {thm:worstbound}}{13}{subsection.A.1}\protected@file@percent }
+\newlabel{app:proof_worstbound}{{A.1}{13}{Proof of Theorem~\ref {thm:worstbound}}{subsection.A.1}{}}
+\newlabel{eq:swadmain}{{17}{13}{Proof of Theorem~\ref {thm:worstbound}}{equation.17}{}}
+\newlabel{eq:mixlemax1}{{19}{13}{Proof of Theorem~\ref {thm:worstbound}}{equation.19}{}}
+\newlabel{eq:mixlemax2}{{20}{13}{Proof of Theorem~\ref {thm:worstbound}}{equation.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Theorem~\ref {thm:suboptimality}}{13}{subsection.A.2}\protected@file@percent }
+\newlabel{app:proof_suboptimality}{{A.2}{13}{Proof of Theorem~\ref {thm:suboptimality}}{subsection.A.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 1: upper bound on $\mathcal  {E}_T(\hat  {\theta }_{\max }^\gamma )$.}{14}{section*.10}\protected@file@percent }
+\newlabel{eq:upperhat}{{21}{14}{Step 1: upper bound on $\risk _T(\hat {\theta }_{\max }^\gamma )$}{equation.21}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 2: lower bound on the target optimum.}{14}{section*.11}\protected@file@percent }
+\newlabel{eq:mix_to_target}{{22}{14}{Step 2: lower bound on the target optimum}{equation.22}{}}
+\newlabel{eq:uniformmix}{{23}{14}{Step 2: lower bound on the target optimum}{equation.23}{}}
+\newlabel{eq:lowertheta}{{24}{14}{Step 2: lower bound on the target optimum}{equation.24}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 3: subtract the two bounds.}{14}{section*.12}\protected@file@percent }
+\newlabel{eq:subtractionstep}{{25}{14}{Step 3: subtract the two bounds}{equation.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Proof of Proposition~\ref {prop:psd}}{14}{subsection.A.3}\protected@file@percent }
+\newlabel{app:proof_psd}{{A.3}{14}{Proof of Proposition~\ref {prop:psd}}{subsection.A.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Theorem~\ref {thm:convex}}{15}{subsection.A.4}\protected@file@percent }
+\newlabel{app:proof_convex}{{A.4}{15}{Proof of Theorem~\ref {thm:convex}}{subsection.A.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Theorem~\ref {thm:convergence}}{15}{subsection.A.5}\protected@file@percent }
+\newlabel{app:proof_convergence}{{A.5}{15}{Proof of Theorem~\ref {thm:convergence}}{subsection.A.5}{}}
+\newlabel{eq:keysubgrad}{{33}{16}{Proof of Theorem~\ref {thm:convergence}}{equation.33}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Proof of Theorem~\ref {thm:soupmix}}{16}{subsection.A.6}\protected@file@percent }
+\newlabel{app:proof_soupmix}{{A.6}{16}{Proof of Theorem~\ref {thm:soupmix}}{subsection.A.6}{}}
+\newlabel{eq:taylor}{{34}{16}{Proof of Theorem~\ref {thm:soupmix}}{equation.34}{}}
+\newlabel{eq:remainder}{{35}{16}{Proof of Theorem~\ref {thm:soupmix}}{equation.35}{}}
+\newlabel{eq:sumtaylor}{{37}{16}{Proof of Theorem~\ref {thm:soupmix}}{equation.37}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Proof of Theorem~\ref {thm:domination}}{17}{subsection.A.7}\protected@file@percent }
+\newlabel{app:proof_domination}{{A.7}{17}{Proof of Theorem~\ref {thm:domination}}{subsection.A.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Additional experimental notes}{17}{subsection.A.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What would count as a meaningful empirical win?}{17}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Recommended ablation order.}{17}{section*.14}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Illustrative trade-off between covariance reduction and locality. Driving covariance too low can force weights toward distant checkpoints; D-COLA seeks a point on the low-covariance, low-barrier frontier instead of optimizing either objective in isolation.}}{18}{figure.9}\protected@file@percent }
+\newlabel{fig:tradeoff}{{9}{18}{Illustrative trade-off between covariance reduction and locality. Driving covariance too low can force weights toward distant checkpoints; D-COLA seeks a point on the low-covariance, low-barrier frontier instead of optimizing either objective in isolation}{figure.9}{}}
+\gdef \@abspage@last{18}

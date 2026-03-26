@@ -1,0 +1,119 @@
+
+We have shown that flat minima will bring a better domain generalization. 
+In this section, we 
+% \jb{first look at existing flatness-aware solvers,}
+propose Stochastic Weight Averaging Densely (SWAD) algorithm, and provide empirical quantitative and qualitative analyses on SWAD and flatness to understand why SWAD works better than ERM.
+
+\subsection{A baseline method: stochastic weight averaging}
+
+Since the importance of flatness in loss landscapes has emerged~\cite{keskar2016largebatch,dziugaite2017computing,garipov2018fge,izmailov2018swa,jiang2019fantastic,foret2020sharpness}, several methods have been proposed to find flat minima~\cite{foret2020sharpness,chaudhari2019entropy,izmailov2018swa}. 
+We select stochastic weight averaging (SWA)~\cite{izmailov2018swa} as a baseline, which finds flat minima by a weight ensemble approach.
+% We adopt stochastic weight averaging (SWA)~\cite{izmailov2018swa} as a our baseline, which is a widely used flatness-aware solver. It finds flat minima by a simple weight ensemble approach. 
+% Stochastic weight averaging (SWA)~\cite{izmailov2018swa}, one of the popular approaches, finds flat minima by a simple weight ensemble approach.
+% SWA~\cite{izmailov2018swa} is a simple weight ensemble approach to find flat minima. 
+More specifically, SWA updates a pretrained model (namely, a model trained with sufficiently enough training epochs, $K_0$) with a cyclical~\cite{smith2017cyclical} or high constant learning rate scheduling. SWA gathers model parameters for every $K$ epochs during the update and averages them for the model ensemble.
+SWA finds an ensembled solution of different local optima found by a sufficiently large learning rate to escape a local minimum. \citet{izmailov2018swa} empirically showed that SWA finds flatter minima than ERM. We also considered sharpness-aware minimization (SAM)~\cite{foret2020sharpness}, which is another popular flatness-aware solver, but SWA finds flatter minima than SAM (See Figure~\ref{fig:flatness}).
+We illustrate an overview of SWA in Figure~\ref{fig:swa_overview}.
+% We examine two widely used flatness-aware solvers: sharpness-aware minimization (SAM)~\cite{foret2020sharpness} and stochastic weight averaging (SWA)~\cite{izmailov2018swa}. SAM approximate robust risk and directly optimize it. SWA averages a number of weights from the end of optimization process. Although SWA does not address flatness in the learning process, they empirically showed that SWA finds flatter minima than ERM. We evaluate flatness-aware solvers by comparing local flatness of the solution found by each algorithm.
+
+
+% \jb{
+% To begin with, we quantify the local flatness of a model parameter $\theta$ by assuming that flat minima will have smaller changes of loss value within its neighborhoods than sharp minima.
+% For the given model parameter $\theta$, we compute the expected loss value changes between $\theta$ and parameters on the sphere surrounding $\theta$ with radius $\gamma$, \ie, $\mathcal{F}_\gamma (\theta)=\mathbb {E}_{\| \theta' \| = \|\theta\| + \gamma} [\mathcal{E}(\theta')-\mathcal{E}(\theta)]$.
+% In practice, $\mathcal{F}_\gamma(\theta)$ is approximated by Monte-Carlo sampling with 100 samples.
+% Note that the proposed local flatness $\mathcal{F}_\gamma(\theta)$ is computationally efficient than measuring curvature using the Hessian-based quantities. Also, $\mathcal{F}_\gamma(\theta)$ has an unbiased finite sample estimator, while the worst-case loss value, \ie, $\max_{\| \theta' \| = \|\theta\| + \gamma}[\mathcal{E}(\theta')-\mathcal{E}(\theta)]$ has no unbiased finite sample estimator.
+% As shown in the Figure~\ref{fig:flatness}, this comparison shows SWA finds flatter minima than ERM and SAM.
+% }
+
+\subsection{Dense and overfit-aware stochastic weight sampling strategy}
+% \vspace{-1em}
+
+\input{figures/swa_swad_comparison}
+
+% \jb{TODO: update below paragraph to fit in with above added subsection}
+
+% \jb{Based on the flatness analysis, we choose SWA as our baseline flatness-aware solver.}
+% SWA~\cite{izmailov2018swa} is a simple weight ensemble approach to find flat minima. More specifically, SWA updates a pretrained model (namely, a model trained with sufficiently enough training epochs, $K_0$) with a cyclical~\cite{smith2017cyclical} or high constant learning rate scheduling. SWA gathers model parameters for every $K$ epochs during the update and averages them for the model ensemble.
+% Intuitively, SWA finds a solution that is an ensemble of different local optima found by a sufficiently large learning rate to escape a local minimum.
+% We illustrate an overview of SWA in Figure~\ref{fig:swa_overview}.
+%SWA has advantages over other flatness-aware methods~\cite{chaudhari2019entropy, foret2020sharpness} in that it does not change the objective function to penalize sharp minima and does not require any additional computation for sharpness related quantities.
+
+% Comparing to other flatness-aware methods~\cite{chaudhari2019entropy, foret2020sharpness}, SWA does not change the objective function by penalizing sharp minima, and no additional computation for sharpness related quantities is needed.
+
+% However, in practice, we observe that directly applying the vanilla SWA to domain generalization tasks often suffers from the overfitting issue.
+% From this motivation, we propose a modified SWA, named SWA-densely (SWAD).
+
+% How about this flow?
+% 1) learning from multiple source domains -> wider variance of empirical risks on mini-batches. (See Figure 5) 
+% 2) to gather diverse model weights, SWAD gathers weights densely
+
+% Despite its advantages, we find that there are two problems to apply SWA to domain generalization task directly.
+% SWA has two major drawbacks. 
+Despite its advantages, directly applying SWA to DG task has two problems.
+First, SWA averages a few weights (usually less than ten) by sampling weights for every $K$ epochs, results in an inaccurate approximation of flat minima on a high-dimensional parameter space (\eg, 23M for ResNet-50~\cite{he2016_cvpr_resnet}).
+% \footnote{\citet{izmailov2018swa} also observed similar phenomenon: averaging 10 weights outperforms 5 weights.}
+Furthermore, a common DG benchmark protocol uses relatively small training epochs (\eg,
+% DomainBed~\cite{gulrajani2020domainbed} typically trained with less than two epochs, 
+\citet{gulrajani2020domainbed} trained with less than two epochs for \data{DomainNet} benchmark), resulting in insufficient stochastic weights for SWA.
+% not a sufficient to gather stochastic weights for SWA.
+From this motivation, we propose a \textbf{\textit{``dense''}} sampling strategy for gathering sufficiently enough stochastic weights.
+
+In addition, widely used DG datasets, such as \data{PACS} ($\approx$ 10K images, 7 classes) and \data{VLCS} ($\approx$ 11K images, 5 classes), are relatively smaller than large-scale datasets, such as ImageNet~\cite{russakovsky2015imagenet} ($\approx$ 1.2M images, 1K classes). In this case, we observe that a simple ERM approach is rapidly reached to a local optimum only within a few epochs, and easily suffers from the overfitting issue, \ie, the validation loss is increased after a few training epochs.
+% In addition, since domain generalization benchmarks, such as \data{PACS} ($\approx$ 10K images, 4 domains, 7 classes), \data{VLCS} ($\approx$ 11K images, 4 domains, 5 classes), \data{OfficeHome} ($\approx$ 15K images, 4 domains, 65 classes), and \data{TerraIncognita} ($\approx$ 25K images, 4 domains, 10 classes), are relatively smaller datasets than large-scale datasets, such as ImageNet~\cite{russakovsky2015imagenet} ($\approx$ 1.2M images, 1K classes), we observe that a simple ERM approach is rapidly reached to a local optimum only within a few epochs, and easily suffers from the overfitting issue, \ie, the validation loss is increased after a few training epochs.
+It implies that directly applying the vanilla SWA will suffer from the overfitting issue by averaging sub-optimal solutions (\ie, overfitted parameters).
+Hence, we need an \textbf{\textit{``overfit-aware''}} sampling scheduling to omit the sub-optimal solutions for SWA.
+
+The main idea of Stochastic Weight Averaging Densely (SWAD) is a dense and overfit-aware stochastic weight gathering strategy.
+First, instead of collecting weights for every $K$ epochs, SWAD collects weights for every iteration. This dense sampling strategy easily collects sufficiently many weights than the sparse one.
+% (for every $K$ epochs).
+We also employ overfit-aware sampling scheduling by considering traces of the validation loss.
+Instead of sampling weights from $K_0$ pretraining epochs to the final epoch, we search the start iteration (when the validation loss achieves a local optimum for the first time) and the end iteration (when the validation loss is no longer decreased, but keep increasing).
+More specifically, we introduce three parameters: an optimum patient parameter $N_s$, an overfitting patient parameter $N_e$, and the tolerance rate $r$ for searching the start iteration $t_s$ and the end iteration $t_e$.
+First, we search $t_s$ which satisfies $\min_{i\in[0, \ldots, N_s-1]} \mathcal E_\text{val}^{(t_s + i)}=\mathcal E_\text{val}^{(t_s)}$, where $\mathcal{E}_\text{val}^{(i)}$ denotes the validation loss at iteration $i$.
+Simply, $t_s$ is the first iteration where the loss value is no longer decreased during $N_s$ iterations.
+Then, we find $t_e$ satisfying $\min_{i \in [0, 1, \ldots, N_e - 1]} \mathcal E_\text{val}^{(t_e + i)} > r \mathcal E_\text{val}^{(t_s)}$.
+In other words, $t_e$ is the first iteration where the validation loss values exceed the tolerance $r$ during $N_e$ iterations.
+
+
+We illustrate the overview of SWAD and the comparison of SWAD to SWA in Figure~\ref{fig:swa_swad_comparison}. Detailed pseudo code is provided in Appendix B.4.
+We compare SWAD with other possible SWA strategies in \S\ref{label:s__ablation} and show that our design choice works better for DG tasks.
+
+\subsection{Empirical analysis of SWAD and flatness}
+\label{subsection:s__empirical_analysis_of_swad_and_flatness}
+
+% \input{figures/flatness_comparison}
+% \input{figures/flatness_comparison_w_avg}
+\input{figures/flatness_comparison_w_avg_subfig}
+
+Here, we analyze solutions found by SWAD in terms of flatness. We first verify that the SWAD solution is flatter than those of ERM, SWA, and SAM. Our loss surface visualization shows that the SWAD solution is located on the center of the flat region, while ERM finds a boundary solution.
+Finally, we show that the sharp boundary solutions by ERM are not generalized well, resulting in sensitivity to the model selection.
+All following empirical analyses are conducted on \data{PACS} dataset, validating by all four domains (art painting, cartoon, photo, and sketch).
+
+\paragraph{Local flatness anaylsis.}
+% We verify that the proposed SWAD finds flatter minima than ERM and SWA.
+
+To begin with, we quantify the local flatness of a model parameter $\theta$ by assuming that flat minima will have smaller changes of loss value within its neighborhoods than sharp minima.
+For the given model parameter $\theta$, we compute the expected loss value changes between $\theta$ and parameters on the sphere surrounding $\theta$ with radius $\gamma$, \ie, $\mathcal{F}_\gamma (\theta)=\mathbb {E}_{\| \theta' \| = \|\theta\| + \gamma} [\mathcal{E}(\theta')-\mathcal{E}(\theta)]$.
+In practice, $\mathcal{F}_\gamma(\theta)$ is approximated by Monte-Carlo sampling with 100 samples.
+Note that the proposed local flatness $\mathcal{F}_\gamma(\theta)$ is computationally efficient than measuring curvature using the Hessian-based quantities. Also, $\mathcal{F}_\gamma(\theta)$ has an unbiased finite sample estimator, while the worst-case loss value, \ie, $\max_{\| \theta' \| = \|\theta\| + \gamma}[\mathcal{E}(\theta')-\mathcal{E}(\theta)]$ has no unbiased finite sample estimator.
+
+In Figure~\ref{fig:flatness}, we compare $\mathcal{F}_\gamma(\theta)$ of ERM, SAM, SWA with cyclic learning rate, SWA with constant learning rate, and SWAD by varying radius $\gamma$.
+% The solution found by SWA and SWAD shows lower local flatness quantities than ERM in all experiments.
+SAM and SWA find the solutions with lower local flatness than ERM on average.
+SWAD finds the most flat minimum in every experiment.
+% We also observe that our dense and overfit-aware sampling strategy, \ie, SWAD, finds flatter optima than SWA and SAM does.
+
+
+\input{figures/loss_space}
+\input{figures/accfluc}
+
+\paragraph{Loss surface visualization.}
+We visualize the loss landscapes by choosing three model weights on the optimization trajectory ($\theta_1, \theta_2, \theta_3$)\footnote{We choose weights at iteration 2500, 3500, 4500 during the training.}, and computing the loss values by linear combinations of $\theta_1, \theta_2, \theta_3$\footnote{Each point is defined by two axes $u$ and $v$ computed by $u=\theta_2 - \theta_1$ and $v=\frac{(\theta_3 - \theta_1)- \langle \theta_3 - \theta_1, \theta_2 - \theta_1 \rangle}{\|\theta_2 - \theta_1 \|^2 \cdot (\theta_2 - \theta_1)}$.} as \cite{izmailov2018swa}.
+More details are in Appendix B.5.
+In Figure~\ref{fig:loss_space}, we observe that for all cases, ERM solutions are located at the boundary of a flat minimum of training loss, resulting in poor generalizability in test domains, that is aligned with our theoretical analysis and empirical flatness analysis.
+Since ERM solutions are located on the boundary of a flat loss surface, we observe that ERM solutions are very sensitive to model selection.
+In Figure~\ref{fig:accfluc}, we illustrate the validation accuracies for each train-test domain combination of \data{PACS} by ERM, over training iterations (one epoch is equivalent to 83 iterations).
+We first observe that ERM rapidly reaches the best accuracy within only a few training epochs, namely less than 6 epochs.
+Furthermore, the ERM validation accuracies fluctuate a lot, and the final performance is very sensitive to the model selection criterion.
+
+On the other hand, we observe that SWA solutions are located on the center of the training loss surfaces as well as of the test loss surfaces (Figure~\ref{fig:loss_space}). Also, our overfit-aware stochastic weight gathering strategy (denoted as the vertical dot lines in Figure~\ref{fig:accfluc}) prevents the ensembled weight from overfitting and makes SWAD model selection-free.

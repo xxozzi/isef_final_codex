@@ -1,0 +1,31 @@
+\section{Introduction}
+Learning robust models that generalize well is critical for many real-world applications \cite{Zech2018,degrave2021ai}.
+Yet, the classical Empirical Risk Minimization (ERM) lacks robustness to distribution shifts \cite{hendrycks2018benchmarking,NEURIPS2020_6cfe0e61,d2020underspecification}.
+To improve out-of-distribution (\ood) generalization in classification, several recent works proposed to train models simultaneously on multiple related but different domains \cite{muandet2013domain}.
+Though theoretically appealing, domain-invariant approaches \cite{peters2016causal} either underperform \cite{arjovsky2019invariant,krueger2020utofdistribution} or only slightly improve \cite{coral216aaai,rame_fishr_2021} ERM on the reference DomainBed benchmark \cite{gulrajani2021in}.
+The state-of-the-art strategy on DomainBed is currently to average the weights obtained along a training trajectory \cite{izmailov2018}.
+\cite{cha2021wad} argues that this weight averaging (WA) succeeds in \ood because it finds solutions with flatter loss landscapes.
+
+In this paper, we show the limitations of this flatness-based analysis and provide a new explanation for the success of WA in \ood.
+It is based on WA's similarity with ensembling \cite{Lakshminarayanan2017}, a well-known strategy to improve robustness \cite{Ovadia2019,ashukha2020pitfalls}, that averages the predictions from various models.
+Based on \cite{ueda1996generalization}, we present %in \Cref{subsec:biasvariance}
+a bias-variance-covariance-locality decomposition of WA's expected error.
+It contains four terms:
+\textit{first} the bias that we show increases under shift in label posterior distributions (\ie correlation shift \cite{ye2021odbench});
+\textit{second}, the variance that we show increases under shift in input marginal distributions (\ie diversity shift \cite{ye2021odbench});
+\textit{third}, the covariance that decreases when models are diverse;
+\textit{finally}, a locality condition on the weights of averaged models.
+% to enforce the validity of our approximation.
+
+Based on this analysis, we aim at obtaining diverse models whose weights are averageable with our Diverse Weight Averaging (DiWA) approach.
+In practice, DiWA averages in weights the models obtained from independent training runs that share the same initialization. The motivation is that those models are more diverse than those obtained along a single run \cite{Fort2019DeepEA,gontijolopes2022no}.
+Yet, averaging the weights of independently trained networks with batch normalization \cite{batchnorm2015} and ReLU layers \cite{agarap2018deep} may be counter-intuitive.
+Such averaging is efficient especially when models can be connected linearly in the weight space via a low loss path. Interestingly, this linear mode connectivity property \cite{Frankle2020} was empirically validated when the runs start from a shared pretrained initialization \cite{Neyshabur2020}.
+This insight is at the heart of DiWA but also of other recent works \cite{Wortsman2022robust,mergefisher21,Wortsman2022ModelSA}, as discussed in \Cref{sec:related_work}.
+
+In summary, our main contributions are the following:
+\begin{itemize}
+    \item We propose a new theoretical analysis of WA for \ood based on a bias-variance-covariance-locality decomposition of its expected error (\Cref{sec:theory}). By relating correlation shift to its bias and diversity shift to its variance, we show that WA succeeds under diversity shift.
+    \item We empirically tackle the covariance term by increasing the diversity across models averaged in weights. In our DiWA approach, we decorrelate their training procedures: in practice, these models are obtained from independent runs (\Cref{sect:dwa}).
+    We then empirically validate that diversity improves \ood performance (\Cref{sect:analysis}) and show that DiWA is state of the art on all real-world datasets from the DomainBed benchmark \cite{gulrajani2021in} (\Cref{sec:domainbed}).%
+\end{itemize}%

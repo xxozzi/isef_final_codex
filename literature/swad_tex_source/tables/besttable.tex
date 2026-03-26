@@ -1,0 +1,27 @@
+\begin{table}[t]
+\centering
+\small
+\caption{\small {\bf Comparisons with SOTA.} The proposed SWAD outperforms other state-of-the-art DG methods on five different DG benchmarks with significant gaps (+1.6pp in the average).
+% our Our method outperforms every state-of-the-art method for all of the benchmark datasets.
+}
+\label{table:best_table}
+\vspace{0.5em}
+% \renewcommand{\arraystretch}{1.1}
+% \begin{tabular}{l @{\extracolsep{\fill}} lllll|c} 
+% \setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llllll|c@{}} 
+\toprule
+                     & \textbf{\data{PACS}} & \textbf{\data{VLCS}} & \textbf{\data{OfficeHome}} & \textbf{\data{TerraInc}} & \textbf{\data{DomainNet}} & \textbf{Avg}.  \\ 
+                    %  & \textbf{\data{PACS}~\cite{li2017pacs}} & \textbf{\data{VLCS}~\cite{fang2013vlcs}} & \textbf{\data{OfficeHome}~\cite{venkateswara2017officehome}} & \textbf{\data{TerraInc}~\cite{beery2018terraincognita}} & \textbf{\data{DomainNet}~\cite{peng2019domainnet}} & \textbf{Avg}.  \\ 
+\midrule
+ERM~\cite{vapnik1998statistical} & 85.5 & 77.5 & 66.5 & 46.1 & 40.9 & 63.3\\
+Best SOTA competitor & 86.6~\cite{seo2020dson}          & 78.8~\cite{sun2016coral}          & 68.7~\cite{sun2016coral}                & 48.6~\cite{nam2019sagnet}              & 43.6~\cite{balaji2018metareg,chattopadhyay2020dmg}               & 65.3           \\ 
+SWAD (proposed)                 & \textbf{88.1}          & \textbf{79.1}          & \textbf{70.6}                & \textbf{50.0}              & \textbf{46.5}               & \textbf{66.9}           \\
+\midrule
+Previous SOTA~\cite{sun2016coral} + SWAD                 & 88.3 & 78.9 & 71.3 & 51.0 & 46.8 & 67.3 \\
+
+% CORAL + SWAD & 88.3 & 78.9 & 71.3 & 51.0 & 46.8 & 67.3\\
+\bottomrule
+\end{tabular}
+\vspace{-1em}
+\end{table}

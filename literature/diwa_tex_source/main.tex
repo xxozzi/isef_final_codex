@@ -1,0 +1,201 @@
+% \pdfoutput=1
+\documentclass{article}
+
+% \usepackage{neurips_2022}
+%%%%%%%%%%%%%TODO Uncomment for official submission
+\usepackage[final,nonatbib]{neurips_2022}
+
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+%\usepackage[margin=0.5in]{geometry}
+\usepackage{stmaryrd}
+\usepackage{amsmath,amsfonts,bm,amssymb,amsthm}
+ \usepackage{mathtools}
+
+\usepackage{optidef}
+\usepackage{breqn}
+\usepackage{placeins}
+\usepackage{url}
+\usepackage{xfrac}
+\usepackage{soul}
+\usepackage{makecell}
+\usepackage{xspace}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+%\usepackage{hyperref}       % hyperlinks
+%\usepackage{hyperref}
+\usepackage[pagebackref=true,colorlinks=true,linkcolor=cyan,citecolor=blue]{hyperref}
+%\renewcommand*\backref[1]{\ifx#1\relax \else (Cited p#1) \fi}
+\renewcommand*{\backrefalt}[4]{%
+    \ifcase #1 \footnotesize{(Not cited.)}%
+    \or        \footnotesize{(p.~#2)}%
+    \else      \footnotesize{(pp.~#2)}%
+    \fi}
+
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+% \usepackage{graphicx}
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage[export]{adjustbox}
+\usepackage{optidef}
+\usepackage{stmaryrd}
+\usepackage{cleveref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{xfrac}
+\usepackage{multirow}
+%\hypersetup{colorlinks=true}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\usepackage{csquotes}
+%\hypersetup{colorlinks=true}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+%\usepackage{amssymb}
+%\let\proof\relax
+%\let\endproof\relax
+\usepackage{amsthm}
+\usepackage[ruled]{algorithm}
+\usepackage[noend]{algorithmic}
+\usepackage[page]{appendix} % print appendices title
+
+\newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{assumption}{Assumption}
+\newtheorem*{assumption*}{Assumption}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem{definition}{Definition}
+\Crefname{assumption}{Assumption}{Assumptions}
+\Crefname{lemma}{Lemma}{Lemmas}
+\Crefname{definition}{Definition}{Definitions}
+\Crefname{proposition}{Proposition}{Propositions}
+\input{math_commands.tex}
+
+\newcommand{\alexd}[2]{\textcolor{blue}{[R: #1]}\textcolor{Sepia}{[A: #2]}}
+% \newcommand{\reb}[1]{\textcolor{Salmon}{#1}}
+% \newcommand{\reb}[1]{\textcolor{CadetBlue}{#1}}
+\newcommand{\reb}[1]{#1} %\textcolor{NavyBlue}{#1}}
+\makeatletter
+\newcommand{\mytag}[2]{%
+  \text{#1}%
+  \@bsphack
+  \begingroup
+    \@onelevel@sanitize\@currentlabelname
+    \edef\@currentlabelname{%
+      \expandafter\strip@period\@currentlabelname\relax.\relax\@@@%
+    }%
+    \protected@write\@auxout{}{%
+      \string\newlabel{#2}{%
+        {#1}%
+        {\thepage}%
+        {\@currentlabelname}%
+        {\@currentHref}{}%
+      }%
+    }%
+  \endgroup
+  \@esphack
+}
+\makeatother
+
+\makeatletter
+\renewcommand\maketitle{\par
+  \begingroup
+    \@maketitle
+    \@thanks
+    \@notice
+    \thispagestyle{empty}
+  \endgroup
+  \setcounter{footnote}{0}%
+}
+\makeatother
+
+\newcommand{\mk}[1]{\textcolor{magenta}{#1}}
+
+\begin{document}
+%
+\title{Diverse Weight Averaging for Out-of-Distribution Generalization}
+%\titlerunning{Diverse Weight Averaging for Out-of-distribution Generalization}
+%
+% \titlerunning{Diverse Weight Averaging for OOD Generalization}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+
+\author{%
+  Alexandre~Ramé\textsuperscript{1,*}, Matthieu~Kirchmeyer\textsuperscript{1,2,*} \\ \textbf{Thibaud~Rahier\textsuperscript{2}, Alain~Rakotomamonjy\textsuperscript{2,4}, Patrick~Gallinari\textsuperscript{1,2}, Matthieu~Cord\textsuperscript{1,3}}\\
+  \textsuperscript{1}Sorbonne Université, CNRS, ISIR, F-75005 Paris, France
+  ~~\textsuperscript{2}Criteo AI Lab, Paris, France \\
+  \textsuperscript{3}Valeo.ai, Paris, France ~~
+  \textsuperscript{4}Université de Rouen, LITIS, France \\
+  \textsuperscript{*}Equal contribution\\
+  %\texttt{\{alexandre.rame,matthieu.kirchmeyer,patrick.gallinari\}@sorbonne-universite.fr}
+}
+
+% \author{%
+%   Alexandre Ramé\\
+%   \texttt{alexandre.rame@isir.upmc.fr} \\
+%   Matthieu Kirchmeyer\\
+%   \texttt{matthieu.kirchmeyer@isir.upmc.fr} \\
+%   % examples of more authors
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \AND
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+%   % \And
+%   % Coauthor \\
+%   % Affiliation \\
+%   % Address \\
+%   % \texttt{email} \\
+% }
+%
+\maketitle
+%
+\begin{abstract}
+    \input{sections/00_abstract}
+\end{abstract}
+\input{sections/01_intro}
+\input{sections/02_theory}
+\input{sections/03_approach}
+\input{sections/04_analysis}
+\input{sections/05_expe}
+\input{sections/06_related_work_short}
+\input{sections/07_conclusion}
+
+\bibliographystyle{unsrt}
+% \bibliographystyle{icml2022}
+\bibliography{ref}
+% \clearpage
+\input{sections/09_checklist}
+
+\newpage
+\begin{appendices}
+    \appendix
+    \input{sections/08_appendix}
+\end{appendices}
+\end{document}

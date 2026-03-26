@@ -1,0 +1,438 @@
+\begin{thebibliography}{64}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Dai and Van~Gool(2018)]{dai2018dark}
+Dengxin Dai and Luc Van~Gool.
+\newblock Dark model adaptation: Semantic image segmentation from daytime to
+  nighttime.
+\newblock In \emph{2018 21st International Conference on Intelligent
+  Transportation Systems (ITSC)}, pages 3819--3824. IEEE, 2018.
+
+\bibitem[Michaelis et~al.(2019)Michaelis, Mitzkus, Geirhos, Rusak, Bringmann,
+  Ecker, Bethge, and Brendel]{michaelis2019benchmarking}
+Claudio Michaelis, Benjamin Mitzkus, Robert Geirhos, Evgenia Rusak, Oliver
+  Bringmann, Alexander~S Ecker, Matthias Bethge, and Wieland Brendel.
+\newblock Benchmarking robustness in object detection: Autonomous driving when
+  winter is coming.
+\newblock \emph{arXiv preprint arXiv:1907.07484}, 2019.
+
+\bibitem[de~Vries et~al.(2019)de~Vries, Misra, Wang, and van~der
+  Maaten]{de2019does}
+Terrance de~Vries, Ishan Misra, Changhan Wang, and Laurens van~der Maaten.
+\newblock Does object recognition work for everyone?
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition Workshops}, pages 52--59, 2019.
+
+\bibitem[Yang et~al.(2020)Yang, Qinami, Fei-Fei, Deng, and
+  Russakovsky]{yang2020towards}
+Kaiyu Yang, Klint Qinami, Li~Fei-Fei, Jia Deng, and Olga Russakovsky.
+\newblock Towards fairer datasets: Filtering and balancing the distribution of
+  the people subtree in the imagenet hierarchy.
+\newblock In \emph{Proceedings of the 2020 Conference on Fairness,
+  Accountability, and Transparency}, pages 547--558, 2020.
+
+\bibitem[Geirhos et~al.(2019)Geirhos, Rubisch, Michaelis, Bethge, Wichmann, and
+  Brendel]{geirhos2019cnn_biased_towards_texture}
+Robert Geirhos, Patricia Rubisch, Claudio Michaelis, Matthias Bethge, Felix~A.
+  Wichmann, and Wieland Brendel.
+\newblock Imagenet-trained cnns are biased towards texture; increasing shape
+  bias improves accuracy and robustness.
+\newblock In \emph{International Conference on Learning Representations}, 2019.
+
+\bibitem[Beery et~al.(2018{\natexlab{a}})Beery, Van~Horn, and
+  Perona]{beery2018recognition}
+Sara Beery, Grant Van~Horn, and Pietro Perona.
+\newblock Recognition in terra incognita.
+\newblock In \emph{Proceedings of the European Conference on Computer Vision
+  (ECCV)}, pages 456--473, 2018{\natexlab{a}}.
+
+\bibitem[Li et~al.(2017)Li, Yang, Song, and Hospedales]{li2017pacs}
+Da~Li, Yongxin Yang, Yi-Zhe Song, and Timothy~M Hospedales.
+\newblock Deeper, broader and artier domain generalization.
+\newblock In \emph{IEEE International Conference on Computer Vision}, pages
+  5542--5550, 2017.
+
+\bibitem[Muandet et~al.(2013)Muandet, Balduzzi, and
+  Sch{\"o}lkopf]{muandet2013icml_DIFL}
+Krikamol Muandet, David Balduzzi, and Bernhard Sch{\"o}lkopf.
+\newblock Domain generalization via invariant feature representation.
+\newblock In \emph{International Conference on Machine Learning}, pages 10--18.
+  PMLR, 2013.
+
+\bibitem[Ganin et~al.(2016)Ganin, Ustinova, Ajakan, Germain, Larochelle,
+  Laviolette, Marchand, and Lempitsky]{ganin2016dann}
+Yaroslav Ganin, Evgeniya Ustinova, Hana Ajakan, Pascal Germain, Hugo
+  Larochelle, Fran{\c{c}}ois Laviolette, Mario Marchand, and Victor Lempitsky.
+\newblock Domain-adversarial training of neural networks.
+\newblock \emph{Journal of machine learning research}, 17\penalty0
+  (1):\penalty0 2096--2030, 2016.
+
+\bibitem[Li et~al.(2018{\natexlab{a}})Li, Gong, Tian, Liu, and
+  Tao]{li2018cdann}
+Ya~Li, Mingming Gong, Xinmei Tian, Tongliang Liu, and Dacheng Tao.
+\newblock Domain generalization via conditional invariant representations.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}, volume~32,
+  2018{\natexlab{a}}.
+
+\bibitem[Bahng et~al.(2020)Bahng, Chun, Yun, Choo, and Oh]{bahng2019rebias}
+Hyojin Bahng, Sanghyuk Chun, Sangdoo Yun, Jaegul Choo, and Seong~Joon Oh.
+\newblock Learning de-biased representations with biased representations.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2020.
+
+\bibitem[Zhao et~al.(2020)Zhao, Gong, Liu, Fu, and
+  Tao]{zhao2020er_entropy_regularization}
+Shanshan Zhao, Mingming Gong, Tongliang Liu, Huan Fu, and Dacheng Tao.
+\newblock Domain generalization via entropy regularization.
+\newblock \emph{Neural Information Processing Systems}, 33, 2020.
+
+\bibitem[Li et~al.(2018{\natexlab{b}})Li, Yang, Song, and
+  Hospedales]{li2018mldg}
+Da~Li, Yongxin Yang, Yi-Zhe Song, and Timothy Hospedales.
+\newblock Learning to generalize: Meta-learning for domain generalization.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}, volume~32,
+  2018{\natexlab{b}}.
+
+\bibitem[Dou et~al.(2019)Dou, Castro, Kamnitsas, and Glocker]{dou2019masf}
+Qi~Dou, Daniel~C Castro, Konstantinos Kamnitsas, and Ben Glocker.
+\newblock Domain generalization via model-agnostic learning of semantic
+  features.
+\newblock \emph{Neural Information Processing System}, 2019.
+
+\bibitem[Balaji et~al.(2018)Balaji, Sankaranarayanan, and
+  Chellappa]{balaji2018metareg}
+Yogesh Balaji, Swami Sankaranarayanan, and Rama Chellappa.
+\newblock Metareg: Towards domain generalization using meta-regularization.
+\newblock \emph{Neural Information Processing Systems}, 31:\penalty0 998--1008,
+  2018.
+
+\bibitem[Zhang et~al.(2020)Zhang, Marklund, Gupta, Levine, and
+  Finn]{zhang2020arm}
+Marvin Zhang, Henrik Marklund, Abhishek Gupta, Sergey Levine, and Chelsea Finn.
+\newblock Adaptive risk minimization: A meta-learning approach for tackling
+  group shift.
+\newblock \emph{arXiv preprint arXiv:2007.02931}, 2020.
+
+\bibitem[Zhou et~al.(2021)Zhou, Yang, Qiao, and Xiang]{zhou2021mixstyle}
+Kaiyang Zhou, Yongxin Yang, Yu~Qiao, and Tao Xiang.
+\newblock Domain generalization with mixstyle.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Shankar et~al.(2018)Shankar, Piratla, Chakrabarti, Chaudhuri, Jyothi,
+  and Sarawagi]{shankar2018crossgrad}
+Shiv Shankar, Vihari Piratla, Soumen Chakrabarti, Siddhartha Chaudhuri, Preethi
+  Jyothi, and Sunita Sarawagi.
+\newblock Generalizing across domains via cross-gradient training.
+\newblock In \emph{International Conference on Learning Representations}, 2018.
+
+\bibitem[Carlucci et~al.(2019)Carlucci, D'Innocente, Bucci, Caputo, and
+  Tommasi]{carlucci2019jigsaw_jigen}
+Fabio~M Carlucci, Antonio D'Innocente, Silvia Bucci, Barbara Caputo, and
+  Tatiana Tommasi.
+\newblock Domain generalization by solving jigsaw puzzles.
+\newblock In \emph{IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition}, pages 2229--2238, 2019.
+
+\bibitem[Arjovsky et~al.(2019)Arjovsky, Bottou, Gulrajani, and
+  Lopez-Paz]{arjovsky2019irm}
+Martin Arjovsky, L{\'e}on Bottou, Ishaan Gulrajani, and David Lopez-Paz.
+\newblock Invariant risk minimization.
+\newblock \emph{arXiv preprint arXiv:1907.02893}, 2019.
+
+\bibitem[Krueger et~al.(2020)Krueger, Caballero, Jacobsen, Zhang, Binas, Priol,
+  and Courville]{krueger2020vrex}
+David Krueger, Ethan Caballero, Joern-Henrik Jacobsen, Amy Zhang, Jonathan
+  Binas, Remi~Le Priol, and Aaron Courville.
+\newblock Out-of-distribution generalization via risk extrapolation (rex).
+\newblock \emph{arXiv preprint arXiv:2003.00688}, 2020.
+
+\bibitem[Gulrajani and Lopez-Paz(2021)]{gulrajani2020domainbed}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Keskar et~al.(2017)Keskar, Mudigere, Nocedal, Smelyanskiy, and
+  Tang]{keskar2016largebatch}
+Nitish~Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy,
+  and Ping Tak~Peter Tang.
+\newblock On large-batch training for deep learning: Generalization gap and
+  sharp minima.
+\newblock In \emph{International Conference on Learning Representations}, 2017.
+
+\bibitem[Garipov et~al.(2018)Garipov, Izmailov, Podoprikhin, Vetrov, and
+  Wilson]{garipov2018fge}
+Timur Garipov, Pavel Izmailov, Dmitrii Podoprikhin, Dmitry~P Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Loss surfaces, mode connectivity, and fast ensembling of dnns.
+\newblock In \emph{Neural Information Processing Systems}, 2018.
+
+\bibitem[Izmailov et~al.(2018)Izmailov, Podoprikhin, Garipov, Vetrov, and
+  Wilson]{izmailov2018swa}
+Pavel Izmailov, Dmitrii Podoprikhin, Timur Garipov, Dmitry Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Averaging weights leads to wider optima and better generalization.
+\newblock \emph{Conference on Uncertainty in Artificial Intelligence}, 2018.
+
+\bibitem[Foret et~al.(2021)Foret, Kleiner, Mobahi, and
+  Neyshabur]{foret2020sharpness}
+Pierre Foret, Ariel Kleiner, Hossein Mobahi, and Behnam Neyshabur.
+\newblock Sharpness-aware minimization for efficiently improving
+  generalization.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Dziugaite and Roy(2017)]{dziugaite2017computing}
+Gintare~Karolina Dziugaite and Daniel~M Roy.
+\newblock Computing nonvacuous generalization bounds for deep (stochastic)
+  neural networks with many more parameters than training data.
+\newblock In \emph{Uncertainty in Artificial Intelligence}, 2017.
+
+\bibitem[Jiang et~al.(2019)Jiang, Neyshabur, Mobahi, Krishnan, and
+  Bengio]{jiang2019fantastic}
+Yiding Jiang, Behnam Neyshabur, Hossein Mobahi, Dilip Krishnan, and Samy
+  Bengio.
+\newblock Fantastic generalization measures and where to find them.
+\newblock \emph{arXiv preprint arXiv:1912.02178}, 2019.
+
+\bibitem[Vapnik(1998)]{vapnik1998statistical}
+V~Vapnik.
+\newblock Statistical learning theory.
+\newblock \emph{NY: Wiley}, 1998.
+
+\bibitem[Seo et~al.(2020)Seo, Suh, Kim, Han, and Han]{seo2020dson}
+Seonguk Seo, Yumin Suh, Dongwan Kim, Jongwoo Han, and Bohyung Han.
+\newblock Learning to optimize domain specific normalization for domain
+  generalization.
+\newblock \emph{European Conference on Computer Vision}, 2020.
+
+\bibitem[Sun and Saenko(2016)]{sun2016coral}
+Baochen Sun and Kate Saenko.
+\newblock Deep coral: Correlation alignment for deep domain adaptation.
+\newblock In \emph{European conference on computer vision}, pages 443--450.
+  Springer, 2016.
+
+\bibitem[Nam et~al.(2021)Nam, Lee, Park, Yoon, and Yoo]{nam2019sagnet}
+Hyeonseob Nam, HyunJae Lee, Jongchan Park, Wonjun Yoon, and Donggeun Yoo.
+\newblock Reducing domain gap by reducing style bias.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 8690--8699, 2021.
+
+\bibitem[Chattopadhyay et~al.(2020)Chattopadhyay, Balaji, and
+  Hoffman]{chattopadhyay2020dmg}
+Prithvijit Chattopadhyay, Yogesh Balaji, and Judy Hoffman.
+\newblock Learning to balance specificity and invariance for in and out of
+  domain generalization.
+\newblock In \emph{European Conference on Computer Vision}, pages 301--318.
+  Springer, 2020.
+
+\bibitem[Norton and Royset(2019)]{norton2019diametrical}
+Matthew Norton and Johannes~O Royset.
+\newblock Diametrical risk minimization: Theory and computations.
+\newblock \emph{arXiv preprint arXiv:1910.10844}, 2019.
+
+\bibitem[Zhang et~al.(2018)Zhang, Cisse, Dauphin, and
+  Lopez-Paz]{zhang2018mixup}
+Hongyi Zhang, Moustapha Cisse, Yann~N. Dauphin, and David Lopez-Paz.
+\newblock mixup: Beyond empirical risk minimization.
+\newblock \emph{International Conference on Learning Representations}, 2018.
+
+\bibitem[Yun et~al.(2019)Yun, Han, Oh, Chun, Choe, and Yoo]{yun2019cutmix}
+Sangdoo Yun, Dongyoon Han, Seong~Joon Oh, Sanghyuk Chun, Junsuk Choe, and
+  Youngjoon Yoo.
+\newblock Cutmix: Regularization strategy to train strong classifiers with
+  localizable features.
+\newblock In \emph{International Conference on Computer Vision (ICCV)}, 2019.
+
+\bibitem[Ben-David et~al.(2010)Ben-David, Blitzer, Crammer, Kulesza, Pereira,
+  and Vaughan]{ben2010theory}
+Shai Ben-David, John Blitzer, Koby Crammer, Alex Kulesza, Fernando Pereira, and
+  Jennifer~Wortman Vaughan.
+\newblock A theory of learning from different domains.
+\newblock \emph{Machine learning}, 79\penalty0 (1):\penalty0 151--175, 2010.
+
+\bibitem[Kingma and Ba(2015)]{kingma2015adam}
+Diederik~P Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock In \emph{International Conference on Learning Representations}, 2015.
+
+\bibitem[Chaudhari et~al.(2019)Chaudhari, Choromanska, Soatto, LeCun, Baldassi,
+  Borgs, Chayes, Sagun, and Zecchina]{chaudhari2019entropy}
+Pratik Chaudhari, Anna Choromanska, Stefano Soatto, Yann LeCun, Carlo Baldassi,
+  Christian Borgs, Jennifer Chayes, Levent Sagun, and Riccardo Zecchina.
+\newblock Entropy-sgd: Biasing gradient descent into wide valleys.
+\newblock \emph{Journal of Statistical Mechanics: Theory and Experiment},
+  2019\penalty0 (12):\penalty0 124018, 2019.
+
+\bibitem[Smith(2017)]{smith2017cyclical}
+Leslie~N Smith.
+\newblock Cyclical learning rates for training neural networks.
+\newblock In \emph{2017 IEEE winter conference on applications of computer
+  vision (WACV)}, pages 464--472. IEEE, 2017.
+
+\bibitem[He et~al.(2016)He, Zhang, Ren, and Sun]{he2016_cvpr_resnet}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In \emph{IEEE Conference on Computer Vision and Pattern Recognition},
+  2016.
+
+\bibitem[Russakovsky et~al.(2015)Russakovsky, Deng, Su, Krause, Satheesh, Ma,
+  Huang, Karpathy, Khosla, Bernstein, et~al.]{russakovsky2015imagenet}
+Olga Russakovsky, Jia Deng, Hao Su, Jonathan Krause, Sanjeev Satheesh, Sean Ma,
+  Zhiheng Huang, Andrej Karpathy, Aditya Khosla, Michael Bernstein, et~al.
+\newblock Imagenet large scale visual recognition challenge.
+\newblock \emph{International Journal of Computer Vision}, 115\penalty0
+  (3):\penalty0 211--252, 2015.
+
+\bibitem[Fang et~al.(2013)Fang, Xu, and Rockmore]{fang2013vlcs}
+Chen Fang, Ye~Xu, and Daniel~N Rockmore.
+\newblock Unbiased metric learning: On the utilization of multiple datasets and
+  web images for softening bias.
+\newblock In \emph{IEEE International Conference on Computer Vision}, pages
+  1657--1664, 2013.
+
+\bibitem[Venkateswara et~al.(2017)Venkateswara, Eusebio, Chakraborty, and
+  Panchanathan]{venkateswara2017officehome}
+Hemanth Venkateswara, Jose Eusebio, Shayok Chakraborty, and Sethuraman
+  Panchanathan.
+\newblock Deep hashing network for unsupervised domain adaptation.
+\newblock In \emph{IEEE conference on computer vision and pattern recognition},
+  pages 5018--5027, 2017.
+
+\bibitem[Beery et~al.(2018{\natexlab{b}})Beery, Van~Horn, and
+  Perona]{beery2018terraincognita}
+Sara Beery, Grant Van~Horn, and Pietro Perona.
+\newblock Recognition in terra incognita.
+\newblock In \emph{European Conference on Computer Vision}, pages 456--473,
+  2018{\natexlab{b}}.
+
+\bibitem[Peng et~al.(2019)Peng, Bai, Xia, Huang, Saenko, and
+  Wang]{peng2019domainnet}
+Xingchao Peng, Qinxun Bai, Xide Xia, Zijun Huang, Kate Saenko, and Bo~Wang.
+\newblock Moment matching for multi-source domain adaptation.
+\newblock In \emph{IEEE/CVF International Conference on Computer Vision}, pages
+  1406--1415, 2019.
+
+\bibitem[Nuriel et~al.(2021)Nuriel, Benaim, and Wolf]{nuriel2020padain}
+Oren Nuriel, Sagie Benaim, and Lior Wolf.
+\newblock Permuted adain: Reducing the bias towards global statistics in image
+  classification.
+\newblock In \emph{IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition}, 2021.
+
+\bibitem[Wang et~al.(2020{\natexlab{a}})Wang, Yu, Li, Fu, and
+  Heng]{wang2020eisnet}
+Shujun Wang, Lequan Yu, Caizi Li, Chi-Wing Fu, and Pheng-Ann Heng.
+\newblock Learning from extrinsic and intrinsic supervisions for domain
+  generalization.
+\newblock In \emph{European Conference on Computer Vision}, pages 159--176.
+  Springer, 2020{\natexlab{a}}.
+
+\bibitem[Sagawa* et~al.(2020)Sagawa*, Koh*, Hashimoto, and
+  Liang]{Sagawa2020GroupDRO}
+Shiori Sagawa*, Pang~Wei Koh*, Tatsunori~B. Hashimoto, and Percy Liang.
+\newblock Distributionally robust neural networks.
+\newblock In \emph{International Conference on Learning Representations}, 2020.
+
+\bibitem[Xu et~al.(2020)Xu, Zhang, Ni, Li, Wang, Tian, and
+  Zhang]{xu2020interdomain_mixup_aaai}
+Minghao Xu, Jian Zhang, Bingbing Ni, Teng Li, Chengjie Wang, Qi~Tian, and
+  Wenjun Zhang.
+\newblock Adversarial domain adaptation with domain mixup.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}, volume~34,
+  pages 6502--6509, 2020.
+
+\bibitem[Yan et~al.(2020)Yan, Song, Li, Zou, and Ren]{yan2020interdomain_mixup}
+Shen Yan, Huan Song, Nanxiang Li, Lincan Zou, and Liu Ren.
+\newblock Improve unsupervised domain adaptation with mixup training.
+\newblock \emph{arXiv preprint arXiv:2001.00677}, 2020.
+
+\bibitem[Wang et~al.(2020{\natexlab{b}})Wang, Li, and
+  Kot]{wang2020interdomain_mixup_icassp_dg}
+Yufei Wang, Haoliang Li, and Alex~C Kot.
+\newblock Heterogeneous domain generalization via domain mixup.
+\newblock In \emph{IEEE International Conference on Acoustics, Speech and
+  Signal Processing}, pages 3622--3626. IEEE, 2020{\natexlab{b}}.
+
+\bibitem[Li et~al.(2018{\natexlab{c}})Li, Pan, Wang, and Kot]{li2018mmd}
+Haoliang Li, Sinno~Jialin Pan, Shiqi Wang, and Alex~C Kot.
+\newblock Domain generalization with adversarial feature learning.
+\newblock In \emph{IEEE Conference on Computer Vision and Pattern Recognition},
+  pages 5400--5409, 2018{\natexlab{c}}.
+
+\bibitem[Blanchard et~al.(2021)Blanchard, Deshmukh, Dogan, Lee, and
+  Scott]{blanchard2021mtl_marginal_transfer_learning}
+Gilles Blanchard, Aniket~Anand Deshmukh, Urun Dogan, Gyemin Lee, and Clayton
+  Scott.
+\newblock Domain generalization by marginal transfer learning.
+\newblock \emph{Journal of Machine Learning Research}, 22\penalty0
+  (2):\penalty0 1--55, 2021.
+
+\bibitem[Huang et~al.(2020)Huang, Wang, Xing, and Huang]{huang2020rsc}
+Zeyi Huang, Haohan Wang, Eric~P Xing, and Dong Huang.
+\newblock Self-challenging improves cross-domain generalization.
+\newblock \emph{European Conference on Computer Vision}, 2, 2020.
+
+\bibitem[Polyak and Juditsky(1992)]{polyak1992ema}
+Boris~T Polyak and Anatoli~B Juditsky.
+\newblock Acceleration of stochastic approximation by averaging.
+\newblock \emph{SIAM journal on control and optimization}, 30\penalty0
+  (4):\penalty0 838--855, 1992.
+
+\bibitem[Miyato et~al.(2018)Miyato, Maeda, Koyama, and Ishii]{miyato2018vat}
+Takeru Miyato, Shin-ichi Maeda, Masanori Koyama, and Shin Ishii.
+\newblock Virtual adversarial training: a regularization method for supervised
+  and semi-supervised learning.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}, 41\penalty0 (8):\penalty0 1979--1993, 2018.
+
+\bibitem[Laine and Aila(2017)]{LaineA17iclr_pi_model}
+Samuli Laine and Timo Aila.
+\newblock Temporal ensembling for semi-supervised learning.
+\newblock In \emph{International Conference on Learning Representations}, 2017.
+
+\bibitem[Hendrycks and
+  Dietterich(2018)]{hendrycks2018benchmarking_robustness_imagenet_c}
+Dan Hendrycks and Thomas Dietterich.
+\newblock Benchmarking neural network robustness to common corruptions and
+  perturbations.
+\newblock In \emph{International Conference on Learning Representations}, 2018.
+
+\bibitem[Hendrycks et~al.(2020)Hendrycks, Basart, Mu, Kadavath, Wang, Dorundo,
+  Desai, Zhu, Parajuli, Guo, et~al.]{hendrycks2020many_face_of_robustness}
+Dan Hendrycks, Steven Basart, Norman Mu, Saurav Kadavath, Frank Wang, Evan
+  Dorundo, Rahul Desai, Tyler Zhu, Samyak Parajuli, Mike Guo, et~al.
+\newblock The many faces of robustness: A critical analysis of
+  out-of-distribution generalization.
+\newblock \emph{arXiv preprint arXiv:2006.16241}, 2020.
+
+\bibitem[Xiao et~al.(2020)Xiao, Engstrom, Ilyas, and
+  Madry]{xiao2020background_challenge_bgc}
+Kai~Yuanqing Xiao, Logan Engstrom, Andrew Ilyas, and Aleksander Madry.
+\newblock Noise or signal: The role of image backgrounds in object recognition.
+\newblock In \emph{International Conference on Learning Representations}, 2020.
+
+\bibitem[Kim et~al.(2018)Kim, Kim, Seo, Kim, Park, Park, Jo, Kim, Yang, Kim,
+  et~al.]{nsml}
+Hanjoo Kim, Minkyu Kim, Dongjoo Seo, Jinwoong Kim, Heungseok Park, Soeun Park,
+  Hyunwoo Jo, KyungHyun Kim, Youngil Yang, Youngkwan Kim, et~al.
+\newblock Nsml: Meet the mlaas platform with a real-world case study.
+\newblock \emph{arXiv preprint arXiv:1810.09957}, 2018.
+
+\bibitem[Goyal et~al.(2017)Goyal, Doll{\'a}r, Girshick, Noordhuis, Wesolowski,
+  Kyrola, Tulloch, Jia, and He]{goyal2017training_imagenet_1hour}
+Priya Goyal, Piotr Doll{\'a}r, Ross Girshick, Pieter Noordhuis, Lukasz
+  Wesolowski, Aapo Kyrola, Andrew Tulloch, Yangqing Jia, and Kaiming He.
+\newblock Accurate, large minibatch sgd: Training imagenet in 1 hour.
+\newblock \emph{arXiv preprint arXiv:1706.02677}, 2017.
+
+\bibitem[Zhao et~al.(2018)Zhao, Zhang, Wu, Moura, Costeira, and
+  Gordon]{zhao2018multi_domain_adapt}
+Han Zhao, Shanghang Zhang, Guanhang Wu, Jos\'{e} M.~F. Moura, Joao~P Costeira,
+  and Geoffrey~J Gordon.
+\newblock Adversarial multiple source domain adaptation.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~31, 2018.
+
+\end{thebibliography}

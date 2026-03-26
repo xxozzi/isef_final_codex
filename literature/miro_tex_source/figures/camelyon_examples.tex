@@ -1,0 +1,50 @@
+\begin{figure}[tb]
+\begin{center}
+\setlength{\tabcolsep}{0pt}
+\newcommand\figwidth{.15}
+\newcommand\rf{-0.4}
+\newcommand\rs{-0.45}
+\renewcommand{\arraystretch}{1.3}
+
+\begin{tabular*}{0.8\textwidth}{c @{\extracolsep{\fill}} ccccc}
+    \rotatebox[origin=c]{90}{Normal}
+    &
+    \raisebox{\rf\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T0_H0.png}}
+    &
+    \raisebox{\rf\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T0_H1.png}}
+    &
+    \raisebox{\rf\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T0_H2.png}}
+    &
+    \raisebox{\rf\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T0_H3.png}}
+    &
+    \raisebox{\rf\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T0_H4.png}}
+\\
+    \rotatebox[origin=c]{90}{Tumor}
+    &
+    \raisebox{\rs\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T1_H0.png}}
+    &
+    \raisebox{\rs\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T1_H1.png}}
+    &
+    \raisebox{\rs\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T1_H2.png}}
+    &
+    \raisebox{\rs\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T1_H3.png}}
+    &
+    \raisebox{\rs\height}{\includegraphics[width=\figwidth\textwidth]{figures/camelyon_images/T1_H4.png}}
+\\
+    &
+    {\small Hospital 1}
+    &
+    {\small Hospital 2}
+    &
+    {\small Hospital 3}
+    &
+    {\small Hospital 4}
+    &
+    {\small Hospital 5}
+\end{tabular*}
+%
+\end{center}
+\caption{\small \textbf{Example images of \data{Camelyon17}.} Distribution shifts between hospitals are caused by the way to acquire and process the tissue slide images.
+}
+\label{fig:camelyon_examples}
+\end{figure}

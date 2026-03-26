@@ -1,0 +1,117 @@
+\begin{thebibliography}{18}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cha et~al.(2021)Cha, Chun, Lee, Cho, Park, Lee, and Park]{cha2021wad}
+Junbum Cha, Sanghyuk Chun, Kyungjae Lee, Han-Cheol Cho, Seunghyun Park, Yunsung
+  Lee, and Sungrae Park.
+\newblock {SWAD}: Domain generalization by seeking flat minima.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem[Ram{\'e} et~al.(2022)Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy,
+  Gallinari, and Cord]{rame2022diwa}
+Alexandre Ram{\'e}, Matthieu Kirchmeyer, Thibaud Rahier, Alain Rakotomamonjy,
+  Patrick Gallinari, and Matthieu Cord.
+\newblock Diverse weight averaging for out-of-distribution generalization.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2022.
+
+\bibitem[Simard et~al.(1992)Simard, Victorri, LeCun, and
+  Denker]{simard1991tangent}
+Patrice~Y. Simard, Bernard Victorri, Yann LeCun, and John~S. Denker.
+\newblock Tangent prop: A formalism for specifying selected invariances in an
+  adaptive network.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 1992.
+
+\bibitem[Koh and Liang(2017)]{koh2017influence}
+Pang~Wei Koh and Percy Liang.
+\newblock Understanding black-box predictions via influence functions.
+\newblock In \emph{International Conference on Machine Learning}, 2017.
+
+\bibitem[Duchi and Namkoong(2020)]{duchi2020variance}
+John Duchi and Hongseok Namkoong.
+\newblock Variance-based regularization with convex objectives.
+\newblock In \emph{Conference on Learning Theory}, 2020.
+
+\bibitem[Duchi et~al.(2021)Duchi, Glynn, and Namkoong]{duchi2021learning}
+John Duchi, Peter Glynn, and Hongseok Namkoong.
+\newblock Learning models with uniform performance via distributionally robust
+  optimization.
+\newblock \emph{The Annals of Statistics}, 49\penalty0 (3):\penalty0
+  1378--1406, 2021.
+
+\bibitem[Izmailov et~al.(2018)Izmailov, Podoprikhin, Garipov, Vetrov, and
+  Wilson]{izmailov2018swa}
+Pavel Izmailov, Dmitrii Podoprikhin, Timur Garipov, Dmitry Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Averaging weights leads to wider optima and better generalization.
+\newblock In \emph{Conference on Uncertainty in Artificial Intelligence}, 2018.
+
+\bibitem[Garipov et~al.(2018)Garipov, Izmailov, Podoprikhin, Vetrov, and
+  Wilson]{garipov2018fge}
+Timur Garipov, Pavel Izmailov, Dmitrii Podoprikhin, Dmitry Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Loss surfaces, mode connectivity, and fast ensembling of {DNN}s.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2018.
+
+\bibitem[Bousquet and Elisseeff(2002)]{bousquet2002stability}
+Olivier Bousquet and Andr{\'e} Elisseeff.
+\newblock Stability and generalization.
+\newblock \emph{Journal of Machine Learning Research}, 2:\penalty0 499--526,
+  2002.
+
+\bibitem[Li et~al.(2018)Li, Yang, Song, and Hospedales]{li2018mldg}
+Da~Li, Yongxin Yang, Yi-Zhe Song, and Timothy Hospedales.
+\newblock Learning to generalize: Meta-learning for domain generalization.
+\newblock In \emph{AAAI Conference on Artificial Intelligence}, 2018.
+
+\bibitem[Li et~al.(2017)Li, Yang, Song, and Hospedales]{li2017pacs}
+Da~Li, Yongxin Yang, Yi-Zhe Song, and Timothy Hospedales.
+\newblock Deeper, broader and artier domain generalization.
+\newblock In \emph{IEEE International Conference on Computer Vision}, 2017.
+
+\bibitem[Fang et~al.(2013)Fang, Xu, and Rockmore]{fang2013vlcs}
+Chen Fang, Ye~Xu, and Daniel Rockmore.
+\newblock Unbiased metric learning: On the utilization of multiple datasets and
+  web images for softening bias.
+\newblock In \emph{IEEE International Conference on Computer Vision}, 2013.
+
+\bibitem[Venkateswara et~al.(2017)Venkateswara, Eusebio, Chakraborty, and
+  Panchanathan]{venkateswara2017officehome}
+Hemanth Venkateswara, Jose Eusebio, Shayok Chakraborty, and Sethuraman
+  Panchanathan.
+\newblock Deep hashing network for unsupervised domain adaptation.
+\newblock In \emph{IEEE Conference on Computer Vision and Pattern Recognition},
+  2017.
+
+\bibitem[Beery et~al.(2018)Beery, Van~Horn, and
+  Perona]{beery2018terraincognita}
+Sara Beery, Grant Van~Horn, and Pietro Perona.
+\newblock Recognition in terra incognita.
+\newblock In \emph{European Conference on Computer Vision}, 2018.
+
+\bibitem[Peng et~al.(2019)Peng, Bai, Xia, Huang, Saenko, and
+  Wang]{peng2019domainnet}
+Xingchao Peng, Qinxun Bai, Xide Xia, Zijun Huang, Kate Saenko, and Bo~Wang.
+\newblock Moment matching for multi-source domain adaptation.
+\newblock In \emph{IEEE International Conference on Computer Vision}, 2019.
+
+\bibitem[Gulrajani and Lopez-Paz(2021)]{gulrajani2021in}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Sun and Saenko(2016)]{sun2016coral}
+Baochen Sun and Kate Saenko.
+\newblock Deep {CORAL}: Correlation alignment for deep domain adaptation.
+\newblock In \emph{European Conference on Computer Vision Workshops}, 2016.
+
+\bibitem[Foret et~al.(2021)Foret, Kleiner, Mobahi, and Neyshabur]{foret2021}
+Pierre Foret, Ariel Kleiner, Hossein Mobahi, and Behnam Neyshabur.
+\newblock Sharpness-aware minimization for efficiently improving
+  generalization.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\end{thebibliography}

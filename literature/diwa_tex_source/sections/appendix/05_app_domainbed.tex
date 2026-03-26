@@ -1,0 +1,69 @@
+\section{DomainBed}
+\label{app:domainbeddetails}
+
+\subsection{Description of the DomainBed benchmark}
+\label{app:domainbed_description}
+
+We now further detail our experiments on the DomainBed benchmark \cite{gulrajani2021in}.
+
+\paragraph{Data.} DomainBed includes several computer vision classification datasets divided into multiple domains.
+Each domain is successively considered as the test domain while other domains are used in training.
+In practice, the data from each domain is split into 80\% (used as training and testing) and 20\% (used as validation for hyperparameter selection) splits. This random process is repeated with 3 different seeds: the reported numbers are the means and the standard errors over these 3 seeds.
+
+\paragraph{Training protocol.}
+We follow the training protocol from \url{https://github.com/facebookresearch/DomainBed}.
+For each dataset, domain and seed, we perform a random search of $20$ trials on the hyperparameter distributions described in Table \ref{tab:hyperparam}.
+Our mild distribution is taken directly from \cite{cha2021wad}, yet could be adapted by dataset for better results.
+Even though these distributions are more restricted than the extreme distributions introduced \cite{gulrajani2021in}, our ERM runs perform better.
+It leads to a total amount of $2640$ runs only for \Cref{table:db_all_training}.
+In \Cref{app:limit_proof_swad}, the $\rho$ hyperparameter for SAM is sampled from $[0.001, 0.002, 0.005, 0.01, 0.02, 0.05]$.
+In \Cref{table:db_home0_training}, hyperparameters specific to Interdomain Mixup \cite{yan2020improve} (\enquote{mixup\_alpha}) and Coral \cite{coral216aaai} (\enquote{mmd\_gamma}) are sampled from the distributions defined in \cite{gulrajani2021in}.
+We use a ResNet50 \cite{he51deep} pretrained on ImageNet, with a dropout layer before the newly added dense layer and fine-tuned with frozen batch normalization layers. The optimizer is Adam \cite{kingma2014adam}. Our classifier is either initialized randomly or with Linear Probing \cite{kumar2022finetuning}; in the latter case, we first learn only the classifier (with the encoder frozen) with the default hyperparameters defined in \Cref{tab:hyperparam}; the classifier's weights are then used to initialize all subsequent runs.
+All runs are trained for 5k steps, except on DomainNet with 15k steps as done in concurrent works \cite{cha2021wad,arpit2021ensemble}. As in \cite{cha2021wad}, validation accuracy is calculated every $50$ steps for VLCS, $500$ steps for DomainNet and $100$ steps for others.
+
+\input{tables/domainbed/table_hp.tex}
+
+\paragraph{Model selection and scores.}
+We consider the training-domain validation set protocol.
+From each run, we thus take the weights of the epoch with maximum accuracy on the validation dataset --- which follows the training distribution. Our restricted weight selection is also based on this training-domain validation set. This strategy is not possible for DiWA$^\dagger$ as it averages $M=20\times 3$ weights trained with different data splits: they do not share a common validation dataset.
+The scores for ERM and Coral are taken from DomainBed \cite{gulrajani2021in}.
+Scores for SWAD \cite{cha2021wad} and MA \cite{arpit2021ensemble} are taken from their respective papers.
+Note that MA and SWAD perform similarly even though SWAD introduced three additional hyperparameters tuned per dataset: \enquote{an optimum patient parameter, an overfitting patient parameter, and the tolerance rate for searching the start iteration and the end iteration}. Thus we reproduced MA \cite{arpit2021ensemble} which was much easier to implement, and closer to our uniform weight selection.%
+
+\subsection{DomainBed results detailed per domain for each real-world dataset}
+\label{app:full_results}
+
+Tables below detail results per domain for the $5$ multi-domain real-world datasets from DomainBed: PACS \cite{li2017deeper}, VLCS \cite{fang2013unbiased}, OfficeHome \cite{venkateswara2017deep}, TerraIncognita \cite{beery2018recognition} and DomainNet \cite{peng2019moment}.
+Critically, \cite{ye2021odbench} showed that diversity shift dominates in these datasets.
+
+\input{tables/domainbed/db_perdataset_training.tex}
+
+\FloatBarrier
+
+\section{Failure of WA under correlation shift on ColoredMNIST}
+\label{app:failure_corr_shift}
+Based on \Cref{eq:b_var_cov}, we explained that WA is efficient when variance dominates; we showed in \Cref{subsec:expression_ood_var} that this occurs under diversity shift.
+This is confirmed by our state-of-the-art results in \Cref{table:db_all_training} and \Cref{app:full_results} on PACS, OfficeHome, VLCS, TerraIncognita and DomainNet.
+In contrast, we argue that WA is inefficient when bias dominates, \ie in the presence of correlation shift (see \Cref{subsec:expression_ood_bias}).
+We verify this failure on the ColoredMNIST \cite{arjovsky2019invariant} dataset, which is dominated by correlation shift \cite{peng2019moment}.
+
+Colored MNIST is a colored variant of the MNIST handwritten digit classification dataset \cite{lecun2010mnist} where the correlation strengths between color and label vary across domains.
+We follow the protocol described in \Cref{app:domainbed_description} except that (1) we used the convolutional neural network architecture introduced in DomainBed \cite{gulrajani2021in} for MNIST experiments and (2) we used the test-domain model selection in addition to the train-domain model selection. Indeed, as stated in \cite{ye2021odbench}, \enquote{it may be improper to apply training-domain validation to datasets dominated by correlation shift since under the influence of spurious correlations, achieving excessively high accuracy in the training environments often leads to low accuracy in novel test environments}.
+
+In \Cref{table:db_cmnist_training,table:db_cmnist}, we observe that DiWA-uniform and MA both perform poorly compared to ERM.
+Note that DiWA-restricted does not degrade ERM as it selects only a few models for averaging (low $M$).
+This confirms that our approach is useful to tackle diversity shift but not correlation shift, for which invariance-based approaches as IRM \cite{arjovsky2019invariant} or Fishr \cite{rame_fishr_2021} remain state-of-the-art.%
+\input{tables/domainbed/db_cmnist_training.tex}
+\input{tables/domainbed/db_cmnist.tex}
+
+\FloatBarrier
+\section{\reb{Last layer retraining when some target data is available}}
+\label{app:llr}
+
+\reb{The traditional OOD generalization setup does not provide access to target samples (labelled or unlabelled). The goal is to learn a model able to generalize to any kind of distributions. This is arguably the most challenging generalization setup: under these strict conditions, we showed that DiWA outperforms other approaches on DomainBed. Yet, in real-world applications, some target data is often available for training; moreover, last layer retraining on these target samples was shown highly efficient in \cite{kirichenko2022last,rosenfeld2022domain}. The complete analysis of DiWA for this new scenario should be properly addressed in future work; yet, we now hint that a DiWA strategy could be helpful.}
+
+\reb{Specifically, in \Cref{table:db_home0_llr}, we consider that after a first training phase on the \enquote{Clipart}, \enquote{Product} and \enquote{Photo} domains, we eventually have access to some samples from the target \enquote{Art} domain (20\% or 80\% of the whole domain). Following \cite{kirichenko2022last}, we re-train only the last layer of the network on these samples before testing.
+We observe improved performance when the (frozen) feature extractor was obtained via DiWA (from the first stage) rather than from ERM. It suggests that features extracted by DiWA are more adapted to last layer retraining/generalization than those of ERM. In conclusion, we believe our DiWA strategy has great potential for many real-world applications, whether some target data is available for training or not.}
+\input{tables/domainbed/db_home0_llr.tex}
+
+

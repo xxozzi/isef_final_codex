@@ -1,0 +1,149 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{rame2022diwa}
+\citation{cha2022miro}
+\citation{cha2022miro}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{cha2021swad}
+\citation{izmailov2018swa}
+\citation{garipov2018fge}
+\citation{wortsman2022soups}
+\citation{rame2022diwa}
+\citation{hsu2022rashomon,watsondaniels2024churn}
+\citation{watsondaniels2024churn}
+\citation{bousquet2002stability,hardt2016sgd}
+\citation{chandramoorthy2022nonconvergent}
+\citation{cha2022miro}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {CORA}}{} overview.} Starting from one dense trajectory, \textup  {\textsc  {CORA}}{} constructs a connected near-optimal checkpoint set, computes a predictive barycenter over that set, estimates examplewise multiplicity to define a consensus core and disagreement fringe, and solves a convex post-hoc simplex problem whose output is a single weight soup.}}{3}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:overview}{{1}{3}{\textbf {\cora {} overview.} Starting from one dense trajectory, \cora {} constructs a connected near-optimal checkpoint set, computes a predictive barycenter over that set, estimates examplewise multiplicity to define a consensus core and disagreement fringe, and solves a convex post-hoc simplex problem whose output is a single weight soup}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single-run post-hoc DG.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Weight averaging, connectivity, and soups.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Predictive multiplicity and churn.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stability and non-convergent training.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Pretraining-aware DG.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
+\newlabel{eq:val_loss}{{1}{4}{Problem Setup}{equation.1}{}}
+\newlabel{eq:barrier}{{2}{4}{Problem Setup}{equation.2}{}}
+\newlabel{eq:anchor}{{3}{4}{Problem Setup}{equation.3}{}}
+\newlabel{eq:candidate_set}{{4}{4}{Problem Setup}{equation.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Consensus-of-Rashomon Averaging}{4}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{4}{Consensus-of-Rashomon Averaging}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Trajectory prior and predictive barycenter}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:rho}{{5}{4}{Trajectory prior and predictive barycenter}{equation.5}{}}
+\newlabel{eq:barycenter}{{6}{4}{Trajectory prior and predictive barycenter}{equation.6}{}}
+\newlabel{thm:barycenter}{{1}{4}{Barycenter optimality}{theorem.1}{}}
+\newlabel{eq:barycenter_opt}{{7}{4}{Barycenter optimality}{equation.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Predictive multiplicity and the consensus core}{5}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:multiplicity}{{8}{5}{Predictive multiplicity and the consensus core}{equation.8}{}}
+\newlabel{eq:core_weight}{{9}{5}{Predictive multiplicity and the consensus core}{equation.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Predictive-mixture objective}{5}{subsection.4.3}\protected@file@percent }
+\newlabel{eq:mixture}{{10}{5}{Predictive-mixture objective}{equation.10}{}}
+\newlabel{eq:ensval}{{11}{5}{Predictive-mixture objective}{equation.11}{}}
+\newlabel{eq:core_term}{{12}{5}{Predictive-mixture objective}{equation.12}{}}
+\newlabel{eq:amb_term}{{13}{5}{Predictive-mixture objective}{equation.13}{}}
+\newlabel{eq:objective}{{14}{5}{Predictive-mixture objective}{equation.14}{}}
+\newlabel{eq:optimizer}{{15}{5}{Predictive-mixture objective}{equation.15}{}}
+\newlabel{eq:final_soup}{{16}{5}{Predictive-mixture objective}{equation.16}{}}
+\@writefile{toc}{\contentsline {paragraph}{Implementation note.}{5}{section*.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {The connected near-optimal set is not necessarily a contiguous window.} \textup  {\textsc  {CORA}}{} keeps the \textup  {\textsc  {SWAD}}{} intuition that safe soups live inside one connected region, but it replaces contiguous time windows with an explicit loss-plus-barrier feasibility test.}}{6}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:set}{{2}{6}{\textbf {The connected near-optimal set is not necessarily a contiguous window.} \cora {} keeps the \swad {} intuition that safe soups live inside one connected region, but it replaces contiguous time windows with an explicit loss-plus-barrier feasibility test}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Consensus core versus disagreement fringe.} Columns are support examples sorted by multiplicity; rows are candidate checkpoints. Vertically consistent columns form the consensus core, while striped columns form the high-multiplicity fringe. This is the object that \textup  {\textsc  {CORA}}{} models directly and prior methods do not.}}{6}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:core}{{3}{6}{\textbf {Consensus core versus disagreement fringe.} Columns are support examples sorted by multiplicity; rows are candidate checkpoints. Vertically consistent columns form the consensus core, while striped columns form the high-multiplicity fringe. This is the object that \cora {} models directly and prior methods do not}{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {paragraph}{What is genuinely new here.}{6}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Theory}{6}{section.5}\protected@file@percent }
+\newlabel{sec:theory}{{5}{6}{Theory}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Convexity and optimization}{6}{subsection.5.1}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {CORA}}{} (\textsc  {Consensus-of-Rashomon Averaging})}}{7}{algorithm.1}\protected@file@percent }
+\newlabel{alg:cora}{{1}{7}{\cora {} (\textsc {Consensus-of-Rashomon Averaging})}{algorithm.1}{}}
+\newlabel{prop:convexity}{{1}{7}{Convexity, existence, and uniqueness}{proposition.1}{}}
+\newlabel{prop:subgrad}{{2}{7}{Projected-subgradient convergence for the non-entropic objective}{proposition.2}{}}
+\newlabel{eq:subgrad_rate}{{17}{7}{Projected-subgradient convergence for the non-entropic objective}{equation.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}A target-risk certificate from the consensus core}{7}{subsection.5.2}\protected@file@percent }
+\newlabel{def:decomp}{{1}{7}{Consensus-fringe target decomposition}{definition.1}{}}
+\newlabel{eq:decomp}{{18}{7}{Consensus-fringe target decomposition}{equation.18}{}}
+\newlabel{thm:certificate}{{2}{8}{Consensus-core certificate for predictive mixtures}{theorem.2}{}}
+\newlabel{eq:cert}{{19}{8}{Consensus-core certificate for predictive mixtures}{equation.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Empirical support estimation and concentration}{8}{subsection.5.3}\protected@file@percent }
+\newlabel{eq:omegaU}{{20}{8}{Empirical support estimation and concentration}{equation.20}{}}
+\newlabel{prop:concentration}{{3}{8}{Uniform concentration on the simplex}{proposition.3}{}}
+\newlabel{eq:uniform_conc}{{21}{8}{Uniform concentration on the simplex}{equation.21}{}}
+\newlabel{cor:density}{{1}{8}{Density-ratio transfer}{corollary.1}{}}
+\newlabel{eq:density_transfer}{{22}{8}{Density-ratio transfer}{equation.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}From predictive mixtures to a single weight soup}{8}{subsection.5.4}\protected@file@percent }
+\newlabel{ass:locality}{{1}{9}{Local second-order linearity}{assumption.1}{}}
+\newlabel{eq:locality_assump}{{23}{9}{Local second-order linearity}{equation.23}{}}
+\newlabel{thm:mixture_to_soup}{{3}{9}{Mixture-to-soup discrepancy}{theorem.3}{}}
+\newlabel{eq:soup_gap}{{24}{9}{Mixture-to-soup discrepancy}{equation.24}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}How \textup  {\textsc  {CORA}}{} compares to \textup  {\textsc  {SWAD}}}{9}{subsection.5.5}\protected@file@percent }
+\newlabel{thm:domination}{{2}{9}{Optimization consequence relative to feasible \swad -style intervals}{corollary.2}{}}
+\newlabel{eq:dom_assump}{{25}{9}{Optimization consequence relative to feasible \swad -style intervals}{equation.25}{}}
+\newlabel{eq:domination}{{26}{9}{Optimization consequence relative to feasible \swad -style intervals}{equation.26}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Constructive separation}{9}{subsection.5.6}\protected@file@percent }
+\newlabel{thm:separation}{{4}{9}{Constructive separation from validation-only selection}{proposition.4}{}}
+\citation{gulrajani2021domainbed,cha2021swad}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Prediction-space geometry.} For a fixed example, candidate checkpoint predictions can disagree substantially while remaining equally low-loss globally. \textup  {\textsc  {CORA}}{} targets the barycenter on low-multiplicity examples and avoids brittle fringe commitments.}}{10}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:geometry}{{4}{10}{\textbf {Prediction-space geometry.} For a fixed example, candidate checkpoint predictions can disagree substantially while remaining equally low-loss globally. \cora {} targets the barycenter on low-multiplicity examples and avoids brittle fringe commitments}{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Core matching versus fringe hedging.} The \textup  {\textsc  {CORA}}{} objective emphasizes barycenter matching where multiplicity is low and worst-case caution where multiplicity is high. This differs structurally from both flatness-only and drift-only selectors.}}{10}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:objective}{{5}{10}{\textbf {Core matching versus fringe hedging.} The \cora {} objective emphasizes barycenter matching where multiplicity is low and worst-case caution where multiplicity is high. This differs structurally from both flatness-only and drift-only selectors}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Empirical Protocol}{10}{section.6}\protected@file@percent }
+\newlabel{sec:experiments}{{6}{10}{Empirical Protocol}{section.6}{}}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{rame2022diwa}
+\citation{cha2022miro}
+\citation{cha2022miro}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published five-dataset ResNet-50-style benchmark numbers from prior work.} Numbers come from the cited source tables and are not from identical protocols; in particular, \textup  {\textsc  {DiWA}}{} is primarily multi-run and \textup  {\textsc  {MIRO}}{} is training-time rather than post-hoc.}}{11}{table.caption.17}\protected@file@percent }
+\newlabel{tab:published}{{1}{11}{\textbf {Published five-dataset ResNet-50-style benchmark numbers from prior work.} Numbers come from the cited source tables and are not from identical protocols; in particular, \diwa {} is primarily multi-run and \miro {} is training-time rather than post-hoc}{table.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Planned \textup  {\textsc  {CORA}}{} benchmark results.} All entries remain intentionally blank pending experiments.}}{11}{table.caption.18}\protected@file@percent }
+\newlabel{tab:tbd}{{2}{11}{\textbf {Planned \cora {} benchmark results.} All entries remain intentionally blank pending experiments}{table.caption.18}{}}
+\@writefile{toc}{\contentsline {paragraph}{Datasets and protocol.}{11}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Base training.}{11}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Decisive analyses.}{11}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Published baseline numbers}{11}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Planned \textup  {\textsc  {CORA}}{} tables}{11}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{11}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why \textup  {\textsc  {CORA}}{} is not a disguised window selector.}{11}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why the method is still simple enough to spread.}{12}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Limitations.}{12}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{12}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs}{13}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Theorem~\ref {thm:barycenter}}{13}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Proposition~\ref {prop:convexity}}{13}{subsection.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Proof of Proposition~\ref {prop:subgrad}}{13}{subsection.A.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Theorem~\ref {thm:certificate}}{14}{subsection.A.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Proposition~\ref {prop:concentration}}{14}{subsection.A.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Proof of Corollary~\ref {cor:density}}{14}{subsection.A.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Proof of Theorem~\ref {thm:mixture_to_soup}}{15}{subsection.A.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Proof of Corollary~\ref {thm:domination}}{15}{subsection.A.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.9}Proof of Proposition~\ref {thm:separation}}{15}{subsection.A.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B}Additional Baseline Notes}{15}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{\textup  {\textsc  {SWAD}}{} versus \textup  {\textsc  {DiWA}}{} versus \textup  {\textsc  {MIRO}}{}.}{15}{section*.22}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{bousquet2002stability}{{1}{2002}{{Bousquet and Elisseeff}}{{}}}
+\bibcite{cha2021swad}{{2}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{cha2022miro}{{3}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
+\bibcite{chandramoorthy2022nonconvergent}{{4}{2022}{{Chandramoorthy et~al.}}{{Chandramoorthy, Loukas, Gatmiry, and Jegelka}}}
+\bibcite{garipov2018fge}{{5}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\bibcite{gulrajani2021domainbed}{{6}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{haghighat2026rashomon}{{7}{2026}{{Haghighat et~al.}}{{Haghighat, Anahideh, and Rudin}}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Additional Visual Comparison}{16}{appendix.C}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Conceptual contrast among post-hoc selectors.} \textup  {\textsc  {SWAD}}{} emphasizes connected flat valleys, stationarity-style methods emphasize temporal calmness, and \textup  {\textsc  {CORA}}{} emphasizes examplewise consensus inside the connected good-model set.}}{16}{figure.caption.23}\protected@file@percent }
+\bibcite{hardt2016sgd}{{8}{2016}{{Hardt et~al.}}{{Hardt, Recht, and Singer}}}
+\bibcite{hsu2022rashomon}{{9}{2022}{{Hsu and Calmon}}{{}}}
+\bibcite{izmailov2018swa}{{10}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{rame2022diwa}{{11}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\bibcite{watsondaniels2024churn}{{12}{2024}{{Watson-Daniels et~al.}}{{Watson-Daniels, Calmon, D'Amour, Long, Parkes, and Ustun}}}
+\bibcite{wortsman2022soups}{{13}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\gdef \@abspage@last{17}

@@ -1,0 +1,124 @@
+\section{Proofs}
+\label{app:proof}
+
+\subsection{WA loss derivation}
+\label{app:wa_loss}
+\begin{lemma*}[\ref{lemma:wa_ensembling}]
+    Given $\{\theta_m\}_{m=1}^M$ with learning procedures $L_S^M\triangleq\{l_S^{(m)}\}_{m=1}^M$. Denoting $\Delta_{L_S^M}=\max_{m=1}^{M}\left\|\theta_m-\theta_{\text{WA}}\right\|_2$, $\forall (x,y) \in \X \times \Y$:%
+    \begin{equation*}
+        f_{\text{WA}}(x) = f_{\text{ENS}}(x) + O(\Delta^2_{L_S^M}) \text{~and~} \ell\left(f_{\text{WA}}(x), y\right) = \ell\left(f_{\text{ENS}}(x) , y\right) + O(\Delta_{L_S^M}^2).%
+    \end{equation*}%
+\end{lemma*}
+\begin{proof}
+This proof has two components:
+\begin{itemize}
+    \item to establish the functional approximation, as \cite{izmailov2018}, it performs Taylor expansion of the models' predictions at the first order.
+    \item to establish the loss approximation, as \cite{Wortsman2022ModelSA}, it performs Taylor expansion of the loss at the first order.
+\end{itemize}
+% \footnote{at the first order instead of the second order in \cite{Wortsman2022ModelSA}.}
+\paragraph{Functional approximation}
+With a Taylor expansion at the first order of the models' predictions \wrt parameters $\theta$:
+\begin{align*}
+    f_{\theta_m}&=f_{\text{WA}}+\nabla f_{\text{WA}}^\intercal \Delta_m+ O\left(\left\|\Delta_m\right\|_2^2\right)\\
+    f_{\text{ENS}}-f_{\text{WA}}&=\frac{1}{M} \sum_{m=1}^{M}\left(\nabla f_{\text{WA}}^\intercal \Delta_m+O\left(\left\|\Delta_m\right\|_2^{2}\right)\right)
+\end{align*}
+Therefore, because $\sum_{m=1}^{M} \Delta_m=0$,
+\begin{equation} \label{eq:diff_fens_fwa}
+    f_{\text{ENS}}-f_{\text{WA}} = O\left(\Delta^2\right) \text{~where~}\Delta=\max_{m=1}^{M}\left\|\Delta_m\right\|_2.
+\end{equation}
+\paragraph{Loss approximation}
+With a Taylor expansion at the zeroth order of the loss \wrt its first input and injecting \Cref{eq:diff_fens_fwa}:
+\begin{align*}
+    \ell\left(f_{\text{ENS}}(x) ; y\right)&=\ell\left(f_{\text{WA}}(x); y\right)+O\left(\left\|f_{\text{ENS}}(x)-f_{\text{WA}}(x)\right\|_2\right) \\
+     \ell\left(f_{\text{ENS}}(x) ; y\right) &= \ell\left(f_{\text{WA}}(x); y\right) + O\left(\Delta^2\right).
+\end{align*}
+\end{proof}
+\subsection{Bias-variance-covariance-locality decomposition}
+
+\begin{remark} \label{remark:identical_assumption}
+    Our result in \Cref{prop:b_var_cov} is simplified by leveraging the fact that the learning procedures $L_S^M=\{l_S^{(m)}\}_{m=1}^M$ are identically distributed (i.d.). This assumption naturally holds for DiWA which selects weights from different runs with i.i.d. hyperparameters.
+    It may be less obvious why it applies to MA \cite{arpit2021ensemble} and SWAD \cite{cha2021wad}.
+    It is even false if the weights $\{\theta(l_S^{(m)})\}_{m=1}^M$ are defined as being taken sequentially along a training trajectory, \ie when $0\leq i < j \leq M$ implies that $l_S^{(i)}$ has fewer training steps than $l_S^{(j)}$.
+    We propose an alternative indexing strategy to respect the i.d. assumption.
+    Given $M$ weights selected by the weight selection procedure, we draw without replacement the $M$ weights, \ie $\theta(l_S^{(i)})$ refers to the $i^{th}$ sampled weights.
+    With this procedure, all weights are i.d. as they are uniformly sampled.
+    Critically, their WA are unchanged for the two definitions.%
+\end{remark}
+\label{app:proof_bvc}
+\begin{proposition*}[\ref{prop:b_var_cov}]
+    Denoting $\bar{f}_S\left(x\right) = \mathbb{E}_{l_S} \left[f\left(x,\theta\left(l_S\right)\right)\right]$, under identically distributed learning procedures $L_S^M\triangleq\{l_S^{(m)}\}_{m=1}^M$, the expected generalization error on domain $T$ of $\theta_{\text{WA}}(L_S^M)\triangleq\frac{1}{M} \sum\nolimits_{m=1}^{M} \theta_m$ over the joint distribution of $L_S^M$ is:%
+    \begin{equation*}\tag{\ref{eq:b_var_cov}}
+        \begin{aligned}
+             \mathbb{E}_{L_S^M}\mathcal{E}_T(\theta_{\text{WA}}(L_S^M)) &= \mathbb{E}_{(x,y)\sim p_T}\Big[\biasb^2(x, y)+\frac{1}{M} \varb(x)+\frac{M-1}{M} \covb(x)\Big] + O(\Deltab^2), \\
+             \text{where~}\biasb(x,y)&=y-\bar{f}_S\left(x\right), \\
+             \text{and~}\varb(x)&=\mathbb{E}_{l_S}\left[\left(f(x, \theta(l_S)) - \bar{f}_S\left(x\right)\right)^{2}\right], \\
+             \text{and~}\covb(x)&= \mathbb{E}_{l_S,l_S'}\left[\left(f(x,\theta(l_S))-\bar{f}_S\left(x\right)\right)\left(f(x,\theta(l_S')))-\bar{f}_S\left(x\right)\right)\right], \\
+             \text{and~}\Deltab^2&=\mathbb{E}_{L_S^M}\Delta_{L_S^M}^2 \text{~with~} \Delta_{L_S^M}=\max_{m=1}^{M}\left\|\theta_m-\theta_{\text{WA}}\right\|_2.%
+        \end{aligned}%
+    \end{equation*}%
+    $\covb$ is the prediction covariance between two member models whose weights are averaged.
+    The locality term $\Deltab^2$ is the expected squared maximum distance between weights and their average.
+\end{proposition*}
+\begin{proof}
+    This proof has two components:
+    \begin{itemize}
+        \item it follows the bias-variance-covariance decomposition from \cite{ueda1996generalization,brown2005between} for functional ensembling. It is tailored to WA by assuming that learning procedures are identically distributed.
+        \item it injects the obtained equation into \Cref{lemma:wa_ensembling} to obtain the \Cref{prop:b_var_cov} for WA.
+    \end{itemize}
+    \paragraph{BVC for ensembling with identically distributed learning procedures}
+    With $\bar{f}_S\left(x\right) = \mathbb{E}_{l_S} \left[f\left(x,\theta\left(l_S\right)\right)\right]$, we recall the bias-variance decomposition \cite{kohavi1996bias} (\Cref{eq:b_v}):
+    \begin{align*}
+        \mathbb{E}_{l_S}\mathcal{E}_T(\theta(l_S)) & = \mathbb{E}_{(x,y)\sim p_T}\Big[\biasb(x,y)^{2}+\varb(x)\Big],\\
+        \text{where~}\biasb(x,y) & =  \operatorname{Bias}\{f|(x,y)\} = y-\bar{f}_S\left(x\right), \\
+        \text{and~}\varb(x) &= \operatorname{Var}\{f|x\} = \mathbb{E}_{l_S}\left[\left(f(x, \theta(l_S)) - \bar{f}_S\left(x\right)\right)^{2}\right]. \\
+    \end{align*}
+    Using $f_{\text{ENS}}\triangleq f_{\text{ENS}}(\cdot, \{\theta(l_S^{(m)})\}_{m=1}^M) \triangleq \frac{1}{M} \sum_{m=1}^{M} f(\cdot, \theta(l_S^{(m)}))$ in this decomposition yields,
+    \begin{equation} \label{eq:b_v_ens}
+        \mathbb{E}_{L_S^M}\mathcal{E}_T(\{\theta(l_S^{(m)})\}_{m=1}^M)=\mathbb{E}_{x\sim p_T}\left[\operatorname{Bias}\left\{f_{\text{ENS}} \mid (x,y)\right\}^{2}+\operatorname{Var}\left\{f_{\text{ENS}} \mid x\right\}\right].
+    \end{equation}
+    As $f_{\text{ENS}}$ depends on $L_S^M$, we extend the bias into:
+    \begin{align*}
+        \operatorname{Bias}\left\{f_{\text{ENS}} \mid (x,y)\right\}&=y-\mathbb{E}_{L_S^M}\left[\frac{1}{M} \sum_{m=1}^{M} f(x, \theta(l_S^{(m)}))\right]=y-\frac{1}{M} \sum_{m=1}^{M} \mathbb{E}_{l_S^{(m)}}\left[f(x, \theta(l_S^{(m)}))\right]
+    \end{align*}
+    Under identically distributed $L_S^M\triangleq\{l_S^{(m)}\}_{m=1}^M$,
+    $$
+        \frac{1}{M} \sum_{m=1}^{M} \mathbb{E}_{l_S^{(m)}}\left[y-f(x, \theta(l_S^{(m)}))\right]=\mathbb{E}_{l_S}\left[y-f(x, \theta(l_S))\right]=\operatorname{Bias}\{f|(x,y)\}.
+    $$
+    Thus the bias of ENS is the same as for a single member of the WA.
+    
+    Regarding the variance:
+    \begin{align*}
+        &\operatorname{Var}\left\{f_{\text{ENS}} \mid x\right\}=\mathbb{E}_{L_S^M}\left[\left(\frac{1}{M} \sum_{m=1}^{M} f(x, \theta(l_S^{(m)}))-\mathbb{E}_{L_S^M}\left[\frac{1}{M} \sum_{m=1}^{M} f(x, \theta(l_S^{(m)}))\right]\right)^{2}\right].\\
+        % &=\frac{1}{M^{2}} \sum_{m=1}^{M} \mathbb{E}_{l_S^{(m)}}\left[\left(f(x, \theta(l_S^{(m)}))-\mathbb{E}_{l_S^{(m)}}\left[f(x, \theta(l_S^{(m)}))\right]\right)^{2}\right]+ \\
+        % &\quad\quad \frac{1}{M^{2}} \sum_{m} \sum_{m^{\prime} \neq m} \mathbb{E}_{l_S^{(m)}, l_S^{(m^{\prime})}}[\left(f(x, \theta(l_S^{(m)}))-\mathbb{E}_{l_S^{(m)}}\left[f(x, \theta(l_S^{(m)}))\right]\right) \\
+        % & \left(f(x, \theta(l_S^{(m^\prime)}))-\mathbb{E}_{l_S^{(m^{\prime})}}\left[f(x, \theta(l_S^{(m^\prime)}))\right]\right)].
+    \end{align*}
+    Under identically distributed $L_S^M\triangleq\{l_S^{(m)}\}_{m=1}^M$,
+    \begin{align*}
+        &\operatorname{Var}\left\{f_{\text{ENS}} \mid x\right\} = \frac{1}{M^{2}} \sum_{m=1}^{M} \mathbb{E}_{l_S}\left[\left(f(x, \theta(l_S))-\mathbb{E}_{l_S}\left[f(x, \theta(l_S))\right]\right)^{2}\right]+ \\
+        &\quad\quad\quad\quad \frac{1}{M^{2}} \sum_{m} \sum_{m^{\prime} \neq m} \mathbb{E}_{l_S, l_S^\prime}\left[\left(f(x, \theta(l_S))-\mathbb{E}_{l_S}\left[f(x, \theta(l_S))\right]\right)\left(f(x, \theta(l_S^\prime))-\mathbb{E}_{l_S^\prime}\left[f(x, \theta(l_S^\prime))\right]\right)\right] \\
+        &= \frac{1}{M} \mathbb{E}_{l_S}\left[\left(f(x, \theta(l_S))-\mathbb{E}_{l_S}\left[f(x, \theta(l_S))\right]\right)^{2}\right] + \\
+        &\quad\quad\quad\quad \frac{M-1}{M}\mathbb{E}_{l_S, l_S^\prime}\left[\left(f(x, \theta(l_S))-\mathbb{E}_{l_S}\left[f(x, \theta(l_S))\right]\right)\left(f(x, \theta(l_S^\prime))-\mathbb{E}_{l_S^\prime}\left[f(x, \theta(l_S^\prime))\right]\right)\right] \\
+        &=\frac{1}{M} \varb\left(x\right)+\left(1-\frac{1}{M}\right) \covb\left(x\right).
+    \end{align*}
+    The variance is split into the variance of a single member (divided by $M$) and a covariance term.
+    \paragraph{Combination with \Cref{lemma:wa_ensembling}}
+    We recall that per \Cref{lemma:wa_ensembling},
+    \begin{align*}
+        \ell\left(f_{\text{WA}}(x), y\right) = \ell\left(f_{\text{ENS}}(x) , y\right) + O(\Delta_{L_S^M}^2).
+    \end{align*}
+    Then we have:
+    \begin{align*}
+        \mathcal{E}_T(\theta_{\text{WA}}(L_S^M))&=\mathbb{E}_{(x,y) \sim p_T}[\ell(f_{\text{WA}}(x),y)]\\
+        &=\mathbb{E}_{(x,y) \sim p_T}[\ell(f_{\text{ENS}}(x),y)] + O(\Delta_{L_S^M}^2) = \mathcal{E}_T(\{\theta(l_S^{(m)})\}_{m=1}^M) + O(\Delta_{L_S^M}^2), \\
+        \mathbb{E}_{L_S^M} \mathcal{E}_T(\theta_{\text{WA}}(L_S^M))&=\mathbb{E}_{L_S^M}\mathcal{E}_T(\{\theta(l_S^{(m)})\}_{m=1}^M) + O(\mathbb{E}_{L_S^M}[\Delta_{L_S^M}^2]).
+    \end{align*}
+    We eventually obtain the result:
+    \begin{align*}
+        % \mathcal{E}_T(\theta_{\text{WA}}(L_S^M)) =
+        \mathbb{E}_{L_S^M}\mathcal{E}_T(\theta_{\text{WA}}(L_S^M)) = \mathbb{E}_{(x,y)\sim p_T}\Big[\biasb(x,y)^{2}+\frac{1}{M} \varb(x)+\frac{M-1}{M} \covb(x)\Big] + O(\Deltab^2).
+    \end{align*}
+\end{proof}%
+\input{sections/appendix/proofs/app_bias_corr_inequality}
+\input{sections/appendix/proofs/app_var_div}
+\input{sections/appendix/proofs/app_wa_vs_member}

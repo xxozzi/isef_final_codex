@@ -1,0 +1,93 @@
+\begin{thebibliography}{13}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bousquet and Elisseeff(2002)]{bousquet2002stability}
+Olivier Bousquet and Andr{\'e} Elisseeff.
+\newblock Stability and generalization.
+\newblock \emph{Journal of Machine Learning Research}, 2:\penalty0 499--526,
+  2002.
+
+\bibitem[Cha et~al.(2021)Cha, Chun, Lee, Cho, Park, Lee, and Park]{cha2021swad}
+Junbum Cha, Sanghyuk Chun, Kyungjae Lee, Han-Cheol Cho, Seunghyun Park, Yunsung
+  Lee, and Sungrae Park.
+\newblock {SWAD}: Domain generalization by seeking flat minima.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem[Cha et~al.(2022)Cha, Lee, Park, and Chun]{cha2022miro}
+Junbum Cha, Kyungjae Lee, Sungrae Park, and Sanghyuk Chun.
+\newblock Domain generalization by mutual-information regularization with
+  pre-trained models.
+\newblock In \emph{European Conference on Computer Vision}, 2022.
+
+\bibitem[Chandramoorthy et~al.(2022)Chandramoorthy, Loukas, Gatmiry, and
+  Jegelka]{chandramoorthy2022nonconvergent}
+Nisha Chandramoorthy, Andreas Loukas, Khashayar Gatmiry, and Stefanie Jegelka.
+\newblock On the generalization of learning algorithms that do not converge.
+\newblock \emph{arXiv preprint arXiv:2208.07951}, 2022.
+
+\bibitem[Garipov et~al.(2018)Garipov, Izmailov, Podoprikhin, Vetrov, and
+  Wilson]{garipov2018fge}
+Timur Garipov, Pavel Izmailov, Dmitrii Podoprikhin, Dmitry~P. Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Loss surfaces, mode connectivity, and fast ensembling of {DNN}s.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2018.
+
+\bibitem[Gulrajani and Lopez-Paz(2021)]{gulrajani2021domainbed}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Haghighat et~al.(2026)Haghighat, Anahideh, and
+  Rudin]{haghighat2026rashomon}
+Parian Haghighat, Hadis Anahideh, and Cynthia Rudin.
+\newblock Resolving predictive multiplicity for the rashomon set.
+\newblock \emph{arXiv preprint arXiv:2601.09071}, 2026.
+
+\bibitem[Hardt et~al.(2016)Hardt, Recht, and Singer]{hardt2016sgd}
+Moritz Hardt, Benjamin Recht, and Yoram Singer.
+\newblock Train faster, generalize better: Stability of stochastic gradient
+  descent.
+\newblock In \emph{International Conference on Machine Learning}, 2016.
+
+\bibitem[Hsu and Calmon(2022)]{hsu2022rashomon}
+Hsiang Hsu and Flavio du~Pin Calmon.
+\newblock Rashomon capacity: A metric for predictive multiplicity in
+  classification.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2022.
+
+\bibitem[Izmailov et~al.(2018)Izmailov, Podoprikhin, Garipov, Vetrov, and
+  Wilson]{izmailov2018swa}
+Pavel Izmailov, Dmitrii Podoprikhin, Timur Garipov, Dmitry~P. Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Averaging weights leads to wider optima and better generalization.
+\newblock In \emph{Proceedings of the Conference on Uncertainty in Artificial
+  Intelligence}, 2018.
+
+\bibitem[Ram{\'e} et~al.(2022)Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy,
+  Gallinari, and Cord]{rame2022diwa}
+Alexandre Ram{\'e}, Matthieu Kirchmeyer, Thibaud Rahier, Alain Rakotomamonjy,
+  Patrick Gallinari, and Matthieu Cord.
+\newblock Diverse weight averaging for out-of-distribution generalization.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2022.
+
+\bibitem[Watson-Daniels et~al.(2024)Watson-Daniels, Calmon, D'Amour, Long,
+  Parkes, and Ustun]{watsondaniels2024churn}
+Jamelle Watson-Daniels, Flavio du~Pin Calmon, Alexander D'Amour, Carol Long,
+  David~C. Parkes, and Berk Ustun.
+\newblock Predictive churn with the set of good models.
+\newblock \emph{arXiv preprint arXiv:2402.07745}, 2024.
+
+\bibitem[Wortsman et~al.(2022)Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes,
+  Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt]{wortsman2022soups}
+Mitchell Wortsman, Gabriel Ilharco, Samir~Yitzhak Gadre, Rebecca Roelofs,
+  Raphael Gontijo-Lopes, Ari~S. Morcos, Hongseok Namkoong, Ali Farhadi, Yair
+  Carmon, Simon Kornblith, and Ludwig Schmidt.
+\newblock Model soups: Averaging weights of multiple fine-tuned models improves
+  accuracy without increasing inference time.
+\newblock In \emph{International Conference on Machine Learning}, 2022.
+
+\end{thebibliography}

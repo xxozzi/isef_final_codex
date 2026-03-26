@@ -1,0 +1,23 @@
+% Contributions:
+% 1. We introduce the concept of flatness into domain generalization
+% 2. We propose SWAD to capture flatter minima
+% 3. SWAD achieves state-of-the-art performances with large margin
+% 4. We show even better results by minimizing both robust risk and domain divergence
+
+% \jb{ToDo: Update conclusion also before finalize paper.}
+
+In this paper, we theoretically and empirically demonstrate that domain generalization (DG) is achievable by seeking flat minima.
+We propose SWAD that captures flatter minima than the vanilla SWA does.
+The extensive experiments on five DG benchmarks show superior performances of SWAD compared with existing DG methods.
+In addition, combinations of SWAD and existing DG methods even show better performances than the vanilla SWAD.
+We theoretically and empirically observe that seeking flat minima can achieve better generalizability to both in-domain and out-of-domain, while strong in-domain generalization methods without consideration of flatness, \eg, Mixup or CutMix, cannot guarantee to achieve out-of-domain generalizability in both theory and practice.
+This study first brings the concept of flatness into DG tasks, and shows strong empirical performances not only in DG but also in ImageNet benchmarks.
+% As our theoretical observation supports, seeking flat minima can achieve better DG, while strong in-domain generalization without consideration of flatness, \eg, Mixup or CutMix, does not have any guarantee.
+% Comparisons with conventional generalization methods, such as Mixup or CutMix, supports that the significant improvement by SWAD is from seeking flat minima, not from better in-domain generalization performances.
+% It also supports our theoretical result that the DG gap is bounded to robust risk and divergence between training and target domains.
+% It should be noted that this study is very first work to introduce the concept of flatness into the DG field.
+We hope that this study promotes a new research direction of seeking flat minima for domain generalization and other robustness tasks.
+% We believe this study is a foundation work in a new research direction of seeking flat minima for domain generalization.
+% We believe this study open a new direction, seeking flat minima, in DG field, and hope that this study will serve as cornerstone 
+
+% In addition, we show that combinations of SWAD and other DG methods can achieve state-of-the-art performances on the DG benchmarks.

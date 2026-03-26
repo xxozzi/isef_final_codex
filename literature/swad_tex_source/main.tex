@@ -1,0 +1,178 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2021
+
+% ready for submission
+\PassOptionsToPackage{sort&compress,numbers}{natbib}
+% \usepackage{neurips_2021}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+    % \usepackage[preprint]{neurips_2021}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+    \usepackage[final]{neurips_2021}
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2021}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{multirow,array,makecell}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[htt]{hyphenat}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+
+\usepackage{color}
+
+\definecolor{darkergreen}{RGB}{21, 152, 56}
+\definecolor{red2}{RGB}{252, 54, 65}
+\newcommand\redp[1]{\textcolor{red2}{(#1)}}
+\newcommand\greenp[1]{\textcolor{darkergreen}{(#1)}}
+
+\definecolor{darkred}{rgb}{0.6, 0.0, 0.0}
+\newcommand{\jb}[1]{\textcolor{darkred}{#1}}
+\newcommand{\kj}[1]{\textcolor{red}{#1}}
+\newcommand{\sh}[1]{\textcolor{orange}{#1}}
+\definecolor{ao}{rgb}{0.0, 0.5, 0.0}
+\newcommand{\hc}[1]{\textcolor{ao}{#1}}
+\definecolor{pp}{rgb}{0.6,0.0,0.6}
+\newcommand\sr[1]{\textcolor{pp}{#1}}
+
+\newcommand\data[1]{{\normalfont \texttt{#1}}}
+
+% Macros
+\newcommand\eg{\textit{e.g.}}
+\newcommand\ie{\textit{i.e.}}
+\newcommand\etal{\textit{et al.}}
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+
+% \title{Domain Generalization Needs Stochastic Weight Averaging for Robustness on Domain Shifts}
+% \title{Towards Domain Generalization\\by Seeking a Flatter Minima}
+\title{SWAD: Domain Generalization\\by Seeking Flat Minima}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+\author{%
+    Junbum Cha$^{1\dagger}$ \qquad Sanghyuk Chun$^{2}$\thanks{Equal contribution \quad $^\dagger$Part of work done while at NAVER Clova \newline
+    \hspace*{0.0cm}Correspondence to: Junbum Cha <junbum.cha@kakaobrain.com>, Sungrae Park <sungrae.park@upstage.ai>
+    } \qquad Kyungjae Lee$^3$\footnotemark[1] \\
+    \bf Han-Cheol Cho$^4$ \quad Seunghyun Park$^4$ \quad Yunsung Lee$^5$ \quad Sungrae Park$^6$$^\dagger$\\\\
+  $^1$ Kakao Brain \quad $^2$ NAVER AI Lab \quad $^3$ Chung-Ang University \\
+   $^4$ NAVER Clova \quad $^5$ Korea University \quad $^6$ Upstage AI Research
+%   \texttt{junbum.cha@navercorp.com} \qquad \texttt{psungrae@gmail.com}
+    
+%   Junbum Cha$^1$ \\
+%   \And
+%   Sanghyuk Chun$^{1*}$ \\
+%   \And
+%   Kyungjae Lee$^2$\thanks{Equal contribution} \\
+%   \AND
+%   Hancheol Cho$^1$ \\
+%   \And
+%   Seunghyun Park$^1$ \\
+%   \And
+%   Yunsung Lee$^{1,3}$ \\
+%   \And
+%   Sungrae Park$^4$ \\
+%   \ANDC
+%   $^1$ NAVER Clova \quad
+%   $^2$ Chungang Univ. \quad
+%   $^3$ Korea Univ. \quad
+%   $^4$ Upstage AI
+}
+
+\begin{document}
+
+\maketitle
+\input{0.abstract}
+
+% \newcommand\blfootnote[1]{% footnote without marker
+%   \begingroup
+%   \renewcommand\thefootnote{}\footnote{#1}%
+%   \addtocounter{footnote}{-1}%
+%   \endgroup
+% }
+% \blfootnote{Correspondence to: Junbum Cha <junbum.cha@navercorp.com>, Sungrae Park <sungrae.park@upstage.ai>}
+
+%%%%% Paper Skeleton
+\vspace{-.4em}
+\section{Introduction}
+\vspace{-.25em}
+\label{s_introduction}
+\input{1.introduction}
+
+\vspace{-.25em}
+\section{A Theoretical Relationship between Flatness and Domain Generalization}
+\label{s_theoretical_analysis}
+\vspace{-.25em}
+\input{2.theoretical_analysis}
+
+\section{SWAD: Domain Generalization by Seeking Flat Minima}
+\label{s_method}
+\input{3.method}
+
+\section{Experiments}
+\label{s_empirical_results}
+\input{4.empirical_results}
+
+
+% \section{Related Work}
+% \label{s_related_work}
+% \input{2.related_work}
+
+\section{Discussion and Limitations}
+\label{s_discussion}
+\input{5.discussion}
+
+\section{Concluding Remarks}
+\label{s_conclusion}
+\input{6.conclusion}
+
+% \section*{Acknowledgement}
+\acksection
+NAVER Smart Machine Learning (NSML)~\cite{nsml} and Kakao Brain Cloud platform have been used in experiments. This work was supported by IITP grant funded by the Korea government (MSIT) (No. 2021-0-01341, AI Graduate School Program, CAU).
+
+\bibliography{7.reference}
+\bibliographystyle{unsrtnat}
+
+% \input{checklist}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\appendix
+
+\input{8.appendix}
+
+% Optionally include extra information (complete proofs, additional experiments and plots) in the appendix.
+% This section will often be part of the supplemental material.
+
+\end{document}

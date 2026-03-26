@@ -1,0 +1,27 @@
+\section{Related work}%
+\label{sec:related_work}
+\textbf{Generalization and ensemble.}
+To generalize under distribution shifts, invariant approaches \cite{arjovsky2019invariant,krueger2020utofdistribution,rame_fishr_2021,coral216aaai,Sagawa2020Distributionally,ganin2016domain} try to detect the causal mechanism rather than memorize correlations: yet, they do not outperform ERM on various benchmarks \cite{gulrajani2021in,ye2021odbench,pmlr-v139-koh21a}.
+In contrast, ensembling of deep networks \cite{Lakshminarayanan2017,hansen1990neural,krogh1995neural} consistently increases robustness \cite{Ovadia2019} and was successfully applied to domain generalization \cite{arpit2021ensemble,thopalli2021multidomain,Mesbah2022,li2022domain,lee2022diversify,pagliardini2022agree}.
+As highlighted in \cite{ueda1996generalization} (whose analysis underlies our \Cref{eq:b_var_cov}), ensembling works due to the diversity among its members.
+This diversity comes primarily from the randomness of the learning procedure \cite{Lakshminarayanan2017} and can be increased with different hyperparameters \cite{wenzel2020hyperparameter}, data \cite{breiman1996bagging,nixon2020why,Yeo2021}, augmentations \cite{wen2021combining,rame2021ixmo} or with regularizations \cite{lee2022diversify,pagliardini2022agree,rame2021dice,teneydiv}.%
+
+\textbf{Weight averaging.}
+Recent works \cite{izmailov2018,Draxler2018,Guo2022,zhang2019lookahead} combine in weights (rather than in predictions) models collected along a single run. This was shown suboptimal in \iid \cite{ashukha2020pitfalls} but successful in \ood \cite{cha2021wad,arpit2021ensemble}.
+Following the linear mode connectivity \cite{Frankle2020,nagarajan2019uniform} and the property that many independent models are connectable \cite{Benton2021}, a second group of works average weights with fewer constraints  \cite{Wortsman2022robust,mergefisher21,Wortsman2022ModelSA,Gupta2020Stochastic,choshen2022fusing,wortsman2021learning}.
+\reb{To induce greater diversity, \cite{maddox2019simple} used a high constant learning rate; \cite{Benton2021} explicitly encouraged the weights to encompass more volume in the weight space; \cite{wortsman2021learning} minimized cosine similarity between weights; \cite{izmailov_subspace_2019} used a tempered posterior.}
+\reb{From a loss landscape perspective \cite{Fort2019DeepEA}, these methods aimed at \enquote{explor[ing] the set of possible solutions instead of simply converging to a single point}, as stated in \cite{maddox2019simple}}.
+% ,izmailov_subspace_2019
+% \reb{This diversity was probabilistically motivated in \cite{izmailov_subspace_2019} to prevent \enquote{premature concentration} of the \enquote{posterior [which] can overly concentrate around the maximum likelihood [...] leading to overconfident uncertainty estimates}.}
+The recent \enquote{Model soups} introduced by Wortsman \textit{et al.} \cite{Wortsman2022ModelSA} is a WA algorithm similar to \Cref{alg:pseudo-code}; yet, the theoretical analysis and the goals of these two works are different.
+% they demonstrate the robustness of \enquote{Model soups} out-of-distribution by evaluating it on several ImageNet variants with distribution shift.
+Theoretically, we explain why WA succeeds under diversity shift: the bias/correlation shift, variance/diversity shift and diversity-based findings are novel and are confirmed empirically.
+Regarding the motivation, our work aims at combining more diverse weights: it may be analyzed as a general framework to average weights obtained in various ways. In contrast, \cite{Wortsman2022ModelSA} challenges the standard model selection after a grid search.
+Regarding the task, \cite{Wortsman2022ModelSA} and our work complement each other: while \cite{Wortsman2022ModelSA} demonstrate robustness on several ImageNet variants with distribution shift, we improve the SoTA on the multi-domain DomainBed benchmark against other established \ood methods after a thorough and fair comparison. Thus, DiWA and \cite{Wortsman2022ModelSA} are theoretically complementary with different motivations and applied successfully for different tasks.
+% Old
+% The recent \enquote{Model soups} by Wortsman \textit{et al.} \cite{Wortsman2022ModelSA} developed a WA algorithm similar to \Cref{alg:pseudo-code}.
+% However the task, the theoretical analysis and most importantly the goals of these two works are different.
+% Regarding the task, we focused on \ood and the multi-domain DomainBed benchmark.
+% Theoretically, we explain why WA succeeds under diversity shift. The bias/correlation shift, variance/diversity shift and diversity-based findings are novel; they are confirmed empirically.
+% DiWA aims at combining weights from diverse models: our work may be analyzed as a general framework to average in weights models which can be obtained in various ways, as traditionally done in ensembling.
+% In contrast, \cite{Wortsman2022ModelSA} challenges the standard model selection after a grid search. Thus, DiWA and \cite{Wortsman2022ModelSA} are theoretically complementary and applied successfully in different contexts.

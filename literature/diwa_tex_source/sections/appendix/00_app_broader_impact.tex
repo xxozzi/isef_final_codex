@@ -1,0 +1,15 @@
+\section{Broader impact statement}
+\label{app:broader_impact}
+
+We believe our paper can have several positive impacts.
+\textit{First}, our theoretical analysis enables practitioners to know when averaging strategies succeed (under diversity shift, where variance dominates) or break down (under correlation shift, where bias dominates).
+This is key to understand when several models can be combined into a production system, or if the focus should be put on the training objective and/or the data.
+\textit{Second}, it sets a new state of the art for \ood generalization under diversity shift without relying on a specific objective, architecture or task prior. It could be useful in medicine \cite{Zech2018,degrave2021ai} or to tackle fairness issues related to under-representation \cite{Sagawa2020Distributionally,blodgett2016demographic,barocas2016big}.
+\textit{Finally}, DIWA has no additional inference cost; in contrast, functional ensembling needs one forward per member.
+Thus, DiWA removes the carbon footprint overhead of ensembling strategies at test-time.
+
+Yet, our paper may also have some negative impacts.
+\textit{First}, it requires independent training of several models. It may motivate practitioners to learn even more networks and average them afterwards.
+Note that in \Cref{sec:domainbed}, we restricted ourselves to combining only the runs obtained from the standard ERM grid search from DomainBed \cite{gulrajani2021in}.
+\textit{Second}, our model is fully deep learning based with the corresponding risks, \eg adversarial attacks and lack of interpretability.
+\textit{Finally}, we do not control its possible use to surveillance or weapon systems.

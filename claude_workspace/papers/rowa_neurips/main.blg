@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: unsrtnat.bst
+Database file #1: references.bib
+Warning--I didn't find a database entry for "liu2020genie"
+You've used 14 entries,
+            2481 wiz_defined-function locations,
+            619 strings with 6942 characters,
+and the built_in function-call counts, 6539 in all, are:
+= -- 508
+> -- 390
+< -- 9
++ -- 144
+- -- 116
+* -- 474
+:= -- 989
+add.period$ -- 43
+call.type$ -- 14
+change.case$ -- 28
+chr.to.int$ -- 14
+cite$ -- 14
+duplicate$ -- 362
+empty$ -- 603
+format.name$ -- 134
+if$ -- 1442
+int.to.chr$ -- 1
+int.to.str$ -- 15
+missing$ -- 14
+newline$ -- 78
+num.names$ -- 42
+pop$ -- 167
+preamble$ -- 1
+purify$ -- 14
+quote$ -- 0
+skip$ -- 234
+stack$ -- 0
+substring$ -- 252
+swap$ -- 103
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 98
+warning$ -- 0
+while$ -- 46
+width$ -- 0
+write$ -- 183
+(There was 1 warning)

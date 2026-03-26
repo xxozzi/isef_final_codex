@@ -1,0 +1,37 @@
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.1}
+\caption{\small\textbf{Out-of-domain accuracies (\%) on} \data{PACS}\textbf{.}}
+\begin{tabular}{lllll|c}
+\toprule
+\textbf{Algorithm} & \textbf{A} & \textbf{C} & \textbf{P} & \textbf{S} & \textbf{Avg} \\
+\midrule
+CDANN$^\dagger$ & 84.6 \scriptsize$\pm1.8$ & 75.5 \scriptsize$\pm0.9$ & 96.8 \scriptsize$\pm0.3$ & 73.5 \scriptsize$\pm0.6$ & 82.6 \\
+MASF & 82.9 & 80.5 & 95.0 & 72.3 & 82.7 \\
+DMG & 82.6 & 78.1 & 94.5 & 78.3 & 83.4 \\
+IRM$^\dagger$ & 84.8 \scriptsize$\pm1.3$ & 76.4 \scriptsize$\pm1.1$ & 96.7 \scriptsize$\pm0.6$ & 76.1 \scriptsize$\pm1.0$ & 83.5 \\
+MetaReg & 87.2 & 79.2 & 97.6 & 70.3 & 83.6 \\
+DANN$^\dagger$ & 86.4 \scriptsize$\pm0.8$ & 77.4 \scriptsize$\pm0.8$ & 97.3 \scriptsize$\pm0.4$ & 73.5 \scriptsize$\pm2.3$ & 83.7 \\
+ERM$^\ddagger$ & 85.7 \scriptsize$\pm0.6$ & 77.1 \scriptsize$\pm0.8$ & 97.4 \scriptsize$\pm0.4$ & 76.6 \scriptsize$\pm0.7$ & 84.2 \\
+GroupDRO$^\dagger$ & 83.5 \scriptsize$\pm0.9$ & 79.1 \scriptsize$\pm0.6$ & 96.7 \scriptsize$\pm0.3$ & 78.3 \scriptsize$\pm2.0$ & 84.4 \\
+MTL$^\dagger$ & 87.5 \scriptsize$\pm0.8$ & 77.1 \scriptsize$\pm0.5$ & 96.4 \scriptsize$\pm0.8$ & 77.3 \scriptsize$\pm1.8$ & 84.6 \\
+I-Mixup & 86.1 \scriptsize$\pm0.5$ & 78.9 \scriptsize$\pm0.8$ & 97.6 \scriptsize$\pm0.1$ & 75.8 \scriptsize$\pm1.8$ & 84.6 \\
+MMD$^\dagger$ & 86.1 \scriptsize$\pm1.4$ & 79.4 \scriptsize$\pm0.9$ & 96.6 \scriptsize$\pm0.2$ & 76.5 \scriptsize$\pm0.5$ & 84.7 \\
+VREx$^\dagger$ & 86.0 \scriptsize$\pm1.6$ & 79.1 \scriptsize$\pm0.6$ & 96.9 \scriptsize$\pm0.5$ & 77.7 \scriptsize$\pm1.7$ & 84.9 \\
+MLDG$^\dagger$ & 85.5 \scriptsize$\pm1.4$ & 80.1 \scriptsize$\pm1.7$ & 97.4 \scriptsize$\pm0.3$ & 76.6 \scriptsize$\pm1.1$ & 84.9 \\
+ARM$^\dagger$ & 86.8 \scriptsize$\pm0.6$ & 76.8 \scriptsize$\pm0.5$ & 97.4 \scriptsize$\pm0.3$ & 79.3 \scriptsize$\pm1.2$ & 85.1 \\
+RSC$^\dagger$ & 85.4 \scriptsize$\pm0.8$ & 79.7 \scriptsize$\pm1.8$ & 97.6 \scriptsize$\pm0.3$ & 78.2 \scriptsize$\pm1.2$ & 85.2 \\
+Mixstyle$^\ddagger$ & 86.8 \scriptsize$\pm0.5$ & 79.0 \scriptsize$\pm1.4$ & 96.6 \scriptsize$\pm0.1$ & 78.5 \scriptsize$\pm2.3$ & 85.2 \\
+ER & 87.5 & 79.3 & \textbf{98.3} & 76.3 & 85.3 \\
+pAdaIN & 85.8 & 81.1 & 97.2 & 77.4 & 85.4 \\
+ERM$^\dagger$ & 84.7 \scriptsize$\pm0.4$ & 80.8 \scriptsize$\pm0.6$ & 97.2 \scriptsize$\pm0.3$ & 79.3 \scriptsize$\pm1.0$ & 85.5 \\
+EISNet & 86.6 & 81.5 & 97.1 & 78.1 & 85.8 \\
+CORAL$^\dagger$ & 88.3 \scriptsize$\pm0.2$ & 80.0 \scriptsize$\pm0.5$ & 97.5 \scriptsize$\pm0.3$ & 78.8 \scriptsize$\pm1.3$ & 86.2 \\
+SagNet$^\dagger$ & 87.4 \scriptsize$\pm1.0$ & 80.7 \scriptsize$\pm0.6$ & 97.1 \scriptsize$\pm0.1$ & 80.0 \scriptsize$\pm0.4$ & 86.3 \\
+DSON & 87.0 & 80.6 & 96.0 & \textbf{82.9} & 86.6 \\
+\midrule
+Ours & \textbf{89.3} \scriptsize$\pm0.2$ & \textbf{83.4} \scriptsize$\pm0.6$ & 97.3 \scriptsize$\pm0.3$ & 82.5 \scriptsize$\pm0.5$ & \textbf{88.1} \\
+\bottomrule
+\end{tabular}
+\end{table}

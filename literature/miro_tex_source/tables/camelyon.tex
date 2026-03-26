@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\small
+\caption{\small {\bf Performance improvements in \data{Camelyon17} medical dataset.} Even in the large distribution shift setup between pre-training and target datasets, \method{} consistently outperforms ERM.
+%Bold indicates performance improvement.
+Every accuracy is averaged over three trials.}
+\label{table:camelyon}
+\renewcommand{\arraystretch}{1.1}
+\setlength{\tabcolsep}{5pt}
+\setlength{\abovetopsep}{0.5em}
+\begin{tabular}{ll|ccccc|c} 
+\toprule
+\textbf{Pretrain}             & \textbf{Algorithm} & 1 & 2 & 3 & 4 & 5 & Avg.  \\
+\midrule\multirow{2}{*}{ImageNet ERM}   & ERM                & 97.1      & 94.7      & 95.7      & 96.4      & 90.7      & 94.9  \\
+                                        & \method            & {97.5}      & 94.5      & 95.6      & {96.7}      & {93.7}      & {95.6} (+0.7)  \\
+\midrule\multirow{2}{*}{SWAG}           & ERM                & 97.0      & 94.1      & 95.3      & 96.0      & 89.5      & 94.4  \\
+                                        & \method            & {97.4}      & {95.5}      & {96.5}      & {96.1}      & {90.9}      & {95.3} (+0.9)  \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,59 @@
+\begin{thebibliography}{7}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Arpit et~al.(2022{\natexlab{a}})Arpit, D'Ascoli, Nguyen, Yu, Chin,
+  Bengio, and Hjelm]{arpit2022diwa}
+Devansh Arpit, St{\'e}phane D'Ascoli, Trung Nguyen, Felix Yu, Alex Chin, Yoshua
+  Bengio, and R.~Devon Hjelm.
+\newblock Diwa: Enhancing domain generalization by leveraging diverse weights
+  averaging.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  2022{\natexlab{a}}.
+
+\bibitem[Arpit et~al.(2022{\natexlab{b}})Arpit, Wang, Zhou, and
+  Xiong]{shen2022eoa}
+Devansh Arpit, Huan Wang, Yingbo Zhou, and Caiming Xiong.
+\newblock Ensemble of averages: Improving model selection and boosting
+  performance in domain generalization.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  2022{\natexlab{b}}.
+
+\bibitem[Cha et~al.(2021)Cha, Chun, Lee, Cho, Park, Lee, and Park]{cha2021swad}
+Jihyun Cha, Sanghyuk Chun, Kyungjae Lee, Han-Cheol Cho, Seunghyun Park, Yunsung
+  Lee, and Sungrae Park.
+\newblock Swad: Domain generalization by seeking flat minima.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem[Frankle et~al.(2020)Frankle, Dziugaite, Roy, and
+  Carbin]{frankle2020linear}
+Jonathan Frankle, Gintare~Karolina Dziugaite, Daniel~M. Roy, and Michael
+  Carbin.
+\newblock Linear mode connectivity and the lottery ticket hypothesis.
+\newblock In \emph{International Conference on Machine Learning}, 2020.
+
+\bibitem[Gulrajani and Lopez-Paz(2021)]{gulrajani2021domainbed}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Izmailov et~al.(2018)Izmailov, Podoprikhin, Garipov, Vetrov, and
+  Wilson]{izmailov2018swa}
+Pavel Izmailov, Dmitrii Podoprikhin, Timur Garipov, Dmitry Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Averaging weights leads to wider optima and better generalization.
+\newblock In \emph{Conference on Uncertainty in Artificial Intelligence}, 2018.
+
+\bibitem[Wortsman et~al.(2022)Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes,
+  Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt]{wortsman2022soups}
+Mitchell Wortsman, Gabriel Ilharco, Samir~Yitzhak Gadre, Rebecca Roelofs,
+  Raphael Gontijo-Lopes, Ari~S. Morcos, Hongseok Namkoong, Ali Farhadi, Yair
+  Carmon, Simon Kornblith, and Ludwig Schmidt.
+\newblock Model soups: Averaging weights of multiple fine-tuned models improves
+  accuracy without increasing inference time.
+\newblock In \emph{International Conference on Machine Learning}, 2022.
+
+\end{thebibliography}

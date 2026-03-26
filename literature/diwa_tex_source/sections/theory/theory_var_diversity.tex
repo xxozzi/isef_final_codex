@@ -1,0 +1,35 @@
+\subsubsection{Variance and diversity shift}
+\label{subsec:expression_ood_var}
+Variance is known to be large in \ood \cite{d2020underspecification} and to cause a phenomenon named  underspecification, when models behave differently in \ood despite similar test \iid accuracy.
+We now relate \ood variance to diversity shift \cite{ye2021odbench} in a simplified setting.
+We fix the source dataset $d_S$ (with input support $X_{d_S}$), the target dataset $d_T$ (with input support $X_{d_T}$) and the network's initialization.
+We get a closed-form expression for the variance of $f$ over all other sources of randomness under \Cref{ass:infinite_width,ass:inter_sample}.
+\begin{assumption}[Kernel regime] $f$ is in the kernel regime \cite{Jacot2018,daniely2017sgd}.%
+\label{ass:infinite_width}%
+% \vspace{-0.5em}%
+\end{assumption}%
+This states that $f$ behaves as a Gaussian process (GP); it is reasonable if $f$ is a wide network \cite{Jacot2018,Lee2018DeepNN}.
+The corresponding kernel $K$ is the neural tangent kernel (NTK) \cite{Jacot2018} depending only on the initialization.
+GPs are useful because their variances have a closed-form expression (\Cref{app:nns_as_gps}).
+To simplify the expression of variance, we now make \Cref{ass:inter_sample}.
+\begin{assumption}[Constant norm and low intra-sample similarity on $d_S$]
+    % $\exists 0\leq \epsilon \ll \lambda_S \text{~s.t.~} \forall (x_S, x_S^\prime \neq x_S) \in X_{d_S}^2,|K(x_S,x_S^\prime)|\leq \epsilon$.%
+    $\exists (\lambda_S, \epsilon) \text{~with~}\linebreak 0 \leq \epsilon \ll \lambda_S \text{~such~that~} \forall x_S \in X_{d_S}, K(x_S,x_S)=\lambda_S \text{~and~} \forall x_S^\prime \neq x_S \in X_{d_S},|K(x_S,x_S^\prime)|\leq \epsilon$.%
+    \label{ass:inter_sample}%
+    % \vspace{-0.5em}%
+\end{assumption}%
+This states that training samples have the same norm (following standard practice \cite{Lee2018DeepNN,ah2010normalized,ghojogh2021reproducing,rennie2005}) and weakly interact \cite{He2020The,seleznova2022neural}. This assumption is further discussed and relaxed in \Cref{app:discussion_inter_sample}.
+We are now in a position to relate variance and diversity shift when~$\epsilon \to 0$.%
+\clearpage
+\begin{proposition}[\ood variance and diversity shift. Proof in \Cref{app:var_diversity}] \label{prop:var}%
+    Given $f$ trained on source dataset $d_S$ (of size $n_S$) with NTK $K$, under \Cref{ass:infinite_width,ass:inter_sample}, the variance on dataset $d_T$ is:%
+    \begin{equation} \label{eq:int_var}%
+        \mathbb{E}_{x_T\in X_{d_T}}[\varb(x_T)] = \frac{n_S}{2\lambda_S}\text{MMD}^{2}(X_{d_S}, X_{d_T}) + \lambda_T - \frac{n_S}{2\lambda_S}\beta_T + O(\epsilon),%
+    \end{equation}%
+    where $\text{MMD}$ is the empirical Maximum Mean Discrepancy in the RKHS of $K^2(x,y)=(K(x,y))^2$;$\lambda_T \triangleq \mathbb{E}_{x_T \in X_{d_T}} K\left(x_T, x_T\right)$ and $\beta_T \triangleq \mathbb{E}_{(x_T,x_T^\prime)\in X_{d_T}^2, x_T \neq x_T^\prime} K^2\left(x_T, x_T^{\prime}\right)$ are the empirical mean similarities respectively measured between identical (\wrt $K$) and different (\wrt $K^2$) samples averaged over $X_{d_T}$.%
+\end{proposition}
+The MMD empirically estimates shifts in input marginals, \ie between $p_S(X)$ and $p_T(X)$. Our expression of variance is thus similar to the diversity shift formula in \cite{ye2021odbench}: MMD replaces the $L_1$ divergence used in \cite{ye2021odbench}.
+The other terms, $\lambda_T$ and $\beta_T$, both involve internal dependencies on the target dataset $d_T$: they are constants \wrt $X_{d_T}$ and do not depend on distribution shifts.
+At fixed $d_T$ and under our assumptions, \Cref{eq:int_var} shows that variance on $d_T$ decreases when $X_{d_S}$ and $X_{d_T}$ are closer (for the MMD distance defined by the kernel $K^2$) and increases when they deviate. Intuitively, the further $X_{d_T}$ is from $X_{d_S}$, the less the model's predictions on $X_{d_T}$ are constrained after fitting $d_S$.
+
+This analysis shows that WA reduces the impact of diversity shift as combining $M$ models divides the variance per $M$. This is a strong property achieved \textit{without requiring data from the target domain}.

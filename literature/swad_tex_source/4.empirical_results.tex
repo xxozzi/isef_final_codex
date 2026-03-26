@@ -1,0 +1,117 @@
+% In this section, we demonstrate the effectiveness of our SWAD in various domain generalization benchmarks.
+
+\subsection{Evaluation protocols}
+\label{section:s__evaluation_protocols}
+% \begin{table}[tb]
+%     \centering
+%     \small
+%     \caption{\small {\bf Domain generalization benchmarks.} We describe the details of each benchmark.}
+%     \label{table:dataset}
+%     \begin{tabular}{l @{\extracolsep{\fill}} rrr}
+%     \toprule
+%         Dataset & \# examples & \# classes & domains \\
+%         \midrule
+%         \data{PACS}~\cite{li2017pacs} & 9,991 & 7 & \textit{Photo}, \textit{Art painting}, \textit{Cartoon}, \textit{Sketch} \\
+%         \data{VLCS}~\cite{fang2013vlcs} & 10,729 & 5 & \textit{VOC2007}, \textit{LabelMe}, \textit{Caltech101}, \textit{SUN09} \\
+%         \data{OfficeHome}~\cite{venkateswara2017officehome} & 15,588 & 65 & \textit{Art}, \textit{Clipart}, \textit{Product}, \textit{Real} \\
+%         \data{TerraIncognita}~\cite{beery2018terraincognita} & 24,788 & 10 & \textit{L100}, \textit{L38}, \textit{L43}, \textit{L46} \\
+%         \data{DomainNet}~\cite{peng2019domainnet} & 586,575 & 345 & \textit{Clipart}, \textit{Infographic}, \textit{Painting}, \textit{Quickdraw}, \textit{Real}, \textit{Sketch}\\ \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% \paragraph{Dataset and optimization protocol.}
+\textbf{Dataset and optimization protocol.}
+Following \citet{gulrajani2020domainbed}, we exhaustively evaluate our method and comparison methods on various benchmarks: \data{PACS}~\cite{li2017pacs} (9,991 images, 7 classes, and 4 domains), \data{VLCS}~\cite{fang2013vlcs} (10,729 images, 5 classes, and 4 domains), \data{OfficeHome}~\cite{venkateswara2017officehome} (15,588 images, 65 classes, and 4 domains), \data{TerraIncognita}~\cite{beery2018terraincognita} (24,788 images, 10 classes, and 4 domains), and \data{DomainNet}~\cite{peng2019domainnet} (586,575 images, 345 classes, and 6 domains). 
+
+\input{tables/fulltable}
+
+For a fair comparison, we follow training and evaluation protocol by \citet{gulrajani2020domainbed}, including the dataset splits, hyperparameter (HP) search and model selection (while SWAD does not need it) on the validation set, and optimizer HP, except the HP search space and the number of iterations for \data{DomainNet}.
+We use a reduced HP search space to reduce the computational costs.
+We also tripled the number of iterations for \data{DomainNet} from 5,000 to 15,000 because we observe that 5,000 is not sufficient to convergence. We re-evaluate ERM with 15,000 iterations, and observe 3.1pp average performance improvement ($40.9\% \rightarrow 44.0\%$) in \data{DomainNet}.
+For training, we choose a domain as the target domain and use the remaining domains as the training domain where 20\% samples are used for validation and model selection.
+ImageNet~\cite{russakovsky2015imagenet} trained ResNet-50~\cite{he2016_cvpr_resnet} is employed as the initial weight, and optimized by Adam~\cite{kingma2015adam} optimizer with a learning rate of 5e-5. We construct a mini-batch containing all domains where each domain has 32 images.
+We set SWAD HPs $N_s$ to 3, $N_e$ to 6, and $r$ to 1.2 for \data{VLCS} and 1.3 for the others by HP search on the validation sets.
+% Note that unlike previous methods, SWAD does not need a model selection criterion, but automatically select the ensemble weight by the given hyperparameters.
+% In addition, we observe that the number of iterations for \data{DomainNet} used by \citet{gulrajani2020domainbed} (5,000) is not sufficient. Instead, we train the methods with 15,000 iterations for \data{DomainNet}. We re-evaluate a ERM method with 15,000 iterations and observe 0.9pp average improvement ($63.3\% \rightarrow 64.2\%$).
+% Except the number of iterations on \data{DomainNet}, we follow the optimization setting by \citet{gulrajani2020domainbed}: 
+Additional implementation details, such as other HPs, are given in Appendix B.
+
+\textbf{Evaluation metrics.}
+% \paragraph{Evaluation metrics.}
+% In the all following experiments, w
+We report out-of-domain accuracies for each domain and their average, \ie, a model is trained and validated on training domains and evaluated on the unseen target domain. Each out-of-domain performance is an average of three different runs with different train-validation splits.
+% We report the full table including standard error in Appendix.
+
+\subsection{Main results}
+\label{label:s__main_results}
+
+\input{tables/generalization_methods_wrap}
+\textbf{Comparison with domain generalization methods.}
+% \paragraph{Comparison with domain generalization methods.}
+We report the full out-of-domain performances on five DG benchmarks in Table~\ref{table:full_table}.
+The full tables including out-of-domain accuracies for each domain are in Appendix E.
+In all experiments, our SWAD achieves significant performance gain against ERM as well as the previous best results: +2.6pp in \data{PACS}, +0.3pp in \data{VLCS}, +1.4pp in \data{TerraIncognita}, +1.9pp in \data{OfficeHome}, and +2.9pp in \data{DomainNet} comparing to the previous best results.
+We observe that SWAD provides two practical advantages comparing to previous methods. First, SWAD does not need any modification on training objectives or model architecture, \ie, it is universally applicable to any other methods.
+As an example, we show that SWAD actually improves the performances of other DG methods, such as CORAL~\cite{sun2016coral} in Table~\ref{table:swad_combination}.
+Moreover, as we discussed before, SWAD is free to the model selection, resulting in stable performances (\ie, small standard errors) on various benchmarks.
+Note that we only compare results with ResNet-50 backbone for a fair comparison.
+We describe the implementation details of each comparison method and the hyperparameter search protocol in Appendix B.
+
+
+\textbf{Comparison with conventional generalization methods.}
+We also compare SWAD with other conventional generalization methods to show that the remarkable domain generalization gaps by SWAD is not achieved by better generalization, but by seeking flat minima.
+The comparison methods include flatness-aware optimization methods, such as SAM~\cite{foret2020sharpness},
+ensemble methods, such as EMA~\cite{polyak1992ema},
+data augmentation methods, such as Mixup~\cite{zhang2018mixup} and CutMix~\cite{yun2019cutmix}, and consistency regularization methods, such as VAT~\cite{miyato2018vat} and $\Pi$-model~\cite{LaineA17iclr_pi_model}.
+We also split in-domain datasets into training (60\%), validation (20\%), and test (20\%) splits, while no in-domain test set used for Table~\ref{table:full_table}.
+Every experiment is repeated three times.
+
+
+The results are shown in Table~\ref{table:generalization}.
+We observe that all conventional methods helps in-domain generalization, \ie, performing better than ERM on in-domain test set. However, their out-of-domain performances are similar to or even worse than ERM.
+For example, CutMix and $\Pi$-model improve in-domain performances by 1.0pp and 0.2pp but degrade out-of-domain performances by 1.5pp and 1.8pp. 
+SAM, another method for seeking flat minima, slightly increases both in-domain and out-of-domain performances but the out-of-domain performance is not statistically significant.
+%We will discuss more out-of-domain accuracies by SAM in other benchmarks later.
+We will discuss performances of SAM in other benchmarks later.
+In contrast, the vanilla SWA and our SWAD significantly improve both in-domain and out-of-domain performances. SWAD improves the performances by SWA with statistically significantly gaps: 1.2pp on the out-of-domain and 0.6pp on the in-domain. Further comparison between SWA and SWAD is provided in \S\ref{label:s__ablation}.
+
+
+\input{tables/swad_combination}
+\textbf{Combinations with other methods.}
+Since SWAD does not require any modification on training procedures and model architectures, SWAD is universally applicable to any other methods. Here, we combine SWAD with ERM, CORAL~\cite{sun2016coral}, and SAM~\cite{foret2020sharpness}. Results are shown in Table~\ref{table:swad_combination}.
+% When comparing baselines, 
+Both CORAL and SAM solely show better performances than ERM with +1.2pp average out-of-domain accuracy gap.
+Note that SAM is not a DG method but a sharpness-aware optimization method to find flat minima.
+It supports our theoretical motivation: DG can be achieved by seeking flat minima.
+
+By applying SWAD on the baselines, the performances are consistently improved by 3.6pp on ERM, 2.8pp on CORAL, and 1.0pp on SAM. Interestingly, CORAL + SWAD show the best performances with both incorporating different advantages of utilizing domain labels and seeking flat minima.
+We also observe that SAM + SWAD shows worse performance than ERM + SWAD, while SAM performs better than ERM.
+We conjecture that it is because the objective control by SAM restricts the model parameter diversity durinig training, reducing the diversity for SWA ensemble.
+However, applying SWAD on SAM still leads to better performances than the sole SAM. The results demonstrate that the application of SWAD on other baselines is a simple yet effective method for DG. 
+
+
+% \vspace{-.5em}
+\subsection{Ablation study}
+\label{label:s__ablation}
+\vspace{-.5em}
+\input{tables/ablation}
+
+Table~\ref{table:ablation} provides ablative studies on the starting and ending iterations for averaging, the learning rate schedule, and the sampling interval. SWA$_\text{w/ cyclic}$ (SWA in Table~\ref{table:generalization}) and SWA$_\text{w/ constant}$ are vanilla SWAs with fixed sampling positions. 
+We also report SWAD by eliminating three factors: the dense sampling strategy, and searching the start iteration, searching the end iteration.
+The dense sampling strategy lets SWAD estimate a more accurate approximation of flat minima: showing 0.8pp degeneration in the average out-of-domain accuracy (SWAD$_\text{w/o Dense}$).
+When we take an average from $t_s$ to the final iteration, the out-of-domain performance degrades by 0.6pp (SWAD$_\text{w/o Overfit}$). Similarly, a fixed scheduling without the overfit-aware scheduling only shows very marginal improvements from the vanilla SWA (SWAD$_\text{w/o Opt-Overfit}$).
+We also evaluate SWAD$_\text{fit-on-val}$ that uses the range achieving the best performances on the validation set, but it becomes overfitted to the validation, results in lower performances than SWAD.
+The results demonstrate the benefits of combining ``dense'' and ``overfit-aware'' sampling strategies of SWAD.
+
+
+\subsection{Exploring the other applications: ImageNet robustness}
+\vspace{-.5em}
+\input{tables/imagenet}
+
+Since SWAD does not rely on domain labels, it can be applied to other robustness tasks not containing domain labels.
+Table \ref{table:exploring_other_applications} show the generalizability of SWAD on ImageNet \cite{russakovsky2015imagenet} and its shifted benchmarks, namely, ImageNet-C~\cite{hendrycks2018benchmarking_robustness_imagenet_c}, ImageNet-R~\cite{hendrycks2020many_face_of_robustness}, and background challenge (BGC)~\cite{xiao2020background_challenge_bgc}.
+SWAD consistently improves robustness performances against the ERM baseline and the SWA baseline.
+These results support that our method is robustly and widely applicable to improve both in-domain and out-of-domain generalizability. The detailed setup is provided in Appendix B.6.
+
+% SWAD can be applied to any other robustness tasks, thanks to its domain-free property (not utilizing domain label). We verify that on the three ImageNet robustness benchmarks, such as ImageNet-C~\cite{hendrycks2018benchmarking_robustness_imagenet_c}, ImageNet-A~\cite{hendrycks2020many_face_of_robustness}, and background challenge (BGC)~\cite{xiao2020background_challenge_bgc}. 
+% In every experiment, SWAD consistently improves robustness performance: 1.9 mean corruption error (mCE) in ImageNet-C, 2.1pp accuracy in ImageNet-R, and 3.1pp accuracy in BGC, compared with ERM baseline. When compared with SWA, there are performance improvements of 0.9 mCE, 1.3pp, and 0.9pp, respectively. These results support that our method is robustly and widely applicable to improve robustness. The detailed experiment setup and results are provided in Appendix.
