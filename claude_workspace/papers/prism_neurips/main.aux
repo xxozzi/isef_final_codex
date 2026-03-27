@@ -1,0 +1,161 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{izmailov2018swa,wortsman2022soups,rame2022diwa}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{agarwal2022mro}
+\citation{li2021worstcase,hashimoto2018fairness,lahoti2020fairness}
+\citation{cha2021swad}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {PRISM}}{} overview.} A dense single-run trajectory is reduced to a low-loss, anchor-screened candidate pool. The action space consists of uniform soups over feasible subsets of that pool. \textup  {\textsc  {PRISM}}{} then chooses the soup with smallest worst-case regret to the best feasible soup over hidden source-supported subpopulations of the pooled support split.}}{2}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:overview}{{1}{2}{\textbf {\prism {} overview.} A dense single-run trajectory is reduced to a low-loss, anchor-screened candidate pool. The action space consists of uniform soups over feasible subsets of that pool. \prism {} then chooses the soup with smallest worst-case regret to the best feasible soup over hidden source-supported subpopulations of the pooled support split}{figure.caption.2}{}}
+\citation{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups}
+\citation{rame2022diwa}
+\citation{duchi2016fdiv,duchi2021learning}
+\citation{hashimoto2018fairness,lahoti2020fairness,sagawa2020groupdro}
+\citation{li2021worstcase}
+\citation{agarwal2022mro}
+\citation{cha2022miro}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc DG and interval-based selectors.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Weight averaging, connectivity, and soups.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Distributionally robust and subgroup-robust learning.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Regret under distribution shift.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Pretraining-aware DG.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
+\newlabel{eq:val_loss}{{1}{3}{Problem Setup}{equation.1}{}}
+\newlabel{eq:anchor}{{2}{3}{Problem Setup}{equation.2}{}}
+\newlabel{eq:barrier}{{3}{4}{Problem Setup}{equation.3}{}}
+\newlabel{eq:candidate_pool}{{4}{4}{Problem Setup}{equation.4}{}}
+\newlabel{eq:action_set}{{5}{4}{Feasible soup action family}{equation.5}{}}
+\newlabel{eq:uniform_soup}{{6}{4}{Feasible soup action family}{equation.6}{}}
+\newlabel{eq:empirical_action_loss}{{7}{4}{Problem Setup}{equation.7}{}}
+\newlabel{eq:lmax}{{8}{4}{Problem Setup}{equation.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}\textup  {\textsc  {PRISM}}{}: Hidden-Subpopulation Regret over Scored Soup Actions}{4}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{4}{\prism {}: Hidden-Subpopulation Regret over Scored Soup Actions}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Capped adversaries and empirical regret}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:capped_simplex}{{9}{4}{Capped adversaries and empirical regret}{equation.9}{}}
+\newlabel{eq:empirical_prism}{{10}{4}{Capped adversaries and empirical regret}{equation.10}{}}
+\newlabel{eq:prism_selector}{{11}{4}{Capped adversaries and empirical regret}{equation.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Exact adversary geometry.} For a fixed candidate soup \(S\) and witness soup \(S'\), the capped adversary selects the highest pairwise regret tail. This is the exact empirical objective used by \textup  {\textsc  {PRISM}}{}, not a surrogate.}}{5}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:top_alpha}{{2}{5}{\textbf {Exact adversary geometry.} For a fixed candidate soup \(S\) and witness soup \(S'\), the capped adversary selects the highest pairwise regret tail. This is the exact empirical objective used by \prism {}, not a surrogate}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Exact top-\(\alpha \) and empirical-\(\operatorname  {CVaR}\) characterization}{5}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:top_alpha_def}{{12}{5}{\texorpdfstring {Exact top-\(\alpha \) and empirical-\(\CVaR \) characterization}{Exact top-alpha and empirical-CVaR characterization}}{equation.12}{}}
+\newlabel{prop:top_alpha}{{1}{5}{Exact top-\(\alpha \) form of the empirical objective}{proposition.1}{}}
+\newlabel{eq:prism_top_alpha}{{13}{5}{Exact top-\(\alpha \) form of the empirical objective}{equation.13}{}}
+\newlabel{eq:top_alpha_closed}{{14}{5}{Exact top-\(\alpha \) form of the empirical objective}{equation.14}{}}
+\newlabel{eq:top_alpha_cvar}{{15}{5}{Exact top-\(\alpha \) form of the empirical objective}{equation.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Exact exhaustive selector}{5}{subsection.4.3}\protected@file@percent }
+\newlabel{prop:global_optimality}{{2}{5}{Exact optimality and complexity of the exhaustive second-stage selector}{proposition.2}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {PRISM}}{} exact post-hoc selector}}{6}{algorithm.1}\protected@file@percent }
+\newlabel{alg:prism}{{1}{6}{\prism {} exact post-hoc selector}{algorithm.1}{}}
+\newlabel{eq:action_count}{{16}{6}{Exact optimality and complexity of the exhaustive second-stage selector}{equation.16}{}}
+\newlabel{eq:selector_complexity}{{17}{6}{Exact optimality and complexity of the exhaustive second-stage selector}{equation.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Theory}{6}{section.5}\protected@file@percent }
+\newlabel{sec:theory}{{5}{6}{Theory}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Population hidden-subpopulation regret}{6}{subsection.5.1}\protected@file@percent }
+\newlabel{eq:population_reweightings}{{18}{6}{Population hidden-subpopulation regret}{equation.18}{}}
+\newlabel{eq:population_regret}{{19}{6}{Population hidden-subpopulation regret}{equation.19}{}}
+\newlabel{eq:population_prism}{{20}{6}{Population hidden-subpopulation regret}{equation.20}{}}
+\newlabel{thm:certificate}{{1}{6}{Target-regret certificate under hidden source-supported shift}{theorem.1}{}}
+\newlabel{eq:certificate_basic}{{21}{6}{Target-regret certificate under hidden source-supported shift}{equation.21}{}}
+\newlabel{eq:population_minimizer}{{22}{6}{Target-regret certificate under hidden source-supported shift}{equation.22}{}}
+\newlabel{eq:certificate_minimized}{{23}{6}{Target-regret certificate under hidden source-supported shift}{equation.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Action-family view.} Interval-restricted selectors operate on a strict subfamily of the feasible subset soups available to \textup  {\textsc  {PRISM}}{}. The theory compares these methods at the level of the shared certificate rather than via a claim of universal empirical dominance.}}{7}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:action_family}{{3}{7}{\textbf {Action-family view.} Interval-restricted selectors operate on a strict subfamily of the feasible subset soups available to \prism {}. The theory compares these methods at the level of the shared certificate rather than via a claim of universal empirical dominance}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Comparison with interval-restricted post-hoc selectors}{7}{subsection.5.2}\protected@file@percent }
+\newlabel{cor:interval_domination}{{1}{7}{Interval-family domination}{corollary.1}{}}
+\newlabel{eq:interval_domination}{{24}{7}{Interval-family domination}{equation.24}{}}
+\newlabel{eq:interval_domination_target}{{25}{7}{Interval-family domination}{equation.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Consistency over a finite action class}{7}{subsection.5.3}\protected@file@percent }
+\newlabel{ass:bounded_losses}{{1}{7}{Bounded measurable action losses}{assumption.1}{}}
+\newlabel{thm:consistency}{{2}{7}{Consistency of the second-stage selector conditional on a fixed candidate family}{theorem.2}{}}
+\newlabel{eq:uniform_consistency}{{26}{7}{Consistency of the second-stage selector conditional on a fixed candidate family}{equation.26}{}}
+\newlabel{cor:identification}{{2}{7}{Eventual identification under a population gap}{corollary.2}{}}
+\newlabel{eq:population_gap}{{27}{7}{Eventual identification under a population gap}{equation.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Certificate interpretation.} Because \(\Psi _\alpha (S)\) is monotone in \(\alpha \), each soup admits a robustness threshold \(\alpha _\tau ^\star \) for any chosen regret tolerance.}}{8}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:certificate}{{4}{8}{\textbf {Certificate interpretation.} Because \(\Psi _\alpha (S)\) is monotone in \(\alpha \), each soup admits a robustness threshold \(\alpha _\tau ^\star \) for any chosen regret tolerance}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Monotonic robustness certificates}{8}{subsection.5.4}\protected@file@percent }
+\newlabel{prop:alpha_monotone}{{3}{8}{Monotonicity in \(\alpha \)}{proposition.3}{}}
+\newlabel{eq:alpha_monotonicity}{{28}{8}{Monotonicity in \(\alpha \)}{equation.28}{}}
+\newlabel{eq:alpha_star}{{29}{8}{Monotonic robustness certificates}{equation.29}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Why complementarity and noncontiguity can be necessary}{8}{subsection.5.5}\protected@file@percent }
+\newlabel{thm:complementarity}{{3}{8}{Complementary subgroup-specialized checkpoints}{theorem.3}{}}
+\newlabel{eq:specialized_losses}{{30}{8}{Complementary subgroup-specialized checkpoints}{equation.30}{}}
+\newlabel{eq:exact_soup_average}{{31}{8}{Complementary subgroup-specialized checkpoints}{equation.31}{}}
+\newlabel{eq:full_soup_regret}{{32}{8}{Complementary subgroup-specialized checkpoints}{equation.32}{}}
+\newlabel{eq:incomplete_soup_regret}{{33}{8}{Complementary subgroup-specialized checkpoints}{equation.33}{}}
+\citation{gulrajani2021domainbed}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Noncontiguous separation.} Even when every contiguous interval is feasible, the regret-optimal soup can require checkpoints from distant parts of the trajectory because those checkpoints specialize to different hidden subpopulations.}}{9}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:noncontiguous}{{5}{9}{\textbf {Noncontiguous separation.} Even when every contiguous interval is feasible, the regret-optimal soup can require checkpoints from distant parts of the trajectory because those checkpoints specialize to different hidden subpopulations}{figure.caption.11}{}}
+\newlabel{prop:noncontiguous}{{4}{9}{Constructive noncontiguous separation}{proposition.4}{}}
+\newlabel{eq:noncontig_value}{{34}{9}{Constructive noncontiguous separation}{equation.34}{}}
+\newlabel{eq:interval_worse}{{35}{9}{Constructive noncontiguous separation}{equation.35}{}}
+\newlabel{eq:noncontiguous_example}{{36}{9}{Constructive noncontiguous separation}{equation.36}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Why regret rather than raw risk}{9}{subsection.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Experimental Protocol and Published Context}{9}{section.6}\protected@file@percent }
+\newlabel{sec:experiments}{{6}{9}{Experimental Protocol and Published Context}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Protocol}{9}{subsection.6.1}\protected@file@percent }
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{cha2022miro}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Raw risk versus regret.} Raw subgroup risk combines irreducible subgroup difficulty with excess loss. Regret isolates the performance gap to the best feasible soup on each subgroup.}}{10}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:risk_regret}{{6}{10}{\textbf {Raw risk versus regret.} Raw subgroup risk combines irreducible subgroup difficulty with excess loss. Regret isolates the performance gap to the best feasible soup on each subgroup}{figure.caption.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published DomainBed context from prior work.} The upper block reproduces the single-number reporting style of \citet  {cha2021swad}; the lower block reproduces the mean\(\pm \)stderr reporting style of \citet  {cha2022miro}.}}{10}{table.caption.13}\protected@file@percent }
+\newlabel{tab:published_context}{{1}{10}{\textbf {Published DomainBed context from prior work.} The upper block reproduces the single-number reporting style of \citet {cha2021swad}; the lower block reproduces the mean\(\pm \)stderr reporting style of \citet {cha2022miro}}{table.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Published benchmark context}{10}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}\textup  {\textsc  {PRISM}}{} reporting tables}{10}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{10}{section.7}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{agarwal2022mro}{{1}{2022}{{Agarwal and Zhang}}{{}}}
+\bibcite{cha2021swad}{{2}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{cha2022miro}{{3}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
+\bibcite{duchi2016fdiv}{{4}{2016}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{duchi2021learning}{{5}{2021}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{frankle2020linear}{{6}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{garipov2018fge}{{7}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\bibcite{gulrajani2021domainbed}{{8}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{hashimoto2018fairness}{{9}{2018}{{Hashimoto et~al.}}{{Hashimoto, Srivastava, Namkoong, and Liang}}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Primary \textup  {\textsc  {PRISM}}{} reporting table.}}}{11}{table.caption.14}\protected@file@percent }
+\newlabel{tab:prism_tbd}{{2}{11}{\textbf {Primary \prism {} reporting table.}}{table.caption.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {\textup  {\textsc  {PRISM}}{} ablation table.}}}{11}{table.caption.15}\protected@file@percent }
+\newlabel{tab:ablation_tbd}{{3}{11}{\textbf {\prism {} ablation table.}}{table.caption.15}{}}
+\bibcite{izmailov2018swa}{{10}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{lahoti2020fairness}{{11}{2020}{{Lahoti et~al.}}{{Lahoti, Gummadi, and Weikum}}}
+\bibcite{li2021worstcase}{{12}{2021}{{Li et~al.}}{{Li, Namkoong, and Xia}}}
+\bibcite{rame2022diwa}{{13}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\bibcite{sagawa2020groupdro}{{14}{2020}{{Sagawa et~al.}}{{Sagawa, Koh, Hashimoto, and Liang}}}
+\bibcite{wortsman2022soups}{{15}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs}{12}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Proposition~\ref {prop:top_alpha}}{12}{subsection.A.1}\protected@file@percent }
+\newlabel{eq:proof_topalpha_swap}{{37}{12}{Proof of Proposition~\ref {prop:top_alpha}}{equation.37}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Proposition~\ref {prop:global_optimality}}{13}{subsection.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Proof of Theorem~\ref {thm:certificate}}{13}{subsection.A.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Corollary~\ref {cor:interval_domination}}{13}{subsection.A.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Theorem~\ref {thm:consistency}}{13}{subsection.A.5}\protected@file@percent }
+\newlabel{eq:population_cvar_pair}{{38}{13}{Proof of Theorem~\ref {thm:consistency}}{equation.38}{}}
+\newlabel{eq:empirical_cvar_pair}{{39}{13}{Proof of Theorem~\ref {thm:consistency}}{equation.39}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Proof of Corollary~\ref {cor:identification}}{14}{subsection.A.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Proof of Proposition~\ref {prop:alpha_monotone}}{15}{subsection.A.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Proof of Theorem~\ref {thm:complementarity}}{15}{subsection.A.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.9}Proof of Proposition~\ref {prop:noncontiguous}}{15}{subsection.A.9}\protected@file@percent }
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Additional Background from Prior Literature}{16}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Flat minima and DG.}{16}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Diversity and locality in weight averaging.}{16}{section*.19}\protected@file@percent }
+\newlabel{eq:diwa_appendix}{{40}{16}{Diversity and locality in weight averaging}{equation.40}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Implementation Details}{16}{appendix.C}\protected@file@percent }
+\gdef \@abspage@last{16}
