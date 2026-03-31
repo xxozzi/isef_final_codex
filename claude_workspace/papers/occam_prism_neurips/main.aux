@@ -1,0 +1,171 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{rame2022diwa}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{duchi2021learning,li2021worstcase,hashimoto2018fairness,lahoti2020fairness}
+\citation{agarwal2022mro}
+\citation{bartlett2002rademacher}
+\citation{cha2021swad}
+\citation{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups}
+\citation{rame2022diwa}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {PRISM}}{} at a glance.} A dense trajectory is filtered into multiple admissible soup families by validation loss, locality, and a fixed search budget. Within each family, \textup  {\textsc  {PRISM}}{} computes exact hidden-subpopulation regret over actual soups on a disjoint support split, then chooses the family-action pair with smallest structural-risk score.}}{2}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:pipeline}{{1}{2}{\textbf {\prism {} at a glance.} A dense trajectory is filtered into multiple admissible soup families by validation loss, locality, and a fixed search budget. Within each family, \prism {} computes exact hidden-subpopulation regret over actual soups on a disjoint support split, then chooses the family-action pair with smallest structural-risk score}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc DG and flat-minima selectors.}{2}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Weight averaging, soups, and locality.}{2}{section*.4}\protected@file@percent }
+\citation{duchi2016fdiv,duchi2021learning,li2021worstcase}
+\citation{hashimoto2018fairness,lahoti2020fairness}
+\citation{agarwal2022mro}
+\citation{bartlett2002rademacher}
+\citation{bousquet2002stability}
+\@writefile{toc}{\contentsline {paragraph}{Distributional robustness and hidden subpopulations.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Regret under shift.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Structural risk minimization and stability.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
+\newlabel{eq:val_loss}{{1}{3}{Problem Setup}{equation.1}{}}
+\newlabel{eq:anchor}{{2}{3}{Problem Setup}{equation.2}{}}
+\newlabel{eq:barrier}{{3}{3}{Problem Setup}{equation.3}{}}
+\newlabel{eq:candidate_pool}{{4}{4}{Validation-defined candidate pool and soup family}{equation.4}{}}
+\newlabel{eq:action_family}{{5}{4}{Validation-defined candidate pool and soup family}{equation.5}{}}
+\newlabel{eq:admissible_gamma}{{6}{4}{Problem Setup}{equation.6}{}}
+\newlabel{eq:uniform_soup}{{7}{4}{Problem Setup}{equation.7}{}}
+\newlabel{eq:normalized_loss}{{8}{4}{Problem Setup}{equation.8}{}}
+\newlabel{eq:loss_bounded}{{9}{4}{Problem Setup}{equation.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}PRISM: Structural-Risk-Minimized Hidden-Subpopulation Regret}{4}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{4}{PRISM: Structural-Risk-Minimized Hidden-Subpopulation Regret}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Family-indexed hidden-subpopulation regret}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:capped_simplex}{{10}{4}{Family-indexed hidden-subpopulation regret}{equation.10}{}}
+\newlabel{eq:family_regret}{{11}{4}{Family-indexed hidden-subpopulation regret}{equation.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Exact top-\(\alpha \) and empirical-\(\operatorname  {CVaR}\) characterization}{4}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:top_alpha_def}{{12}{4}{\texorpdfstring {Exact top-\(\alpha \) and empirical-\(\CVaR \) characterization}{Exact top-alpha and empirical-CVaR characterization}}{equation.12}{}}
+\newlabel{prop:top_alpha}{{1}{4}{Exact top-\(\alpha \) form}{proposition.1}{}}
+\newlabel{eq:family_top_alpha}{{13}{4}{Exact top-\(\alpha \) form}{equation.13}{}}
+\newlabel{eq:cvar_rep}{{14}{4}{Exact top-\(\alpha \) form}{equation.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Exact hidden-subpopulation geometry.} For a fixed candidate soup \(S\) and witness soup \(S'\), the capped adversary selects the highest tail of the pairwise gap vector. This is exactly the objective optimized by \textup  {\textsc  {PRISM}}{}, not a surrogate.}}{5}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:tail_geometry}{{2}{5}{\textbf {Exact hidden-subpopulation geometry.} For a fixed candidate soup \(S\) and witness soup \(S'\), the capped adversary selects the highest tail of the pairwise gap vector. This is exactly the objective optimized by \prism {}, not a surrogate}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Structural risk minimization across admissible families}{5}{subsection.4.3}\protected@file@percent }
+\newlabel{eq:penalty}{{15}{5}{Structural risk minimization across admissible families}{equation.15}{}}
+\newlabel{eq:prism_selector}{{16}{5}{Structural risk minimization across admissible families}{equation.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Exact exhaustive selector}{5}{subsection.4.4}\protected@file@percent }
+\newlabel{prop:termination}{{2}{5}{Finite termination and exact optimality}{proposition.2}{}}
+\newlabel{eq:total_actions}{{17}{5}{Finite termination and exact optimality}{equation.17}{}}
+\newlabel{eq:complexity}{{18}{5}{Finite termination and exact optimality}{equation.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Family-aware selection frontier.} Different validation-defined soup families induce different trade-offs between empirical regret and Occam penalty. \textup  {\textsc  {PRISM}}{} chooses the family-action pair with smallest total score, rather than optimizing inside a hand-picked family.}}{6}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:frontier}{{3}{6}{\textbf {Family-aware selection frontier.} Different validation-defined soup families induce different trade-offs between empirical regret and Occam penalty. \prism {} chooses the family-action pair with smallest total score, rather than optimizing inside a hand-picked family}{figure.caption.9}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {PRISM}}{} exact family-aware post-hoc selector}}{6}{algorithm.1}\protected@file@percent }
+\newlabel{alg:prism}{{1}{6}{\prism {} exact family-aware post-hoc selector}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Theory}{6}{section.5}\protected@file@percent }
+\newlabel{sec:theory}{{5}{6}{Theory}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Population hidden-subpopulation regret}{6}{subsection.5.1}\protected@file@percent }
+\newlabel{eq:population_reweightings}{{19}{6}{Population hidden-subpopulation regret}{equation.19}{}}
+\newlabel{eq:population_regret}{{20}{6}{Population hidden-subpopulation regret}{equation.20}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Why the search budget is part of the method.} The admissible-family restriction prevents the selector from drifting into intractable exact-search regimes while preserving a theorem-governed finite action union.}}{7}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:budget}{{4}{7}{\textbf {Why the search budget is part of the method.} The admissible-family restriction prevents the selector from drifting into intractable exact-search regimes while preserving a theorem-governed finite action union}{figure.caption.10}{}}
+\newlabel{eq:population_objective}{{21}{7}{Population hidden-subpopulation regret}{equation.21}{}}
+\newlabel{thm:certificate}{{1}{7}{Target-regret certificate}{theorem.1}{}}
+\newlabel{eq:certificate}{{22}{7}{Target-regret certificate}{equation.22}{}}
+\newlabel{prop:population_top_alpha}{{3}{7}{Population top-\(\alpha \) / \(\CVaR \) representation}{proposition.3}{}}
+\newlabel{eq:population_pairwise}{{23}{7}{Population top-\(\alpha \) / \(\CVaR \) representation}{equation.23}{}}
+\newlabel{eq:population_cvar}{{24}{7}{Population top-\(\alpha \) / \(\CVaR \) representation}{equation.24}{}}
+\newlabel{eq:population_max_pair}{{25}{7}{Population top-\(\alpha \) / \(\CVaR \) representation}{equation.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Finite-sample deviation over the admissible family union}{7}{subsection.5.2}\protected@file@percent }
+\newlabel{eq:pair_class}{{26}{7}{Finite-sample deviation over the admissible family union}{equation.26}{}}
+\newlabel{thm:deviation}{{2}{7}{Conditional finite-sample deviation}{theorem.2}{}}
+\newlabel{eq:uniform_deviation}{{27}{7}{Conditional finite-sample deviation}{equation.27}{}}
+\newlabel{thm:oracle}{{3}{7}{Oracle inequality for the family-aware selector}{theorem.3}{}}
+\newlabel{eq:oracle}{{28}{7}{Oracle inequality for the family-aware selector}{equation.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Why interval selectors are a strict special case here.} Any contiguous interval family is a subfamily of the admissible subset soups searched by \textup  {\textsc  {PRISM}}{}. The theorem-level comparison is therefore a subfamily domination statement on the same certificate.}}{8}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:interval}{{5}{8}{\textbf {Why interval selectors are a strict special case here.} Any contiguous interval family is a subfamily of the admissible subset soups searched by \prism {}. The theorem-level comparison is therefore a subfamily domination statement on the same certificate}{figure.caption.11}{}}
+\newlabel{cor:consistency}{{1}{8}{Consistency conditional on the validation-defined admissible family}{corollary.1}{}}
+\newlabel{eq:consistency}{{29}{8}{Consistency conditional on the validation-defined admissible family}{equation.29}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Comparison to interval-restricted selectors}{8}{subsection.5.3}\protected@file@percent }
+\newlabel{eq:interval_subfamily}{{30}{8}{Comparison to interval-restricted selectors}{equation.30}{}}
+\newlabel{cor:interval}{{2}{8}{Interval-family domination on the \prism {} certificate}{corollary.2}{}}
+\newlabel{eq:interval_domination}{{31}{8}{Interval-family domination on the \prism {} certificate}{equation.31}{}}
+\newlabel{eq:interval_oracle}{{32}{8}{Interval-family domination on the \prism {} certificate}{equation.32}{}}
+\citation{gulrajani2021domainbed}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Monotone robustness certificate.} Because \(\Psi ^{(\gamma ,\mathcal  {V})}_\alpha (S)\) decreases with \(\alpha \), every selected soup admits a threshold \(\alpha ^\star \) at any chosen regret tolerance.}}{9}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:alpha_curve}{{6}{9}{\textbf {Monotone robustness certificate.} Because \(\Psi ^{(\gamma ,\cV )}_\alpha (S)\) decreases with \(\alpha \), every selected soup admits a threshold \(\alpha ^\star \) at any chosen regret tolerance}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Monotonic robustness certificates}{9}{subsection.5.4}\protected@file@percent }
+\newlabel{prop:alpha}{{4}{9}{Monotonicity in \(\alpha \)}{proposition.4}{}}
+\newlabel{eq:alpha_star}{{33}{9}{Monotonic robustness certificates}{equation.33}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Why \textup  {\textsc  {PRISM}}{} can improve on raw within-family selection}{9}{subsection.5.5}\protected@file@percent }
+\newlabel{rem:comparison}{{1}{9}{What the theory does and does not prove}{remark.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Experimental Protocol and Published Context}{9}{section.6}\protected@file@percent }
+\newlabel{sec:experiments}{{6}{9}{Experimental Protocol and Published Context}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Protocol}{9}{subsection.6.1}\protected@file@percent }
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{rame2022diwa}
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{rame2022diwa}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{cha2022miro}
+\citation{rame2022diwa}
+\citation{rame2022diwa}
+\citation{rame2022diwa}
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{agarwal2022mro}{{1}{2022}{{Agarwal and Zhang}}{{}}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published DomainBed context from prior work.} The first block reproduces the reporting style of \citet  {cha2021swad}; the second block reproduces the reporting style of \citet  {cha2022miro}; the third block reproduces the reporting style of \citet  {rame2022diwa}.}}{10}{table.caption.13}\protected@file@percent }
+\newlabel{tab:published_context}{{1}{10}{\textbf {Published DomainBed context from prior work.} The first block reproduces the reporting style of \citet {cha2021swad}; the second block reproduces the reporting style of \citet {cha2022miro}; the third block reproduces the reporting style of \citet {rame2022diwa}}{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Primary \textup  {\textsc  {PRISM}}{} reporting table.}}}{10}{table.caption.14}\protected@file@percent }
+\newlabel{tab:prism_tbd}{{2}{10}{\textbf {Primary \prism {} reporting table.}}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Published benchmark context}{10}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}\textup  {\textsc  {PRISM}}{} reporting tables}{10}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{10}{section.7}\protected@file@percent }
+\bibcite{bartlett2002rademacher}{{2}{2002}{{Bartlett and Mendelson}}{{}}}
+\bibcite{bousquet2002stability}{{3}{2002}{{Bousquet and Elisseeff}}{{}}}
+\bibcite{cha2021swad}{{4}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{cha2022miro}{{5}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
+\bibcite{duchi2016fdiv}{{6}{2016}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{duchi2021learning}{{7}{2021}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{frankle2020linear}{{8}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{garipov2018fge}{{9}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\bibcite{gulrajani2021domainbed}{{10}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{hashimoto2018fairness}{{11}{2018}{{Hashimoto et~al.}}{{Hashimoto, Srivastava, Namkoong, and Liang}}}
+\bibcite{izmailov2018swa}{{12}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{lahoti2020fairness}{{13}{2020}{{Lahoti et~al.}}{{Lahoti, Gummadi, and Weikum}}}
+\bibcite{li2021worstcase}{{14}{2021}{{Li et~al.}}{{Li, Namkoong, and Xia}}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {\textup  {\textsc  {PRISM}}{} ablation table.}}}{11}{table.caption.15}\protected@file@percent }
+\newlabel{tab:ablation_tbd}{{3}{11}{\textbf {\prism {} ablation table.}}{table.caption.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Certificate and compute reporting table.}}}{11}{table.caption.16}\protected@file@percent }
+\newlabel{tab:certificate_tbd}{{4}{11}{\textbf {Certificate and compute reporting table.}}{table.caption.16}{}}
+\bibcite{rame2022diwa}{{15}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\bibcite{wortsman2022soups}{{16}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Visual Intuition}{12}{appendix.A}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {Admissible family grid.} Different settings of validation width, locality, and soup size induce families of very different sizes. \textup  {\textsc  {PRISM}}{} reasons over these families explicitly instead of pretending one hand-picked family is the only relevant object.}}{12}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:grid}{{7}{12}{\textbf {Admissible family grid.} Different settings of validation width, locality, and soup size induce families of very different sizes. \prism {} reasons over these families explicitly instead of pretending one hand-picked family is the only relevant object}{figure.caption.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Proofs}{12}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Proof of Proposition~\ref {prop:top_alpha}}{12}{subsection.B.1}\protected@file@percent }
+\newlabel{eq:proof_swap}{{34}{12}{Proof of Proposition~\ref {prop:top_alpha}}{equation.34}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Proof of Proposition~\ref {prop:termination}}{13}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Proof of Theorem~\ref {thm:certificate}}{13}{subsection.B.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Proof of Proposition~\ref {prop:population_top_alpha}}{13}{subsection.B.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Proof of Theorem~\ref {thm:deviation}}{14}{subsection.B.5}\protected@file@percent }
+\newlabel{eq:emp_pair}{{35}{14}{Proof of Theorem~\ref {thm:deviation}}{equation.35}{}}
+\newlabel{eq:pop_pair}{{36}{14}{Proof of Theorem~\ref {thm:deviation}}{equation.36}{}}
+\newlabel{eq:net_bound}{{37}{14}{Proof of Theorem~\ref {thm:deviation}}{equation.37}{}}
+\newlabel{eq:family_dev}{{38}{14}{Proof of Theorem~\ref {thm:deviation}}{equation.38}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Proof of Theorem~\ref {thm:oracle}}{15}{subsection.B.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Proof of Corollary~\ref {cor:consistency}}{15}{subsection.B.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.8}Proof of Corollary~\ref {cor:interval}}{15}{subsection.B.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.9}Proof of Proposition~\ref {prop:alpha}}{15}{subsection.B.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C}High-Level Explanation}{15}{appendix.C}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What problem is \textup  {\textsc  {PRISM}}{} solving?}{15}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What does “hidden-subpopulation regret” mean?}{15}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What makes the new version different?}{16}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What do the theorems actually prove?}{16}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What do the theorems not prove?}{16}{section*.24}\protected@file@percent }
+\gdef \@abspage@last{16}

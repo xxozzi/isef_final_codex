@@ -1,0 +1,112 @@
+\begin{thebibliography}{16}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Agarwal and Zhang(2022)]{agarwal2022mro}
+Alekh Agarwal and Tong Zhang.
+\newblock Minimax regret optimization for robust machine learning under
+  distribution shift.
+\newblock In \emph{Proceedings of Machine Learning Research}, volume 178, pages
+  1--26, 2022.
+
+\bibitem[Bartlett and Mendelson(2002)]{bartlett2002rademacher}
+Peter~L. Bartlett and Shahar Mendelson.
+\newblock Rademacher and gaussian complexities: Risk bounds and structural
+  results.
+\newblock \emph{Journal of Machine Learning Research}, 3:\penalty0 463--482,
+  2002.
+
+\bibitem[Bousquet and Elisseeff(2002)]{bousquet2002stability}
+Olivier Bousquet and Andr{\'e} Elisseeff.
+\newblock Stability and generalization.
+\newblock \emph{Journal of Machine Learning Research}, 2:\penalty0 499--526,
+  2002.
+
+\bibitem[Cha et~al.(2021)Cha, Chun, Lee, Cho, Park, Lee, and Park]{cha2021swad}
+Junbum Cha, Sanghyuk Chun, Kyungjae Lee, Han-Cheol Cho, Seunghyun Park, Yunsung
+  Lee, and Sungrae Park.
+\newblock {SWAD}: Domain generalization by seeking flat minima.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem[Cha et~al.(2022)Cha, Lee, Park, and Chun]{cha2022miro}
+Junbum Cha, Kyungjae Lee, Sungrae Park, and Sanghyuk Chun.
+\newblock Domain generalization by mutual-information regularization with
+  pre-trained models.
+\newblock In \emph{European Conference on Computer Vision}, 2022.
+
+\bibitem[Duchi et~al.(2016)Duchi, Glynn, and Namkoong]{duchi2016fdiv}
+John~C. Duchi, Peter~W. Glynn, and Hongseok Namkoong.
+\newblock Stochastic gradient methods for distributionally robust optimization
+  with {$f$}-divergences.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2016.
+
+\bibitem[Duchi et~al.(2021)Duchi, Glynn, and Namkoong]{duchi2021learning}
+John~C. Duchi, Peter~W. Glynn, and Hongseok Namkoong.
+\newblock Learning models with uniform performance via distributionally robust
+  optimization.
+\newblock \emph{The Annals of Statistics}, 49\penalty0 (3):\penalty0
+  1378--1406, 2021.
+
+\bibitem[Frankle et~al.(2020)Frankle, Dziugaite, Roy, and
+  Carbin]{frankle2020linear}
+Jonathan Frankle, Gintare~Karolina Dziugaite, Daniel~M. Roy, and Michael
+  Carbin.
+\newblock Linear mode connectivity and the lottery ticket hypothesis.
+\newblock In \emph{International Conference on Machine Learning}, 2020.
+
+\bibitem[Garipov et~al.(2018)Garipov, Izmailov, Podoprikhin, Vetrov, and
+  Wilson]{garipov2018fge}
+Timur Garipov, Pavel Izmailov, Dmitrii Podoprikhin, Dmitry~P. Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Loss surfaces, mode connectivity, and fast ensembling of {DNN}s.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2018.
+
+\bibitem[Gulrajani and Lopez-Paz(2021)]{gulrajani2021domainbed}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Hashimoto et~al.(2018)Hashimoto, Srivastava, Namkoong, and
+  Liang]{hashimoto2018fairness}
+Tatsunori~B. Hashimoto, Megha Srivastava, Hongseok Namkoong, and Percy Liang.
+\newblock Fairness without demographics in repeated loss minimization.
+\newblock In \emph{International Conference on Machine Learning}, 2018.
+
+\bibitem[Izmailov et~al.(2018)Izmailov, Podoprikhin, Garipov, Vetrov, and
+  Wilson]{izmailov2018swa}
+Pavel Izmailov, Dmitrii Podoprikhin, Timur Garipov, Dmitry~P. Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Averaging weights leads to wider optima and better generalization.
+\newblock In \emph{Conference on Uncertainty in Artificial Intelligence}, 2018.
+
+\bibitem[Lahoti et~al.(2020)Lahoti, Gummadi, and Weikum]{lahoti2020fairness}
+Preethi Lahoti, Krishna~P. Gummadi, and Gerhard Weikum.
+\newblock Fairness without demographics through adversarially reweighted
+  learning.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2020.
+
+\bibitem[Li et~al.(2021)Li, Namkoong, and Xia]{li2021worstcase}
+Mike Li, Hongseok Namkoong, and Shangzhou Xia.
+\newblock Evaluating model performance under worst-case subpopulations.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem[Ram{\'e} et~al.(2022)Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy,
+  Gallinari, and Cord]{rame2022diwa}
+Alexandre Ram{\'e}, Matthieu Kirchmeyer, Thibaud Rahier, Alain Rakotomamonjy,
+  Patrick Gallinari, and Matthieu Cord.
+\newblock Diverse weight averaging for out-of-distribution generalization.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2022.
+
+\bibitem[Wortsman et~al.(2022)Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes,
+  Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt]{wortsman2022soups}
+Mitchell Wortsman, Gabriel Ilharco, Samir~Yitzhak Gadre, Rebecca Roelofs,
+  Raphael Gontijo-Lopes, Ari~S. Morcos, Hongseok Namkoong, Ali Farhadi, Yair
+  Carmon, Simon Kornblith, and Ludwig Schmidt.
+\newblock Model soups: Averaging weights of multiple fine-tuned models improves
+  accuracy without increasing inference time.
+\newblock In \emph{International Conference on Machine Learning}, 2022.
+
+\end{thebibliography}

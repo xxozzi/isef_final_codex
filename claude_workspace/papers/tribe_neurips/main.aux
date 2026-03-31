@@ -1,0 +1,141 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cha2021swad}
+\citation{cha2022miro}
+\citation{izmailov2018swa,frankle2020linear,wortsman2022soups,rame2022diwa}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{qiu2023afr,labonte2023self,roburin2023gram}
+\citation{cha2021swad}
+\citation{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups}
+\citation{rame2022diwa}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single-run post-hoc DG.}{2}{section*.3}\protected@file@percent }
+\citation{hashimoto2018fairness,sagawa2020groupdro,li2021worstcase,yang2023change}
+\citation{qiu2023afr,labonte2023self,roburin2023gram}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {TRIBE}}{} overview.} A dense checkpoint bank first yields a fixed averaged anchor on a dedicated source split. On a separate discovery split, checkpoint-response trajectories are factorized into a low-rank failure basis. On a repair split, the basis induces a domain-label-free uncertainty family over hidden source-supported shifts, and a local last-layer repair is solved around the fixed anchor.}}{3}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:overview}{{1}{3}{\textbf {\tribe {} overview.} A dense checkpoint bank first yields a fixed averaged anchor on a dedicated source split. On a separate discovery split, checkpoint-response trajectories are factorized into a low-rank failure basis. On a repair split, the basis induces a domain-label-free uncertainty family over hidden source-supported shifts, and a local last-layer repair is solved around the fixed anchor}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Weight averaging, soups, and locality.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Subpopulation robustness without group labels.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why trajectory geometry matters.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
+\citation{cha2021swad,wortsman2022soups,rame2022diwa}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Stage 1: Fixed averaged anchor}{4}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Stage 2: Trajectory response matrix}{4}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:margin}{{1}{4}{Stage 2: Trajectory response matrix}{equation.1}{}}
+\newlabel{eq:trajectory_matrix}{{2}{4}{Stage 2: Trajectory response matrix}{equation.2}{}}
+\newlabel{eq:centered_matrix}{{3}{4}{Stage 2: Trajectory response matrix}{equation.3}{}}
+\newlabel{eq:svd}{{4}{4}{Stage 2: Trajectory response matrix}{equation.4}{}}
+\newlabel{eq:trajectory_vector}{{5}{4}{Trajectory failure basis}{equation.5}{}}
+\newlabel{eq:basis_score}{{6}{4}{Trajectory failure basis}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Stage 3: Basis-induced uncertainty set}{4}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:score_matrix}{{7}{4}{Stage 3: Basis-induced uncertainty set}{equation.7}{}}
+\newlabel{eq:q_family}{{8}{4}{Stage 3: Basis-induced uncertainty set}{equation.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Trajectory basis construction.} Example-by-checkpoint margin residuals are centered and factorized. The right singular directions define checkpoint-space failure modes; any new example is mapped to a low-dimensional trajectory coordinate by projection onto those modes.}}{5}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:basis}{{2}{5}{\textbf {Trajectory basis construction.} Example-by-checkpoint margin residuals are centered and factorized. The right singular directions define checkpoint-space failure modes; any new example is mapped to a low-dimensional trajectory coordinate by projection onto those modes}{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Local head repair around a fixed averaged anchor.} The anchor head \(W_0\) defines a local ball in classifier space. Robust optimization moves only inside this neighborhood, preserving the anchor representation while correcting boundary error along trajectory-induced shift directions.}}{5}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:repair}{{3}{5}{\textbf {Local head repair around a fixed averaged anchor.} The anchor head \(W_0\) defines a local ball in classifier space. Robust optimization moves only inside this neighborhood, preserving the anchor representation while correcting boundary error along trajectory-induced shift directions}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Stage 4: Local head repair}{5}{subsection.3.4}\protected@file@percent }
+\newlabel{eq:local_class}{{9}{5}{Stage 4: Local head repair}{equation.9}{}}
+\newlabel{eq:ce_loss}{{10}{5}{Stage 4: Local head repair}{equation.10}{}}
+\newlabel{eq:tribe_objective}{{11}{5}{Stage 4: Local head repair}{equation.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Theoretical Analysis}{6}{section.4}\protected@file@percent }
+\newlabel{sec:theory}{{4}{6}{Theoretical Analysis}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Basic assumptions}{6}{subsection.4.1}\protected@file@percent }
+\newlabel{ass:bounded_features}{{1}{6}{Bounded anchor features}{assumption.1}{}}
+\newlabel{ass:interior_q}{{2}{6}{Interior feasibility of the uncertainty family}{assumption.2}{}}
+\newlabel{ass:spiked}{{3}{6}{Spiked trajectory model}{assumption.3}{}}
+\newlabel{ass:head_repairable}{{4}{6}{Source-supported head-repairable shift}{assumption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Convexity, saddle structure, and convergence}{6}{subsection.4.2}\protected@file@percent }
+\newlabel{prop:convexity}{{1}{6}{Convexity and uniqueness}{proposition.1}{}}
+\newlabel{prop:saddle}{{2}{6}{Saddle-point formulation}{proposition.2}{}}
+\newlabel{thm:convergence}{{1}{6}{Projected primal--dual convergence}{theorem.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Basis-induced uncertainty family.} The adversary starts at the uniform source-support distribution and moves only inside a low-rank subspace generated by trajectory failure coordinates. When positivity is inactive, the resulting support function becomes a mean loss plus a basis-aligned norm penalty.}}{7}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:uncertainty}{{4}{7}{\textbf {Basis-induced uncertainty family.} The adversary starts at the uniform source-support distribution and moves only inside a low-rank subspace generated by trajectory failure coordinates. When positivity is inactive, the resulting support function becomes a mean loss plus a basis-aligned norm penalty}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Monotone certificate relative to the anchor}{7}{subsection.4.3}\protected@file@percent }
+\newlabel{thm:anchor_domination}{{2}{7}{Anchor domination on the robust surrogate}{theorem.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}A closed-form view of the adversary}{7}{subsection.4.4}\protected@file@percent }
+\newlabel{prop:support}{{3}{7}{Support-function form}{proposition.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Recovering the trajectory basis}{7}{subsection.4.5}\protected@file@percent }
+\newlabel{thm:recovery}{{3}{7}{Spectral recovery under a spiked model}{theorem.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}A conditional target-risk certificate}{8}{subsection.4.6}\protected@file@percent }
+\newlabel{thm:certificate}{{4}{8}{Conditional target-risk certificate}{theorem.4}{}}
+\newlabel{cor:improvement}{{1}{8}{Improvement under a head-repairability gap}{corollary.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}Complexity}{8}{subsection.4.7}\protected@file@percent }
+\newlabel{prop:complexity}{{4}{8}{Replay-time complexity}{proposition.4}{}}
+\citation{cha2021swad,wortsman2022soups,rame2022diwa}
+\citation{gulrajani2021domainbed,cha2021swad}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Certificate structure.} The target domain is modeled as a source-supported shift inside the basis-induced uncertainty family. The repaired head minimizes the corresponding local robust objective, yielding a conditional target-risk certificate around the fixed anchor.}}{9}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:certificate}{{5}{9}{\textbf {Certificate structure.} The target domain is modeled as a source-supported shift inside the basis-induced uncertainty family. The repaired head minimizes the corresponding local robust objective, yielding a conditional target-risk certificate around the fixed anchor}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Data protocol.} The source holdout is divided into disjoint selection, basis-discovery, repair, and validation splits. This prevents the trajectory basis, head repair, and final model selection from collapsing into one adaptive loop.}}{9}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:protocol}{{6}{9}{\textbf {Data protocol.} The source holdout is divided into disjoint selection, basis-discovery, repair, and validation splits. This prevents the trajectory basis, head repair, and final model selection from collapsing into one adaptive loop}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion of the Modeling Assumptions}{9}{section.5}\protected@file@percent }
+\newlabel{sec:discussion}{{5}{9}{Discussion of the Modeling Assumptions}{section.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{What the theory really says.}{9}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What the theory does not say.}{9}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why the anchor should be fixed.}{9}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why an averaged anchor is still the natural practical default.}{9}{section*.14}\protected@file@percent }
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{rame2022diwa}
+\citation{cha2022miro}
+\citation{cha2022miro}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published DG context from prior work.} Numbers are reproduced from the cited papers to define the benchmark frontier that \textup  {\textsc  {TRIBE}}{} must eventually be compared against.}}{10}{table.caption.18}\protected@file@percent }
+\newlabel{tab:published_context}{{1}{10}{\textbf {Published DG context from prior work.} Numbers are reproduced from the cited papers to define the benchmark frontier that \tribe {} must eventually be compared against}{table.caption.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {\textup  {\textsc  {TRIBE}}{} main results.} New results intentionally left blank pending execution.}}{10}{table.caption.19}\protected@file@percent }
+\newlabel{tab:tribe_main}{{2}{10}{\textbf {\tribe {} main results.} New results intentionally left blank pending execution}{table.caption.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Experimental Protocol}{10}{section.6}\protected@file@percent }
+\newlabel{sec:experiments}{{6}{10}{Experimental Protocol}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Main evaluation plan}{10}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Planned model classes.}{10}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Primary ablations.}{10}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Published benchmark context}{10}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Planned \textup  {\textsc  {TRIBE}}{} tables}{10}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evaluation note.}{10}{section*.21}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{cha2021swad}{{1}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{cha2022miro}{{2}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
+\bibcite{frankle2020linear}{{3}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{garipov2018fge}{{4}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\bibcite{gulrajani2021domainbed}{{5}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{hashimoto2018fairness}{{6}{2018}{{Hashimoto et~al.}}{{Hashimoto, Srivastava, Namkoong, and Liang}}}
+\bibcite{izmailov2018swa}{{7}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {\textup  {\textsc  {TRIBE}}{} ablations.} The main goal is to distinguish the value of the averaged anchor, the trajectory basis, and the local repair.}}{11}{table.caption.20}\protected@file@percent }
+\newlabel{tab:tribe_ablation}{{3}{11}{\textbf {\tribe {} ablations.} The main goal is to distinguish the value of the averaged anchor, the trajectory basis, and the local repair}{table.caption.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Limitations}{11}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{11}{section.8}\protected@file@percent }
+\bibcite{labonte2023self}{{8}{2023}{{Labonte et~al.}}{{Labonte, Padhy, Mroueh, Duchi, and Beutel}}}
+\bibcite{li2021worstcase}{{9}{2021}{{Li et~al.}}{{Li, Namkoong, and Xia}}}
+\bibcite{qiu2023afr}{{10}{2023}{{Qiu et~al.}}{{Qiu, Potapczynski, Izmailov, and Wilson}}}
+\bibcite{rame2022diwa}{{11}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\bibcite{roburin2023gram}{{12}{2023}{{Roburin et~al.}}{{Roburin, Corbi{\`e}re, Puy, Thome, Aubry, Marlet, and P{\'e}rez}}}
+\bibcite{sagawa2020groupdro}{{13}{2020}{{Sagawa et~al.}}{{Sagawa, Koh, Hashimoto, and Liang}}}
+\bibcite{wortsman2022soups}{{14}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\bibcite{yang2023change}{{15}{2023}{{Yang et~al.}}{{Yang, Swayamdipta, Choi, and D'Amour}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Algorithm}{12}{appendix.A}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {TRIBE}}{}}}{12}{algorithm.1}\protected@file@percent }
+\newlabel{alg:tribe}{{1}{12}{\tribe {}}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Proofs}{13}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Proof of Proposition~\ref {prop:convexity}}{13}{subsection.B.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Proof of Proposition~\ref {prop:saddle}}{13}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Proof of Theorem~\ref {thm:convergence}}{13}{subsection.B.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Proof of Theorem~\ref {thm:anchor_domination}}{14}{subsection.B.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Proof of Proposition~\ref {prop:support}}{14}{subsection.B.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Proof of Theorem~\ref {thm:recovery}}{14}{subsection.B.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Proof sketch of Theorem~\ref {thm:certificate}}{14}{subsection.B.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 1: target risk is dominated by the population robust objective.}{14}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 2: empirical optimization transfers to population robust risk.}{14}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 3: basis-recovery error perturbs the uncertainty family.}{15}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.8}Proof of Corollary~\ref {cor:improvement}}{15}{subsection.B.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.9}Proof of Proposition~\ref {prop:complexity}}{15}{subsection.B.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C}Additional Remarks on Empirical Falsification}{15}{appendix.C}\protected@file@percent }
+\gdef \@abspage@last{15}
