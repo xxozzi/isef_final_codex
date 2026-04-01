@@ -1,0 +1,1228 @@
+\documentclass{article}
+
+\PassOptionsToPackage{numbers,sort&compress}{natbib}
+\usepackage[preprint]{neurips}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{bbm}
+
+\title{SWING: Source-Reweighting-Induced Eigen-Shrinkage for Single-Run Post-hoc Domain Generalization}
+\author{Anonymous Authors}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cZ}{\mathcal{Z}}
+\newcommand{\sZ}{\mathsf{Z}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\barrier}{\operatorname{bar}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\loss}{\ell}
+\newcommand{\TBD}{\textbf{TBD}}
+\newcommand{\swing}{\textup{\textsc{SWING}}}
+\newcommand{\swad}{\textup{\textsc{SWAD}}}
+\newcommand{\diwa}{\textup{\textsc{DiWA}}}
+\newcommand{\miro}{\textup{\textsc{MIRO}}}
+\newcommand{\erm}{\textup{\textsc{ERM}}}
+\newcommand{\ood}{OOD}
+\newcommand{\iid}{i.i.d.}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\paren}[1]{\left( #1 \right)}
+\newcommand{\bracks}[1]{\left[ #1 \right]}
+\newcommand{\braces}[1]{\left\{ #1 \right\}}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\one}{\mathbbm{1}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Single-run post-hoc domain generalization is attractive because it can be attached to a strong empirical-risk-minimization pipeline without retraining. Existing post-hoc methods in this regime predominantly select or average checkpoints inside one connected low-loss region, motivated by flatness, locality, or diversity. This paper studies a different remaining degree of freedom: \emph{once a safe basin has already been found, should all directions inside that basin be trusted equally under domain shift?} We propose \textbf{\swing{}} (\textbf{S}ource-re\textbf{W}eighting-\textbf{I}nduced ei\textbf{N}-shrin\textbf{G}age), a single-run, post-hoc, domain-label-free method that learns a low-rank basin geometry from one dense checkpoint trajectory and then contracts only the directions that are fragile under plausible source-support reweightings. The method first constructs a connected checkpoint pool, defines a basin center and trajectory subspace, fits a local quadratic source-risk surrogate on one held-out split, estimates a reweighting fragility operator on a disjoint split, and finally outputs a single model by minimizing the resulting surrogate inside a basin trust region; when the constraint is inactive, this reduces to generalized eigen-shrinkage of the source-fit solution. We prove a local hidden-shift upper bound in which the reweighting term appears as a square-root variance penalty, derive the quadratic \swing{} surrogate from that bound, show that its unconstrained minimizer has an exact generalized eigen-shrinkage form, give a precise comparison with scalar shrinkage inside the quadratic model, and establish a deterministic perturbation bound together with a conditional plug-in consistency statement for the unconstrained estimator. The experimental sections intentionally leave all new \swing{} quantitative results as \TBD{}, while recording exact published benchmark context from prior work and providing the full evaluation protocol.
+\end{abstract}
+
+\section{Introduction}
+
+Domain generalization (DG) asks for a predictor that performs well on an unseen target environment using only source data at training time. In practice, the DG methods that last are often the ones that preserve the base training recipe and change only how the final model is selected. This is why single-run post-hoc selection matters: one can train once, save dense checkpoints, and choose a deployable model after training has already finished.
+
+This regime already has a clear reference point. On the standard DomainBed ResNet-50 benchmark suite, \swad{} improves the average out-of-domain accuracy of \erm{} from \(63.3\) to \(66.9\) across PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet \citep{cha2021swad}. More diverse weight-averaging schemes can go further in heavier settings, with \diwa{} reporting \(68.0\) in its strongest multi-run, multi-model configuration \citep{rame2022diwa}, and a pretraining-aware method combined with the same post-hoc selector reaching \(68.1\) \citep{cha2022miro}. The empirical lesson is clear: the final predictor is often not the last checkpoint.
+
+Yet existing post-hoc DG methods still work inside one narrow action family. They select a checkpoint, an interval, or a soup inside a connected low-loss region. That is often enough to find a safe basin, but it leaves a natural question unanswered:
+\begin{quote}
+\textbf{After a safe basin has been identified, should the final model keep every direction inside that basin at full strength?}
+\end{quote}
+
+Our answer is no. Some directions inside a good basin are strongly supported by the pooled source data; others are fragile because small source-support redistributions would swing their contribution substantially. Those fragile directions are exactly the ones that should be attenuated before deployment.
+
+This principle leads to \textbf{\swing{}} (\textbf{S}ource-re\textbf{W}eighting-\textbf{I}nduced ei\textbf{N}-shrin\textbf{G}age). \swing{} has two stages. First, it builds a safe connected checkpoint pool, computes a basin center, and extracts a low-rank trajectory subspace. Second, inside that subspace, it fits:
+\begin{itemize}[leftmargin=1.4em]
+    \item a \emph{source-fit operator} \(A\) that captures how strongly the pooled source data supports each direction, and
+    \item a \emph{fragility operator} \(B\) that measures how much examplewise local loss slopes vary across the source support, hence how strongly nearby source reweightings can swing the direction.
+\end{itemize}
+The final model is a single deterministic weight vector obtained by minimizing the surrogate inside the basin trust region. When the trust-region constraint is inactive, the edit reduces to shrinking the fit solution along the generalized eigenvectors of the pair \((B, A)\).
+
+The central idea may be stated in one sentence:
+\begin{quote}
+\textbf{Directions that swing under plausible source reweightings should not survive deployment at full strength.}
+\end{quote}
+
+This move is still grounded in the current post-hoc DG literature. Weight averaging, mode connectivity, and soups tell us that dense trajectories often lie in a common low-loss basin \citep{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups}. Subspace-based Bayesian approximations further show that a small trajectory subspace can contain many high-performing models \citep{izmailov2020subspace}. Influence analyses and distributionally robust optimization show that sample reweightings are a natural first-order model of nearby distribution shifts \citep{koh2017influence,duchi2020variance,duchi2021learning}. \swing{} combines these threads into a post-hoc DG method that is still simple, still single-model at test time, and more directly tied to hidden shift than isotropic averaging.
+
+We make five contributions.
+\begin{enumerate}[leftmargin=1.4em]
+    \item We introduce \swing{}, a single-run, post-hoc, domain-label-free DG method that performs a full-weight basin edit rather than another checkpoint selector.
+    \item We derive \swing{} from a local hidden-shift model in which target domains are source-supported \(\chi^2\)-bounded reweightings of the pooled source support. This yields a square-root fragility term \( \sqrt{\varrho\, z^\top B z}\) and, after quadratic majorization, the \swing{} surrogate.
+    \item We prove that the unconstrained \swing{} edit has an exact generalized eigen-shrinkage form, and that the deployed estimator inherits this form whenever the trust-region constraint is inactive. We also give a precise within-model comparison against scalar shrinkage.
+    \item We prove a deterministic perturbation bound and a conditional plug-in consistency statement for the unconstrained empirical estimator, and give a restricted-family target-risk certificate for the returned basin edit.
+    \item We provide a complete NeurIPS-style manuscript with original analytical figures, a reproducible protocol, and published baseline context from prior work; all new \swing{} quantitative results remain explicitly marked \TBD{}.
+\end{enumerate}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/method_overview.pdf}
+    \caption{\textbf{\swing{} pipeline.} A dense checkpoint bank is reduced to a connected safe pool. That pool defines a basin center \(\mu\) and a low-rank subspace \(U\). On disjoint source splits, \swing{} estimates a source-fit operator \(\hat A\) and a reweighting fragility operator \(\hat B\), then outputs one deployable model by minimizing the surrogate within the basin trust region; when the constraint is inactive, this reduces to generalized eigen-shrinkage.}
+    \label{fig:overview}
+\end{figure}
+
+\section{Related Work}
+
+\paragraph{Single-run post-hoc DG.}
+\swad{} is the canonical single-run post-hoc DG method \citep{cha2021swad}. Its practical appeal comes from dense checkpointing, overfit-aware windowing, and a single averaged model at test time. Published follow-ups reinforce that post-hoc averaging is genuinely strong. At the same time, the strongest published \diwa{} configuration is explicitly heavier, averaging models from different training runs \citep{rame2022diwa}, while \miro{} improves the training representation and then benefits again from post-hoc selection \citep{cha2022miro}. \swing{} stays in the single-run deployment regime and changes the post-hoc action itself: it edits the final weight vector inside a safe basin rather than merely choosing which checkpoints to average.
+
+\paragraph{Weight averaging, connectivity, and basin geometry.}
+Stochastic weight averaging \citep{izmailov2018swa}, fast geometric ensembling \citep{garipov2018fge}, linear mode connectivity \citep{frankle2020linear}, and model soups \citep{wortsman2022soups} show that dense training trajectories often traverse connected low-loss regions. Subspace inference further shows that a small trajectory subspace can contain many strong models \citep{izmailov2020subspace}. \swing{} uses these ideas as infrastructure: a connected checkpoint pool defines the basin, and a low-rank subspace provides the coordinate system for post-hoc editing.
+
+\paragraph{Reweighting, influence, and local robustness.}
+Influence functions quantify local sensitivity to sample reweightings \citep{koh2017influence}. Distributionally robust optimization studies worst-case risk over ambiguity sets such as \(\chi^2\) or other \(f\)-divergence balls \citep{duchi2016fdiv,duchi2020variance,duchi2021learning}. Closely related literatures study worst-case subpopulations, fairness without observed demographics, and group-robust learning through reweighting \citep{li2021worstcase,hashimoto2018fairness,lahoti2020fairness,sagawa2020groupdro}. Tangent Prop is the classical precursor in input space: useful invariance can be enforced by controlling derivatives along nuisance directions \citep{simard1991tangent}. \swing{} transfers this logic to the empirical distribution: its nuisance directions are nearby redistributions of the source support.
+
+\paragraph{Adjacent post-training weight editing outside DG.}
+There is recent interest in editing weights after training to improve robustness or preserve \(\ood{}\) performance, including WiSE-FT interpolation, robustness signatures, model-stock averaging, and spectral soup editing \citep{wortsman2021wiseft,cai2023rws,jang2024modelstock,abdollahpoorrostam2026monosoup}. These works are adjacent but different. They do not target single-run post-hoc DG with source-only held-out data, do not derive a hidden-subpopulation reweighting geometry, and do not formulate the final edit as the solution of a basin-restricted hidden-shift surrogate whose unconstrained form is generalized eigen-shrinkage.
+
+\section{Problem Setup}
+\label{sec:setup}
+
+We work in the standard source-only DG setting. Let \(P\) denote the pooled source distribution over examples \(Z=(X,Y)\). A dense training run produces checkpoints \(\theta_1,\dots,\theta_T \in \RR^d\). The method is post-hoc: training is already over, and only the checkpoints and held-out source data are used.
+
+\paragraph{Safe checkpoint pool.}
+Let \(S_{\mathrm{pool}}\) be a held-out source split used for pool construction. Define a source validation loss \(\widehat L_{\mathrm{pool}}(\theta)\) on this split. Let
+\[
+t^\star \in \argmin_{1\le t \le T}\widehat L_{\mathrm{pool}}(\theta_t)
+\]
+be the best checkpoint. For checkpoints \(i,j\), define the empirical interpolation barrier
+\[
+\barrier(i,j)
+=
+\max_{\alpha\in\mathcal G}
+\widehat L_{\mathrm{pool}}\paren{\alpha \theta_i + (1-\alpha)\theta_j}
+-
+\max\braces{\widehat L_{\mathrm{pool}}(\theta_i),\widehat L_{\mathrm{pool}}(\theta_j)},
+\]
+where \(\mathcal G \subset [0,1]\) is a fixed interpolation grid. For user-chosen thresholds \(\varepsilon_{\mathrm{pool}}, \tau_{\mathrm{pool}} > 0\), define the safe pool
+\[
+\cC
+=
+\braces{
+t : \widehat L_{\mathrm{pool}}(\theta_t) \le \widehat L_{\mathrm{pool}}(\theta_{t^\star}) + \varepsilon_{\mathrm{pool}},
+\ \barrier(t,t^\star)\le \tau_{\mathrm{pool}}
+}.
+\]
+This pool is intended to isolate one connected low-loss basin. The pool construction stage is not the novelty of the paper; it is the infrastructure on top of which \swing{} operates.
+
+\paragraph{Basin coordinates.}
+Define the basin center
+\[
+\mu = \frac{1}{|\cC|}\sum_{t\in\cC}\theta_t.
+\]
+Let \(U\in\RR^{d\times r}\) have orthonormal columns spanning the top \(r\) principal components of \(\braces{\theta_t-\mu : t\in\cC}\). Every point \(z\in\RR^r\) induces a full model
+\[
+\theta(z)=\mu + Uz.
+\]
+The safe pool itself induces observed coordinates
+\[
+z_t = U^\top(\theta_t - \mu), \qquad t\in\cC.
+\]
+
+\paragraph{Disjoint source splits.}
+Beyond \(S_{\mathrm{pool}}\), \swing{} uses two disjoint held-out source splits:
+\begin{itemize}[leftmargin=1.4em]
+    \item \(S_{\mathrm{fit}}\), used to fit a local quadratic source-risk surrogate;
+    \item \(S_{\mathrm{shift}}\), used to estimate the fragility operator.
+\end{itemize}
+The split separation is deliberate: it prevents the same source examples from simultaneously defining both the fit geometry and the hidden-shift geometry.
+
+In theory, \(\cZ\) is any compact trust region containing the observed safe-pool coordinates. In practice, we instantiate \(\cZ\) as a box in generalized coordinates whose sides are determined by the extrema of the safe-pool projections.
+
+\section{The Method}
+\label{sec:method}
+
+\subsection{Quadratic source-fit surrogate}
+
+On \(S_{\mathrm{fit}}\), \swing{} fits a local quadratic model of source risk in the basin subspace:
+\[
+q(z) = c + a^\top z + \frac{1}{2} z^\top A z,
+\qquad
+A \in \RR^{r\times r}, \ A \succ 0.
+\]
+In practice, \(q\) is estimated from the observed checkpoint cloud \(\braces{z_t : t\in\cC}\) by least-squares fitting of the empirical losses
+\[
+\widehat L_{\mathrm{fit}}(\theta_t)
+\approx
+c + a^\top z_t + \frac{1}{2} z_t^\top A z_t.
+\]
+The unique minimizer of the quadratic fit-only surrogate is
+\[
+z_{\mathrm{fit}} = -A^{-1}a.
+\]
+This is the source-fit solution in the basin coordinate system.
+
+\subsection{Fragility operator from source reweightings}
+
+Fix an example \(Z_i \in S_{\mathrm{shift}}\). Let \(\phi_i \in \RR^r\) denote the local first-order loss slope of that example in the basin subspace. Formally, in the theory we assume
+\[
+\loss\paren{\theta(z); Z_i}
+=
+\loss\paren{\theta(0); Z_i}
++
+\phi_i^\top z
++
+r_i(z),
+\]
+with a controlled quadratic remainder \(r_i(z)\).
+
+The fragility operator is the covariance of these examplewise slopes:
+\[
+B
+=
+\Cov(\phi)
+=
+\EE\bracks{(\phi - \EE[\phi])(\phi-\EE[\phi])^\top}.
+\]
+Intuitively:
+\begin{itemize}[leftmargin=1.4em]
+    \item if a direction has small variance in examplewise slopes, then nearby source reweightings do not change its preferred update much;
+    \item if a direction has large variance, then small hidden redistributions of the source support can swing its utility sharply.
+\end{itemize}
+
+In practice, \(\phi_i\) is estimated from the checkpoint cloud by regressing the examplewise losses of \(Z_i\) against the coordinates \(z_t\), \(t\in\cC\), and \(\hat B\) is the sample covariance of the fitted slope vectors.
+
+\subsection{The \swing{} objective}
+
+The derivation in Section~\ref{sec:theory} yields the quadratic robust surrogate
+\[
+J_\lambda(z)
+=
+a^\top z + \frac12 z^\top A z + \frac{\lambda}{2} z^\top B z,
+\qquad \lambda > 0.
+\]
+The first two terms retain source fit. The third term penalizes directions whose first-order contribution is unstable under plausible source-support reweightings.
+
+The theoretical returned estimator is the constrained minimizer
+\[
+z_\lambda^{\cZ}
+\in
+\argmin_{z\in\cZ} J_\lambda(z).
+\]
+Whenever the unconstrained minimizer lies inside \(\cZ\), the constrained and unconstrained solutions coincide.
+
+Let \(z_{\mathrm{fit}}=-A^{-1}a\). Then
+\[
+J_\lambda(z)
+=
+\text{const}
++
+\frac12 (z-z_{\mathrm{fit}})^\top A (z-z_{\mathrm{fit}})
++
+\frac{\lambda}{2} z^\top B z.
+\]
+Therefore \swing{} should be interpreted as a \emph{basin edit}: it does not search for a new basin, but contracts the fit solution along fragile directions inside a basin that was already judged safe by the first-stage pool construction.
+
+\subsection{Generalized eigen-shrinkage}
+
+Because \(A\succ 0\) and \(B\succeq 0\), there exists an \(A\)-orthonormal generalized eigenbasis \(V=[v_1,\dots,v_r]\) and nonnegative generalized eigenvalues \(\nu_1,\dots,\nu_r\) such that
+\[
+Bv_j = \nu_j A v_j,
+\qquad
+V^\top A V = I.
+\]
+Writing
+\[
+z_{\mathrm{fit}} = \sum_{j=1}^r c_j v_j,
+\qquad
+c_j = v_j^\top A z_{\mathrm{fit}},
+\]
+the unconstrained \swing{} edit is
+\[
+z_\lambda^{\mathrm{unc}} = \sum_{j=1}^r \frac{c_j}{1+\lambda \nu_j}v_j.
+\]
+Thus every generalized coordinate is shrunk by a factor
+\[
+\beta_j(\lambda)=\frac{1}{1+\lambda\nu_j}.
+\]
+Directions with larger fragility-to-fit ratio \(\nu_j\) receive stronger attenuation.
+
+\begin{algorithm}[t]
+\caption{\swing{}}
+\label{alg:swing}
+\begin{algorithmic}[1]
+\Require Dense checkpoint bank \(\braces{\theta_t}_{t=1}^T\), held-out source splits \(S_{\mathrm{pool}},S_{\mathrm{fit}},S_{\mathrm{shift}}\), rank \(r\), thresholds \(\varepsilon_{\mathrm{pool}},\tau_{\mathrm{pool}}\), regularization \(\lambda\).
+\State Select the safe checkpoint pool \(\cC\) using source-fit thresholding and interpolation barriers on \(S_{\mathrm{pool}}\).
+\State Compute the basin center \(\mu = |\cC|^{-1}\sum_{t\in\cC}\theta_t\).
+\State Compute \(U\in\RR^{d\times r}\) from the top \(r\) principal directions of \(\braces{\theta_t-\mu : t\in\cC}\).
+\State Form checkpoint coordinates \(z_t = U^\top(\theta_t-\mu)\), \(t\in\cC\).
+\State Fit the quadratic source-risk surrogate \(q(z)=c+a^\top z+\tfrac12 z^\top A z\) on \(S_{\mathrm{fit}}\).
+\State Fit examplewise slope vectors \(\hat\phi_i\) on \(S_{\mathrm{shift}}\) and set \(\hat B = \widehat{\Cov}(\hat\phi)\).
+\State Solve the generalized eigenproblem \(\hat B v_j = \nu_j \hat A v_j\), \(V^\top \hat A V = I\).
+\State Compute \(z_{\mathrm{fit}} = -\hat A^{-1}\hat a\) and coefficients \(c_j = v_j^\top \hat A z_{\mathrm{fit}}\).
+\State Set the unconstrained edit \(z_\lambda^{\mathrm{unc}} = \sum_{j=1}^r \frac{c_j}{1+\lambda \nu_j}v_j\).
+\State If \(z_\lambda^{\mathrm{unc}}\in\cZ\), set \(z_\lambda^{\cZ}=z_\lambda^{\mathrm{unc}}\); otherwise solve \(z_\lambda^{\cZ}\in\argmin_{z\in\cZ} J_\lambda(z)\) inside the chosen trust region.
+\State \Return \(\theta_{\mathrm{SWING}} = \mu + U z_\lambda^{\cZ}\).
+\end{algorithmic}
+\end{algorithm}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=0.92\textwidth]{figures/basin_3d_steps.pdf}
+    \caption{\textbf{Three-dimensional intuition for \swing{}.} Left: dense checkpoints define a connected low-loss basin and a center \(\mu\). Middle: the basin subspace supplies the coordinates in which fit and fragility are estimated. Right: \swing{} contracts the fit solution anisotropically, suppressing high-fragility directions more than low-fragility directions.}
+    \label{fig:basin3d}
+\end{figure*}
+
+\section{Theory}
+\label{sec:theory}
+
+This section derives the \swing{} objective from a local hidden-shift model and proves its main properties. The assumptions are deliberately explicit. The theory is local and subspace-restricted; it does not claim that arbitrary deep networks are globally quadratic in weight space.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Local quadratic source-fit model]
+\label{ass:fit}
+There exists a compact set \(\cZ \subset \RR^r\) containing the observed checkpoint coordinates and a positive definite matrix \(A\in\RR^{r\times r}\) and vector \(a\in\RR^r\) such that the pooled source excess risk on the basin subspace satisfies
+\[
+L_P(z) - L_P(0)
+=
+a^\top z + \frac12 z^\top A z
+\qquad
+\text{for all } z\in\cZ.
+\]
+\end{assumption}
+
+\begin{assumption}[Examplewise local linearization with quadratic remainder]
+\label{ass:lin}
+There exist measurable \(\phi : \sZ\to\RR^r\) and \(\kappa : \sZ\to[0,\infty)\) such that for every example \(Z\in\sZ\) and every \(z\in\cZ\),
+\[
+\loss(\theta(z);Z)
+=
+\loss(\theta(0);Z)
++
+\phi(Z)^\top z
++
+r(Z,z),
+\]
+where the remainder satisfies
+\[
+\abs{r(Z,z)} \le \frac{\kappa(Z)}{2}\norm{z}^2
+\qquad
+\text{for all } z\in\cZ.
+\]
+Moreover \(\EE_P[\norm{\phi(Z)}^2] < \infty\) and
+\(\EE_P[\kappa(Z)^2] \le K^2 < \infty\).
+\end{assumption}
+
+\begin{assumption}[Source-supported local target shift]
+\label{ass:shift}
+The target distribution \(Q\) is absolutely continuous with respect to \(P\) and belongs to the local \(\chi^2\)-style ambiguity family
+\[
+\cQ(\varrho)
+=
+\braces{
+Q : \frac{dQ}{dP} = 1+h,\ 1+h\ge 0 \text{ $P$-a.s.},\ \EE_P[h]=0,\ \EE_P[h^2]\le \varrho
+}
+\]
+for some radius \(\varrho \ge 0\).
+\end{assumption}
+
+Assumption~\ref{ass:shift} encodes the source-supported hidden-subpopulation view: unseen domains are not arbitrary, but are local redistributions of source support mass. Assumption~\ref{ass:lin} makes the reweighting effect observable through the examplewise slope covariance. Assumption~\ref{ass:fit} isolates the source-fit geometry inside a single connected basin.
+
+\subsection{Deriving the fragility term}
+
+\begin{theorem}[Local hidden-shift upper bound]
+\label{thm:robust_bound}
+Under Assumptions~\ref{ass:fit}--\ref{ass:shift}, define
+\[
+\bar\phi = \EE_P[\phi(Z)],
+\qquad
+B = \Cov_P(\phi(Z))
+=
+\EE_P\bracks{(\phi(Z)-\bar\phi)(\phi(Z)-\bar\phi)^\top}.
+\]
+Then for every \(z\in\cZ\) and every \(Q\in\cQ(\varrho)\),
+\[
+L_Q(z)
+\le
+L_Q(0)
++
+a^\top z + \frac12 z^\top A z
++
+\sqrt{\varrho\, z^\top B z}
++
+\frac{\sqrt{\varrho}\,K}{2}\norm{z}^2.
+\]
+\end{theorem}
+
+The theorem shows where the fragility term comes from. The quantity \(z^\top B z\) is the variance of the first-order examplewise slope in direction \(z\). If that variance is large, local source reweightings can swing the contribution of \(z\) strongly; if it is small, the direction is reweighting-stable.
+
+\begin{corollary}[Quadratic \swing{} surrogate]
+\label{cor:quadratic_majorizer}
+Under the assumptions of Theorem~\ref{thm:robust_bound}, for every \(\lambda>0\),
+\[
+L_Q(z)
+\le
+L_Q(0) + \frac{\varrho}{2\lambda}
++
+a^\top z
++
+\frac12 z^\top \widetilde A z
++
+\frac{\lambda}{2} z^\top B z
+\qquad
+\text{for all } z\in\cZ,
+\]
+where
+\[
+\widetilde A = A + \sqrt{\varrho}\, K I_r.
+\]
+\end{corollary}
+
+Corollary~\ref{cor:quadratic_majorizer} is the exact bridge from the hidden-shift model to \swing{}: the practical objective is the smallest quadratic upper envelope obtained by balancing the source-fit term and the reweighting fragility term.
+
+\subsection{Closed-form shrinkage solution}
+
+For the rest of the theory, write \(A\) for the positive definite matrix \(\widetilde A\) from Corollary~\ref{cor:quadratic_majorizer}; this only lightens notation.
+
+\begin{theorem}[Generalized eigen-shrinkage]
+\label{thm:closed_form}
+Let
+\[
+J_\lambda(z)=a^\top z + \frac12 z^\top A z + \frac{\lambda}{2} z^\top B z,
+\qquad
+A\succ 0,\ B\succeq 0,\ \lambda>0.
+\]
+Define the fit-only solution
+\[
+z_{\mathrm{fit}} = -A^{-1}a.
+\]
+Then:
+\begin{enumerate}[leftmargin=1.4em]
+    \item The unconstrained problem \(\min_{z\in\RR^r} J_\lambda(z)\) is strongly convex and has the unique minimizer
+    \[
+    z_\lambda^{\mathrm{unc}} = -(A+\lambda B)^{-1}a = (A+\lambda B)^{-1}A z_{\mathrm{fit}}.
+    \]
+    \item If \(z_\lambda^{\mathrm{unc}}\in\cZ\), then \(z_\lambda^{\cZ}=z_\lambda^{\mathrm{unc}}\). In that case, if \(V=[v_1,\dots,v_r]\) is an \(A\)-orthonormal generalized eigenbasis satisfying
+    \[
+    Bv_j = \nu_j A v_j,
+    \qquad
+    V^\top A V = I,
+    \qquad
+    \nu_j\ge 0,
+    \]
+    and
+    \[
+    z_{\mathrm{fit}} = \sum_{j=1}^r c_j v_j,
+    \qquad
+    c_j = v_j^\top A z_{\mathrm{fit}},
+    \]
+    then
+    \[
+    z_\lambda^{\cZ} = z_\lambda^{\mathrm{unc}} = \sum_{j=1}^r \frac{c_j}{1+\lambda\nu_j}v_j.
+    \]
+\end{enumerate}
+\end{theorem}
+
+Theorem~\ref{thm:closed_form} is the central mathematical result of the paper. It shows that \swing{} is not merely a heuristic penalty. Whenever the unconstrained minimizer stays inside the chosen basin trust region, the returned solution is an exact contraction of the fit-only solution, with one shrinkage factor per generalized fragility level.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.92\linewidth]{figures/reweighting_simplex.pdf}
+    \caption{\textbf{Why reweighting induces a fragility operator.} Nearby target domains are modeled as local redistributions of source-support mass. Examplewise slope vectors that fan out strongly under these redistributions produce a large covariance \(B\), so directions aligned with them are shrunk more aggressively by \swing{}.}
+    \label{fig:simplex}
+\end{figure}
+
+\subsection{Why anisotropy matters}
+
+The next comparison result formalizes an important point. If generalized fragility levels are heterogeneous, then one global scalar shrinkage factor is not enough inside the quadratic model.
+
+\begin{proposition}[Comparison to scalar shrinkage]
+\label{thm:scalar_gap}
+Under the assumptions of Theorem~\ref{thm:closed_form}, consider the scalar shrinkage family
+\[
+\mathcal F_{\mathrm{sc}}
+=
+\braces{\alpha z_{\mathrm{fit}} : \alpha\in\RR}.
+\]
+Then
+\[
+\min_{\alpha\in\RR} J_\lambda(\alpha z_{\mathrm{fit}})
+\ge
+J_\lambda(z_\lambda^{\mathrm{unc}}).
+\]
+Moreover equality holds if and only if the generalized eigenvalues \(\nu_j\) are constant on the support of \(z_{\mathrm{fit}}\), that is,
+\[
+\nu_j = \nu_k
+\qquad
+\text{for all } j,k \text{ such that } c_j\neq 0 \text{ and } c_k\neq 0.
+\]
+Consequently, whenever \(z_{\mathrm{fit}}\) has nonzero mass on at least two distinct generalized fragility levels, anisotropic shrinkage is strictly better than the best scalar shrinkage.
+\end{proposition}
+
+Proposition~\ref{thm:scalar_gap} records the simplest exact comparison that motivates anisotropy in the quadratic surrogate. Scalar shrinkage is optimal only in the degenerate case where all active directions have the same fragility-to-fit ratio.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/anisotropic_vs_scalar_2d.pdf}
+    \caption{\textbf{Two-dimensional analogue of Proposition~\ref{thm:scalar_gap}.} The fit solution \(z_{\mathrm{fit}}\) lies away from the basin center \(\mu\). The best scalar shrinkage moves only along the dashed ray. The \swing{} optimum follows the anisotropic geometry defined by \(A\) and \(B\), producing a lower robust surrogate value whenever fragility is direction-dependent.}
+    \label{fig:2d}
+\end{figure}
+
+\subsection{Certificate improvement and conditional stability}
+
+\begin{proposition}[Exact certificate gain over the fit-only solution]
+\label{prop:gain}
+Under the assumptions of Theorem~\ref{thm:closed_form},
+\[
+J_\lambda(z_{\mathrm{fit}}) - J_\lambda(z_\lambda^{\mathrm{unc}})
+=
+\frac12 (z_{\mathrm{fit}}-z_\lambda^{\mathrm{unc}})^\top (A+\lambda B)(z_{\mathrm{fit}}-z_\lambda^{\mathrm{unc}}).
+\]
+In particular,
+\[
+J_\lambda(z_\lambda^{\mathrm{unc}})\le J_\lambda(z_{\mathrm{fit}}),
+\]
+with equality if and only if \(B z_{\mathrm{fit}} = 0\).
+\end{proposition}
+
+Proposition~\ref{prop:gain} quantifies the exact improvement that \swing{} certifies over the fit-only solution. If the fit solution already lies in the kernel of the fragility operator, there is nothing to shrink; otherwise the robust surrogate is improved strictly.
+
+\begin{theorem}[Deterministic perturbation bound]
+\label{thm:perturb}
+Let
+\[
+M = A+\lambda B,
+\qquad
+\hat M = \hat A + \lambda \hat B,
+\qquad
+m = \lambda_{\min}(M).
+\]
+Suppose \(m>0\) and define
+\[
+\delta = \norm{\hat A - A} + \lambda \norm{\hat B-B}.
+\]
+If \(\delta < m\), then \(\hat M\) is positive definite and the empirical solution
+\[
+\hat z_\lambda = -\hat M^{-1}\hat a
+\]
+is well defined. Moreover
+\[
+\norm{\hat z_\lambda - z_\lambda^{\mathrm{unc}}}
+\le
+\frac{\norm{\hat a-a} + \delta \norm{z_\lambda^{\mathrm{unc}}}}{m-\delta}.
+\]
+Consequently, if \(\hat a\to a\), \(\hat A\to A\), and \(\hat B\to B\) in operator norm, then \(\hat z_\lambda \to z_\lambda^{\mathrm{unc}}\).
+\end{theorem}
+
+Theorem~\ref{thm:perturb} is the paper's main convergence statement. It is a deterministic continuity bound: conditional on consistent operator estimators, the resulting unconstrained \swing{} estimator is also consistent, and this directly covers the deployed edit whenever the trust-region constraint is inactive.
+
+\begin{corollary}[Restricted-family target certificate]
+\label{cor:certificate}
+Under Assumptions~\ref{ass:fit}--\ref{ass:shift}, let
+\[
+z_\lambda^{\cZ} \in \argmin_{z\in\cZ} J_\lambda(z).
+\]
+Then for every \(Q\in\cQ(\varrho)\) and every \(z\in\cZ\),
+\[
+L_Q(z_\lambda^{\cZ})
+\le
+L_Q(0) + \frac{\varrho}{2\lambda} + J_\lambda(z_\lambda^{\cZ})
+\le
+L_Q(0) + \frac{\varrho}{2\lambda} + J_\lambda(z).
+\]
+In particular, the \swing{} solution attains the smallest available quadratic hidden-shift certificate inside the chosen basin family.
+\end{corollary}
+
+\begin{figure*}[t]
+    \centering
+    \begin{subfigure}[t]{0.73\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/operator_views.pdf}
+        \caption{Fit and fragility operators, their generalized geometry, and the resulting spectrum.}
+        \label{fig:operators}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/shrinkage_curve.pdf}
+        \caption{Shrinkage path as fragility rises.}
+        \label{fig:path}
+    \end{subfigure}
+    \caption{\textbf{Operator-level intuition for \swing{}.} The fit operator \(\hat A\) says which directions the source data trusts. The fragility operator \(\hat B\) says which directions swing under source-support redistributions. Their generalized eigensystem defines the contraction geometry.}
+    \label{fig:operators_main}
+\end{figure*}
+
+\section{Practical Estimation Details}
+\label{sec:practical}
+
+\paragraph{Estimating the quadratic fit surrogate.}
+Given safe-pool coordinates \(z_t\) and fit-split losses \(\widehat L_{\mathrm{fit}}(\theta_t)\), we estimate \((\hat c,\hat a,\hat A)\) by solving
+\[
+\min_{c,a,A=A^\top}
+\sum_{t\in\cC}
+\paren{
+\widehat L_{\mathrm{fit}}(\theta_t)
+-
+c-a^\top z_t-\frac12 z_t^\top A z_t
+}^2
++
+\eta_A \norm{A}_F^2
+\]
+subject to \(\hat A \succeq m_A I_r\) for a small ridge floor \(m_A>0\). This makes the source-fit surrogate strictly convex and numerically stable.
+
+\paragraph{Estimating the slope covariance.}
+For each example \(Z_i \in S_{\mathrm{shift}}\), let \(\ell_{it}=\loss(\theta_t; Z_i)\). We estimate the examplewise slope vector \(\hat\phi_i\) from the linear model
+\[
+\ell_{it} - \bar \ell_i
+\approx
+\hat\phi_i^\top z_t,
+\qquad
+\bar\ell_i = \frac{1}{|\cC|}\sum_{t\in\cC}\ell_{it},
+\]
+using ridge regression over \(t\in\cC\). Then
+\[
+\hat B
+=
+\frac{1}{|S_{\mathrm{shift}}|}
+\sum_{i\in S_{\mathrm{shift}}}
+(\hat\phi_i-\bar\phi)(\hat\phi_i-\bar\phi)^\top,
+\qquad
+\bar\phi = \frac{1}{|S_{\mathrm{shift}}|}\sum_i \hat\phi_i.
+\]
+
+\paragraph{Computational complexity.}
+If \(d\) is the ambient parameter dimension, \(r\ll d\) is the subspace rank, \(M=|\cC|\) is the safe-pool size, and \(n_s=|S_{\mathrm{shift}}|\), then the dominant costs are:
+\begin{itemize}[leftmargin=1.4em]
+    \item subspace extraction from \(M\) checkpoints;
+    \item \(n_s\) ridge regressions in \(r\) variables to estimate slopes;
+    \item one \(r\times r\) generalized eigendecomposition.
+\end{itemize}
+The final deployment cost remains unchanged from ordinary single-model inference because \swing{} outputs one weight vector.
+
+\section{Experimental Protocol}
+\label{sec:experiments}
+
+All new empirical results for \swing{} are intentionally left as \TBD{}. This section records the protocol, published benchmark context, and the exact ablations the eventual empirical study should run.
+
+\subsection{Benchmarks and training regime}
+
+We will evaluate on the standard DomainBed suite \citep{gulrajani2021domainbed}:
+\begin{itemize}[leftmargin=1.4em]
+    \item PACS,
+    \item VLCS,
+    \item OfficeHome,
+    \item TerraIncognita,
+    \item DomainNet.
+\end{itemize}
+The intended baseline regime is the standard ResNet-50 single-run post-hoc setting established by published \swad{} comparisons. The \diwa{} row is retained only as broader published context from a heavier setting, not as the pure single-run reference regime. The checkpoint bank should be dense enough to resolve one late connected basin. All post-hoc selection and shrinkage must use only source-held-out data and must not use source-domain identities.
+
+\subsection{Published benchmark context}
+
+Table~\ref{tab:published} records exact published numbers from prior work. These are not new \swing{} results; they define the bar that any serious single-run post-hoc DG method must eventually clear.
+
+\begin{table}[t]
+    \centering
+    \small
+    \begin{adjustbox}{max width=\linewidth}
+    \begin{tabular}{lcccccc}
+        \toprule
+        Method & PACS & VLCS & OfficeHome & TerraInc. & DomainNet & Avg. \\
+        \midrule
+        \erm{} \citep{cha2021swad} & 85.5 & 77.5 & 66.5 & 46.1 & 40.9 & 63.3 \\
+        \swad{} \citep{cha2021swad} & 88.1 & 79.1 & 70.6 & 50.0 & 46.5 & 66.9 \\
+        \diwa{}$^\dagger$ \citep{rame2022diwa} & 89.0 & 78.6 & 72.8 & 51.9 & 47.7 & 68.0 \\
+        \miro{} + \swad{} \citep{cha2022miro} & 88.4 & 79.6 & 72.4 & 52.9 & 47.0 & 68.1 \\
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Published benchmark context from prior work. \(\dagger\) DiWA's strongest published configuration uses a heavier multi-model setting than pure single-run post-hoc selection.}
+    \label{tab:published}
+\end{table}
+
+\subsection{Planned main table}
+
+\begin{table}[t]
+    \centering
+    \small
+    \begin{adjustbox}{max width=\linewidth}
+    \begin{tabular}{lcccccc}
+        \toprule
+        Method & PACS & VLCS & OfficeHome & TerraInc. & DomainNet & Avg. \\
+        \midrule
+        \erm{} & 85.5 & 77.5 & 66.5 & 46.1 & 40.9 & 63.3 \\
+        \swad{} & 88.1 & 79.1 & 70.6 & 50.0 & 46.5 & 66.9 \\
+        \swing{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+        \bottomrule
+    \end{tabular}
+    \end{adjustbox}
+    \caption{Planned primary comparison for the pure single-run post-hoc setting. All \swing{} entries are intentionally left as \TBD{} until experiments are run.}
+    \label{tab:main_tbd}
+\end{table}
+
+\subsection{Required ablations}
+
+The empirical study should include at least the following ablations.
+\begin{enumerate}[leftmargin=1.4em]
+    \item \textbf{No fragility term:} set \(B=0\) and recover the pure fit solution.
+    \item \textbf{Scalar shrinkage:} replace generalized shrinkage with the best one-parameter interpolation toward \(\mu\).
+    \item \textbf{No safe pool:} build \(U\) from a broader late trajectory without the barrier screen.
+    \item \textbf{Rank sensitivity:} vary \(r\).
+    \item \textbf{Regularization sensitivity:} vary \(\lambda\).
+    \item \textbf{Split overlap test:} compare disjoint versus reused fit/shift splits.
+\end{enumerate}
+
+\begin{table}[t]
+    \centering
+    \small
+    \begin{tabular}{lc}
+        \toprule
+        Variant & Avg. Acc. \\
+        \midrule
+        \swing{} & \TBD{} \\
+        No fragility term (\(B=0\)) & \TBD{} \\
+        Best scalar shrinkage & \TBD{} \\
+        No safe pool screen & \TBD{} \\
+        Small rank \(r\) & \TBD{} \\
+        Large rank \(r\) & \TBD{} \\
+        Small \(\lambda\) & \TBD{} \\
+        Large \(\lambda\) & \TBD{} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Planned ablation table. All new numbers remain \TBD{}.}
+    \label{tab:ablations_tbd}
+\end{table}
+
+\section{Discussion}
+
+\paragraph{What \swing{} is and is not.}
+\swing{} is not another global soup optimizer. It is also not a last-layer repair method, not a multi-run averaging scheme, and not a target-time adaptation method. It is a full-weight basin edit that acts only after a safe post-hoc basin has already been found.
+
+\paragraph{Why the theory is local.}
+The paper's theory is intentionally restricted to a connected low-rank basin family. That is a strength, not a weakness. The whole operational point of post-hoc single-run DG is that one dense trajectory often already contains a safe region; the scientifically honest question is what can be proved \emph{inside that region}.
+
+\paragraph{Limitations.}
+The theory assumes a source-supported local shift model. If the target domain introduces genuinely new support, then source-reweighting fragility cannot fully characterize deployment risk. The quadratic source-fit model is also local, and the regression estimators for \(A\) and \(B\) can become noisy if the safe pool is too small or too narrow. Finally, the eventual empirical study must verify that the gains are not captured by simpler scalar shrinkage.
+
+\section{Conclusion}
+
+\swing{} is a simple claim made operational: once a good checkpoint basin has been found, not all directions inside that basin should be trusted equally. Directions whose contribution swings under plausible source-support reweightings should be shrunk. The resulting method stays single-run, post-hoc, domain-label-free, and single-model at test time. Its math is explicit: a hidden-shift upper bound yields a square-root fragility term, a quadratic surrogate, the exact generalized eigen-shrinkage form of the unconstrained basin edit, a clean comparison against scalar shrinkage inside the quadratic model, and a deterministic perturbation theory that upgrades to consistency for the unconstrained estimator under consistent operator estimation. The empirical study remains to be run; the paper, figures, proofs, and protocol are ready.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+
+\section{Additional Geometric Intuition}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/shrinkage_curve.pdf}
+    \caption{\textbf{Regularization path.} Each generalized direction is shrunk by \(\beta_j(\lambda)=1/(1+\lambda\nu_j)\). Larger fragility eigenvalues decay faster as \(\lambda\) grows.}
+    \label{fig:path_appendix}
+\end{figure}
+
+\section{Proofs}
+
+\subsection{Proof of Theorem~\ref{thm:robust_bound}}
+
+\begin{proof}
+Fix \(z\in\cZ\) and \(Q\in\cQ(\varrho)\). By Assumption~\ref{ass:shift}, there exists \(h\) such that \(dQ/dP = 1+h\), \(\EE_P[h]=0\), and \(\EE_P[h^2]\le \varrho\). Therefore
+\begin{align}
+L_Q(z)-L_Q(0)
+&=
+\EE_Q\bracks{\loss(\theta(z);Z)-\loss(\theta(0);Z)} \notag\\
+&=
+\EE_P\bracks{(1+h(Z))\paren{\loss(\theta(z);Z)-\loss(\theta(0);Z)}}.
+\label{eq:proof_t1_start}
+\end{align}
+By Assumption~\ref{ass:lin},
+\[
+\loss(\theta(z);Z)
+=
+\loss(\theta(0);Z)
++
+\phi(Z)^\top z
++
+r(Z,z).
+\]
+Substituting this into \eqref{eq:proof_t1_start} gives
+\begin{align}
+L_Q(z)-L_Q(0)
+&=
+\EE_P\bracks{\phi(Z)^\top z}
++
+\EE_P\bracks{r(Z,z)}
++
+\EE_P\bracks{h(Z)\phi(Z)^\top z}
++
+\EE_P\bracks{h(Z)r(Z,z)}.
+\label{eq:proof_t1_expand}
+\end{align}
+Write \(\bar\phi=\EE_P[\phi(Z)]\). Since \(\EE_P[h]=0\),
+\[
+\EE_P\bracks{h(Z)\phi(Z)^\top z}
+=
+\EE_P\bracks{h(Z)(\phi(Z)-\bar\phi)^\top z}.
+\]
+Apply Cauchy--Schwarz:
+\begin{align}
+\abs{\EE_P\bracks{h(Z)(\phi(Z)-\bar\phi)^\top z}}
+&\le
+\sqrt{\EE_P[h(Z)^2]}
+\sqrt{\EE_P\bracks{\paren{(\phi(Z)-\bar\phi)^\top z}^2}} \notag\\
+&\le
+\sqrt{\varrho}
+\sqrt{z^\top \EE_P\bracks{(\phi(Z)-\bar\phi)(\phi(Z)-\bar\phi)^\top} z} \notag\\
+&=
+\sqrt{\varrho\, z^\top B z}.
+\label{eq:proof_t1_phi}
+\end{align}
+Next, use the remainder bound from Assumption~\ref{ass:lin}:
+\[
+\abs{r(Z,z)} \le \frac{\kappa(Z)}{2}\norm{z}^2.
+\]
+Applying Cauchy--Schwarz again,
+\begin{align}
+\abs{\EE_P\bracks{h(Z)r(Z,z)}}
+&\le
+\sqrt{\EE_P[h(Z)^2]}
+\sqrt{\EE_P[r(Z,z)^2]} \notag\\
+&\le
+\sqrt{\varrho}
+\sqrt{
+\EE_P\bracks{\frac{\kappa(Z)^2}{4}\norm{z}^4}
+} \notag\\
+&=
+\frac{\sqrt{\varrho}}{2}\norm{z}^2
+\sqrt{\EE_P[\kappa(Z)^2]} \notag\\
+&\le
+\frac{\sqrt{\varrho}\,K}{2}\norm{z}^2.
+\label{eq:proof_t1_remainder}
+\end{align}
+Finally, by Assumption~\ref{ass:fit},
+\[
+L_P(z)-L_P(0)=a^\top z + \frac12 z^\top A z.
+\]
+The first two terms on the right-hand side of \eqref{eq:proof_t1_expand} therefore combine to
+\[
+\EE_P\bracks{\phi(Z)^\top z}
++
+\EE_P\bracks{r(Z,z)}
+=
+L_P(z)-L_P(0)
+=
+a^\top z + \frac12 z^\top A z.
+\]
+Combining this identity with \eqref{eq:proof_t1_expand}, \eqref{eq:proof_t1_phi}, and \eqref{eq:proof_t1_remainder} yields
+\[
+L_Q(z)-L_Q(0)
+\le
+a^\top z + \frac12 z^\top A z
++
+\sqrt{\varrho\, z^\top B z}
++
+\frac{\sqrt{\varrho}\,K}{2}\norm{z}^2.
+\]
+Adding \(L_Q(0)\) to both sides gives the claimed inequality.
+\end{proof}
+
+\subsection{Proof of Corollary~\ref{cor:quadratic_majorizer}}
+
+\begin{proof}
+Start from Theorem~\ref{thm:robust_bound}:
+\[
+L_Q(z)
+\le
+L_Q(0)
++
+a^\top z + \frac12 z^\top A z
++
+\sqrt{\varrho\, z^\top B z}
++
+\frac{\sqrt{\varrho}\,K}{2}\norm{z}^2.
+\]
+For any \(\lambda>0\) and any \(u\ge 0\), Young's inequality gives
+\[
+\sqrt{\varrho\,u}
+\le
+\frac{\varrho}{2\lambda} + \frac{\lambda}{2}u.
+\]
+Apply this with \(u=z^\top B z\) to obtain
+\[
+\sqrt{\varrho\, z^\top B z}
+\le
+\frac{\varrho}{2\lambda}
++
+\frac{\lambda}{2} z^\top B z.
+\]
+Also,
+\[
+\frac12 z^\top A z + \frac{\sqrt{\varrho}\,K}{2}\norm{z}^2
+=
+\frac12 z^\top \paren{A + \sqrt{\varrho}\,K I_r}z
+=
+\frac12 z^\top \widetilde A z.
+\]
+Substituting both identities into the bound from Theorem~\ref{thm:robust_bound} yields
+\[
+L_Q(z)
+\le
+L_Q(0) + \frac{\varrho}{2\lambda}
++
+a^\top z
++
+\frac12 z^\top \widetilde A z
++
+\frac{\lambda}{2} z^\top B z.
+\]
+This is the desired claim.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:closed_form}}
+
+\begin{proof}
+Because \(A\succ 0\) and \(B\succeq 0\), the matrix \(A+\lambda B\) is positive definite for every \(\lambda>0\). Hence the quadratic function
+\[
+J_\lambda(z)=a^\top z + \frac12 z^\top A z + \frac{\lambda}{2} z^\top B z
+\]
+is strongly convex and has a unique minimizer. Its gradient is
+\[
+\nabla J_\lambda(z)=a + Az + \lambda Bz.
+\]
+Setting the gradient equal to zero yields the normal equation
+\[
+(A+\lambda B)z = -a.
+\]
+Therefore
+\[
+z_\lambda^{\mathrm{unc}} = -(A+\lambda B)^{-1}a.
+\]
+Because \(z_{\mathrm{fit}}=-A^{-1}a\), we may rewrite this as
+\[
+z_\lambda^{\mathrm{unc}} = (A+\lambda B)^{-1}A z_{\mathrm{fit}}.
+\]
+This proves the first claim.
+
+For the second claim, because \(A\succ 0\) and \(B\succeq 0\), the symmetric generalized eigenproblem admits an \(A\)-orthonormal basis \(V=[v_1,\dots,v_r]\) and nonnegative eigenvalues \(\nu_1,\dots,\nu_r\) satisfying
+\[
+BV = AV \diag(\nu_1,\dots,\nu_r),
+\qquad
+V^\top A V = I.
+\]
+Expand
+\[
+z_{\mathrm{fit}} = Vc,
+\qquad
+c = V^\top A z_{\mathrm{fit}}.
+\]
+Since \(z = Vy\) if and only if \(y=V^\top A z\), we may write
+\begin{align}
+J_\lambda(Vy)
+&=
+a^\top Vy + \frac12 y^\top V^\top A V y + \frac{\lambda}{2} y^\top V^\top B V y \notag\\
+&=
+a^\top Vy + \frac12 y^\top y + \frac{\lambda}{2} y^\top \diag(\nu_1,\dots,\nu_r) y.
+\label{eq:proof_t2_coord_1}
+\end{align}
+Now use \(a=-Az_{\mathrm{fit}}=-AVc\), so
+\[
+a^\top Vy
+=
+-c^\top V^\top A V y
+=
+-c^\top y.
+\]
+Substituting this into \eqref{eq:proof_t2_coord_1} gives
+\[
+J_\lambda(Vy)
+=
+\sum_{j=1}^r \bracks{-c_j y_j + \frac12 y_j^2 + \frac{\lambda}{2}\nu_j y_j^2}.
+\]
+The coordinates decouple. Minimizing each coordinate separately yields
+\[
+0 = -c_j + (1+\lambda\nu_j)y_j,
+\qquad
+ y_j = \frac{c_j}{1+\lambda\nu_j}.
+\]
+Therefore
+\[
+z_\lambda^{\mathrm{unc}}
+=
+Vy
+=
+\sum_{j=1}^r \frac{c_j}{1+\lambda\nu_j}v_j.
+\]
+This is exactly the stated generalized eigen-shrinkage formula.
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{thm:scalar_gap}}
+
+\begin{proof}
+The family \(\mathcal F_{\mathrm{sc}}=\braces{\alpha z_{\mathrm{fit}}:\alpha\in\RR}\) is a subset of \(\RR^r\). Since \(z_\lambda^{\mathrm{unc}}\) is the global minimizer of \(J_\lambda\) over \(\RR^r\),
+\[
+\min_{\alpha\in\RR} J_\lambda(\alpha z_{\mathrm{fit}})
+\ge
+J_\lambda(z_\lambda^{\mathrm{unc}}).
+\]
+This proves the first inequality.
+
+It remains to characterize equality. By Theorem~\ref{thm:closed_form},
+\[
+z_\lambda^{\mathrm{unc}}
+=
+\sum_{j=1}^r \frac{c_j}{1+\lambda\nu_j}v_j.
+\]
+Equality holds if and only if \(z_\lambda^{\mathrm{unc}} \in \mathcal F_{\mathrm{sc}}\), that is, if and only if there exists \(\alpha\in\RR\) such that
+\[
+\sum_{j=1}^r \frac{c_j}{1+\lambda\nu_j}v_j
+=
+\alpha \sum_{j=1}^r c_j v_j.
+\]
+Because the generalized eigenvectors form a basis, this is equivalent to
+\[
+\frac{c_j}{1+\lambda\nu_j} = \alpha c_j
+\qquad
+\text{for all } j=1,\dots,r.
+\]
+For every index \(j\) such that \(c_j\neq 0\), the condition becomes
+\[
+\alpha = \frac{1}{1+\lambda\nu_j}.
+\]
+Hence the same scalar \(\alpha\) can satisfy all active coordinates if and only if
+\[
+\nu_j = \nu_k
+\qquad
+\text{for all } j,k \text{ with } c_j\neq 0,\ c_k\neq 0.
+\]
+Conversely, if all active generalized eigenvalues are equal to some common value \(\bar\nu\), then
+\[
+z_\lambda^{\mathrm{unc}}
+=
+\sum_{j=1}^r \frac{c_j}{1+\lambda\bar\nu}v_j
+=
+\frac{1}{1+\lambda\bar\nu} z_{\mathrm{fit}},
+\]
+which belongs to \(\mathcal F_{\mathrm{sc}}\). Therefore equality holds if and only if the generalized eigenvalues are constant on the support of \(z_{\mathrm{fit}}\).
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:gain}}
+
+\begin{proof}
+Because \(z_\lambda^{\mathrm{unc}}\) is the minimizer of the quadratic \(J_\lambda\), the standard completion-of-squares identity around the minimizer gives
+\[
+J_\lambda(z)
+=
+J_\lambda(z_\lambda^{\mathrm{unc}})
++
+\frac12 (z-z_\lambda^{\mathrm{unc}})^\top (A+\lambda B)(z-z_\lambda^{\mathrm{unc}})
+\qquad
+\text{for all } z.
+\]
+Substituting \(z=z_{\mathrm{fit}}\) yields
+\[
+J_\lambda(z_{\mathrm{fit}})
+=
+J_\lambda(z_\lambda^{\mathrm{unc}})
++
+\frac12 (z_{\mathrm{fit}}-z_\lambda^{\mathrm{unc}})^\top (A+\lambda B)(z_{\mathrm{fit}}-z_\lambda^{\mathrm{unc}}).
+\]
+Rearranging gives the claimed identity.
+
+The difference is zero if and only if \(z_{\mathrm{fit}}=z_\lambda^{\mathrm{unc}}\). From Theorem~\ref{thm:closed_form},
+\[
+z_\lambda^{\mathrm{unc}}=(A+\lambda B)^{-1}A z_{\mathrm{fit}}.
+\]
+Hence \(z_\lambda^{\mathrm{unc}}=z_{\mathrm{fit}}\) if and only if
+\[
+(A+\lambda B)z_{\mathrm{fit}} = A z_{\mathrm{fit}},
+\]
+which is equivalent to \(\lambda B z_{\mathrm{fit}}=0\), hence \(Bz_{\mathrm{fit}}=0\). This proves the second statement.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:perturb}}
+
+\begin{proof}
+Let
+\[
+M = A+\lambda B,
+\qquad
+\hat M = \hat A + \lambda \hat B.
+\]
+By definition,
+\[
+\norm{\hat M - M}
+\le
+\norm{\hat A-A}
++
+\lambda \norm{\hat B-B}
+=
+\delta.
+\]
+Since \(M\succ 0\) with \(\lambda_{\min}(M)=m\) and \(\delta<m\), Weyl's inequality implies
+\[
+\lambda_{\min}(\hat M)
+\ge
+\lambda_{\min}(M) - \norm{\hat M-M}
+\ge
+m-\delta > 0.
+\]
+Therefore \(\hat M\) is positive definite, and
+\[
+\norm{\hat M^{-1}} \le \frac{1}{m-\delta}.
+\]
+
+Now use the exact normal equations
+\[
+Mz_\lambda^{\mathrm{unc}} = -a,
+\qquad
+\hat M \hat z_\lambda = -\hat a.
+\]
+Subtract the first from the second:
+\[
+\hat M(\hat z_\lambda - z_\lambda^{\mathrm{unc}})
+=
+-(\hat a-a) - (\hat M-M)z_\lambda^{\mathrm{unc}}.
+\]
+Multiply by \(\hat M^{-1}\):
+\[
+\hat z_\lambda - z_\lambda^{\mathrm{unc}}
+=
+-\hat M^{-1}(\hat a-a)
+-\hat M^{-1}(\hat M-M)z_\lambda^{\mathrm{unc}}.
+\]
+Taking norms and using the bound on \(\hat M^{-1}\),
+\begin{align*}
+\norm{\hat z_\lambda - z_\lambda^{\mathrm{unc}}}
+&\le
+\norm{\hat M^{-1}}
+\bracks{
+\norm{\hat a-a} + \norm{\hat M-M}\,\norm{z_\lambda^{\mathrm{unc}}}
+} \\
+&\le
+\frac{\norm{\hat a-a} + \delta \norm{z_\lambda^{\mathrm{unc}}}}{m-\delta}.
+\end{align*}
+This proves the deterministic perturbation inequality.
+
+If \(\hat a\to a\), \(\hat A\to A\), and \(\hat B\to B\), then \(\delta\to 0\) and \(\norm{\hat a-a}\to 0\). The right-hand side therefore converges to zero, implying \(\hat z_\lambda\to z_\lambda^{\mathrm{unc}}\).
+\end{proof}
+
+\subsection{Proof of Corollary~\ref{cor:certificate}}
+
+\begin{proof}
+Corollary~\ref{cor:quadratic_majorizer} states that for every \(z\in\cZ\),
+\[
+L_Q(z)
+\le
+L_Q(0) + \frac{\varrho}{2\lambda}
++
+J_\lambda(z).
+\]
+Apply this inequality at \(z=z_\lambda^{\cZ}\):
+\[
+L_Q(z_\lambda^{\cZ})
+\le
+L_Q(0) + \frac{\varrho}{2\lambda}
++
+J_\lambda(z_\lambda^{\cZ}).
+\]
+Because \(z_\lambda^{\cZ}\) minimizes \(J_\lambda\) over \(\cZ\),
+\[
+J_\lambda(z_\lambda^{\cZ}) \le J_\lambda(z)
+\qquad
+\text{for all } z\in\cZ.
+\]
+Combining the two inequalities yields
+\[
+L_Q(z_\lambda^{\cZ})
+\le
+L_Q(0) + \frac{\varrho}{2\lambda}
++
+J_\lambda(z_\lambda^{\cZ})
+\le
+L_Q(0) + \frac{\varrho}{2\lambda}
++
+J_\lambda(z)
+\qquad
+\text{for all } z\in\cZ.
+\]
+This proves the corollary.
+\end{proof}
+
+\section{Optional Numerical Properties}
+
+Although \swing{} has a closed-form solution, one useful limit statement is worth recording.
+
+\begin{proposition}[Shrinkage path limits]
+\label{prop:path}
+Under the assumptions of Theorem~\ref{thm:closed_form}, let
+\[
+z_\lambda^{\mathrm{unc}} = \sum_{j=1}^r \frac{c_j}{1+\lambda\nu_j}v_j.
+\]
+Then:
+\begin{enumerate}[leftmargin=1.4em]
+    \item \(z_\lambda^{\mathrm{unc}} \to z_{\mathrm{fit}}\) as \(\lambda\downarrow 0\);
+    \item \(z_\lambda^{\mathrm{unc}} \to \sum_{\nu_j=0} c_j v_j\) as \(\lambda\to\infty\);
+    \item for every \(j\) with \(\nu_j>0\), the coefficient \(\frac{c_j}{1+\lambda\nu_j}\) is continuous in \(\lambda\) and strictly decreases in magnitude as \(\lambda\) increases.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+All three claims are immediate from the closed-form coefficient
+\[
+\frac{c_j}{1+\lambda\nu_j}.
+\]
+If \(\lambda\downarrow 0\), then \(1+\lambda\nu_j \to 1\), so each coefficient converges to \(c_j\). If \(\lambda\to\infty\), then the coefficient converges to \(0\) for every \(\nu_j>0\) and remains \(c_j\) for every \(\nu_j=0\). The continuity and monotonicity follow from elementary calculus because \(\nu_j\ge 0\).
+\end{proof}
+
+\end{document}
