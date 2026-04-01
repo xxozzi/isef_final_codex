@@ -1,14 +1,15 @@
 # Fdb version 4
-["bibtex main"] 1774998285.00337 "main.aux" "main.bbl" "main" 1774998453.40721 0
-  "./references.bib" 1774998270.9987 7908 9f7a0b8c7fb95c2abab371da8c269dbc ""
+["bibtex main"] 1775015465.33023 "main.aux" "main.bbl" "main" 1775015555.75132 0
+  "./references.bib" 1775015462.05675 9798 58c3197977b44a3046eef47a5f8fddfd ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "main.aux" 1774998453.1686 17954 b1be4fdb0092edf6554e1fc8208b04b7 "pdflatex"
+  "main.aux" 1775015555.46146 20329 e923f8fdc54ce43fbd07754a1e5712a4 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1774998452.51768 "main.tex" "main.pdf" "main" 1774998453.40736 0
+["pdflatex"] 1775015554.77122 "main.tex" "main.pdf" "main" 1775015555.75146 0
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8r.tfm" 1136768653 4524 6bce29db5bc272ba5f332261583fee9c ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb8t.tfm" 1136768653 6880 f19b8995b61c334d78fc734065f6b4d4 ""
@@ -19,6 +20,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmrc8t.tfm" 1136768653 16648 7e91c60ebf91b9c60e16ef52b3070f9c ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm" 1136768653 4640 532ca3305aad10cc01d769f3f91f1029 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmri8t.tfm" 1136768653 6944 94c55ad86e6ea2826f78ba2240d50df9 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1136768653 1536 06717a2b50de47d4087ac0e6cd759455 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm" 1246382020 996 a18840b13b499c08ac2de96a99eda4bc ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -48,10 +50,10 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb" 1248133631 24457 5cbb7bdf209d5d1ce9892a9b80a307cc ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb" 1248133631 32915 7bf7720c61a5b3a7ff25b0964421c9b6 ""
-  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1248133631 32587 1788b0c1c5b39540c96f5e42ccd6dae8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb" 1248133631 35309 940e81a5b9e04201a07e8b33a3ae6e64 ""
+  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb" 1215737283 169201 9ebf99020dde51a5086e186761a34e8f ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb" 1136849748 44729 811d6c62865936705a31c797a1d5dada ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb" 1136849748 46026 6dab18b61c907687b520c72847215a68 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb" 1136849748 45458 a3faba884469519614ca56ba5f6b1de1 ""
@@ -167,10 +169,10 @@
   "figures/operator_views.pdf" 1774996004.21477 30945 42ee3e0b702835e821f6adcb3057ca3c ""
   "figures/reweighting_simplex.pdf" 1774996003.98912 19093 40f5b1c8cfcb76508a5d50e765ce6cc4 ""
   "figures/shrinkage_curve.pdf" 1774996004.28117 22132 b64901aa451e637bcbcb96ac41b097d6 ""
-  "main.aux" 1774998453.1686 17954 b1be4fdb0092edf6554e1fc8208b04b7 "pdflatex"
-  "main.bbl" 1774998285.10842 7564 b0b338756fba7cf7c27678d22017d7a9 "bibtex main"
-  "main.out" 1774998453.1696 5246 a3fce692e23e916d50fe7e4fd86e0b11 "pdflatex"
-  "main.tex" 1774998448.21623 51683 0e1e6cea9c6ed98a4c8215f8001e4a70 ""
+  "main.aux" 1775015555.46146 20329 e923f8fdc54ce43fbd07754a1e5712a4 "pdflatex"
+  "main.bbl" 1775015465.43057 9438 113497935fc0c3f652f92570b304c309 "bibtex main"
+  "main.out" 1775015555.46255 5246 a3fce692e23e916d50fe7e4fd86e0b11 "pdflatex"
+  "main.tex" 1775015549.45993 61367 5011aa00318a8d8e97c8ec9459de5600 ""
   "neurips.sty" 1774995901.43791 11549 4145e102565b1e11c4b1f009af7dd86e ""
   (generated)
   "main.aux"

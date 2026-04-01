@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{27}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -11,6 +11,12 @@ Alireza Abdollahpoorrostam, Nikolaos Dimitriadis, Adam Hazimeh, and Pascal
   Frossard.
 \newblock Model soups need only one ingredient.
 \newblock \emph{arXiv preprint arXiv:2602.09689}, 2026.
+
+\bibitem[Arpit et~al.(2022)Arpit, Wang, Zhou, and Xiong]{arpit2022eoa}
+Devansh Arpit, Huan Wang, Yingbo Zhou, and Caiming Xiong.
+\newblock Ensemble of averages: Improving model selection and boosting
+  performance in domain generalization.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2022.
 
 \bibitem[Cai et~al.(2023)Cai, Zhang, and Wang]{cai2023rws}
 Ruisi Cai, Zhenyu Zhang, and Zhangyang Wang.
@@ -110,12 +116,34 @@ Mike Li, Hongseok Namkoong, and Shangzhou Xia.
 \newblock Evaluating model performance under worst-case subpopulations.
 \newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
 
+\bibitem[Qiao et~al.(2025)Qiao, Wu, Wang, Koh, and Low]{qiao2025gsr}
+Rui Qiao, Zhaoxuan Wu, Jingtan Wang, Pang~Wei Koh, and Bryan Kian~Hsiang Low.
+\newblock Group-robust sample reweighting for subpopulation shifts via
+  influence functions.
+\newblock In \emph{International Conference on Learning Representations}, 2025.
+
+\bibitem[Qiu et~al.(2023)Qiu, Potapczynski, Izmailov, and Wilson]{qiu2023afr}
+Shikai Qiu, Andres Potapczynski, Pavel Izmailov, and Andrew~Gordon Wilson.
+\newblock Simple and fast group robustness by automatic feature reweighting.
+\newblock In \emph{Proceedings of the 40th International Conference on Machine
+  Learning}, volume 202 of \emph{Proceedings of Machine Learning Research},
+  pages 28448--28467. PMLR, 2023.
+\newblock URL \url{https://proceedings.mlr.press/v202/qiu23c.html}.
+
 \bibitem[Ram{\'e} et~al.(2022)Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy,
   Gallinari, and Cord]{rame2022diwa}
 Alexandre Ram{\'e}, Matthieu Kirchmeyer, Thibaud Rahier, Alain Rakotomamonjy,
   Patrick Gallinari, and Matthieu Cord.
 \newblock Diverse weight averaging for out-of-distribution generalization.
 \newblock In \emph{Advances in Neural Information Processing Systems}, 2022.
+
+\bibitem[Rothenh{\"a}usler et~al.(2021)Rothenh{\"a}usler, Meinshausen,
+  B{\"u}hlmann, and Peters]{rothenhausler2021anchor}
+Dominik Rothenh{\"a}usler, Nicolai Meinshausen, Peter B{\"u}hlmann, and Jonas
+  Peters.
+\newblock Anchor regression: Heterogeneous data meet causality.
+\newblock \emph{Journal of the Royal Statistical Society: Series B},
+  83\penalty0 (2):\penalty0 215--246, 2021.
 
 \bibitem[Sagawa et~al.(2020)Sagawa, Koh, Hashimoto, and
   Liang]{sagawa2020groupdro}
@@ -130,6 +158,14 @@ Patrice~Y. Simard, Bernard Victorri, Yann LeCun, and John~S. Denker.
 \newblock Tangent prop: A formalism for specifying selected invariances in an
   adaptive network.
 \newblock In \emph{Advances in Neural Information Processing Systems}, 1992.
+
+\bibitem[Teterwak et~al.(2025)Teterwak, Saito, Tsiligkaridis, Saenko, and
+  Plummer]{teterwak2025ermpp}
+Piotr Teterwak, Kuniaki Saito, Theodoros Tsiligkaridis, Kate Saenko, and
+  Bryan~A. Plummer.
+\newblock {ERM++}: An improved baseline for domain generalization.
+\newblock In \emph{IEEE/CVF Winter Conference on Applications of Computer
+  Vision}, 2025.
 
 \bibitem[Wortsman et~al.(2022{\natexlab{a}})Wortsman, Ilharco, Gadre, Roelofs,
   Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and

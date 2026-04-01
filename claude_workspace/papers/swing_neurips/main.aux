@@ -3,18 +3,21 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{cha2021swad}
+\citation{arpit2022eoa}
 \citation{rame2022diwa}
 \citation{cha2022miro}
+\citation{teterwak2025ermpp}
+\citation{teterwak2025ermpp}
 \providecommand \oddpage@label [2]{}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
-\citation{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups}
+\citation{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups,arpit2022eoa}
 \citation{izmailov2020subspace}
 \citation{koh2017influence,duchi2020variance,duchi2021learning}
 \citation{cha2021swad}
+\citation{arpit2022eoa}
 \citation{rame2022diwa}
 \citation{cha2022miro}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Single-run post-hoc DG.}{2}{section*.3}\protected@file@percent }
+\citation{teterwak2025ermpp}
 \citation{izmailov2018swa}
 \citation{garipov2018fge}
 \citation{frankle2020linear}
@@ -22,124 +25,141 @@
 \citation{izmailov2020subspace}
 \citation{koh2017influence}
 \citation{duchi2016fdiv,duchi2020variance,duchi2021learning}
-\citation{li2021worstcase,hashimoto2018fairness,lahoti2020fairness,sagawa2020groupdro}
+\citation{li2021worstcase,hashimoto2018fairness,lahoti2020fairness,sagawa2020groupdro,qiao2025gsr,qiu2023afr}
+\citation{rothenhausler2021anchor}
 \citation{simard1991tangent}
 \citation{wortsman2021wiseft,cai2023rws,jang2024modelstock,abdollahpoorrostam2026monosoup}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {SWING}}{} pipeline.} A dense checkpoint bank is reduced to a connected safe pool. That pool defines a basin center \(\mu \) and a low-rank subspace \(U\). On disjoint source splits, \textup  {\textsc  {SWING}}{} estimates a source-fit operator \(\hat  A\) and a reweighting fragility operator \(\hat  B\), then outputs one deployable model by minimizing the surrogate within the basin trust region; when the constraint is inactive, this reduces to generalized eigen-shrinkage.}}{3}{figure.caption.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {SWING}}{} pipeline.} A dense checkpoint bank is reduced to a connected safe pool. That pool defines a basin center \(\mu \) and a low-rank subspace \(U\). On disjoint source splits, \textup  {\textsc  {SWING}}{} estimates a source-fit operator \(\hat  A_0\), inflates it to \(\hat  A_\tau \), estimates a reweighting fragility operator \(\hat  B\), and outputs one deployable model by minimizing the surrogate within the basin trust region; when the constraint is inactive, this reduces to generalized eigen-shrinkage of the inflated baseline.}}{3}{figure.caption.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:overview}{{1}{3}{\textbf {\swing {} pipeline.} A dense checkpoint bank is reduced to a connected safe pool. That pool defines a basin center \(\mu \) and a low-rank subspace \(U\). On disjoint source splits, \swing {} estimates a source-fit operator \(\hat A\) and a reweighting fragility operator \(\hat B\), then outputs one deployable model by minimizing the surrogate within the basin trust region; when the constraint is inactive, this reduces to generalized eigen-shrinkage}{figure.caption.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Weight averaging, connectivity, and basin geometry.}{3}{section*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Reweighting, influence, and local robustness.}{3}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Adjacent post-training weight editing outside DG.}{3}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
-\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Safe checkpoint pool.}{4}{section*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Basin coordinates.}{4}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Disjoint source splits.}{4}{section*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}The Method}{4}{section.4}\protected@file@percent }
-\newlabel{sec:method}{{4}{4}{The Method}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Quadratic source-fit surrogate}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{fig:overview}{{1}{3}{\textbf {\swing {} pipeline.} A dense checkpoint bank is reduced to a connected safe pool. That pool defines a basin center \(\mu \) and a low-rank subspace \(U\). On disjoint source splits, \swing {} estimates a source-fit operator \(\hat A_0\), inflates it to \(\hat A_\tau \), estimates a reweighting fragility operator \(\hat B\), and outputs one deployable model by minimizing the surrogate within the basin trust region; when the constraint is inactive, this reduces to generalized eigen-shrinkage of the inflated baseline}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single-run post-hoc DG.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Current benchmark landscape.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Weight averaging, connectivity, and basin geometry.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reweighting, influence, and local robustness.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Adjacent post-training weight editing outside DG.}{4}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{4}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{4}{Problem Setup}{section.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Safe checkpoint pool.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Basin coordinates.}{4}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Disjoint source splits.}{4}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}The Method}{5}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{5}{The Method}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Quadratic source-fit surrogate}{5}{subsection.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Fragility operator from source reweightings}{5}{subsection.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}The \textup  {\textsc  {SWING}}{} objective}{5}{subsection.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Generalized eigen-shrinkage}{5}{subsection.4.4}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {SWING}}{}}}{6}{algorithm.1}\protected@file@percent }
-\newlabel{alg:swing}{{1}{6}{\swing {}}{algorithm.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Three-dimensional intuition for \textup  {\textsc  {SWING}}{}.} Left: dense checkpoints define a connected low-loss basin and a center \(\mu \). Middle: the basin subspace supplies the coordinates in which fit and fragility are estimated. Right: \textup  {\textsc  {SWING}}{} contracts the fit solution anisotropically, suppressing high-fragility directions more than low-fragility directions.}}{6}{figure.caption.10}\protected@file@percent }
-\newlabel{fig:basin3d}{{2}{6}{\textbf {Three-dimensional intuition for \swing {}.} Left: dense checkpoints define a connected low-loss basin and a center \(\mu \). Middle: the basin subspace supplies the coordinates in which fit and fragility are estimated. Right: \swing {} contracts the fit solution anisotropically, suppressing high-fragility directions more than low-fragility directions}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Generalized eigen-shrinkage}{6}{subsection.4.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {5}Theory}{6}{section.5}\protected@file@percent }
 \newlabel{sec:theory}{{5}{6}{Theory}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Assumptions}{6}{subsection.5.1}\protected@file@percent }
-\newlabel{ass:fit}{{1}{6}{Local quadratic source-fit model}{assumption.1}{}}
-\newlabel{ass:lin}{{2}{6}{Examplewise local linearization with quadratic remainder}{assumption.2}{}}
-\newlabel{ass:shift}{{3}{7}{Source-supported local target shift}{assumption.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Deriving the fragility term}{7}{subsection.5.2}\protected@file@percent }
-\newlabel{thm:robust_bound}{{1}{7}{Local hidden-shift upper bound}{theorem.1}{}}
-\newlabel{cor:quadratic_majorizer}{{1}{7}{Quadratic \swing {} surrogate}{corollary.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Closed-form shrinkage solution}{7}{subsection.5.3}\protected@file@percent }
-\newlabel{thm:closed_form}{{2}{7}{Generalized eigen-shrinkage}{theorem.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Why reweighting induces a fragility operator.} Nearby target domains are modeled as local redistributions of source-support mass. Examplewise slope vectors that fan out strongly under these redistributions produce a large covariance \(B\), so directions aligned with them are shrunk more aggressively by \textup  {\textsc  {SWING}}{}.}}{8}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:simplex}{{3}{8}{\textbf {Why reweighting induces a fragility operator.} Nearby target domains are modeled as local redistributions of source-support mass. Examplewise slope vectors that fan out strongly under these redistributions produce a large covariance \(B\), so directions aligned with them are shrunk more aggressively by \swing {}}{figure.caption.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Why anisotropy matters}{8}{subsection.5.4}\protected@file@percent }
-\newlabel{thm:scalar_gap}{{1}{8}{Comparison to scalar shrinkage}{proposition.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Two-dimensional analogue of Proposition~\ref {thm:scalar_gap}.} The fit solution \(z_{\mathrm  {fit}}\) lies away from the basin center \(\mu \). The best scalar shrinkage moves only along the dashed ray. The \textup  {\textsc  {SWING}}{} optimum follows the anisotropic geometry defined by \(A\) and \(B\), producing a lower robust surrogate value whenever fragility is direction-dependent.}}{9}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:2d}{{4}{9}{\textbf {Two-dimensional analogue of Proposition~\ref {thm:scalar_gap}.} The fit solution \(z_{\mathrm {fit}}\) lies away from the basin center \(\mu \). The best scalar shrinkage moves only along the dashed ray. The \swing {} optimum follows the anisotropic geometry defined by \(A\) and \(B\), producing a lower robust surrogate value whenever fragility is direction-dependent}{figure.caption.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Certificate improvement and conditional stability}{9}{subsection.5.5}\protected@file@percent }
-\newlabel{prop:gain}{{2}{9}{Exact certificate gain over the fit-only solution}{proposition.2}{}}
-\newlabel{thm:perturb}{{3}{9}{Deterministic perturbation bound}{theorem.3}{}}
-\newlabel{fig:operators}{{5a}{10}{Fit and fragility operators, their generalized geometry, and the resulting spectrum}{figure.caption.13}{}}
-\newlabel{sub@fig:operators}{{a}{10}{Fit and fragility operators, their generalized geometry, and the resulting spectrum}{figure.caption.13}{}}
-\newlabel{fig:path}{{5b}{10}{Shrinkage path as fragility rises}{figure.caption.13}{}}
-\newlabel{sub@fig:path}{{b}{10}{Shrinkage path as fragility rises}{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Operator-level intuition for \textup  {\textsc  {SWING}}{}.} The fit operator \(\hat  A\) says which directions the source data trusts. The fragility operator \(\hat  B\) says which directions swing under source-support redistributions. Their generalized eigensystem defines the contraction geometry.}}{10}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:operators_main}{{5}{10}{\textbf {Operator-level intuition for \swing {}.} The fit operator \(\hat A\) says which directions the source data trusts. The fragility operator \(\hat B\) says which directions swing under source-support redistributions. Their generalized eigensystem defines the contraction geometry}{figure.caption.13}{}}
-\newlabel{cor:certificate}{{2}{10}{Restricted-family target certificate}{corollary.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Practical Estimation Details}{10}{section.6}\protected@file@percent }
-\newlabel{sec:practical}{{6}{10}{Practical Estimation Details}{section.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Estimating the quadratic fit surrogate.}{10}{section*.14}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Estimating the slope covariance.}{10}{section*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Computational complexity.}{10}{section*.16}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {SWING}}{}}}{7}{algorithm.1}\protected@file@percent }
+\newlabel{alg:swing}{{1}{7}{\swing {}}{algorithm.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Three-dimensional intuition for \textup  {\textsc  {SWING}}{}.} Left: dense checkpoints define a connected low-loss basin and a center \(\mu \). Middle: the basin subspace supplies the coordinates in which the local fit, isotropic inflation, and fragility are estimated. Right: \textup  {\textsc  {SWING}}{} contracts the inflated baseline anisotropically, suppressing high-fragility directions more than low-fragility directions.}}{7}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:basin3d}{{2}{7}{\textbf {Three-dimensional intuition for \swing {}.} Left: dense checkpoints define a connected low-loss basin and a center \(\mu \). Middle: the basin subspace supplies the coordinates in which the local fit, isotropic inflation, and fragility are estimated. Right: \swing {} contracts the inflated baseline anisotropically, suppressing high-fragility directions more than low-fragility directions}{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Assumptions}{7}{subsection.5.1}\protected@file@percent }
+\newlabel{ass:fit}{{1}{7}{Local quadratic source-fit model}{assumption.1}{}}
+\newlabel{ass:lin}{{2}{7}{Examplewise local linearization with quadratic remainder}{assumption.2}{}}
+\newlabel{ass:shift}{{3}{8}{Source-supported local target shift}{assumption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Deriving the fragility term}{8}{subsection.5.2}\protected@file@percent }
+\newlabel{thm:robust_bound}{{1}{8}{Local hidden-shift upper bound}{theorem.1}{}}
+\newlabel{cor:quadratic_majorizer}{{1}{8}{Quadratic \swing {} surrogate}{corollary.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Closed-form shrinkage solution}{8}{subsection.5.3}\protected@file@percent }
+\newlabel{thm:closed_form}{{2}{8}{Generalized eigen-shrinkage}{theorem.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Why reweighting induces a fragility operator.} Nearby target domains are modeled as local redistributions of source-support mass. Examplewise slope vectors that fan out strongly under these redistributions produce a large covariance \(B\), so directions aligned with them are shrunk more aggressively by \textup  {\textsc  {SWING}}{}.}}{9}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:simplex}{{3}{9}{\textbf {Why reweighting induces a fragility operator.} Nearby target domains are modeled as local redistributions of source-support mass. Examplewise slope vectors that fan out strongly under these redistributions produce a large covariance \(B\), so directions aligned with them are shrunk more aggressively by \swing {}}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Why anisotropy matters}{9}{subsection.5.4}\protected@file@percent }
+\newlabel{prop:scalar_gap}{{1}{9}{Comparison to scalar shrinkage}{proposition.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Two-dimensional analogue of Proposition~\ref {prop:scalar_gap}.} The inflated baseline \(z_\tau \) lies away from the basin center \(\mu \). The best scalar shrinkage moves only along the dashed ray. The \textup  {\textsc  {SWING}}{} optimum follows the anisotropic geometry defined by \(A_\tau \) and \(B\), producing a lower robust surrogate value whenever fragility is direction-dependent.}}{10}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:2d}{{4}{10}{\textbf {Two-dimensional analogue of Proposition~\ref {prop:scalar_gap}.} The inflated baseline \(z_\tau \) lies away from the basin center \(\mu \). The best scalar shrinkage moves only along the dashed ray. The \swing {} optimum follows the anisotropic geometry defined by \(A_\tau \) and \(B\), producing a lower robust surrogate value whenever fragility is direction-dependent}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Certificate improvement and conditional stability}{10}{subsection.5.5}\protected@file@percent }
+\newlabel{prop:gain}{{2}{10}{Exact certificate gain over the inflated baseline}{proposition.2}{}}
+\newlabel{ass:identify}{{4}{10}{Conditional local identification for plug-in estimation}{assumption.4}{}}
+\newlabel{thm:perturb}{{3}{11}{Deterministic perturbation bound}{theorem.3}{}}
+\newlabel{cor:certificate}{{2}{11}{Restricted-family target certificate}{corollary.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Practical Estimation Details}{11}{section.6}\protected@file@percent }
+\newlabel{sec:practical}{{6}{11}{Practical Estimation Details}{section.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Estimating the quadratic fit surrogate.}{11}{section*.15}\protected@file@percent }
 \citation{gulrajani2021domainbed}
+\newlabel{fig:operators}{{5a}{12}{Inflated fit and fragility operators, their generalized geometry, and the resulting spectrum}{figure.caption.14}{}}
+\newlabel{sub@fig:operators}{{a}{12}{Inflated fit and fragility operators, their generalized geometry, and the resulting spectrum}{figure.caption.14}{}}
+\newlabel{fig:path}{{5b}{12}{Shrinkage path as fragility rises}{figure.caption.14}{}}
+\newlabel{sub@fig:path}{{b}{12}{Shrinkage path as fragility rises}{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Operator-level intuition for \textup  {\textsc  {SWING}}{}.} The inflated fit operator \(\hat  A_\tau \) says which directions the source data trusts after isotropic certification inflation. The fragility operator \(\hat  B\) says which directions swing under source-support redistributions. Their generalized eigensystem defines the contraction geometry.}}{12}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:operators_main}{{5}{12}{\textbf {Operator-level intuition for \swing {}.} The inflated fit operator \(\hat A_\tau \) says which directions the source data trusts after isotropic certification inflation. The fragility operator \(\hat B\) says which directions swing under source-support redistributions. Their generalized eigensystem defines the contraction geometry}{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {paragraph}{Estimating the slope covariance.}{12}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Local design and identifiability.}{12}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Computational complexity.}{12}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Experimental Protocol}{12}{section.7}\protected@file@percent }
+\newlabel{sec:experiments}{{7}{12}{Experimental Protocol}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Benchmarks and training regime}{12}{subsection.7.1}\protected@file@percent }
 \citation{cha2021swad}
 \citation{cha2021swad}
+\citation{teterwak2025ermpp}
+\citation{arpit2022eoa}
 \citation{rame2022diwa}
 \citation{cha2022miro}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Published benchmark context from prior work. \(\dagger \) DiWA's strongest published configuration uses a heavier multi-model setting than pure single-run post-hoc selection.}}{11}{table.caption.17}\protected@file@percent }
-\newlabel{tab:published}{{1}{11}{Published benchmark context from prior work. \(\dagger \) DiWA's strongest published configuration uses a heavier multi-model setting than pure single-run post-hoc selection}{table.caption.17}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Planned primary comparison for the pure single-run post-hoc setting. All \textup  {\textsc  {SWING}}{} entries are intentionally left as \textbf  {TBD}{} until experiments are run.}}{11}{table.caption.18}\protected@file@percent }
-\newlabel{tab:main_tbd}{{2}{11}{Planned primary comparison for the pure single-run post-hoc setting. All \swing {} entries are intentionally left as \TBD {} until experiments are run}{table.caption.18}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Experimental Protocol}{11}{section.7}\protected@file@percent }
-\newlabel{sec:experiments}{{7}{11}{Experimental Protocol}{section.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Benchmarks and training regime}{11}{subsection.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Published benchmark context}{11}{subsection.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Planned main table}{11}{subsection.7.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Required ablations}{11}{subsection.7.4}\protected@file@percent }
+\citation{teterwak2025ermpp}
+\citation{teterwak2025ermpp}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Standalone and direct single-model benchmark context from prior work. \textsc  {ERM++} is not a post-hoc method, but it is a strong current baseline and materially raises the empirical bar.}}{13}{table.caption.19}\protected@file@percent }
+\newlabel{tab:published}{{1}{13}{Standalone and direct single-model benchmark context from prior work. \textsc {ERM++} is not a post-hoc method, but it is a strong current baseline and materially raises the empirical bar}{table.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Heavier or hybrid benchmark context from prior work. These rows are useful reference points, but they are not the pure single-run post-hoc regime targeted by \textup  {\textsc  {SWING}}{}.}}{13}{table.caption.20}\protected@file@percent }
+\newlabel{tab:published_hybrid}{{2}{13}{Heavier or hybrid benchmark context from prior work. These rows are useful reference points, but they are not the pure single-run post-hoc regime targeted by \swing {}}{table.caption.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Published benchmark context}{13}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Planned main table}{13}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Required ablations}{13}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{13}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What \textup  {\textsc  {SWING}}{} is and is not.}{13}{section*.23}\protected@file@percent }
 \bibstyle{plainnat}
 \bibdata{references}
 \bibcite{abdollahpoorrostam2026monosoup}{{1}{2026}{{Abdollahpoorrostam et~al.}}{{Abdollahpoorrostam, Dimitriadis, Hazimeh, and Frossard}}}
-\bibcite{cai2023rws}{{2}{2023}{{Cai et~al.}}{{Cai, Zhang, and Wang}}}
-\bibcite{cha2021swad}{{3}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
-\bibcite{cha2022miro}{{4}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
-\bibcite{duchi2020variance}{{5}{2019}{{Duchi and Namkoong}}{{}}}
-\bibcite{duchi2016fdiv}{{6}{2016}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Planned ablation table. All new numbers remain \textbf  {TBD}{}.}}{12}{table.caption.19}\protected@file@percent }
-\newlabel{tab:ablations_tbd}{{3}{12}{Planned ablation table. All new numbers remain \TBD {}}{table.caption.19}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{12}{section.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{What \textup  {\textsc  {SWING}}{} is and is not.}{12}{section*.20}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Why the theory is local.}{12}{section*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Limitations.}{12}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{12}{section.9}\protected@file@percent }
-\bibcite{duchi2021learning}{{7}{2021}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
-\bibcite{frankle2020linear}{{8}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
-\bibcite{garipov2018fge}{{9}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
-\bibcite{gulrajani2021domainbed}{{10}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
-\bibcite{hashimoto2018fairness}{{11}{2018}{{Hashimoto et~al.}}{{Hashimoto, Srivastava, Namkoong, and Liang}}}
-\bibcite{izmailov2018swa}{{12}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
-\bibcite{izmailov2020subspace}{{13}{2020}{{Izmailov et~al.}}{{Izmailov, Maddox, Kirichenko, Garipov, Vetrov, and Wilson}}}
-\bibcite{jang2024modelstock}{{14}{2024}{{Jang et~al.}}{{Jang, Yun, and Han}}}
-\bibcite{koh2017influence}{{15}{2017}{{Koh and Liang}}{{}}}
-\bibcite{lahoti2020fairness}{{16}{2020}{{Lahoti et~al.}}{{Lahoti, Gummadi, and Weikum}}}
-\bibcite{li2021worstcase}{{17}{2021}{{Li et~al.}}{{Li, Namkoong, and Xia}}}
-\bibcite{rame2022diwa}{{18}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
-\bibcite{sagawa2020groupdro}{{19}{2020}{{Sagawa et~al.}}{{Sagawa, Koh, Hashimoto, and Liang}}}
-\bibcite{simard1991tangent}{{20}{1992}{{Simard et~al.}}{{Simard, Victorri, LeCun, and Denker}}}
-\bibcite{wortsman2022soups}{{21}{2022{}}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
-\bibcite{wortsman2021wiseft}{{22}{2022{}}{{Wortsman et~al.}}{{Wortsman, Ilharco, Kim, Li, Kornblith, Roelofs, Gontijo-Lopes, Hajishirzi, Farhadi, Namkoong, and Schmidt}}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Geometric Intuition}{14}{appendix.A}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Regularization path.} Each generalized direction is shrunk by \(\beta _j(\lambda )=1/(1+\lambda \nu _j)\). Larger fragility eigenvalues decay faster as \(\lambda \) grows.}}{14}{figure.caption.24}\protected@file@percent }
-\newlabel{fig:path_appendix}{{6}{14}{\textbf {Regularization path.} Each generalized direction is shrunk by \(\beta _j(\lambda )=1/(1+\lambda \nu _j)\). Larger fragility eigenvalues decay faster as \(\lambda \) grows}{figure.caption.24}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Proofs}{14}{appendix.B}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Proof of Theorem~\ref {thm:robust_bound}}{14}{subsection.B.1}\protected@file@percent }
-\newlabel{eq:proof_t1_start}{{1}{14}{Proof of Theorem~\ref {thm:robust_bound}}{equation.1}{}}
-\newlabel{eq:proof_t1_expand}{{2}{14}{Proof of Theorem~\ref {thm:robust_bound}}{equation.2}{}}
-\newlabel{eq:proof_t1_phi}{{3}{14}{Proof of Theorem~\ref {thm:robust_bound}}{equation.3}{}}
-\newlabel{eq:proof_t1_remainder}{{4}{15}{Proof of Theorem~\ref {thm:robust_bound}}{equation.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Proof of Corollary~\ref {cor:quadratic_majorizer}}{15}{subsection.B.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Proof of Theorem~\ref {thm:closed_form}}{15}{subsection.B.3}\protected@file@percent }
-\newlabel{eq:proof_t2_coord_1}{{5}{16}{Proof of Theorem~\ref {thm:closed_form}}{equation.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Proof of Proposition~\ref {thm:scalar_gap}}{16}{subsection.B.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Proof of Proposition~\ref {prop:gain}}{17}{subsection.B.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Proof of Theorem~\ref {thm:perturb}}{17}{subsection.B.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Proof of Corollary~\ref {cor:certificate}}{18}{subsection.B.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {C}Optional Numerical Properties}{18}{appendix.C}\protected@file@percent }
-\newlabel{prop:path}{{3}{18}{Shrinkage path limits}{proposition.3}{}}
-\gdef \@abspage@last{18}
+\bibcite{arpit2022eoa}{{2}{2022}{{Arpit et~al.}}{{Arpit, Wang, Zhou, and Xiong}}}
+\bibcite{cai2023rws}{{3}{2023}{{Cai et~al.}}{{Cai, Zhang, and Wang}}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Planned primary comparison in the pure single-run post-hoc regime, together with the strong standalone baseline \textsc  {ERM++}. Heavier and hybrid contexts are summarized separately in Table~\ref {tab:published_hybrid}. All \textup  {\textsc  {SWING}}{} entries are intentionally left as \textbf  {TBD}{} until experiments are run.}}{14}{table.caption.21}\protected@file@percent }
+\newlabel{tab:main_tbd}{{3}{14}{Planned primary comparison in the pure single-run post-hoc regime, together with the strong standalone baseline \textsc {ERM++}. Heavier and hybrid contexts are summarized separately in Table~\ref {tab:published_hybrid}. All \swing {} entries are intentionally left as \TBD {} until experiments are run}{table.caption.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Planned ablation table. All new numbers remain \textbf  {TBD}{}.}}{14}{table.caption.22}\protected@file@percent }
+\newlabel{tab:ablations_tbd}{{4}{14}{Planned ablation table. All new numbers remain \TBD {}}{table.caption.22}{}}
+\@writefile{toc}{\contentsline {paragraph}{Why the theory is local.}{14}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Limitations.}{14}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{14}{section.9}\protected@file@percent }
+\bibcite{cha2021swad}{{4}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{cha2022miro}{{5}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
+\bibcite{duchi2020variance}{{6}{2019}{{Duchi and Namkoong}}{{}}}
+\bibcite{duchi2016fdiv}{{7}{2016}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{duchi2021learning}{{8}{2021}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{frankle2020linear}{{9}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{garipov2018fge}{{10}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\bibcite{gulrajani2021domainbed}{{11}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{hashimoto2018fairness}{{12}{2018}{{Hashimoto et~al.}}{{Hashimoto, Srivastava, Namkoong, and Liang}}}
+\bibcite{izmailov2018swa}{{13}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{izmailov2020subspace}{{14}{2020}{{Izmailov et~al.}}{{Izmailov, Maddox, Kirichenko, Garipov, Vetrov, and Wilson}}}
+\bibcite{jang2024modelstock}{{15}{2024}{{Jang et~al.}}{{Jang, Yun, and Han}}}
+\bibcite{koh2017influence}{{16}{2017}{{Koh and Liang}}{{}}}
+\bibcite{lahoti2020fairness}{{17}{2020}{{Lahoti et~al.}}{{Lahoti, Gummadi, and Weikum}}}
+\bibcite{li2021worstcase}{{18}{2021}{{Li et~al.}}{{Li, Namkoong, and Xia}}}
+\bibcite{qiao2025gsr}{{19}{2025}{{Qiao et~al.}}{{Qiao, Wu, Wang, Koh, and Low}}}
+\bibcite{qiu2023afr}{{20}{2023}{{Qiu et~al.}}{{Qiu, Potapczynski, Izmailov, and Wilson}}}
+\bibcite{rame2022diwa}{{21}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\bibcite{rothenhausler2021anchor}{{22}{2021}{{Rothenh{\"a}usler et~al.}}{{Rothenh{\"a}usler, Meinshausen, B{\"u}hlmann, and Peters}}}
+\bibcite{sagawa2020groupdro}{{23}{2020}{{Sagawa et~al.}}{{Sagawa, Koh, Hashimoto, and Liang}}}
+\bibcite{simard1991tangent}{{24}{1992}{{Simard et~al.}}{{Simard, Victorri, LeCun, and Denker}}}
+\bibcite{teterwak2025ermpp}{{25}{2025}{{Teterwak et~al.}}{{Teterwak, Saito, Tsiligkaridis, Saenko, and Plummer}}}
+\bibcite{wortsman2022soups}{{26}{2022{}}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\bibcite{wortsman2021wiseft}{{27}{2022{}}{{Wortsman et~al.}}{{Wortsman, Ilharco, Kim, Li, Kornblith, Roelofs, Gontijo-Lopes, Hajishirzi, Farhadi, Namkoong, and Schmidt}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Geometric Intuition}{16}{appendix.A}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Regularization path.} Each generalized direction is shrunk by \(\beta _j(\lambda )=1/(1+\lambda \nu _j)\). Larger fragility eigenvalues decay faster as \(\lambda \) grows.}}{16}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:path_appendix}{{6}{16}{\textbf {Regularization path.} Each generalized direction is shrunk by \(\beta _j(\lambda )=1/(1+\lambda \nu _j)\). Larger fragility eigenvalues decay faster as \(\lambda \) grows}{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Proofs}{17}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Proof of Theorem~\ref {thm:robust_bound}}{17}{subsection.B.1}\protected@file@percent }
+\newlabel{eq:proof_t1_start}{{1}{17}{Proof of Theorem~\ref {thm:robust_bound}}{equation.1}{}}
+\newlabel{eq:proof_t1_expand}{{2}{17}{Proof of Theorem~\ref {thm:robust_bound}}{equation.2}{}}
+\newlabel{eq:proof_t1_phi}{{3}{17}{Proof of Theorem~\ref {thm:robust_bound}}{equation.3}{}}
+\newlabel{eq:proof_t1_remainder}{{4}{17}{Proof of Theorem~\ref {thm:robust_bound}}{equation.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Proof of Corollary~\ref {cor:quadratic_majorizer}}{18}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Proof of Theorem~\ref {thm:closed_form}}{18}{subsection.B.3}\protected@file@percent }
+\newlabel{eq:proof_t2_coord_1}{{5}{18}{Proof of Theorem~\ref {thm:closed_form}}{equation.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Proof of Proposition~\ref {prop:scalar_gap}}{19}{subsection.B.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Proof of Proposition~\ref {prop:gain}}{19}{subsection.B.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Proof of Theorem~\ref {thm:perturb}}{20}{subsection.B.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Proof of Corollary~\ref {cor:certificate}}{20}{subsection.B.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C}Optional Numerical Properties}{21}{appendix.C}\protected@file@percent }
+\newlabel{prop:path}{{3}{21}{Shrinkage path limits}{proposition.3}{}}
+\gdef \@abspage@last{21}
