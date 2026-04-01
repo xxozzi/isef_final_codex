@@ -68,6 +68,7 @@
 \newcommand{\bracks}[1]{\left[ #1 \right]}
 \newcommand{\braces}[1]{\left\{ #1 \right\}}
 \newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\ip}[2]{\left\langle #1, #2 \right\rangle}
 \newcommand{\one}{\mathbbm{1}}
 
 \begin{document}
@@ -75,7 +76,7 @@
 \maketitle
 
 \begin{abstract}
-Single-run post-hoc domain generalization is attractive because it can be attached to a strong empirical-risk-minimization pipeline without retraining. Existing post-hoc methods in this regime predominantly select or average checkpoints inside one connected low-loss region, motivated by flatness, locality, or diversity. This paper studies a different remaining degree of freedom: \emph{once a safe basin has already been found, should all directions inside that basin be trusted equally under domain shift?} We propose \textbf{\swing{}} (\textbf{S}ource-re\textbf{W}eighting-\textbf{I}nduced ei\textbf{N}-shrin\textbf{G}age), a single-run, post-hoc, domain-label-free method that learns a low-rank basin geometry from one dense checkpoint trajectory and then contracts only the directions that are fragile under plausible source-support reweightings. The method first constructs a connected checkpoint pool, defines a basin center and trajectory subspace, fits a local quadratic source-risk surrogate on one held-out split, adds an explicit isotropic curvature inflation, estimates a reweighting fragility operator on a disjoint split, and finally outputs a single model by minimizing the resulting surrogate inside a basin trust region; when the constraint is inactive, this reduces to generalized eigen-shrinkage of the inflated baseline. We prove a local hidden-shift upper bound in which the reweighting term appears as a square-root variance penalty, show that any inflation level \(\tau\ge \sqrt{\varrho}K\) yields a valid quadratic hidden-shift certificate, derive the closed-form generalized eigen-shrinkage solution of the unconstrained inflated surrogate, give a precise comparison with scalar shrinkage inside that quadratic model, and establish a deterministic perturbation bound together with a conditional plug-in consistency statement for the unconstrained estimator. The experimental sections intentionally leave all new \swing{} quantitative results as \TBD{}, while recording exact published benchmark context from prior work and providing the full evaluation protocol.
+Single-run post-hoc domain generalization is attractive because it can be attached to a strong empirical-risk-minimization pipeline without retraining. Existing post-hoc methods in this regime predominantly select or average checkpoints inside one connected low-loss region, motivated by flatness, locality, or diversity. This paper studies a different remaining degree of freedom: \emph{once a safe basin has already been found, should all directions inside that basin be trusted equally under domain shift?} We propose \textbf{\swing{}} (\textbf{S}ource-re\textbf{W}eighting-\textbf{I}nduced ei\textbf{N}-shrin\textbf{G}age), a single-run, post-hoc, domain-label-free method that learns a low-rank basin geometry from one dense checkpoint trajectory and then contracts only the directions that are fragile under plausible source-support reweightings. The method first constructs an anchor-centered barrier-filtered checkpoint pool, proves that this stage recovers a population-safe star basin up to explicit finite-sample margins, defines a basin center and trajectory subspace, fits a local quadratic source-risk surrogate on one held-out split, adds an explicit isotropic curvature inflation, estimates a reweighting fragility operator on a disjoint split, and finally outputs a single model by minimizing the resulting surrogate inside a basin trust region; when the constraint is inactive, this reduces to generalized eigen-shrinkage of the inflated baseline. We prove a local hidden-shift upper bound in which the reweighting term appears as a square-root variance penalty, show that any inflation level \(\tau\ge \sqrt{\varrho}K\) yields a valid quadratic hidden-shift certificate, derive exact minimax and dual representations of the robust surrogate, prove that smooth filtered basins are safe to average, quantify the exact gap to scalar shrinkage, establish stability for the constrained deployed estimator, and give finite-sample estimation rates for the source-fit and fragility operators together with a subspace truncation bound. The resulting theory is intentionally local: it certifies robustness to source-supported hidden reallocations inside the learned basin family rather than arbitrary support-expanding \ood{} shifts. The experimental sections intentionally leave all new \swing{} quantitative results as \TBD{}, while recording exact published benchmark context from prior work and providing the full evaluation protocol.
 \end{abstract}
 
 \section{Introduction}
@@ -103,14 +104,18 @@ The central idea may be stated in one sentence:
 \textbf{Directions that swing under plausible source reweightings should not survive deployment at full strength.}
 \end{quote}
 
+The scope of that claim is deliberately limited. The paper does not argue that source-only post-hoc editing can certify arbitrary \ood{} behavior. It argues that, \emph{within a safe basin and for target shifts that can be approximated as local redistributions of source support}, anisotropic suppression of reweighting-fragile directions is the natural next step after isotropic checkpoint averaging.
+
 This move is still grounded in the current post-hoc DG literature. Weight averaging, mode connectivity, soups, and moving-average selectors tell us that dense trajectories often lie in a common low-loss basin \citep{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups,arpit2022eoa}. Subspace-based Bayesian approximations further show that a small trajectory subspace can contain many high-performing models \citep{izmailov2020subspace}. Influence analyses and distributionally robust optimization show that sample reweightings are a natural first-order model of nearby distribution shifts \citep{koh2017influence,duchi2020variance,duchi2021learning}. \swing{} combines these threads into a post-hoc DG method that is still simple, still single-model at test time, and more directly tied to hidden shift than isotropic averaging.
 
-We make four contributions.
+We make six contributions.
 \begin{enumerate}[leftmargin=1.4em]
     \item We introduce \swing{}, a single-run, post-hoc, domain-label-free DG method that performs a full-weight basin edit rather than another checkpoint selector.
-    \item We derive \swing{} from a local hidden-shift model in which target domains are source-supported \(\chi^2\)-bounded reweightings of the pooled source support. This yields a square-root fragility term \( \sqrt{\varrho\, z^\top B z}\) and a certificate family of quadratic surrogates indexed by an isotropic inflation parameter \(\tau\ge \sqrt{\varrho}K\).
-    \item We prove that the unconstrained inflated \swing{} edit has an exact generalized eigen-shrinkage form, and that the deployed estimator inherits this form whenever the trust-region constraint is inactive. We also give a precise within-model comparison against scalar shrinkage.
-    \item We prove a deterministic perturbation bound and a conditional plug-in consistency statement for the unconstrained empirical estimator, and give a restricted-family target-risk certificate for the population minimizer of the chosen hidden-shift surrogate.
+    \item We prove that the anchor-based barrier filter used to construct the checkpoint pool recovers a population-safe star basin up to explicit concentration margins, and that any soup inside a smooth filtered basin obeys a concrete source-risk upper bound controlled by within-pool dispersion.
+    \item We derive \swing{} from a local hidden-shift model in which target domains are source-supported \(\chi^2\)-bounded reweightings of the pooled source support. This yields a square-root fragility term \( \sqrt{\varrho\, z^\top B z}\), a certificate family of quadratic surrogates indexed by an isotropic inflation parameter \(\tau\ge \sqrt{\varrho}K\), and an exact minimax/dual interpretation of the resulting robust surrogate.
+    \item We prove that the unconstrained inflated \swing{} edit has an exact generalized eigen-shrinkage form, and we quantify the exact gap between that anisotropic solution and the best scalar shrinkage rule inside the same quadratic model.
+    \item We prove stability for the constrained deployed estimator that the algorithm actually returns, and we retain a sharper perturbation formula for the inactive-constraint special case.
+    \item We give finite-sample estimation rates for the source-fit and fragility operators, a finite-sample bound for the deployed edit, and a subspace truncation theorem quantifying the price of restricting the method to the learned trajectory subspace.
 \end{enumerate}
 
 \begin{figure}[t]
@@ -145,9 +150,9 @@ We work in the standard source-only DG setting. Let \(P\) denote the pooled sour
 \paragraph{Safe checkpoint pool.}
 Let \(S_{\mathrm{pool}}\) be a held-out source split used for pool construction. Define a source validation loss \(\widehat L_{\mathrm{pool}}(\theta)\) on this split. Let
 \[
-t^\star \in \argmin_{1\le t \le T}\widehat L_{\mathrm{pool}}(\theta_t)
+a \in \argmin_{1\le t \le T}\widehat L_{\mathrm{pool}}(\theta_t)
 \]
-be the best checkpoint. For checkpoints \(i,j\), define the empirical interpolation barrier
+be the empirical anchor checkpoint. For checkpoints \(i,j\), define the empirical interpolation barrier
 \[
 \barrier(i,j)
 =
@@ -161,11 +166,27 @@ where \(\mathcal G \subset [0,1]\) is a fixed interpolation grid. For user-chose
 \cC
 =
 \braces{
-t : \widehat L_{\mathrm{pool}}(\theta_t) \le \widehat L_{\mathrm{pool}}(\theta_{t^\star}) + \varepsilon_{\mathrm{pool}},
-\ \barrier(t,t^\star)\le \tau_{\mathrm{pool}}
+t : \widehat L_{\mathrm{pool}}(\theta_t) \le \widehat L_{\mathrm{pool}}(\theta_a) + \varepsilon_{\mathrm{pool}},
+\ \barrier(t,a)\le \tau_{\mathrm{pool}}
 }.
 \]
-This pool is intended to isolate one connected low-loss basin. The pool construction stage is not the novelty of the paper; it is the infrastructure on top of which \swing{} operates.
+This pool is intended to isolate one connected low-loss basin through an anchor-centered barrier filter. We write
+\[
+\mathfrak{S}_a(\cC)
+=
+\bigcup_{t\in\cC}
+\braces{(1-\alpha)\theta_a + \alpha \theta_t : \alpha\in[0,1]}
+\]
+for the star hull traced out by anchor-to-candidate interpolation paths, and
+\[
+\operatorname{conv}(\cC)
+=
+\braces{
+\sum_{t\in\cC} w_t \theta_t :
+w_t\ge 0,\ \sum_{t\in\cC} w_t = 1
+}
+\]
+for the soup hull of the retained pool. The pool construction stage is not the novelty of the paper; it is the infrastructure on top of which \swing{} operates.
 
 \paragraph{Basin coordinates.}
 Define the basin center
@@ -193,7 +214,7 @@ Beyond \(S_{\mathrm{pool}}\), \swing{} uses two disjoint held-out source splits:
 \end{itemize}
 The split separation is deliberate: it reduces direct reuse of the same source examples when fitting the source geometry and the hidden-shift geometry, although it does not by itself guarantee independence or unbiasedness once the upstream checkpoint pool and subspace have already been selected.
 
-In theory, \(\cZ\) is any compact trust region containing the observed safe-pool coordinates. In practice, we instantiate \(\cZ\) as a box in subspace coordinates whose sides are determined by the extrema of the safe-pool projections.
+In theory, \(\cZ\) is any compact convex trust region containing the observed safe-pool coordinates. In practice, we instantiate \(\cZ\) as a box in subspace coordinates whose sides are determined by the extrema of the safe-pool projections.
 
 \section{The Method}
 \label{sec:method}
@@ -372,13 +393,119 @@ Directions with larger fragility-to-fit ratio \(\nu_j\) receive stronger attenua
 \section{Theory}
 \label{sec:theory}
 
-This section derives the \swing{} objective from a local hidden-shift model and proves its main properties. The assumptions are deliberately explicit. The theory is local and subspace-restricted; it does not claim that arbitrary deep networks are globally quadratic in weight space.
+This section now has two jobs. First, it formalizes why anchor-based barrier filtering identifies a star basin whose retained checkpoints are low-risk and low-barrier, and why averaging inside that basin is safe once the additional convex-hull smoothness condition is imposed. Second, it derives the \swing{} edit from a local hidden-shift model and strengthens the estimator theory beyond the original unconstrained plug-in argument.
 
-\subsection{Assumptions}
+\subsection{Barrier-filtered basins and soup safety}
+
+The safe-pool stage is not the novelty of \swing{}, but it is the mathematical infrastructure the directional edit relies on. The next results make precise what such a barrier filter certifies.
+
+\begin{theorem}[Barrier-filtered pool is population-safe on the interpolation grid]
+\label{thm:pool_filter}
+Assume that \(S_{\mathrm{pool}}\) consists of i.i.d.\ examples from \(P\) and that every loss evaluated at a checkpoint \(\theta_t\) or at a grid interpolation point \((1-\alpha)\theta_i + \alpha \theta_j\) with \(i,j\in[T]\) and \(\alpha\in\mathcal G\) lies in \([0,L_{\max}^{\mathrm{pool}}]\). Let \(a\) and \(\cC\) be the empirical anchor and empirical safe pool from Section~\ref{sec:setup}, and define
+\[
+\xi_{\mathrm{pool}}(\delta)
+=
+L_{\max}^{\mathrm{pool}}
+\sqrt{
+\frac{\log\!\paren{2\paren{T+T^2\abs{\mathcal G}}/\delta}}{2\abs{S_{\mathrm{pool}}}}
+}.
+\]
+Then, with probability at least \(1-\delta\),
+\[
+L_P(\theta_a)
+\le
+\min_{1\le t\le T} L_P(\theta_t) + 2\xi_{\mathrm{pool}}(\delta),
+\]
+and every \(t\in\cC\) satisfies
+\[
+L_P(\theta_t)
+\le
+L_P(\theta_a) + \varepsilon_{\mathrm{pool}} + 2\xi_{\mathrm{pool}}(\delta),
+\]
+\[
+\max_{\alpha\in\mathcal G}
+L_P\paren{(1-\alpha)\theta_a + \alpha \theta_t}
+\le
+\max\braces{L_P(\theta_a),L_P(\theta_t)}
++
+\tau_{\mathrm{pool}} + 2\xi_{\mathrm{pool}}(\delta).
+\]
+\end{theorem}
+
+Theorem~\ref{thm:pool_filter} already gives a rigorous finite-sample statement for the random pool-building stage: the empirical barrier filter recovers a star pool whose checkpoints are population-near-optimal and population-low-barrier up to explicit concentration margins.
+
+\begin{corollary}[Full-segment safety from a finite interpolation grid]
+\label{cor:segment_barrier}
+Let
+\[
+\gamma(\mathcal G)
+=
+\sup_{u\in[0,1]} \min_{\alpha\in\mathcal G} \abs{u-\alpha}
+\]
+be the mesh width of the interpolation grid. Under the event of Theorem~\ref{thm:pool_filter}, assume additionally that \(L_P\) is differentiable on the star hull \(\mathfrak{S}_a(\cC)\) and that
+\[
+\sup_{\theta\in \mathfrak{S}_a(\cC)} \norm{\nabla L_P(\theta)} \le G_{\mathrm{pool}}.
+\]
+Then every \(t\in\cC\) satisfies
+\[
+\sup_{\alpha\in[0,1]}
+L_P\paren{(1-\alpha)\theta_a + \alpha \theta_t}
+\le
+\max\braces{L_P(\theta_a),L_P(\theta_t)}
++
+\tau_{\mathrm{pool}} + 2\xi_{\mathrm{pool}}(\delta)
++
+G_{\mathrm{pool}} \norm{\theta_t-\theta_a}\,\gamma(\mathcal G).
+\]
+\end{corollary}
+
+Corollary~\ref{cor:segment_barrier} closes the grid-discretization gap: a finite interpolation grid certifies the full anchor-to-candidate segment whenever source risk does not change too sharply between adjacent grid points.
+
+\begin{theorem}[Safe averaging inside a smooth filtered basin]
+\label{thm:soup_safe}
+Assume \(L_P\) is twice continuously differentiable on the soup hull \(\operatorname{conv}(\cC)\) and that
+\[
+\nabla^2 L_P(\theta) \succeq -\beta_{\mathrm{pool}} I_d
+\qquad
+\text{for all } \theta\in\operatorname{conv}(\cC).
+\]
+For any weights \((w_t)_{t\in\cC}\) satisfying \(w_t\ge 0\) and \(\sum_{t\in\cC} w_t=1\), define
+\[
+\theta_w = \sum_{t\in\cC} w_t \theta_t.
+\]
+Then
+\[
+L_P(\theta_w)
+\le
+\sum_{t\in\cC} w_t L_P(\theta_t)
++
+\frac{\beta_{\mathrm{pool}}}{2}
+\sum_{t\in\cC} w_t \norm{\theta_t-\theta_w}^2.
+\]
+In particular, if every \(t\in\cC\) obeys
+\[
+L_P(\theta_t) \le L_P(\theta_a) + \varepsilon_{\mathrm{safe}},
+\]
+then
+\[
+L_P(\theta_w)
+\le
+L_P(\theta_a)
++
+\varepsilon_{\mathrm{safe}}
++
+\frac{\beta_{\mathrm{pool}}}{2}
+\sum_{t\in\cC} w_t \norm{\theta_t-\theta_w}^2.
+\]
+\end{theorem}
+
+Theorem~\ref{thm:soup_safe} is the precise sense in which barrier-screened post-hoc methods identify checkpoints that are safe to average: once the retained cloud stays in a smooth common basin, the source loss of any soup is controlled by the retained endpoint losses plus an explicit within-pool variance term.
+
+\subsection{Hidden-shift assumptions}
 
 \begin{assumption}[Local quadratic source-fit model]
 \label{ass:fit}
-There exists a compact set \(\cZ \subset \RR^r\) containing \(0\) and the observed checkpoint coordinates, and a positive definite matrix \(A_0\in\RR^{r\times r}\) and vector \(a\in\RR^r\) such that the pooled source excess risk on the basin subspace satisfies
+There exists a compact convex set \(\cZ \subset \RR^r\) containing \(0\) and the observed checkpoint coordinates, and a positive definite matrix \(A_0\in\RR^{r\times r}\) and vector \(a\in\RR^r\) such that the pooled source excess risk on the basin subspace satisfies
 \[
 L_P(z) - L_P(0)
 =
@@ -424,7 +551,7 @@ Q : \frac{dQ}{dP} = 1+h,\ 1+h\ge 0 \text{ $P$-a.s.},\ \EE_P[h]=0,\ \EE_P[h^2]\le
 for some radius \(\varrho \ge 0\).
 \end{assumption}
 
-Assumption~\ref{ass:shift} encodes the source-supported hidden-subpopulation view: unseen domains are not arbitrary, but are local redistributions of source support mass. Assumption~\ref{ass:lin} makes the reweighting effect observable through the examplewise slope covariance. Assumption~\ref{ass:fit} isolates the source-fit geometry inside a single connected basin.
+Assumption~\ref{ass:shift} encodes the source-supported hidden-subpopulation view: unseen domains are local redistributions of source support mass. It is therefore a deliberately local model of DG, not a claim that every realistic target environment is source-supported. Assumption~\ref{ass:lin} makes that redistribution observable through the examplewise slope covariance. Assumption~\ref{ass:fit} isolates the source-fit geometry inside the safe basin found in the first stage.
 
 \subsection{Deriving the fragility term}
 
@@ -452,7 +579,7 @@ a^\top z + \frac12 z^\top A_0 z
 \]
 \end{theorem}
 
-The theorem shows where the fragility term comes from. The quantity \(z^\top B z\) is the variance of the first-order examplewise slope in direction \(z\). If that variance is large, local source reweightings can swing the contribution of \(z\) strongly; if it is small, the direction is reweighting-stable.
+Theorem~\ref{thm:robust_bound} shows exactly where the fragility term comes from. The quantity \(z^\top B z\) is the variance of the first-order examplewise slope in direction \(z\). If that variance is large, local source reweightings can swing the contribution of \(z\) strongly; if it is small, the direction is reweighting-stable.
 
 \begin{corollary}[Quadratic \swing{} surrogate]
 \label{cor:quadratic_majorizer}
@@ -476,7 +603,33 @@ A_\tau = A_0 + \tau I_r.
 \]
 \end{corollary}
 
-Corollary~\ref{cor:quadratic_majorizer} is the exact bridge from the hidden-shift model to \swing{}: for each fixed \(\lambda>0\), Young's inequality yields a quadratic upper bound, and \(\lambda\) controls the tradeoff between the additive constant and the fragility penalty. The hidden-shift certificate remains valid for any isotropic inflation \(\tau\ge \sqrt{\varrho}K\).
+Corollary~\ref{cor:quadratic_majorizer} is the exact bridge from the hidden-shift model to \swing{}: for each fixed \(\lambda>0\), Young's inequality yields a quadratic upper bound, and \(\lambda\) controls the tradeoff between the additive constant and the fragility penalty. The hidden-shift certificate remains valid for any isotropic inflation \(\tau\ge \sqrt{\varrho}K\). Equivalently, for any chosen inflation level \(\tau\), the same bound certifies all local source-supported shifts whose ambiguity radius satisfies \(\varrho \le (\tau/K)^2\). In practice, \(\tau\) is therefore best read as a conservativeness knob that indexes a family of certified local shift radii rather than as an oracle quantity inferred from the target domain.
+
+\begin{proposition}[Exact minimax and dual representations]
+\label{prop:minimax}
+Define the local robust surrogate
+\[
+R_{\varrho,\tau}(z)
+=
+a^\top z + \frac12 z^\top A_\tau z + \sqrt{\varrho\, z^\top B z}.
+\]
+Then, for every \(z\in\cZ\),
+\[
+R_{\varrho,\tau}(z)
+=
+\sup_{\norm{u}_2\le \sqrt{\varrho}}
+\bracks{
+a^\top z + \frac12 z^\top A_\tau z + u^\top B^{1/2} z
+}
+=
+\inf_{\lambda>0}
+\bracks{
+\frac{\varrho}{2\lambda} + J_{\lambda,\tau}(z)
+}.
+\]
+\end{proposition}
+
+Proposition~\ref{prop:minimax} strengthens the interpretation of \swing{}. The square-root surrogate is the exact value of a local adversarial linear game in the fragility coordinates, while the quadratic objective \(J_{\lambda,\tau}\) is its exact one-parameter dual relaxation.
 
 \subsection{Closed-form shrinkage solution}
 
@@ -530,9 +683,9 @@ Theorem~\ref{thm:closed_form} is the central algebraic result of the paper. It s
 
 \subsection{Why anisotropy matters}
 
-The next comparison result formalizes an important point. If generalized fragility levels are heterogeneous, then one global scalar shrinkage factor is not enough inside the quadratic model.
+The next comparison result quantifies the price of using only one global shrinkage factor when fragility is heterogeneous across the basin subspace.
 
-\begin{proposition}[Comparison to scalar shrinkage]
+\begin{proposition}[Quantitative gap to scalar shrinkage]
 \label{prop:scalar_gap}
 Under the assumptions of Theorem~\ref{thm:closed_form}, consider the scalar shrinkage family
 \[
@@ -540,22 +693,45 @@ Under the assumptions of Theorem~\ref{thm:closed_form}, consider the scalar shri
 =
 \braces{\alpha z_\tau : \alpha\in\RR}.
 \]
+If \(z_\tau = 0\), then \(\min_{\alpha} J_{\lambda,\tau}(\alpha z_\tau)=J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}})\). Otherwise define
+\[
+S = \sum_{j=1}^r c_j^2,
+\qquad
+p_j = \frac{c_j^2}{S},
+\qquad
+f_\lambda(\nu)=\frac{1}{1+\lambda \nu}.
+\]
 Then
 \[
+\Delta_{\mathrm{sc}}
+:=
 \min_{\alpha\in\RR} J_{\lambda,\tau}(\alpha z_\tau)
-\ge
-J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}}).
+-
+J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}})
+=
+\frac{S}{2}
+\bracks{
+\sum_{j=1}^r p_j f_\lambda(\nu_j)
+-
+f_\lambda\!\paren{\sum_{j=1}^r p_j \nu_j}
+}.
 \]
-Moreover equality holds if and only if the generalized eigenvalues \(\nu_j\) are constant on the support of \(z_\tau\), that is,
+Consequently \(\Delta_{\mathrm{sc}}\ge 0\), with equality if and only if the generalized eigenvalues \(\nu_j\) are constant on the support of \(z_\tau\). If
 \[
-\nu_j = \nu_k
-\qquad
-\text{for all } j,k \text{ such that } c_j\neq 0 \text{ and } c_k\neq 0.
+\nu_{\max}^{\mathrm{act}} = \max\braces{\nu_j : c_j\neq 0},
 \]
-Consequently, whenever \(z_\tau\) has nonzero mass on at least two distinct generalized fragility levels, anisotropic shrinkage is strictly better than the best scalar shrinkage.
+then
+\[
+\Delta_{\mathrm{sc}}
+\ge
+\frac{S\lambda^2}{2\paren{1+\lambda \nu_{\max}^{\mathrm{act}}}^3}
+\Var_p(\nu),
+\qquad
+\Var_p(\nu)=\sum_{j=1}^r p_j\paren{\nu_j-\sum_{k=1}^r p_k\nu_k}^2.
+\]
 \end{proposition}
 
-Proposition~\ref{prop:scalar_gap} records the simplest exact comparison that motivates anisotropy in the quadratic surrogate. Scalar shrinkage is optimal only in the degenerate case where all active directions have the same fragility-to-fit ratio.
+Proposition~\ref{prop:scalar_gap} shows more than a yes-or-no comparison. The advantage of anisotropic shrinkage grows quantitatively with the weighted dispersion of the active fragility-to-fit ratios.
 
 \begin{figure}[t]
     \centering
@@ -564,7 +740,7 @@ Proposition~\ref{prop:scalar_gap} records the simplest exact comparison that mot
     \label{fig:2d}
 \end{figure}
 
-\subsection{Certificate improvement and conditional stability}
+\subsection{Certificate improvement, estimation, and stability}
 
 \begin{proposition}[Exact certificate gain over the inflated baseline]
 \label{prop:gain}
@@ -583,20 +759,172 @@ with equality if and only if \(B z_\tau = 0\).
 
 Proposition~\ref{prop:gain} quantifies the exact improvement that \swing{} certifies over the inflated baseline. If that baseline already lies in the kernel of the fragility operator, there is nothing to shrink; otherwise the robust surrogate is improved strictly.
 
+\begin{theorem}[Constrained argmin stability]
+\label{thm:constrained}
+Let
+\[
+M = A_\tau+\lambda B,
+\qquad
+\hat M = \hat A_\tau + \lambda \hat B,
+\qquad
+m = \lambda_{\min}(M),
+\qquad
+D_\cZ = \sup_{z\in\cZ}\norm{z}.
+\]
+Suppose \(m>0\), \(\hat M\succeq 0\), and define
+\[
+\delta = \norm{\hat A_\tau - A_\tau} + \lambda \norm{\hat B-B}.
+\]
+Let
+\[
+z_{\lambda,\tau}^{\cZ}
+\in
+\argmin_{z\in\cZ}
+\bracks{a^\top z + \frac12 z^\top M z},
+\qquad
+\hat z_{\lambda,\tau}^{\cZ}
+\in
+\argmin_{z\in\cZ}
+\bracks{\hat a^\top z + \frac12 z^\top \hat M z}.
+\]
+Then
+\[
+\norm{\hat z_{\lambda,\tau}^{\cZ} - z_{\lambda,\tau}^{\cZ}}
+\le
+\frac{\norm{\hat a-a} + D_\cZ \delta}{m}.
+\]
+\end{theorem}
+
+Theorem~\ref{thm:constrained} is the deployed-estimator stability result: it covers the constrained model actually returned by the algorithm, not only the inactive-trust-region case.
+
 \begin{assumption}[Conditional local identification for plug-in estimation]
 \label{ass:identify}
-For the consistency discussion only, condition on a deterministic asymptotic sequence of upstream-selected basin families \((\mu_n,U_n,\cC_n,\cC_{\mathrm{loc},n},\cZ_n)\). Assume that \(0\) is an interior point of every local coordinate design, that the local polynomial Gram matrix formed by the intercept, linear monomials, and quadratic monomials over \(\cC_{\mathrm{loc},n}\) is uniformly well conditioned, and that the fill distance of the local design around \(0\) tends to zero along the sequence. Assume further that the source-risk function and the examplewise losses restricted to each basin family are three times continuously differentiable with uniformly bounded third derivatives on a neighborhood of \(0\).
+For the estimation discussion only, condition on a deterministic asymptotic sequence of upstream-selected basin families \((\mu_n,U_n,\cC_n,\cC_{\mathrm{loc},n},\cZ_n)\). Assume that \(0\) lies in the interior of the convex hull of every local coordinate design, that the local polynomial Gram matrices formed by the intercept, linear monomials, and quadratic monomials over \(\cC_{\mathrm{loc},n}\) are uniformly well conditioned, and that the fill distance of the local design around \(0\) tends to zero along the sequence. Assume further that the examplewise losses restricted to each basin family are three times continuously differentiable with uniformly bounded third derivatives on a neighborhood of \(0\).
 \end{assumption}
 
-Assumption~\ref{ass:identify} is not used in the algebraic population certificate. It is only the standard local-polynomial regularity needed to interpret \((\hat a,\hat A_0,\hat\phi_i)\) as estimators of derivatives at \(z=0\). Turning that identification statement into \(\hat A_0\to A_0\) and \(\hat B\to B\) also requires the usual tuning and triangular-array conditions for local polynomial regression. A representative regime is
-\[
-|S_{\mathrm{fit},n}|,\ |S_{\mathrm{shift},n}|,\ |\cC_{\mathrm{loc},n}| \to \infty,
-\qquad
-\eta_{A,n},\ \eta_{H,n}\to 0,
-\]
-while the local design matrices remain uniformly well conditioned along the sequence. The consistency discussion below is therefore explicitly \emph{conditional} on that deterministic basin-family sequence chosen upstream.
+Assumption~\ref{ass:identify} is not used in the algebraic population certificate. It is only the local-regularity condition needed to interpret the practical ridge regressions as derivative estimators inside a fixed basin family.
 
-\begin{theorem}[Deterministic perturbation bound]
+\begin{theorem}[Source-fit operator estimation]
+\label{thm:A_est}
+Let
+\[
+p = 1 + r + \frac{r(r+1)}{2},
+\]
+and let \(\psi:\RR^r\to\RR^p\) collect the intercept, linear monomials, and unique quadratic monomials with the convention that for every scalar \(c\), vector \(a\), and symmetric matrix \(A\), if \(\beta=(c,a,\operatorname{vech}(A))\), then
+\[
+\beta^\top \psi(z)=c+a^\top z+\frac12 z^\top A z.
+\]
+Write
+\[
+\beta_0 = \paren{c,\ a,\ \operatorname{vech}(A_0)} \in \RR^p.
+\]
+For a local design \(\braces{z_t : t\in\cC_{\mathrm{loc},n}}\), let \(X_n\in\RR^{m_n\times p}\) have rows \(\psi(z_t)^\top\), where \(m_n=\abs{\cC_{\mathrm{loc},n}}\), and set
+\[
+G_n = \frac{1}{m_n} X_n^\top X_n,
+\qquad
+M_{\psi,n} = \max_{t\in\cC_{\mathrm{loc},n}} \norm{\psi(z_t)}.
+\]
+Let
+\[
+\hat y_n\in\RR^{m_n},
+\qquad
+(\hat y_n)_t=\widehat L_{\mathrm{fit}}(\tilde\theta_t),
+\]
+and let \(P_A\in\RR^{p\times p}\) denote the orthogonal projector onto the quadratic-coefficient block of \(\beta\). Assume \(\lambda_{\min}(G_n)\ge \kappa_A>0\), the fit-split losses satisfy \(0\le \loss(\tilde\theta_t;Z)\le L_{\max}^{\mathrm{fit}}\) almost surely for every \(t\in\cC_{\mathrm{loc},n}\), and \(\tilde\beta_n\) is the unconstrained estimator of the practical block-ridge objective
+\[
+\frac{1}{m_n}\norm{\hat y_n-X_n\beta}_2^2+\eta_{A,n}\norm{P_A\beta}_2^2.
+\]
+Then with probability at least \(1-\delta\),
+\[
+\norm{\tilde\beta_n-\beta_0}_2
+\le
+\frac{
+\sqrt{p}\,M_{\psi,n} L_{\max}^{\mathrm{fit}}
+\sqrt{\frac{\log(2p/\delta)}{2\abs{S_{\mathrm{fit},n}}}}
++
+\eta_{A,n}\norm{\beta_0}_2
+}{\kappa_A}.
+\]
+If the practical positivity floor \(\hat A_{0,n}\succeq m_A I_r\) is inactive, then the same bound applies to the implemented estimator. Consequently there exists a constant \(C_A(r)>0\) depending only on the coefficient unpacking map such that
+\[
+\norm{\hat a_n-a}_2 + \norm{\hat A_{0,n}-A_0}_{\mathrm{op}}
+\le
+C_A(r)\norm{\tilde\beta_n-\beta_0}_2.
+\]
+\end{theorem}
+
+\begin{theorem}[Fragility operator estimation]
+\label{thm:B_est}
+Under Assumption~\ref{ass:identify}, let \(h_n=\max_{t\in\cC_{\mathrm{loc},n}} \norm{z_t}\) and assume the same local Gram matrix lower bound \(\lambda_{\min}(G_n)\ge \kappa_H>0\). Suppose there exist finite constants \(B_\beta\), \(L_\phi\), and \(M_3\) such that for every example \(Z\),
+\[
+\beta(Z)=\paren{\loss(\theta(0);Z),\ \phi(Z),\ \operatorname{vech}\!\paren{\nabla_z^2 \loss(\theta(z);Z)\vert_{z=0}}}
+\in \RR^p,
+\]
+\[
+\norm{\beta(Z)}_2 \le B_\beta,
+\qquad
+\norm{\phi(Z)}_2 \le L_\phi,
+\qquad
+\sup_{\norm{z}\le h_n} \norm{\nabla_z^3 \loss(\theta(z);Z)}_{\mathrm{op}} \le M_3.
+\]
+Let \(\hat\phi_i\) be the linear coefficient produced by the practical per-example ridge regression with penalty \(\eta_{H,n}\), and let \(\hat B_n\) be the sample covariance of \(\hat\phi_i\) over the i.i.d.\ shift split \(S_{\mathrm{shift},n}\). Then:
+\begin{enumerate}[leftmargin=1.4em]
+    \item for every \(Z_i\in S_{\mathrm{shift},n}\),
+    \[
+    \norm{\hat\phi_i - \phi(Z_i)}_2
+    \le
+    \epsilon_{\phi,n}
+    :=
+    \frac{M_{\psi,n} M_3 h_n^3/6 + \eta_{H,n} B_\beta}{\kappa_H+\eta_{H,n}};
+    \]
+    \item there exists a universal constant \(C_B>0\) such that, with probability at least \(1-\delta\),
+    \[
+    \norm{\hat B_n - B}_{\mathrm{op}}
+    \le
+    4L_\phi \epsilon_{\phi,n} + 2\epsilon_{\phi,n}^2
+    +
+    C_B L_\phi^2
+    \max\braces{
+    \sqrt{\frac{\log(2r/\delta)}{\abs{S_{\mathrm{shift},n}}}},
+    \frac{\log(2r/\delta)}{\abs{S_{\mathrm{shift},n}}}
+    }.
+    \]
+\end{enumerate}
+\end{theorem}
+
+\begin{corollary}[Finite-sample deployed-estimator bound]
+\label{cor:finite_sample}
+Under the assumptions of Theorems~\ref{thm:constrained}--\ref{thm:B_est}, and assuming additionally that the practical positivity floor for \(\hat A_{0,n}\) is inactive, there exists a constant \(C_z>0\) depending only on \(r\), \(\lambda\), \(D_\cZ\), \(\kappa_A\), \(\kappa_H\), \(L_{\max}^{\mathrm{fit}}\), \(L_\phi\), \(B_\beta\), \(M_3\), \(m^{-1}\), and \(\norm{\beta_0}_2\) such that, with probability at least \(1-2\delta\),
+\[
+\norm{\hat z_{\lambda,\tau}^{\cZ} - z_{\lambda,\tau}^{\cZ}}
+\le
+C_z
+\bracks{
+\sqrt{\frac{\log(2/\delta)}{\abs{S_{\mathrm{fit},n}}}}
++
+h_n^3
++
+\eta_{A,n}
++
+\eta_{H,n}
++
+\max\braces{
+\sqrt{\frac{\log(2r/\delta)}{\abs{S_{\mathrm{shift},n}}}},
+\frac{\log(2r/\delta)}{\abs{S_{\mathrm{shift},n}}}
+}
+}.
+\]
+In particular, if \(\abs{S_{\mathrm{fit},n}}\to\infty\), \(\abs{S_{\mathrm{shift},n}}\to\infty\), \(h_n\to 0\), and \(\eta_{A,n},\eta_{H,n}\to 0\), then
+\[
+\hat z_{\lambda,\tau}^{\cZ} \to z_{\lambda,\tau}^{\cZ}
+\qquad
+\text{in probability}.
+\]
+\end{corollary}
+
+Corollary~\ref{cor:finite_sample} is stronger than the original discussion-only consistency paragraph: it gives an explicit finite-sample rate for the constrained deployed estimator itself, conditional on the chosen basin family and local design.
+
+\begin{theorem}[Unconstrained perturbation bound]
 \label{thm:perturb}
 Let
 \[
@@ -612,20 +940,43 @@ Suppose \(m>0\) and define
 \[
 \delta = \norm{\hat A_\tau - A_\tau} + \lambda \norm{\hat B-B}.
 \]
-If \(\delta < m\), then \(\hat M\) is positive definite and the empirical solution
+If \(\delta < m\), then \(\hat M\) is positive definite and the unconstrained empirical solution
 \[
-\hat z_{\lambda,\tau} = -\hat M^{-1}\hat a
+\hat z_{\lambda,\tau}^{\mathrm{unc}} = -\hat M^{-1}\hat a
 \]
 is well defined. Moreover
 \[
-\norm{\hat z_{\lambda,\tau} - z_{\lambda,\tau}^{\mathrm{unc}}}
+\norm{\hat z_{\lambda,\tau}^{\mathrm{unc}} - z_{\lambda,\tau}^{\mathrm{unc}}}
 \le
 \frac{\norm{\hat a-a} + \delta \norm{z_{\lambda,\tau}^{\mathrm{unc}}}}{m-\delta}.
 \]
-Consequently, if \(\norm{\hat a-a}\to 0\), \(\hat A_0\to A_0\) in operator norm, and \(\hat B\to B\) in operator norm, then \(\hat z_{\lambda,\tau} \to z_{\lambda,\tau}^{\mathrm{unc}}\).
 \end{theorem}
 
-Theorem~\ref{thm:perturb} is the paper's main convergence statement. It is a deterministic continuity bound: conditional on consistent local estimators for \(a\), \(A_0\), and \(B\) under Assumption~\ref{ass:identify}, the resulting unconstrained \swing{} estimator is also consistent. It is not a consistency theorem for the full random basin-selection pipeline, and it covers the deployed edit only on the event that the trust-region constraint is inactive.
+Theorem~\ref{thm:perturb} is the sharper inactive-constraint special case of Theorem~\ref{thm:constrained}. It is useful because the closed form of the unconstrained edit makes the dependence on the operator perturbation completely explicit.
+
+\begin{proposition}[Subspace truncation gap]
+\label{prop:subspace_gap}
+Let \(\bar J:\RR^d\to\RR\) be any full-space quadratic surrogate of the form
+\[
+\bar J(u) = \bar c + \bar a^\top u + \frac12 u^\top \bar M u,
+\qquad
+\bar M \succ 0,
+\]
+with unconstrained minimizer \(u^\star = -\bar M^{-1}\bar a\). Let \(P_U = UU^\top\) be the orthogonal projector onto the trajectory subspace, and let
+\[
+u_U^\star \in \argmin_{u\in \operatorname{Im}(P_U)} \bar J(u).
+\]
+Then
+\[
+0
+\le
+\bar J(u_U^\star) - \bar J(u^\star)
+\le
+\frac{\lambda_{\max}(\bar M)}{2}\norm{(I-P_U)u^\star}^2.
+\]
+\end{proposition}
+
+Proposition~\ref{prop:subspace_gap} isolates the only price paid by restricting \swing{} to the trajectory subspace: one loses at most the quadratic value carried by the component of the full-space optimum that lies outside the learned basin subspace.
 
 \begin{corollary}[Restricted-family target certificate]
 \label{cor:certificate}
@@ -679,7 +1030,8 @@ c-a^\top z_t-\frac12 z_t^\top A_0 z_t
 +
 \eta_A \norm{A_0}_F^2
 \]
-subject to \(\hat A_0 \succeq m_A I_r\) for a small ridge floor \(m_A>0\). We then set \(\hat A_\tau = \hat A_0 + \tau I_r\). This makes the local source-fit surrogate strictly convex and numerically stable.
+subject to \(\hat A_0 \succeq m_A I_r\) for a small ridge floor \(m_A>0\). The finite-sample theory in Section~\ref{sec:theory} first analyzes the underlying unconstrained ridge fit; when the true curvature is uniformly positive definite and \(m_A\) is chosen below that population floor, the practical positivity constraint is eventually inactive. We then set \(\hat A_\tau = \hat A_0 + \tau I_r\). This makes the local source-fit surrogate strictly convex and numerically stable.
+For the estimation theorems, the ridge parameters are written in normalized form, i.e. after dividing these unnormalized least-squares objectives by \(|\cC_{\mathrm{loc}}|\); this is only a rescaling convention and does not change the fitted optimizer.
 
 \paragraph{Estimating the slope covariance.}
 For each example \(Z_i \in S_{\mathrm{shift}}\), let \(\ell_{it}=\loss(\tilde\theta_t; Z_i)\). We estimate the examplewise slope vector \(\hat\phi_i\) from the local quadratic model
@@ -690,7 +1042,7 @@ For each example \(Z_i \in S_{\mathrm{shift}}\), let \(\ell_{it}=\loss(\tilde\th
 \qquad
 t\in\cC_{\mathrm{loc}},
 \]
-using ridge regression over \(t\in\cC_{\mathrm{loc}}\). The fitted linear coefficient is the estimated derivative at \(z=0\). Then
+using ridge regression with penalty \(\eta_H\) over \(t\in\cC_{\mathrm{loc}}\). The fitted linear coefficient is the estimated derivative at \(z=0\). Then
 \[
 \hat B
 =
@@ -700,18 +1052,27 @@ using ridge regression over \(t\in\cC_{\mathrm{loc}}\). The fitted linear coeffi
 \qquad
 \bar\phi = \frac{1}{|S_{\mathrm{shift}}|}\sum_i \hat\phi_i.
 \]
+As above, the theorem-level \(\eta_H\) is the normalized version of this practical ridge penalty after dividing the per-example regression objective by \(|\cC_{\mathrm{loc}}|\).
 
 \paragraph{Local design and identifiability.}
-The quadratic fit is informative only if the local checkpoint design contains enough variation. Concretely, the design matrix formed by the intercept, the \(r\) linear monomials, and the \(\frac{r(r+1)}{2}\) unique quadratic monomials over \(\cC_{\mathrm{loc}}\) must be well conditioned; otherwise the ridge floor dominates the estimate and the recovered curvature is largely arbitrary. The same requirement applies to the per-example local quadratic regressions used to estimate \(\hat\phi_i\). These are standard local-polynomial identifiability conditions rather than consequences of split separation.
+The quadratic fit is informative only if the local checkpoint design contains enough variation. Concretely, the design matrix formed by the intercept, the \(r\) linear monomials, and the \(\frac{r(r+1)}{2}\) unique quadratic monomials over \(\cC_{\mathrm{loc}}\) must be well conditioned; otherwise the ridge floor dominates the estimate and the recovered curvature is largely arbitrary. The same requirement applies to the per-example local quadratic regressions used to estimate \(\hat\phi_i\). These are standard local-polynomial identifiability conditions rather than consequences of split separation, and they are exactly the deterministic design conditions invoked in Assumption~\ref{ass:identify}.
+
+\paragraph{Dimensionality versus local cloud size.}
+The practical dimension of each local quadratic fit is
+\[
+p = 1 + r + \frac{r(r+1)}{2},
+\]
+so the estimator becomes statistically and numerically demanding if \(r\) is pushed too high relative to the size and diversity of \(\cC_{\mathrm{loc}}\). For example, \(r=10\) already gives \(p=66\). The intended operating regime is therefore modest rank, a local checkpoint cloud substantially richer than the raw parameter count, and explicit monitoring of design conditioning. If those conditions fail, the correct interpretation is not that \swing{} has discovered precise curvature, but that the ridge terms are forcing a conservative low-variance edit. This is exactly why the eventual empirical study must ablate \(r\), \(|\cC_{\mathrm{loc}}|\), and ridge strengths jointly.
 
 \paragraph{Computational complexity.}
 If \(d\) is the ambient parameter dimension, \(r\ll d\) is the subspace rank, \(M=|\cC|\) is the safe-pool size, and \(n_s=|S_{\mathrm{shift}}|\), then the dominant costs are:
 \begin{itemize}[leftmargin=1.4em]
     \item subspace extraction from \(M\) checkpoints;
     \item one local quadratic fit in \(r\) variables for the source surrogate;
-    \item \(n_s\) local quadratic regressions in \(r\) variables to estimate slopes;
+    \item batched local quadratic regressions in \(r\) variables to estimate per-example slopes;
     \item one \(r\times r\) generalized eigendecomposition.
 \end{itemize}
+The per-example regressions share the same local design matrix over \(\cC_{\mathrm{loc}}\). Hence the expensive linear algebra can be amortized: one factors the common ridge Gram matrix once, then applies that factorization to many example-specific right-hand sides in batch. The main remaining overhead is evaluating per-example losses over the local checkpoint cloud, which is an offline post-hoc cost on held-out source data rather than a training-time cost. This does make \swing{} materially heavier than \swad{}, but not by a factor of \(n_s\) fresh matrix factorizations.
 The final deployment cost remains unchanged from ordinary single-model inference because \swing{} outputs one weight vector.
 
 \section{Experimental Protocol}
@@ -800,7 +1161,8 @@ The empirical study should include at least the following ablations.
     \item \textbf{Scalar shrinkage:} replace generalized shrinkage with the best one-parameter interpolation toward \(\mu\).
     \item \textbf{No safe pool:} build \(U\) from a broader late trajectory without the barrier screen.
     \item \textbf{Rank sensitivity:} vary \(r\).
-    \item \textbf{Regularization sensitivity:} vary \(\lambda\).
+    \item \textbf{Local-cloud sensitivity:} vary \(|\cC_{\mathrm{loc}}|\) or \(\rho_{\mathrm{loc}}\), and report the resulting design conditioning.
+    \item \textbf{Regularization sensitivity:} vary \(\lambda\) and the ridge strengths \((\eta_A,\eta_H)\).
     \item \textbf{Inflation sensitivity:} vary \(\tau\).
     \item \textbf{Split overlap test:} compare disjoint versus reused fit/shift splits.
 \end{enumerate}
@@ -837,11 +1199,11 @@ The empirical study should include at least the following ablations.
 The paper's theory is intentionally restricted to a connected low-rank basin family. That is a strength, not a weakness. The whole operational point of post-hoc single-run DG is that one dense trajectory often already contains a safe region; the scientifically honest question is what can be proved \emph{inside that region}.
 
 \paragraph{Limitations.}
-The theory assumes a source-supported local shift model. If the target domain introduces genuinely new support, then source-reweighting fragility cannot fully characterize deployment risk. The quadratic source-fit model is also local, and the regression estimators for \(A_0\) and \(B\) can become noisy if the safe pool is too small or too narrow or if the local design is poorly conditioned. The certificate interpretation additionally depends on choosing \(\tau\ge \sqrt{\varrho}K\), which is not directly observable in practice. Finally, the eventual empirical study must verify that the gains are not captured by simpler scalar shrinkage or by the isotropic inflation alone.
+The theory assumes a source-supported local shift model. If the target domain introduces genuinely new support, novel backgrounds, or unsupported feature mechanisms, then source-reweighting fragility cannot fully characterize deployment risk; this is a structural limitation of source-only post-hoc methods rather than a hidden claim of the paper. The quadratic source-fit model is also local, and the regression estimators for \(A_0\) and \(B\) can become noisy if the safe pool is too small or too narrow or if the local design is poorly conditioned. Because the local polynomial dimension scales as \(1+r+r(r+1)/2\), high-rank fits require correspondingly richer checkpoint clouds; otherwise ridge regularization will dominate and the edit will become conservative. The certificate interpretation should also be read in forward form: a chosen \(\tau\) certifies only local source-supported shifts with radius \(\varrho \le (\tau/K)^2\). Finally, the eventual empirical study must verify that the gains are not captured by simpler scalar shrinkage, by isotropic inflation alone, or by aggressive ridge settings that wash out the intended geometry.
 
 \section{Conclusion}
 
-\swing{} is a simple claim made operational: once a good checkpoint basin has been found, not all directions inside that basin should be trusted equally. Directions whose contribution swings under plausible source-support reweightings should be shrunk. The resulting method stays single-run, post-hoc, domain-label-free, and single-model at test time. Its math is explicit: a hidden-shift upper bound yields a square-root fragility term, a family of isotropically inflated quadratic certificates, the exact generalized eigen-shrinkage form of the unconstrained inflated edit, a clean comparison against scalar shrinkage inside that quadratic model, and a deterministic perturbation theory that upgrades to consistency for the unconstrained estimator under consistent local operator estimation. The empirical study remains to be run; the paper, figures, proofs, and protocol are ready.
+\swing{} is a simple claim made operational: once a good checkpoint basin has been found, not all directions inside that basin should be trusted equally. Directions whose contribution swings under plausible source-support reweightings should be shrunk. The resulting method stays single-run, post-hoc, domain-label-free, and single-model at test time. Its math is now explicit end to end: barrier filtering yields a population-safe star pool up to concentration margins; bounded negative curvature makes averaging inside that filtered basin safe up to an explicit variance term; a hidden-shift upper bound yields a square-root fragility term and an exact minimax/dual interpretation; the inflated surrogate admits generalized eigen-shrinkage and a quantitative scalar-gap theorem; and the deployed constrained estimator enjoys finite-sample control once the local operators are estimated accurately. The empirical study remains to be run; the paper, figures, proofs, and protocol are ready.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
@@ -858,6 +1220,205 @@ The theory assumes a source-supported local shift model. If the target domain in
 \end{figure}
 
 \section{Proofs}
+
+\subsection{Proof of Theorem~\ref{thm:pool_filter}}
+
+\begin{proof}
+\(\widehat L_{\mathrm{pool}}(\theta)\) is the empirical average of the bounded loss at model \(\theta\) over \(S_{\mathrm{pool}}\). For each checkpoint \(t\in[T]\) and each ordered interpolation model \((1-\alpha)\theta_i+\alpha\theta_j\) with \((i,j,\alpha)\in[T]\times[T]\times\mathcal G\), Hoeffding's inequality gives
+\[
+\Pr\!\paren{
+\abs{\widehat L_{\mathrm{pool}}(\theta_t)-L_P(\theta_t)} > \xi
+}
+\le
+2\exp\!\paren{
+-\frac{2\abs{S_{\mathrm{pool}}}\xi^2}{(L_{\max}^{\mathrm{pool}})^2}
+},
+\]
+\[
+\Pr\!\paren{
+\abs{\widehat L_{\mathrm{pool}}\!\paren{(1-\alpha)\theta_i+\alpha\theta_j} - L_P\!\paren{(1-\alpha)\theta_i+\alpha\theta_j}} > \xi
+}
+\le
+2\exp\!\paren{
+-\frac{2\abs{S_{\mathrm{pool}}}\xi^2}{(L_{\max}^{\mathrm{pool}})^2}
+}.
+\]
+There are \(T\) checkpoint models and \(T^2\abs{\mathcal G}\) ordered interpolation models. Hence, by the union bound, with probability at least \(1-\delta\), the event
+\[
+\mathcal E_{\mathrm{pool}}
+:=
+\Bigl\{
+\sup_{1\le t\le T}\abs{\widehat L_{\mathrm{pool}}(\theta_t)-L_P(\theta_t)}\le \xi_{\mathrm{pool}}(\delta),\
+\sup_{\substack{1\le i,j\le T\\ \alpha\in\mathcal G}}
+\abs{
+\widehat L_{\mathrm{pool}}\!\paren{(1-\alpha)\theta_i+\alpha\theta_j}
+-
+L_P\!\paren{(1-\alpha)\theta_i+\alpha\theta_j}
+}
+\le \xi_{\mathrm{pool}}(\delta)
+\Bigr\}
+\]
+holds.
+
+Work on \(\mathcal E_{\mathrm{pool}}\). Let \(t^\star\in\argmin_{1\le t\le T} L_P(\theta_t)\). Since \(a\) minimizes the empirical checkpoint risk,
+\[
+\widehat L_{\mathrm{pool}}(\theta_a)\le \widehat L_{\mathrm{pool}}(\theta_{t^\star}).
+\]
+Therefore
+\[
+L_P(\theta_a)
+\le
+\widehat L_{\mathrm{pool}}(\theta_a) + \xi_{\mathrm{pool}}(\delta)
+\le
+\widehat L_{\mathrm{pool}}(\theta_{t^\star}) + \xi_{\mathrm{pool}}(\delta)
+\le
+L_P(\theta_{t^\star}) + 2\xi_{\mathrm{pool}}(\delta),
+\]
+which proves the anchor bound.
+
+Now fix \(t\in\cC\). By definition of the empirical pool,
+\[
+\widehat L_{\mathrm{pool}}(\theta_t)
+\le
+\widehat L_{\mathrm{pool}}(\theta_a) + \varepsilon_{\mathrm{pool}}.
+\]
+Hence
+\[
+L_P(\theta_t)
+\le
+\widehat L_{\mathrm{pool}}(\theta_t) + \xi_{\mathrm{pool}}(\delta)
+\le
+\widehat L_{\mathrm{pool}}(\theta_a) + \varepsilon_{\mathrm{pool}} + \xi_{\mathrm{pool}}(\delta)
+\le
+L_P(\theta_a) + \varepsilon_{\mathrm{pool}} + 2\xi_{\mathrm{pool}}(\delta).
+\]
+Likewise, the empirical barrier condition for \(t\in\cC\) gives
+\[
+\max_{\alpha\in\mathcal G}
+\widehat L_{\mathrm{pool}}\!\paren{(1-\alpha)\theta_a+\alpha\theta_t}
+\le
+\max\braces{\widehat L_{\mathrm{pool}}(\theta_a),\widehat L_{\mathrm{pool}}(\theta_t)}
++
+\tau_{\mathrm{pool}}.
+\]
+For each fixed \(\alpha\in\mathcal G\), event \(\mathcal E_{\mathrm{pool}}\) implies
+\begin{align*}
+L_P\!\paren{(1-\alpha)\theta_a+\alpha\theta_t}
+&\le
+\widehat L_{\mathrm{pool}}\!\paren{(1-\alpha)\theta_a+\alpha\theta_t}
++
+\xi_{\mathrm{pool}}(\delta) \\
+&\le
+\max\braces{\widehat L_{\mathrm{pool}}(\theta_a),\widehat L_{\mathrm{pool}}(\theta_t)}
++
+\tau_{\mathrm{pool}}
++
+\xi_{\mathrm{pool}}(\delta) \\
+&\le
+\max\braces{L_P(\theta_a),L_P(\theta_t)}
++
+\tau_{\mathrm{pool}}
++
+2\xi_{\mathrm{pool}}(\delta).
+\end{align*}
+Taking the maximum over \(\alpha\in\mathcal G\) proves the grid-barrier claim.
+\end{proof}
+
+\subsection{Proof of Corollary~\ref{cor:segment_barrier}}
+
+\begin{proof}
+Fix \(t\in\cC\). Define
+\[
+g_t(u) = L_P\!\paren{(1-u)\theta_a + u\theta_t},
+\qquad
+u\in[0,1].
+\]
+Because \(L_P\) is differentiable on \(\mathfrak S_a(\cC)\), \(g_t\) is differentiable on \([0,1]\) with derivative
+\[
+g_t'(u)
+=
+\nabla L_P\!\paren{(1-u)\theta_a+u\theta_t}^\top (\theta_t-\theta_a).
+\]
+Hence
+\[
+\abs{g_t'(u)}
+\le
+G_{\mathrm{pool}}\norm{\theta_t-\theta_a}
+\qquad
+\text{for all } u\in[0,1].
+\]
+Let \(u\in[0,1]\). By definition of \(\gamma(\mathcal G)\), choose \(\alpha_u\in\mathcal G\) such that \(\abs{u-\alpha_u}\le \gamma(\mathcal G)\). The mean-value theorem yields
+\[
+\abs{g_t(u)-g_t(\alpha_u)}
+\le
+G_{\mathrm{pool}}\norm{\theta_t-\theta_a}\,\gamma(\mathcal G).
+\]
+Therefore
+\begin{align*}
+g_t(u)
+&\le
+g_t(\alpha_u) + G_{\mathrm{pool}}\norm{\theta_t-\theta_a}\,\gamma(\mathcal G) \\
+&\le
+\max\braces{L_P(\theta_a),L_P(\theta_t)}
++
+\tau_{\mathrm{pool}}
++
+2\xi_{\mathrm{pool}}(\delta)
++
+G_{\mathrm{pool}}\norm{\theta_t-\theta_a}\,\gamma(\mathcal G),
+\end{align*}
+where the second inequality is Theorem~\ref{thm:pool_filter}. Taking the supremum over \(u\in[0,1]\) proves the claim.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:soup_safe}}
+
+\begin{proof}
+Fix any \(t\in\cC\). Taylor's theorem around \(\theta_w\) gives
+\[
+L_P(\theta_t)
+=
+L_P(\theta_w)
++
+\nabla L_P(\theta_w)^\top (\theta_t-\theta_w)
++
+\frac12 (\theta_t-\theta_w)^\top \nabla^2 L_P(\tilde\theta_t)(\theta_t-\theta_w)
+\]
+for some \(\tilde\theta_t\) on the segment joining \(\theta_w\) and \(\theta_t\), hence inside \(\operatorname{conv}(\cC)\). Since \(\nabla^2 L_P(\tilde\theta_t)\succeq -\beta_{\mathrm{pool}}I_d\),
+\[
+L_P(\theta_t)
+\ge
+L_P(\theta_w)
++
+\nabla L_P(\theta_w)^\top (\theta_t-\theta_w)
+-
+\frac{\beta_{\mathrm{pool}}}{2}\norm{\theta_t-\theta_w}^2.
+\]
+Multiply by \(w_t\) and sum over \(t\in\cC\):
+\[
+\sum_{t\in\cC} w_t L_P(\theta_t)
+\ge
+L_P(\theta_w)
++
+\nabla L_P(\theta_w)^\top \sum_{t\in\cC} w_t(\theta_t-\theta_w)
+-
+\frac{\beta_{\mathrm{pool}}}{2}
+\sum_{t\in\cC} w_t \norm{\theta_t-\theta_w}^2.
+\]
+Because \(\theta_w=\sum_{t\in\cC} w_t\theta_t\), the middle term vanishes. Rearranging gives
+\[
+L_P(\theta_w)
+\le
+\sum_{t\in\cC} w_t L_P(\theta_t)
++
+\frac{\beta_{\mathrm{pool}}}{2}
+\sum_{t\in\cC} w_t \norm{\theta_t-\theta_w}^2.
+\]
+If every \(t\in\cC\) satisfies \(L_P(\theta_t)\le L_P(\theta_a)+\varepsilon_{\mathrm{safe}}\), then
+\[
+\sum_{t\in\cC} w_t L_P(\theta_t)\le L_P(\theta_a)+\varepsilon_{\mathrm{safe}},
+\]
+and substituting this into the previous display proves the second bound.
+\end{proof}
 
 \subsection{Proof of Theorem~\ref{thm:robust_bound}}
 
@@ -913,7 +1474,7 @@ Apply Cauchy--Schwarz:
 \sqrt{\varrho\, z^\top B z}.
 \label{eq:proof_t1_phi}
 \end{align}
-Next, use the remainder bound from Assumption~\ref{ass:lin}:
+Next, use the remainder bound from Assumption~\ref{ass:lin},
 \[
 \abs{r(Z,z)} \le \frac{\kappa(Z)}{2}\norm{z}^2.
 \]
@@ -999,7 +1560,7 @@ Also,
 =
 \frac12 z^\top A_\tau z,
 \]
-where the inequality uses \(\tau\ge \sqrt{\varrho}K\). Substituting both identities into the bound from Theorem~\ref{thm:robust_bound} yields
+where the inequality uses \(\tau\ge \sqrt{\varrho}K\). Substituting both inequalities into the bound from Theorem~\ref{thm:robust_bound} yields
 \[
 L_Q(z)
 \le
@@ -1012,6 +1573,40 @@ a^\top z
 \frac{\lambda}{2} z^\top B z.
 \]
 This is the desired claim.
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:minimax}}
+
+\begin{proof}
+For fixed \(z\), the Euclidean support-function identity gives
+\[
+\sup_{\norm{u}_2\le \sqrt{\varrho}} u^\top B^{1/2}z
+=
+\sqrt{\varrho}\,\norm{B^{1/2}z}_2
+=
+\sqrt{\varrho\, z^\top B z}.
+\]
+Adding the deterministic term \(a^\top z + \frac12 z^\top A_\tau z\) yields the first representation.
+
+For the second representation, fix \(u=z^\top B z\ge 0\) and consider
+\[
+\psi_u(\lambda)=\frac{\varrho}{2\lambda} + \frac{\lambda}{2}u,
+\qquad \lambda>0.
+\]
+If \(u>0\), then \(\psi_u'(\lambda) = -\frac{\varrho}{2\lambda^2} + \frac{u}{2}\), so the unique minimizer is \(\lambda^\star=\sqrt{\varrho/u}\), with
+\[
+\psi_u(\lambda^\star)=\sqrt{\varrho u}.
+\]
+If \(u=0\), then \(\psi_u(\lambda)=\varrho/(2\lambda)\), so \(\inf_{\lambda>0}\psi_u(\lambda)=0=\sqrt{\varrho u}\). Consequently
+\[
+\sqrt{\varrho\, z^\top B z}
+=
+\inf_{\lambda>0}
+\bracks{
+\frac{\varrho}{2\lambda} + \frac{\lambda}{2}z^\top B z
+}.
+\]
+Adding \(a^\top z + \frac12 z^\top A_\tau z\) proves the second representation.
 \end{proof}
 
 \subsection{Proof of Theorem~\ref{thm:closed_form}}
@@ -1039,7 +1634,7 @@ z_{\lambda,\tau}^{\mathrm{unc}} = (A_\tau+\lambda B)^{-1}A_\tau z_\tau.
 \]
 This proves the first claim.
 
-For the second claim, because \(A_\tau\succ 0\) and \(B\succeq 0\), the symmetric generalized eigenproblem admits an \(A_\tau\)-orthonormal basis \(V=[v_1,\dots,v_r]\) and nonnegative eigenvalues \(\nu_1,\dots,\nu_r\) satisfying
+Because \(A_\tau\succ 0\) and \(B\succeq 0\), the symmetric generalized eigenproblem admits an \(A_\tau\)-orthonormal basis \(V=[v_1,\dots,v_r]\) and nonnegative eigenvalues \(\nu_1,\dots,\nu_r\) satisfying
 \[
 BV = A_\tau V \diag(\nu_1,\dots,\nu_r),
 \qquad
@@ -1051,100 +1646,122 @@ z_\tau = Vc,
 \qquad
 c = V^\top A_\tau z_\tau.
 \]
-Since \(z = Vy\) if and only if \(y=V^\top A_\tau z\), we may write
+If \(z=Vy\), then
 \begin{align}
 J_{\lambda,\tau}(Vy)
 &=
 a^\top Vy + \frac12 y^\top V^\top A_\tau V y + \frac{\lambda}{2} y^\top V^\top B V y \notag\\
 &=
 a^\top Vy + \frac12 y^\top y + \frac{\lambda}{2} y^\top \diag(\nu_1,\dots,\nu_r) y.
-\label{eq:proof_t2_coord_1}
+\label{eq:proof_closed_coord}
 \end{align}
-Now use \(a=-A_\tau z_\tau=-A_\tau Vc\), so
+Using \(a=-A_\tau z_\tau=-A_\tau Vc\), we obtain
 \[
-a^\top Vy
-=
--c^\top V^\top A_\tau V y
-=
--c^\top y.
+a^\top Vy = -c^\top y.
 \]
-Substituting this into \eqref{eq:proof_t2_coord_1} gives
+Substituting this into \eqref{eq:proof_closed_coord} gives
 \[
 J_{\lambda,\tau}(Vy)
 =
-\sum_{j=1}^r \bracks{-c_j y_j + \frac12 y_j^2 + \frac{\lambda}{2}\nu_j y_j^2}.
+\sum_{j=1}^r\bracks{-c_j y_j + \frac12 (1+\lambda\nu_j)y_j^2}.
 \]
-The coordinates decouple. Minimizing each coordinate separately yields
-\[
-0 = -c_j + (1+\lambda\nu_j)y_j,
-\qquad
- y_j = \frac{c_j}{1+\lambda\nu_j}.
-\]
-Therefore
+The coordinates decouple, and each one is minimized at \(y_j=c_j/(1+\lambda\nu_j)\). Therefore
 \[
 z_{\lambda,\tau}^{\mathrm{unc}}
 =
-Vy
-=
 \sum_{j=1}^r \frac{c_j}{1+\lambda\nu_j}v_j.
 \]
-This is exactly the stated generalized eigen-shrinkage formula.
+If \(z_{\lambda,\tau}^{\mathrm{unc}}\in\cZ\), then it is also the constrained minimizer because the constrained and unconstrained problems share the same objective and \(\cZ\) contains the unconstrained optimum.
 \end{proof}
 
 \subsection{Proof of Proposition~\ref{prop:scalar_gap}}
 
 \begin{proof}
-The family \(\mathcal F_{\mathrm{sc}}=\braces{\alpha z_\tau:\alpha\in\RR}\) is a subset of \(\RR^r\). Since \(z_{\lambda,\tau}^{\mathrm{unc}}\) is the global minimizer of \(J_{\lambda,\tau}\) over \(\RR^r\),
-\[
-\min_{\alpha\in\RR} J_{\lambda,\tau}(\alpha z_\tau)
-\ge
-J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}}).
-\]
-This proves the first inequality.
+If \(z_\tau=0\), then \(\mathcal F_{\mathrm{sc}}=\{0\}\) and Theorem~\ref{thm:closed_form} gives \(z_{\lambda,\tau}^{\mathrm{unc}}=0\), so the gap is zero. Assume now that \(z_\tau\neq 0\), hence \(S=\sum_j c_j^2>0\).
 
-It remains to characterize equality. By Theorem~\ref{thm:closed_form},
+For scalar shrinkage,
 \[
-z_{\lambda,\tau}^{\mathrm{unc}}
+J_{\lambda,\tau}(\alpha z_\tau)
 =
-\sum_{j=1}^r \frac{c_j}{1+\lambda\nu_j}v_j.
-\]
-Equality holds if and only if \(z_{\lambda,\tau}^{\mathrm{unc}} \in \mathcal F_{\mathrm{sc}}\), that is, if and only if there exists \(\alpha\in\RR\) such that
-\[
-\sum_{j=1}^r \frac{c_j}{1+\lambda\nu_j}v_j
+\sum_{j=1}^r\bracks{-\alpha c_j^2 + \frac12 (1+\lambda\nu_j)\alpha^2 c_j^2}
 =
-\alpha \sum_{j=1}^r c_j v_j.
+\frac{S}{2}\bracks{-2\alpha + \alpha^2\paren{1+\lambda\sum_{j=1}^r p_j\nu_j}}.
 \]
-Because the generalized eigenvectors form a basis, this is equivalent to
+The minimizing scalar is therefore
 \[
-\frac{c_j}{1+\lambda\nu_j} = \alpha c_j
-\qquad
-\text{for all } j=1,\dots,r.
-\]
-For every index \(j\) such that \(c_j\neq 0\), the condition becomes
-\[
-\alpha = \frac{1}{1+\lambda\nu_j}.
-\]
-Hence the same scalar \(\alpha\) can satisfy all active coordinates if and only if
-\[
-\nu_j = \nu_k
-\qquad
-\text{for all } j,k \text{ with } c_j\neq 0,\ c_k\neq 0.
-\]
-Conversely, if all active generalized eigenvalues are equal to some common value \(\bar\nu\), then
-\[
-z_{\lambda,\tau}^{\mathrm{unc}}
+\alpha^\star
 =
-\sum_{j=1}^r \frac{c_j}{1+\lambda\bar\nu}v_j
+\frac{1}{1+\lambda\sum_{j=1}^r p_j\nu_j}
 =
-\frac{1}{1+\lambda\bar\nu} z_\tau,
+f_\lambda\!\paren{\sum_{j=1}^r p_j\nu_j},
 \]
-which belongs to \(\mathcal F_{\mathrm{sc}}\). Therefore equality holds if and only if the generalized eigenvalues are constant on the support of \(z_\tau\).
+and the corresponding objective value is
+\[
+\min_{\alpha\in\RR}J_{\lambda,\tau}(\alpha z_\tau)
+=
+-\frac{S}{2}
+f_\lambda\!\paren{\sum_{j=1}^r p_j\nu_j}.
+\]
+By Theorem~\ref{thm:closed_form},
+\[
+J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}})
+=
+\sum_{j=1}^r\bracks{
+-\frac{c_j^2}{1+\lambda\nu_j}
++
+\frac12 (1+\lambda\nu_j)\frac{c_j^2}{(1+\lambda\nu_j)^2}
+}
+=
+-\frac12\sum_{j=1}^r \frac{c_j^2}{1+\lambda\nu_j}
+=
+-\frac{S}{2}\sum_{j=1}^r p_j f_\lambda(\nu_j).
+\]
+Subtracting the two identities yields
+\[
+\Delta_{\mathrm{sc}}
+=
+\frac{S}{2}
+\bracks{
+\sum_{j=1}^r p_j f_\lambda(\nu_j)
+-
+f_\lambda\!\paren{\sum_{j=1}^r p_j\nu_j}
+}.
+\]
+Since
+\[
+f_\lambda''(\nu)=\frac{2\lambda^2}{(1+\lambda\nu)^3}>0,
+\]
+\(f_\lambda\) is convex on \([0,\infty)\), so Jensen's inequality implies \(\Delta_{\mathrm{sc}}\ge 0\). Equality in Jensen's inequality holds if and only if the active generalized eigenvalues are constant, that is, if and only if \(\nu_j\) is constant on the support of \(z_\tau\).
+
+For the variance lower bound, let \(\bar\nu=\sum_j p_j\nu_j\). Taylor's theorem around \(\bar\nu\) gives, for every \(x\in[0,\nu_{\max}^{\mathrm{act}}]\),
+\[
+f_\lambda(x)
+\ge
+f_\lambda(\bar\nu)
++
+f_\lambda'(\bar\nu)(x-\bar\nu)
++
+\frac12 \inf_{0\le s\le \nu_{\max}^{\mathrm{act}}} f_\lambda''(s)\,(x-\bar\nu)^2.
+\]
+Since \(f_\lambda''\) is decreasing,
+\[
+\inf_{0\le s\le \nu_{\max}^{\mathrm{act}}} f_\lambda''(s)
+=
+\frac{2\lambda^2}{(1+\lambda\nu_{\max}^{\mathrm{act}})^3}.
+\]
+Averaging under the weights \(p_j\) annihilates the linear term and yields
+\[
+\sum_{j=1}^r p_j f_\lambda(\nu_j) - f_\lambda(\bar\nu)
+\ge
+\frac{\lambda^2}{(1+\lambda\nu_{\max}^{\mathrm{act}})^3}\Var_p(\nu).
+\]
+Multiplying by \(S/2\) proves the displayed lower bound for \(\Delta_{\mathrm{sc}}\).
 \end{proof}
 
 \subsection{Proof of Proposition~\ref{prop:gain}}
 
 \begin{proof}
-Because \(z_{\lambda,\tau}^{\mathrm{unc}}\) is the minimizer of the quadratic \(J_{\lambda,\tau}\), the standard completion-of-squares identity around the minimizer gives
+Because \(z_{\lambda,\tau}^{\mathrm{unc}}\) is the minimizer of the quadratic \(J_{\lambda,\tau}\), the completion-of-squares identity yields
 \[
 J_{\lambda,\tau}(z)
 =
@@ -1152,27 +1769,401 @@ J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}})
 +
 \frac12 (z-z_{\lambda,\tau}^{\mathrm{unc}})^\top (A_\tau+\lambda B)(z-z_{\lambda,\tau}^{\mathrm{unc}})
 \qquad
-\text{for all } z.
+\text{for all } z\in\RR^r.
 \]
-Substituting \(z=z_\tau\) yields
+Applying this with \(z=z_\tau\) gives
 \[
-J_{\lambda,\tau}(z_\tau)
+J_{\lambda,\tau}(z_\tau) - J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}})
 =
-J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}})
-+
 \frac12 (z_\tau-z_{\lambda,\tau}^{\mathrm{unc}})^\top (A_\tau+\lambda B)(z_\tau-z_{\lambda,\tau}^{\mathrm{unc}}).
 \]
-Rearranging gives the claimed identity.
+Because \(A_\tau+\lambda B\succ 0\), the right-hand side is nonnegative, so \(J_{\lambda,\tau}(z_{\lambda,\tau}^{\mathrm{unc}})\le J_{\lambda,\tau}(z_\tau)\).
 
-The difference is zero if and only if \(z_\tau=z_{\lambda,\tau}^{\mathrm{unc}}\). From Theorem~\ref{thm:closed_form},
+Equality holds if and only if \(z_\tau=z_{\lambda,\tau}^{\mathrm{unc}}\). By Theorem~\ref{thm:closed_form},
 \[
 z_{\lambda,\tau}^{\mathrm{unc}}=(A_\tau+\lambda B)^{-1}A_\tau z_\tau.
 \]
-Hence \(z_{\lambda,\tau}^{\mathrm{unc}}=z_\tau\) if and only if
+Thus equality is equivalent to
 \[
 (A_\tau+\lambda B)z_\tau = A_\tau z_\tau,
 \]
-which is equivalent to \(\lambda B z_\tau=0\), hence \(Bz_\tau=0\). This proves the second statement.
+which reduces to \(\lambda Bz_\tau=0\), hence to \(Bz_\tau=0\).
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:constrained}}
+
+\begin{proof}
+Let
+\[
+\Delta = \hat z_{\lambda,\tau}^{\cZ} - z_{\lambda,\tau}^{\cZ}.
+\]
+Since \(z_{\lambda,\tau}^{\cZ}\) minimizes \(z\mapsto a^\top z + \frac12 z^\top M z\) over the compact convex set \(\cZ\), the variational inequality for convex optimization gives
+\[
+\ip{a+Mz_{\lambda,\tau}^{\cZ}}{z-z_{\lambda,\tau}^{\cZ}} \ge 0
+\qquad
+\text{for all } z\in\cZ.
+\]
+Evaluating at \(z=\hat z_{\lambda,\tau}^{\cZ}\) yields
+\[
+\ip{a+Mz_{\lambda,\tau}^{\cZ}}{\Delta} \ge 0.
+\]
+Likewise, optimality of \(\hat z_{\lambda,\tau}^{\cZ}\) gives
+\[
+\ip{\hat a+\hat M\hat z_{\lambda,\tau}^{\cZ}}{z-\hat z_{\lambda,\tau}^{\cZ}} \ge 0
+\qquad
+\text{for all } z\in\cZ.
+\]
+Evaluating at \(z=z_{\lambda,\tau}^{\cZ}\) yields
+\[
+\ip{\hat a+\hat M\hat z_{\lambda,\tau}^{\cZ}}{-\Delta}\ge 0,
+\qquad\text{equivalently}\qquad
+\ip{\hat a+\hat M\hat z_{\lambda,\tau}^{\cZ}}{\Delta}\le 0.
+\]
+Subtracting the second inequality from the first gives
+\[
+\ip{a-\hat a + Mz_{\lambda,\tau}^{\cZ}-\hat M\hat z_{\lambda,\tau}^{\cZ}}{\Delta}\ge 0.
+\]
+Since
+\[
+Mz_{\lambda,\tau}^{\cZ}-\hat M\hat z_{\lambda,\tau}^{\cZ}
+=
+-M\Delta - (\hat M-M)\hat z_{\lambda,\tau}^{\cZ},
+\]
+we obtain
+\[
+\ip{M\Delta}{\Delta}
+\le
+\ip{a-\hat a - (\hat M-M)\hat z_{\lambda,\tau}^{\cZ}}{\Delta}.
+\]
+The left-hand side is bounded below by \(m\norm{\Delta}^2\). For the right-hand side,
+\[
+\abs{\ip{a-\hat a - (\hat M-M)\hat z_{\lambda,\tau}^{\cZ}}{\Delta}}
+\le
+\paren{\norm{\hat a-a} + \norm{\hat M-M}\,\norm{\hat z_{\lambda,\tau}^{\cZ}}}\norm{\Delta}.
+\]
+Because \(\hat z_{\lambda,\tau}^{\cZ}\in\cZ\), \(\norm{\hat z_{\lambda,\tau}^{\cZ}}\le D_\cZ\), and because \(\norm{\hat M-M}\le \delta\),
+\[
+m\norm{\Delta}^2
+\le
+\paren{\norm{\hat a-a} + D_\cZ\delta}\norm{\Delta}.
+\]
+If \(\Delta=0\), the claim is immediate. Otherwise divide by \(\norm{\Delta}\) to obtain
+\[
+\norm{\hat z_{\lambda,\tau}^{\cZ} - z_{\lambda,\tau}^{\cZ}}
+\le
+\frac{\norm{\hat a-a} + D_\cZ\delta}{m}.
+\]
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:A_est}}
+
+\begin{proof}
+Let \(N_f=\abs{S_{\mathrm{fit},n}}\). Define the response vector
+\[
+\hat y_n \in \RR^{m_n},
+\qquad
+(\hat y_n)_t = \widehat L_{\mathrm{fit}}(\tilde\theta_t)
+=
+\frac{1}{N_f}\sum_{i=1}^{N_f} \loss(\tilde\theta_t;Z_i),
+\]
+and its population counterpart
+\[
+y_n \in \RR^{m_n},
+\qquad
+(y_n)_t = L_P(z_t).
+\]
+By Assumption~\ref{ass:fit}, \(y_n = X_n\beta_0\). Define the normalized ridge objective
+\[
+Q_n(\beta)
+=
+\frac{1}{m_n}\norm{\hat y_n - X_n\beta}_2^2 + \eta_{A,n}\norm{P_A\beta}_2^2.
+\]
+Its minimizer \(\tilde\beta_n\) satisfies the normal equations
+\[
+(G_n+\eta_{A,n}P_A)\tilde\beta_n = \frac{1}{m_n}X_n^\top \hat y_n.
+\]
+Subtracting \((G_n+\eta_{A,n}P_A)\beta_0 = \frac{1}{m_n}X_n^\top y_n + \eta_{A,n}P_A\beta_0\) yields
+\[
+(G_n+\eta_{A,n}P_A)(\tilde\beta_n-\beta_0)
+=
+\frac{1}{m_n}X_n^\top(\hat y_n-y_n) - \eta_{A,n}P_A\beta_0.
+\]
+Since \(\lambda_{\min}(G_n)\ge \kappa_A\),
+\[
+\norm{(G_n+\eta_{A,n}P_A)^{-1}}_{\mathrm{op}}
+\le
+\frac{1}{\kappa_A}.
+\]
+Therefore
+\[
+\norm{\tilde\beta_n-\beta_0}_2
+\le
+\frac{
+\norm{\frac{1}{m_n}X_n^\top(\hat y_n-y_n)}_2 + \eta_{A,n}\norm{P_A\beta_0}_2
+}{\kappa_A}.
+\]
+For each fit example \(Z_i\), define
+\[
+\zeta_i
+=
+\frac{1}{m_n}\sum_{t\in\cC_{\mathrm{loc},n}}
+\psi(z_t)\paren{\loss(\tilde\theta_t;Z_i)-L_P(z_t)}
+\in \RR^p.
+\]
+Then \(\EE[\zeta_i]=0\) and
+\[
+\frac{1}{m_n}X_n^\top(\hat y_n-y_n)
+=
+\frac{1}{N_f}\sum_{i=1}^{N_f}\zeta_i.
+\]
+For each coordinate \(k\in[p]\),
+\[
+\abs{(\zeta_i)_k}
+\le
+\frac{1}{m_n}\sum_{t\in\cC_{\mathrm{loc},n}}
+\abs{\psi_k(z_t)}\,\abs{\loss(\tilde\theta_t;Z_i)-L_P(z_t)}
+\le
+M_{\psi,n}L_{\max}^{\mathrm{fit}}.
+\]
+Hoeffding's inequality and a union bound over the \(p\) coordinates imply that, with probability at least \(1-\delta\),
+\[
+\norm{\frac{1}{N_f}\sum_{i=1}^{N_f}\zeta_i}_2
+\le
+\sqrt{p}\,M_{\psi,n}L_{\max}^{\mathrm{fit}}
+\sqrt{\frac{\log(2p/\delta)}{2N_f}}.
+\]
+Substituting this into the previous deterministic inequality proves the bound for \(\tilde\beta_n\).
+
+If the practical positivity floor is inactive, then the implemented estimator equals the unconstrained ridge estimator, so the same bound applies. The final displayed inequality follows because the maps \(\beta\mapsto a\) and \(\beta\mapsto A_0\) are fixed linear unpacking maps whose operator norms depend only on \(r\).
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:B_est}}
+
+\begin{proof}
+Let \(Z_i\in S_{\mathrm{shift},n}\) be fixed. By Assumption~\ref{ass:identify}, the examplewise loss \(g_i(z)=\loss(\theta(z);Z_i)\) is three times continuously differentiable near \(0\). Its second-order Taylor expansion at \(0\) can be written as
+\[
+g_i(z)=\beta(Z_i)^\top \psi(z) + r_i(z),
+\]
+where the linear block of \(\beta(Z_i)\) is \(\phi(Z_i)\) and
+\[
+\abs{r_i(z)}
+\le
+\frac{M_3}{6}\norm{z}^3
+\qquad
+\text{for all } \norm{z}\le h_n.
+\]
+Let \(r_i\in\RR^{m_n}\) collect the remainders \(r_i(z_t)\) over \(t\in\cC_{\mathrm{loc},n}\), and let \(\tilde\beta_i\) denote the unconstrained per-example ridge estimator obtained from
+\[
+\frac{1}{m_n}\norm{g_i - X_n\beta}_2^2 + \eta_{H,n}\norm{\beta}_2^2.
+\]
+Its normal equations imply
+\[
+(G_n+\eta_{H,n}I_p)(\tilde\beta_i-\beta(Z_i))
+=
+\frac{1}{m_n}X_n^\top r_i - \eta_{H,n}\beta(Z_i).
+\]
+Because \(\lambda_{\min}(G_n)\ge \kappa_H\),
+\[
+\norm{\tilde\beta_i-\beta(Z_i)}_2
+\le
+\frac{
+\norm{\frac{1}{m_n}X_n^\top r_i}_2 + \eta_{H,n}\norm{\beta(Z_i)}_2
+}{\kappa_H+\eta_{H,n}}.
+\]
+Moreover,
+\[
+\norm{\frac{1}{m_n}X_n^\top r_i}_2
+\le
+\frac{1}{m_n}\sum_{t\in\cC_{\mathrm{loc},n}} \norm{\psi(z_t)}\,\abs{r_i(z_t)}
+\le
+M_{\psi,n}\frac{M_3 h_n^3}{6}.
+\]
+Using \(\norm{\beta(Z_i)}_2\le B_\beta\) yields
+\[
+\norm{\tilde\beta_i-\beta(Z_i)}_2
+\le
+\frac{M_{\psi,n}M_3 h_n^3/6 + \eta_{H,n}B_\beta}{\kappa_H+\eta_{H,n}}
+=
+\epsilon_{\phi,n}.
+\]
+The linear block extraction map has operator norm \(1\), so
+\[
+\norm{\hat\phi_i-\phi(Z_i)}_2 \le \epsilon_{\phi,n},
+\]
+which proves part (i).
+
+For part (ii), let \(N_s=\abs{S_{\mathrm{shift},n}}\) and define
+\[
+B_n^\phi
+=
+\frac{1}{N_s}\sum_{i=1}^{N_s}\phi(Z_i)\phi(Z_i)^\top
+-
+\bar\phi_n^\phi(\bar\phi_n^\phi)^\top,
+\qquad
+\bar\phi_n^\phi=\frac{1}{N_s}\sum_{i=1}^{N_s}\phi(Z_i).
+\]
+Then
+\[
+\hat B_n-B
+=
+(\hat B_n-B_n^\phi) + (B_n^\phi-B).
+\]
+We first bound the contamination term \(\hat B_n-B_n^\phi\). Let
+\[
+\hat S_n=\frac{1}{N_s}\sum_{i=1}^{N_s}\hat\phi_i\hat\phi_i^\top,
+\qquad
+S_n^\phi=\frac{1}{N_s}\sum_{i=1}^{N_s}\phi(Z_i)\phi(Z_i)^\top,
+\qquad
+\hat\mu_n=\frac{1}{N_s}\sum_{i=1}^{N_s}\hat\phi_i.
+\]
+Then
+\[
+\hat B_n-B_n^\phi
+=
+(\hat S_n-S_n^\phi) - (\hat\mu_n\hat\mu_n^\top - \bar\phi_n^\phi(\bar\phi_n^\phi)^\top).
+\]
+Since \(\norm{\phi(Z_i)}_2\le L_\phi\) and \(\norm{\hat\phi_i-\phi(Z_i)}_2\le \epsilon_{\phi,n}\), we have \(\norm{\hat\phi_i}_2\le L_\phi+\epsilon_{\phi,n}\) and \(\norm{\hat\mu_n-\bar\phi_n^\phi}_2\le \epsilon_{\phi,n}\). Hence
+\[
+\norm{\hat\phi_i\hat\phi_i^\top - \phi(Z_i)\phi(Z_i)^\top}_{\mathrm{op}}
+\le
+\norm{\hat\phi_i-\phi(Z_i)}_2\paren{\norm{\hat\phi_i}_2+\norm{\phi(Z_i)}_2}
+\le
+2L_\phi\epsilon_{\phi,n} + \epsilon_{\phi,n}^2.
+\]
+Averaging over \(i\) yields
+\[
+\norm{\hat S_n-S_n^\phi}_{\mathrm{op}}
+\le
+2L_\phi\epsilon_{\phi,n} + \epsilon_{\phi,n}^2.
+\]
+The same outer-product perturbation bound gives
+\[
+\norm{\hat\mu_n\hat\mu_n^\top - \bar\phi_n^\phi(\bar\phi_n^\phi)^\top}_{\mathrm{op}}
+\le
+2L_\phi\epsilon_{\phi,n} + \epsilon_{\phi,n}^2.
+\]
+Therefore
+\[
+\norm{\hat B_n-B_n^\phi}_{\mathrm{op}}
+\le
+4L_\phi\epsilon_{\phi,n} + 2\epsilon_{\phi,n}^2.
+\]
+
+It remains to control \(B_n^\phi-B\). Decompose
+\[
+B_n^\phi-B
+=
+\paren{
+\frac{1}{N_s}\sum_{i=1}^{N_s}\phi(Z_i)\phi(Z_i)^\top - \EE_P[\phi(Z)\phi(Z)^\top]
+}
+-
+\paren{
+\bar\phi_n^\phi(\bar\phi_n^\phi)^\top - \mu\mu^\top
+},
+\qquad
+\mu=\EE_P[\phi(Z)].
+\]
+Each scalar entry of \(\phi(Z_i)\phi(Z_i)^\top\) is bounded by \(L_\phi^2\). Scalar Bernstein's inequality and a union bound over the \(r^2\) entries imply that, with probability at least \(1-\delta/2\),
+\[
+\norm{
+\frac{1}{N_s}\sum_{i=1}^{N_s}\phi(Z_i)\phi(Z_i)^\top - \EE_P[\phi(Z)\phi(Z)^\top]
+}_{\mathrm{op}}
+\le
+C_1 L_\phi^2
+\max\braces{
+\sqrt{\frac{\log(4r^2/\delta)}{N_s}},
+\frac{\log(4r^2/\delta)}{N_s}
+}
+\]
+for a universal constant \(C_1>0\), where the factor from converting entrywise sup norm to operator norm is absorbed into \(C_1\). Likewise, coordinatewise Hoeffding and a union bound over the \(r\) coordinates give
+\[
+\norm{\bar\phi_n^\phi-\mu}_2
+\le
+C_2 L_\phi \sqrt{\frac{\log(4r/\delta)}{N_s}}
+\]
+with probability at least \(1-\delta/2\). Since \(\norm{\bar\phi_n^\phi}_2,\norm{\mu}_2\le L_\phi\),
+\[
+\norm{\bar\phi_n^\phi(\bar\phi_n^\phi)^\top - \mu\mu^\top}_{\mathrm{op}}
+\le
+2C_2 L_\phi^2 \sqrt{\frac{\log(4r/\delta)}{N_s}}.
+\]
+By the union bound, both events hold simultaneously with probability at least \(1-\delta\). Since \(\delta\le 1\) implies
+\[
+\log(4r^2/\delta)\le 2\log(2r/\delta),
+\qquad
+\log(4r/\delta)\le 2\log(2r/\delta),
+\]
+combining the last three displays and absorbing the resulting absolute factors into a universal \(C_B\) yields
+\[
+\norm{B_n^\phi-B}_{\mathrm{op}}
+\le
+C_B L_\phi^2
+\max\braces{
+\sqrt{\frac{\log(2r/\delta)}{N_s}},
+\frac{\log(2r/\delta)}{N_s}
+}.
+\]
+Adding the contamination bound proves part (ii).
+\end{proof}
+
+\subsection{Proof of Corollary~\ref{cor:finite_sample}}
+
+\begin{proof}
+On the event from Theorem~\ref{thm:A_est},
+\[
+\norm{\hat a_n-a}_2 + \norm{\hat A_{0,n}-A_0}_{\mathrm{op}}
+\le
+C_A(r)
+\frac{
+\sqrt{p}\,M_{\psi,n}L_{\max}^{\mathrm{fit}}\sqrt{\frac{\log(2p/\delta)}{2\abs{S_{\mathrm{fit},n}}}}
++
+\eta_{A,n}\norm{\beta_0}_2
+}{\kappa_A}.
+\]
+Because every local coordinate lies in \(\cZ_n\subseteq \braces{z:\norm{z}\le D_\cZ}\) and \(\psi\) is a fixed quadratic feature map, there exists \(C_\psi(r,D_\cZ)\) such that \(M_{\psi,n}\le C_\psi(r,D_\cZ)\) for all \(n\). Since \(p\) depends only on \(r\), the right-hand side is bounded by
+\[
+C_A'
+\bracks{
+\sqrt{\frac{\log(2/\delta)}{\abs{S_{\mathrm{fit},n}}}}
++
+\eta_{A,n}
+}
+\]
+for a constant \(C_A'\) depending only on \(r\), \(\kappa_A\), \(L_{\max}^{\mathrm{fit}}\), and \(\norm{\beta_0}_2\).
+
+On the event from Theorem~\ref{thm:B_est},
+\[
+\norm{\hat B_n-B}_{\mathrm{op}}
+\le
+C_B'
+\bracks{
+h_n^3 + \eta_{H,n}
++
+\max\braces{
+\sqrt{\frac{\log(2r/\delta)}{\abs{S_{\mathrm{shift},n}}}},
+\frac{\log(2r/\delta)}{\abs{S_{\mathrm{shift},n}}}
+}
+}
+\]
+for a constant \(C_B'\) depending only on \(r\), \(D_\cZ\), \(\kappa_H\), \(L_\phi\), \(B_\beta\), and \(M_3\). Since the positivity floor is assumed inactive, \(\hat A_{\tau,n}=\hat A_{0,n}+\tau I_r\), so
+\[
+\norm{\hat A_{\tau,n}-A_\tau}_{\mathrm{op}}=\norm{\hat A_{0,n}-A_0}_{\mathrm{op}}.
+\]
+Therefore
+\[
+\delta_n
+:=
+\norm{\hat A_{\tau,n}-A_\tau}_{\mathrm{op}} + \lambda\norm{\hat B_n-B}_{\mathrm{op}}
+\]
+obeys the same rate. On the intersection of the two events, Theorem~\ref{thm:constrained} gives
+\[
+\norm{\hat z_{\lambda,\tau}^{\cZ} - z_{\lambda,\tau}^{\cZ}}
+\le
+\frac{\norm{\hat a_n-a}_2 + D_\cZ \delta_n}{m}.
+\]
+Collecting the preceding bounds, absorbing fixed constants into \(C_z\), and applying the union bound proves the displayed finite-sample inequality with probability at least \(1-2\delta\).
+
+If \(\abs{S_{\mathrm{fit},n}}\to\infty\), \(\abs{S_{\mathrm{shift},n}}\to\infty\), \(h_n\to 0\), and \(\eta_{A,n},\eta_{H,n}\to 0\), then the displayed upper bound converges to zero, so \(\hat z_{\lambda,\tau}^{\cZ}\to z_{\lambda,\tau}^{\cZ}\) in probability.
 \end{proof}
 
 \subsection{Proof of Theorem~\ref{thm:perturb}}
@@ -1204,44 +2195,62 @@ Since \(M\succ 0\) with \(\lambda_{\min}(M)=m\) and \(\delta<m\), Weyl's inequal
 \ge
 m-\delta > 0.
 \]
-Therefore \(\hat M\) is positive definite, and
+Therefore \(\hat M\) is positive definite and
 \[
-\norm{\hat M^{-1}} \le \frac{1}{m-\delta}.
+\norm{\hat M^{-1}}_{\mathrm{op}} \le \frac{1}{m-\delta}.
 \]
-
-Now use the exact normal equations
+The exact normal equations are
 \[
 Mz_{\lambda,\tau}^{\mathrm{unc}} = -a,
 \qquad
-\hat M \hat z_{\lambda,\tau} = -\hat a.
+\hat M \hat z_{\lambda,\tau}^{\mathrm{unc}} = -\hat a.
 \]
-Subtract the first from the second:
+Subtracting them gives
 \[
-\hat M(\hat z_{\lambda,\tau} - z_{\lambda,\tau}^{\mathrm{unc}})
+\hat M\paren{\hat z_{\lambda,\tau}^{\mathrm{unc}} - z_{\lambda,\tau}^{\mathrm{unc}}}
 =
 -(\hat a-a) - (\hat M-M)z_{\lambda,\tau}^{\mathrm{unc}}.
 \]
-Multiply by \(\hat M^{-1}\):
-\[
-\hat z_{\lambda,\tau} - z_{\lambda,\tau}^{\mathrm{unc}}
-=
--\hat M^{-1}(\hat a-a)
--\hat M^{-1}(\hat M-M)z_{\lambda,\tau}^{\mathrm{unc}}.
-\]
-Taking norms and using the bound on \(\hat M^{-1}\),
+Multiplying by \(\hat M^{-1}\) and taking norms,
 \begin{align*}
-\norm{\hat z_{\lambda,\tau} - z_{\lambda,\tau}^{\mathrm{unc}}}
+\norm{\hat z_{\lambda,\tau}^{\mathrm{unc}} - z_{\lambda,\tau}^{\mathrm{unc}}}
 &\le
-\norm{\hat M^{-1}}
+\norm{\hat M^{-1}}_{\mathrm{op}}
 \bracks{
-\norm{\hat a-a} + \norm{\hat M-M}\,\norm{z_{\lambda,\tau}^{\mathrm{unc}}}
+\norm{\hat a-a} + \norm{\hat M-M}_{\mathrm{op}}\norm{z_{\lambda,\tau}^{\mathrm{unc}}}
 } \\
 &\le
 \frac{\norm{\hat a-a} + \delta \norm{z_{\lambda,\tau}^{\mathrm{unc}}}}{m-\delta}.
 \end{align*}
-This proves the deterministic perturbation inequality.
+This is the claimed perturbation bound.
+\end{proof}
 
-If \(\norm{\hat a-a}\to 0\), \(\hat A_0\to A_0\), and \(\hat B\to B\), then \(\delta\to 0\) and the right-hand side converges to zero, implying \(\hat z_{\lambda,\tau}\to z_{\lambda,\tau}^{\mathrm{unc}}\).
+\subsection{Proof of Proposition~\ref{prop:subspace_gap}}
+
+\begin{proof}
+Because \(u^\star\) is the unconstrained minimizer of the strongly convex quadratic \(\bar J\),
+\[
+\bar J(u)=\bar J(u^\star) + \frac12 (u-u^\star)^\top \bar M (u-u^\star)
+\qquad
+\text{for all } u\in\RR^d.
+\]
+Since \(u_U^\star\) minimizes \(\bar J\) over \(\operatorname{Im}(P_U)\),
+\[
+\bar J(u_U^\star)\le \bar J(P_Uu^\star).
+\]
+Therefore
+\begin{align*}
+0
+\le
+\bar J(u_U^\star)-\bar J(u^\star)
+&\le
+\bar J(P_Uu^\star)-\bar J(u^\star) \\
+&=
+\frac12 (P_Uu^\star-u^\star)^\top \bar M (P_Uu^\star-u^\star) \\
+&\le
+\frac{\lambda_{\max}(\bar M)}{2}\norm{(I-P_U)u^\star}^2.
+\end{align*}
+This is the desired inequality.
 \end{proof}
 
 \subsection{Proof of Corollary~\ref{cor:certificate}}
@@ -1255,7 +2264,7 @@ L_Q(0) + \frac{\varrho}{2\lambda}
 +
 J_{\lambda,\tau}(z).
 \]
-Apply this inequality at \(z=z_{\lambda,\tau}^{\cZ}\):
+Applying this at \(z=z_{\lambda,\tau}^{\cZ}\) gives
 \[
 L_Q(z_{\lambda,\tau}^{\cZ})
 \le
@@ -1272,10 +2281,6 @@ J_{\lambda,\tau}(z_{\lambda,\tau}^{\cZ}) \le J_{\lambda,\tau}(z)
 Combining the two inequalities yields
 \[
 L_Q(z_{\lambda,\tau}^{\cZ})
-\le
-L_Q(0) + \frac{\varrho}{2\lambda}
-+
-J_{\lambda,\tau}(z_{\lambda,\tau}^{\cZ})
 \le
 L_Q(0) + \frac{\varrho}{2\lambda}
 +
