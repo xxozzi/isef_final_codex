@@ -1,0 +1,184 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cha2021swad}
+\citation{arpit2021ensemble}
+\citation{rame2022diwa}
+\citation{cha2022miro}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{gupta2024geomtask}
+\citation{cha2021swad}
+\citation{arpit2021ensemble}
+\citation{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups}
+\citation{wortsman2022wiseft}
+\citation{rame2022diwa}
+\citation{duchi2016fdiv,duchi2021learning,li2021worstcase}
+\citation{hashimoto2018fairness,lahoti2020fairness,sagawa2020groupdro}
+\citation{wei2023priorshift}
+\citation{agarwal2022mro}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single-run post-hoc DG.}{2}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Weight averaging, mode connectivity, and soups.}{2}{section*.4}\protected@file@percent }
+\citation{koh2017influence}
+\citation{simard1991tangent}
+\citation{rothenhausler2021anchor}
+\citation{brown1983spatialmedian,minsker2024geomed}
+\citation{megiddo1983linear,welzl1991smallest}
+\citation{gupta2024geomtask}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {CHOIR}}{} at a glance.} From one dense trajectory, we build a safe soup family, use a finite probe set to generate active hidden shifts, compute the safe optimum preferred by each hidden shift, and deploy the center of that witness cloud.}}{3}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:overview}{{1}{3}{\textbf {\choir {} at a glance.} From one dense trajectory, we build a safe soup family, use a finite probe set to generate active hidden shifts, compute the safe optimum preferred by each hidden shift, and deploy the center of that witness cloud}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Distributional robustness, hidden subpopulations, and regret.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Influence, local shift sensitivity, and anchor-style robustness.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Adjacent robust centrality and model merging.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Safe checkpoint family}{4}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:safe_pool}{{1}{4}{Safe checkpoint family}{equation.1}{}}
+\newlabel{eq:safe_family}{{2}{4}{Safe checkpoint family}{equation.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Hidden-shift family}{4}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:weighted_loss}{{3}{4}{Hidden-shift family}{equation.3}{}}
+\newlabel{eq:capped_simplex}{{4}{4}{Hidden-shift family}{equation.4}{}}
+\newlabel{prop:topalpha}{{1}{4}{Top-\(\alpha \) and empirical-\(\CVaR \) characterization}{proposition.1}{}}
+\newlabel{eq:cvar_identity}{{5}{4}{Top-\(\alpha \) and empirical-\(\CVaR \) characterization}{equation.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {2D geometric intuition.} Left: a safe soup family with several hidden-shift optima \(w_q^\star \), the uniform-safe baseline, and the \textup  {\textsc  {CHOIR}}{} center. Right: probe-induced top-\(\alpha \) adversaries focus on the worst \(\alpha \)-fraction of support examples for each probe model.}}{5}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:geometry2d}{{2}{5}{\textbf {2D geometric intuition.} Left: a safe soup family with several hidden-shift optima \(w_q^\star \), the uniform-safe baseline, and the \choir {} center. Right: probe-induced top-\(\alpha \) adversaries focus on the worst \(\alpha \)-fraction of support examples for each probe model}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}The Method}{5}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{5}{The Method}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Probe-induced active reweightings}{5}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:active_set}{{6}{5}{Probe-induced active reweightings}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Witness optima}{5}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:witness_def}{{7}{5}{Witness optima}{equation.7}{}}
+\citation{megiddo1983linear,welzl1991smallest}
+\@writefile{toc}{\contentsline {paragraph}{Practical witness solver.}{6}{section*.9}\protected@file@percent }
+\newlabel{thm:witness_pgd}{{1}{6}{Linear convergence of the reduced-coordinate witness oracle}{theorem.1}{}}
+\newlabel{eq:witness_pgd}{{8}{6}{Linear convergence of the reduced-coordinate witness oracle}{equation.8}{}}
+\newlabel{eq:witness_pgd_rate}{{9}{6}{Linear convergence of the reduced-coordinate witness oracle}{equation.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}The \textup  {\textsc  {CHOIR}}{} center}{6}{subsection.4.3}\protected@file@percent }
+\newlabel{eq:choir_center}{{10}{6}{The \choir {} center}{equation.10}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {CHOIR}}{} with probe-induced active reweightings}}{7}{algorithm.1}\protected@file@percent }
+\newlabel{alg:choir}{{1}{7}{\choir {} with probe-induced active reweightings}{algorithm.1}{}}
+\newlabel{thm:center_dual}{{2}{7}{Existence, uniqueness, and dual characterization}{theorem.2}{}}
+\newlabel{eq:center_dual}{{11}{7}{Existence, uniqueness, and dual characterization}{equation.11}{}}
+\newlabel{cor:sparse}{{1}{7}{Sparse deployability}{corollary.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Exact center solver}{7}{subsection.4.4}\protected@file@percent }
+\newlabel{eq:master_qp}{{12}{7}{Exact center solver}{equation.12}{}}
+\newlabel{thm:finite_termination}{{3}{7}{Finite termination of Algorithm~\ref {alg:choir}}{theorem.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Theory}{8}{section.5}\protected@file@percent }
+\newlabel{sec:theory}{{5}{8}{Theory}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Why centering the optimum cloud controls hidden-shift regret}{8}{subsection.5.1}\protected@file@percent }
+\newlabel{ass:interior}{{1}{8}{Reference-family relative-interior witness optima}{assumption.1}{}}
+\newlabel{thm:regret_domination}{{4}{8}{Local Hessian domination implies regret domination}{theorem.4}{}}
+\newlabel{eq:hessian_domination}{{13}{8}{Local Hessian domination implies regret domination}{equation.13}{}}
+\newlabel{eq:regret_domination}{{14}{8}{Local Hessian domination implies regret domination}{equation.14}{}}
+\newlabel{cor:ideal_regret}{{2}{8}{Worst-case regret bound for ideal \choir {}}{corollary.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Witness stability and active-set approximation}{8}{subsection.5.2}\protected@file@percent }
+\newlabel{ass:strong}{{2}{8}{Local strong convexity and bounded per-example gradients}{assumption.2}{}}
+\newlabel{thm:witness_lipschitz}{{5}{9}{Lipschitz witness map}{theorem.5}{}}
+\newlabel{eq:witness_lipschitz}{{15}{9}{Lipschitz witness map}{equation.15}{}}
+\newlabel{thm:hausdorff}{{6}{9}{Witness-cloud perturbation bound}{theorem.6}{}}
+\newlabel{eq:value_perturb}{{16}{9}{Witness-cloud perturbation bound}{equation.16}{}}
+\newlabel{eq:policy_perturb}{{17}{9}{Witness-cloud perturbation bound}{equation.17}{}}
+\newlabel{cor:epsnet}{{3}{9}{Approximation by an externally supplied \(\varepsilon \)-net active set}{corollary.3}{}}
+\newlabel{cor:oracle}{{4}{9}{Approximation by practical witness oracles}{corollary.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion of Assumptions}{9}{section.6}\protected@file@percent }
+\newlabel{sec:assumptions}{{6}{9}{Discussion of Assumptions}{section.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Why we use the capped simplex.}{9}{section*.11}\protected@file@percent }
+\citation{gulrajani2021domainbed}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {3D corner view.} A safe basin extracted from one training trajectory is shown as a curved low-loss region. Different hidden shifts prefer different witness optima inside that basin, and \textup  {\textsc  {CHOIR}}{} centers that optimum cloud rather than choosing the loudest witness.}}{10}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:geometry3d}{{3}{10}{\textbf {3D corner view.} A safe basin extracted from one training trajectory is shown as a curved low-loss region. Different hidden shifts prefer different witness optima inside that basin, and \choir {} centers that optimum cloud rather than choosing the loudest witness}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{Why local curvature is acceptable here.}{10}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What the smoothness assumptions do and do not cover.}{10}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Where the theory can fail.}{10}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Experimental Protocol and Published Benchmark Context}{10}{section.7}\protected@file@percent }
+\newlabel{sec:experiments}{{7}{10}{Experimental Protocol and Published Benchmark Context}{section.7}{}}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{arpit2021ensemble}
+\citation{rame2022diwa}
+\citation{cha2022miro}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{cha2022miro}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published benchmark context from prior work.} These are exact published averages copied from the cited papers. The settings differ, so this table is reference context, not a direct leaderboard for \textup  {\textsc  {CHOIR}}{}.}}{11}{table.caption.15}\protected@file@percent }
+\newlabel{tab:published_context}{{1}{11}{\textbf {Published benchmark context from prior work.} These are exact published averages copied from the cited papers. The settings differ, so this table is reference context, not a direct leaderboard for \choir {}}{table.caption.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Published dataset-wise context from prior work.} Only rows whose exact dataset-wise values were independently verified from the cited paper sources are included here. Rows corresponding to the upcoming \textup  {\textsc  {CHOIR}}{} run remain intentionally \textbf  {TBD}{}.}}{11}{table.caption.16}\protected@file@percent }
+\newlabel{tab:published_dataset_context}{{2}{11}{\textbf {Published dataset-wise context from prior work.} Only rows whose exact dataset-wise values were independently verified from the cited paper sources are included here. Rows corresponding to the upcoming \choir {} run remain intentionally \TBD {}}{table.caption.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Benchmarks, backbone, and metrics}{11}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Baselines}{11}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Published benchmark context}{11}{subsection.7.3}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{agarwal2022mro}{{1}{2022}{{Agarwal and Zhang}}{{}}}
+\bibcite{arpit2021ensemble}{{2}{2022}{{Arpit et~al.}}{{Arpit, Wang, Zhou, and Xiong}}}
+\bibcite{brown1983spatialmedian}{{3}{1983}{{Brown}}{{}}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Planned run-specific results.} Only rows tied to the upcoming \textup  {\textsc  {CHOIR}}{} run remain \textbf  {TBD}{}.}}{12}{table.caption.17}\protected@file@percent }
+\newlabel{tab:main_results}{{3}{12}{\textbf {Planned run-specific results.} Only rows tied to the upcoming \choir {} run remain \TBD {}}{table.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Planned ablation grid.} Every entry is intentionally \textbf  {TBD}{} until experiments are run.}}{12}{table.caption.18}\protected@file@percent }
+\newlabel{tab:ablations}{{4}{12}{\textbf {Planned ablation grid.} Every entry is intentionally \TBD {} until experiments are run}{table.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Main results table}{12}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Ablations and diagnostics}{12}{subsection.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{12}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{12}{section.9}\protected@file@percent }
+\bibcite{cha2021swad}{{4}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{cha2022miro}{{5}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
+\bibcite{duchi2016fdiv}{{6}{2016}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{duchi2021learning}{{7}{2021}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{frankle2020linear}{{8}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{garipov2018fge}{{9}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\bibcite{gulrajani2021domainbed}{{10}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{gupta2024geomtask}{{11}{2024}{{Gupta and Gupta}}{{}}}
+\bibcite{hashimoto2018fairness}{{12}{2018}{{Hashimoto et~al.}}{{Hashimoto, Srivastava, Namkoong, and Liang}}}
+\bibcite{izmailov2018swa}{{13}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{koh2017influence}{{14}{2017}{{Koh and Liang}}{{}}}
+\bibcite{lahoti2020fairness}{{15}{2020}{{Lahoti et~al.}}{{Lahoti, Gummadi, and Weikum}}}
+\bibcite{li2021worstcase}{{16}{2021}{{Li et~al.}}{{Li, Namkoong, and Xia}}}
+\bibcite{megiddo1983linear}{{17}{1983}{{Megiddo}}{{}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Visual intuition for each step.} From left to right: safe-pool construction, probe-induced adversaries, hidden-shift witness optima, and the final centered deployment.}}{13}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:step_panels}{{4}{13}{\textbf {Visual intuition for each step.} From left to right: safe-pool construction, probe-induced adversaries, hidden-shift witness optima, and the final centered deployment}{figure.caption.19}{}}
+\bibcite{minsker2024geomed}{{18}{2024}{{Minsker and Strawn}}{{}}}
+\bibcite{rame2022diwa}{{19}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\bibcite{rothenhausler2021anchor}{{20}{2021}{{Rothenh{\"a}usler et~al.}}{{Rothenh{\"a}usler, Meinshausen, B{\"u}hlmann, and Peters}}}
+\bibcite{sagawa2020groupdro}{{21}{2020}{{Sagawa et~al.}}{{Sagawa, Koh, Hashimoto, and Liang}}}
+\bibcite{simard1991tangent}{{22}{1992}{{Simard et~al.}}{{Simard, Victorri, LeCun, and Denker}}}
+\bibcite{sion1958minimax}{{23}{1958}{{Sion}}{{}}}
+\bibcite{wei2023priorshift}{{24}{2023}{{Wei et~al.}}{{Wei, Narasimhan, Amid, Chu, Liu, and Kumar}}}
+\bibcite{welzl1991smallest}{{25}{1991}{{Welzl}}{{}}}
+\bibcite{wortsman2022soups}{{26}{2022{}}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\bibcite{wortsman2022wiseft}{{27}{2022{}}{{Wortsman et~al.}}{{Wortsman, Ilharco, Kim, Li, Kornblith, Roelofs, Gontijo-Lopes, Hajishirzi, Farhadi, Namkoong, and Schmidt}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Visual Intuition}{14}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B}Full Proofs}{14}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Proof of Proposition~\ref {prop:topalpha}}{14}{subsection.B.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Active-set intuition.} Left: the capped simplex in reweighting space and probe-induced hidden shifts. Right: the corresponding witness cloud in model space together with the \textup  {\textsc  {CHOIR}}{} center and its enclosing radius.}}{15}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:active_set}{{5}{15}{\textbf {Active-set intuition.} Left: the capped simplex in reweighting space and probe-induced hidden shifts. Right: the corresponding witness cloud in model space together with the \choir {} center and its enclosing radius}{figure.caption.21}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 1: characterize the extreme points of \(\mathcal  {Q}_\alpha ^n\).}{15}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 2: maximize a linear functional.}{15}{section*.23}\protected@file@percent }
+\citation{sion1958minimax}
+\@writefile{toc}{\contentsline {paragraph}{Step 3: empirical-\(\operatorname  {CVaR}\) representation.}{16}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Lower bound.}{16}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Matching upper bound.}{16}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Proof of Theorem~\ref {thm:center_dual}}{16}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Part (a): existence and uniqueness.}{16}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Part (b): the minimizer belongs to \(\operatorname  {conv}(\mathcal  {W})\).}{16}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Part (c): dual characterization.}{17}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Proof of Theorem~\ref {thm:witness_pgd}}{17}{subsection.B.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 1: \(z^\star \) is a fixed point of projected gradient descent.}{17}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 2: the unconstrained gradient map is a contraction.}{17}{section*.31}\protected@file@percent }
+\newlabel{eq:pgd_contraction}{{18}{18}{Step 2: the unconstrained gradient map is a contraction}{equation.18}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 3: projected gradient descent inherits the contraction.}{18}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 4: optimal fixed step size.}{18}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Proof of Corollary~\ref {cor:sparse}}{19}{subsection.B.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Proof of Theorem~\ref {thm:finite_termination}}{19}{subsection.B.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Proof of Theorem~\ref {thm:regret_domination}}{19}{subsection.B.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Proof of Corollary~\ref {cor:ideal_regret}}{20}{subsection.B.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.8}Proof of Theorem~\ref {thm:witness_lipschitz}}{20}{subsection.B.8}\protected@file@percent }
+\newlabel{eq:witness_lip_mid}{{19}{20}{Proof of Theorem~\ref {thm:witness_lipschitz}}{equation.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.9}Proof of Theorem~\ref {thm:hausdorff}}{21}{subsection.B.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.10}Proof of Corollary~\ref {cor:epsnet}}{21}{subsection.B.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.11}Proof of Corollary~\ref {cor:oracle}}{22}{subsection.B.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C}Additional Experimental Tables}{22}{appendix.C}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces \textbf  {Planned implementation details.} This table records the exact fields that will be populated once the experiments are run.}}{22}{table.caption.34}\protected@file@percent }
+\gdef \@abspage@last{22}

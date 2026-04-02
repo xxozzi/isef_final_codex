@@ -264,3 +264,5 @@ When new PRISM replay results come in, add them here in this order:
 2. fill in `Art full`, `In`, and `Out`
 3. add a short note if there was a selector failure, action-cap warning, or anything unusual
 4. if a new best setting emerges, add it to Section 1 or Section 2 as a promoted result
+
+UPDATE: ALL THE RUNS MARKED TBD OR SUBMITTED OR RUNNING OR ANYTHING OTHER THAN AN ACTUAL RESULT JUST TOOK WAY TOO LONG (6 HRS+ AND WERE ABORTED)
