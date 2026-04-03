@@ -1,0 +1,181 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cha2021swad}
+\citation{teterwak2025ermpp}
+\citation{izmailov2018swa}
+\citation{garipov2018fge}
+\citation{wortsman2022soups}
+\citation{moralesbrotons2024ema}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{cha2021swad}
+\citation{arpit2022eoa}
+\citation{cha2022miro}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc domain generalization.}{2}{section*.3}\protected@file@percent }
+\citation{izmailov2018swa,garipov2018fge,frankle2020linear,wortsman2022soups,wortsman2022wiseft}
+\citation{moralesbrotons2024ema}
+\citation{fu2023trajectory}
+\citation{arpit2017memorization,rahaman2019spectralbias}
+\citation{murali2023spurious}
+\citation{li2021worstcase,agarwal2022mro}
+\citation{abdollahpoorrostam2026monosoup}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {TSF}}{} overview.} A dense checkpoint trajectory is converted into groupwise update matrices. Each update sequence is transformed along the checkpoint axis, spectrally shrunk, inverted, and cumulatively reconstructed into one final model. The same model is then evaluated under hidden-shift tail risk on a pooled source holdout set.}}{3}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:overview}{{1}{3}{\textbf {\tsf {} overview.} A dense checkpoint trajectory is converted into groupwise update matrices. Each update sequence is transformed along the checkpoint axis, spectrally shrunk, inverted, and cumulatively reconstructed into one final model. The same model is then evaluated under hidden-shift tail risk on a pooled source holdout set}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Weight averaging and trajectory geometry.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Trajectory information as signal.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Memorization and training dynamics.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Risk under hidden subgroup shift.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Spectral editing of weights.}{3}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Trajectory Spectral Filtering}{4}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{4}{Trajectory Spectral Filtering}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}A concrete filter family}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:dct}{{1}{4}{A concrete filter family}{equation.1}{}}
+\newlabel{eq:freqs}{{2}{4}{A concrete filter family}{equation.2}{}}
+\newlabel{eq:filter}{{3}{4}{A concrete filter family}{equation.3}{}}
+\newlabel{eq:tsf_updates}{{4}{4}{\tsf {} operator}{equation.4}{}}
+\newlabel{eq:tsf_endpoint}{{5}{4}{\tsf {} operator}{equation.5}{}}
+\newlabel{eq:tsf_model}{{6}{4}{\tsf {} operator}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Why these terms appear}{4}{subsection.4.2}\protected@file@percent }
+\newlabel{fig:traj_intuition}{{2a}{5}{2D and 3D intuition}{figure.caption.9}{}}
+\newlabel{sub@fig:traj_intuition}{{a}{5}{2D and 3D intuition}{figure.caption.9}{}}
+\newlabel{fig:signal_spectrum}{{2b}{5}{Signal, spectrum, and filtered path}{figure.caption.9}{}}
+\newlabel{sub@fig:signal_spectrum}{{b}{5}{Signal, spectrum, and filtered path}{figure.caption.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Visual intuition for \textup  {\textsc  {TSF}}{}.} Left: a toy checkpoint path and its filtered counterpart in 2D and on a 3D loss surface viewed from a corner. Right: one update signal, its DCT magnitude profile, the frequency response, and the cumulative filtered path.}}{5}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:intuition}{{2}{5}{\textbf {Visual intuition for \tsf {}.} Left: a toy checkpoint path and its filtered counterpart in 2D and on a 3D loss surface viewed from a corner. Right: one update signal, its DCT magnitude profile, the frequency response, and the cumulative filtered path}{figure.caption.9}{}}
+\newlabel{prop:variational}{{1}{5}{Variational characterization}{proposition.1}{}}
+\newlabel{eq:variational}{{7}{5}{Variational characterization}{equation.7}{}}
+\newlabel{eq:variational_q}{{8}{5}{Variational characterization}{equation.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}How \textup  {\textsc  {TSF}}{} differs from checkpoint averaging}{5}{subsection.4.3}\protected@file@percent }
+\newlabel{prop:endpoint_repr}{{2}{5}{Endpoint representation and relation to averaging}{proposition.2}{}}
+\newlabel{eq:update_kernel}{{9}{5}{Endpoint representation and relation to averaging}{equation.9}{}}
+\newlabel{eq:checkpoint_coeffs}{{10}{5}{Endpoint representation and relation to averaging}{equation.10}{}}
+\newlabel{eq:alpha_formula}{{11}{5}{Endpoint representation and relation to averaging}{equation.11}{}}
+\newlabel{eq:uniform_update_kernel}{{12}{5}{Endpoint representation and relation to averaging}{equation.12}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {TSF}}{}}}{6}{algorithm.1}\protected@file@percent }
+\newlabel{alg:tsf}{{1}{6}{\tsf {}}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Hidden-Shift Evaluation Functional}{6}{section.5}\protected@file@percent }
+\newlabel{sec:hidden_shift}{{5}{6}{Hidden-Shift Evaluation Functional}{section.5}{}}
+\newlabel{eq:clipped_loss}{{13}{6}{Hidden-Shift Evaluation Functional}{equation.13}{}}
+\newlabel{eq:capped_simplex}{{14}{6}{Hidden-Shift Evaluation Functional}{equation.14}{}}
+\newlabel{eq:hidden_shift_risk}{{15}{6}{Hidden-Shift Evaluation Functional}{equation.15}{}}
+\newlabel{prop:topalpha}{{3}{6}{Top-\(\alpha \) / empirical-\(\CVaR \) characterization}{proposition.3}{}}
+\newlabel{eq:topalpha}{{16}{6}{Top-\(\alpha \) / empirical-\(\CVaR \) characterization}{equation.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Theoretical Analysis}{6}{section.6}\protected@file@percent }
+\newlabel{sec:theory}{{6}{6}{Theoretical Analysis}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Stability and exact bias--variance decomposition}{6}{subsection.6.1}\protected@file@percent }
+\newlabel{thm:nonexpansive}{{1}{6}{Nonexpansiveness}{theorem.1}{}}
+\newlabel{eq:nonexp_updates}{{17}{6}{Nonexpansiveness}{equation.17}{}}
+\newlabel{eq:nonexp_endpoint}{{18}{6}{Nonexpansiveness}{equation.18}{}}
+\newlabel{fig:kernels}{{3a}{7}{Uniform averaging vs. \tsf {} kernels}{figure.caption.10}{}}
+\newlabel{sub@fig:kernels}{{a}{7}{Uniform averaging vs. \tsf {} kernels}{figure.caption.10}{}}
+\newlabel{fig:topalpha}{{3b}{7}{Top-\(\alpha \) hidden-shift risk}{figure.caption.10}{}}
+\newlabel{sub@fig:topalpha}{{b}{7}{Top-\(\alpha \) hidden-shift risk}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {What \textup  {\textsc  {TSF}}{} changes, and how hidden-shift risk is measured.} Left: checkpoint averaging induces a triangular update kernel, while \textup  {\textsc  {TSF}}{} induces a spectrally controlled kernel. Right: the hidden-shift evaluation functional equals the loss on the worst \(\alpha \)-fraction of support examples.}}{7}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:kernels_and_topalpha}{{3}{7}{\textbf {What \tsf {} changes, and how hidden-shift risk is measured.} Left: checkpoint averaging induces a triangular update kernel, while \tsf {} induces a spectrally controlled kernel. Right: the hidden-shift evaluation functional equals the loss on the worst \(\alpha \)-fraction of support examples}{figure.caption.10}{}}
+\newlabel{ass:sequence}{{1}{7}{Groupwise spectral sequence model}{assumption.1}{}}
+\newlabel{eq:signal_model}{{19}{7}{Groupwise spectral sequence model}{equation.19}{}}
+\newlabel{thm:bias_variance}{{2}{7}{Exact spectral bias--variance decomposition}{theorem.2}{}}
+\newlabel{eq:bias_variance}{{20}{7}{Exact spectral bias--variance decomposition}{equation.20}{}}
+\newlabel{cor:strict_improvement}{{1}{7}{Strict improvement for sufficiently small positive shrinkage}{corollary.1}{}}
+\newlabel{eq:strict_improvement_condition}{{21}{7}{Strict improvement for sufficiently small positive shrinkage}{equation.21}{}}
+\newlabel{eq:strict_improvement}{{22}{7}{Strict improvement for sufficiently small positive shrinkage}{equation.22}{}}
+\newlabel{cor:sobolev}{{2}{7}{Sobolev-type bound}{corollary.2}{}}
+\newlabel{eq:sobolev_assumption}{{23}{7}{Sobolev-type bound}{equation.23}{}}
+\newlabel{eq:sobolev_bound}{{24}{7}{Sobolev-type bound}{equation.24}{}}
+\newlabel{eq:sobolev_bound_uniform}{{25}{7}{Sobolev-type bound}{equation.25}{}}
+\newlabel{thm:consistency}{{3}{7}{Recovery under vanishing additive noise}{theorem.3}{}}
+\citation{gulrajani2021domainbed}
+\newlabel{eq:noise_vanish}{{26}{8}{Recovery under vanishing additive noise}{equation.26}{}}
+\newlabel{eq:consistency_updates}{{27}{8}{Recovery under vanishing additive noise}{equation.27}{}}
+\newlabel{eq:endpoint_consistency}{{28}{8}{Recovery under vanishing additive noise}{equation.28}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}From denoising to hidden-shift risk}{8}{subsection.6.2}\protected@file@percent }
+\newlabel{ass:local_smooth}{{2}{8}{Uniform local smoothness under hidden shifts}{assumption.2}{}}
+\newlabel{thm:risk_transfer}{{4}{8}{Uniform local hidden-shift risk transfer}{theorem.4}{}}
+\newlabel{eq:risk_transfer}{{29}{8}{Uniform local hidden-shift risk transfer}{equation.29}{}}
+\newlabel{eq:risk_transfer_stationary}{{30}{8}{Uniform local hidden-shift risk transfer}{equation.30}{}}
+\newlabel{cor:model_level}{{3}{8}{Model-level bound from groupwise path error}{corollary.3}{}}
+\newlabel{eq:model_distance}{{31}{8}{Model-level bound from groupwise path error}{equation.31}{}}
+\newlabel{eq:combined_bound}{{32}{8}{Model-level bound from groupwise path error}{equation.32}{}}
+\citation{cha2021swad}
+\citation{teterwak2025ermpp}
+\citation{cha2021swad}
+\citation{teterwak2025ermpp}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{teterwak2025ermpp}
+\citation{teterwak2025ermpp}
+\citation{arpit2022eoa}
+\citation{teterwak2025ermpp}
+\citation{teterwak2025ermpp}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Experimental Protocol and Results Status}{9}{section.7}\protected@file@percent }
+\newlabel{sec:experiments}{{7}{9}{Experimental Protocol and Results Status}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Protocol}{9}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Benchmarks.}{9}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Backbone and training setting.}{9}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Baselines.}{9}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Primary \textup  {\textsc  {TSF}}{} ablations.}{9}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Diagnostics.}{9}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Published benchmark context}{9}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}\textup  {\textsc  {TSF}}{} reporting templates}{9}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion and Limitations}{9}{section.8}\protected@file@percent }
+\newlabel{sec:discussion}{{8}{9}{Discussion and Limitations}{section.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published DomainBed context from prior work.} The upper block reproduces the single-number reporting style of \citet  {cha2021swad}; the lower block uses the ResNet-50 comparison rows reproduced in \citet  {teterwak2025ermpp}.}}{10}{table.caption.16}\protected@file@percent }
+\newlabel{tab:published_context}{{1}{10}{\textbf {Published DomainBed context from prior work.} The upper block reproduces the single-number reporting style of \citet {cha2021swad}; the lower block uses the ResNet-50 comparison rows reproduced in \citet {teterwak2025ermpp}}{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Published average-only context from stronger or different settings.} These rows are useful frontier markers, but not all are identical to the plain single-run post-hoc setting targeted by \textup  {\textsc  {TSF}}{}.}}{10}{table.caption.17}\protected@file@percent }
+\newlabel{tab:published_context_avg}{{2}{10}{\textbf {Published average-only context from stronger or different settings.} These rows are useful frontier markers, but not all are identical to the plain single-run post-hoc setting targeted by \tsf {}}{table.caption.17}{}}
+\@writefile{toc}{\contentsline {paragraph}{What the theory does establish.}{10}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What the theory does \emph  {not} establish.}{10}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why this still counts as a DG method.}{10}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The most dangerous alternative explanation.}{10}{section*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Full trajectory vs. late locality.}{10}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{10}{section.9}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{abdollahpoorrostam2026monosoup}{{1}{2026}{{Abdollahpoorrostam et~al.}}{{Abdollahpoorrostam, Dimitriadis, Hazimeh, and Frossard}}}
+\bibcite{agarwal2022mro}{{2}{2022}{{Agarwal and Zhang}}{{}}}
+\bibcite{arpit2017memorization}{{3}{2017}{{Arpit et~al.}}{{Arpit, Jastrz\k {e}bski, Ballas, Krueger, Bengio, Kanwal, Maharaj, Fischer, Courville, Bengio, and Lacoste-Julien}}}
+\bibcite{arpit2022eoa}{{4}{2022}{{Arpit et~al.}}{{Arpit, Wang, Zhou, and Xiong}}}
+\bibcite{cha2021swad}{{5}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{cha2022miro}{{6}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
+\bibcite{frankle2020linear}{{7}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{fu2023trajectory}{{8}{2023}{{Fu et~al.}}{{Fu, Zhang, Yin, Lu, and Zheng}}}
+\bibcite{garipov2018fge}{{9}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Primary \textup  {\textsc  {TSF}}{} reporting table.}}}{11}{table.caption.18}\protected@file@percent }
+\newlabel{tab:tsf_main}{{3}{11}{\textbf {Primary \tsf {} reporting table.}}{table.caption.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {\textup  {\textsc  {TSF}}{} ablation table.}}}{11}{table.caption.19}\protected@file@percent }
+\newlabel{tab:tsf_ablation}{{4}{11}{\textbf {\tsf {} ablation table.}}{table.caption.19}{}}
+\bibcite{gulrajani2021domainbed}{{10}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{izmailov2018swa}{{11}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{li2021worstcase}{{12}{2021}{{Li et~al.}}{{Li, Namkoong, and Xia}}}
+\bibcite{moralesbrotons2024ema}{{13}{2024}{{Morales-Brotons et~al.}}{{Morales-Brotons, Vogels, and Dieuleveut}}}
+\bibcite{murali2023spurious}{{14}{2023}{{Murali et~al.}}{{Murali, Puli, Yu, Ranganath, and Batmanghelich}}}
+\bibcite{rahaman2019spectralbias}{{15}{2019}{{Rahaman et~al.}}{{Rahaman, Baratin, Arpit, Draxler, Lin, Hamprecht, Bengio, and Courville}}}
+\bibcite{teterwak2025ermpp}{{16}{2025}{{Teterwak et~al.}}{{Teterwak, Saito, Tsiligkaridis, Saenko, and Plummer}}}
+\bibcite{wortsman2022soups}{{17}{2022{}}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\bibcite{wortsman2022wiseft}{{18}{2022{}}{{Wortsman et~al.}}{{Wortsman, Ilharco, Kim, Li, Kornblith, Roelofs, Gontijo-Lopes, Hajishirzi, Farhadi, Namkoong, and Schmidt}}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces \textbf  {Core \textup  {\textsc  {TSF}}{} diagnostics.}}}{12}{table.caption.20}\protected@file@percent }
+\newlabel{tab:tsf_diagnostics}{{5}{12}{\textbf {Core \tsf {} diagnostics.}}{table.caption.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Visual Intuition}{13}{appendix.A}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Filter-family intuition.} Different values of \(\lambda \) and smoothing order \(m\) produce different filtered paths on the same toy update sequence. Larger \(\lambda \) and higher \(m\) remove more temporal roughness.}}{13}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:filter_grid}{{4}{13}{\textbf {Filter-family intuition.} Different values of \(\lambda \) and smoothing order \(m\) produce different filtered paths on the same toy update sequence. Larger \(\lambda \) and higher \(m\) remove more temporal roughness}{figure.caption.28}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Proofs}{13}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Proof of Proposition~\ref {prop:variational}}{13}{subsection.B.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Proof of Proposition~\ref {prop:endpoint_repr}}{14}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Proof of Proposition~\ref {prop:topalpha}}{15}{subsection.B.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Proof of Theorem~\ref {thm:nonexpansive}}{15}{subsection.B.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Proof of Theorem~\ref {thm:bias_variance}}{15}{subsection.B.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Proof of Corollary~\ref {cor:strict_improvement}}{16}{subsection.B.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Proof of Corollary~\ref {cor:sobolev}}{17}{subsection.B.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.8}Proof of Theorem~\ref {thm:consistency}}{17}{subsection.B.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.9}Proof of Theorem~\ref {thm:risk_transfer}}{18}{subsection.B.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.10}Proof of Corollary~\ref {cor:model_level}}{18}{subsection.B.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {C}Additional Experimental Templates}{18}{appendix.C}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces \textbf  {Planned checkpoint-density sensitivity table.}}}{18}{table.caption.29}\protected@file@percent }
+\newlabel{tab:density_tbd}{{6}{18}{\textbf {Planned checkpoint-density sensitivity table.}}{table.caption.29}{}}
+\gdef \@abspage@last{18}

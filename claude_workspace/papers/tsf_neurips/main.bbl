@@ -1,0 +1,135 @@
+\begin{thebibliography}{18}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Abdollahpoorrostam et~al.(2026)Abdollahpoorrostam, Dimitriadis,
+  Hazimeh, and Frossard]{abdollahpoorrostam2026monosoup}
+Alireza Abdollahpoorrostam, Nikolaos Dimitriadis, Adam Hazimeh, and Pascal
+  Frossard.
+\newblock Model soups need only one ingredient.
+\newblock \emph{arXiv preprint arXiv:2602.09689}, 2026.
+
+\bibitem[Agarwal and Zhang(2022)]{agarwal2022mro}
+Alekh Agarwal and Tong Zhang.
+\newblock Minimax regret optimization for robust machine learning under
+  distribution shift.
+\newblock In \emph{Proceedings of Machine Learning Research}, volume 178, pages
+  1--26, 2022.
+
+\bibitem[Arpit et~al.(2017)Arpit, Jastrz\k{e}bski, Ballas, Krueger, Bengio,
+  Kanwal, Maharaj, Fischer, Courville, Bengio, and
+  Lacoste-Julien]{arpit2017memorization}
+Devansh Arpit, Stanis{\l}aw Jastrz\k{e}bski, Nicolas Ballas, David Krueger,
+  Emmanuel Bengio, Maxinder~S. Kanwal, Tegan Maharaj, Asja Fischer, Aaron
+  Courville, Yoshua Bengio, and Simon Lacoste-Julien.
+\newblock A closer look at memorization in deep networks.
+\newblock In \emph{International Conference on Machine Learning}, 2017.
+
+\bibitem[Arpit et~al.(2022)Arpit, Wang, Zhou, and Xiong]{arpit2022eoa}
+Devansh Arpit, Huan Wang, Yingbo Zhou, and Caiming Xiong.
+\newblock Ensemble of averages: Improving model selection and boosting
+  performance in domain generalization.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2022.
+
+\bibitem[Cha et~al.(2021)Cha, Chun, Lee, Cho, Park, Lee, and Park]{cha2021swad}
+Junbum Cha, Sanghyuk Chun, Kyungjae Lee, Han-Cheol Cho, Seunghyun Park, Yunsung
+  Lee, and Sungrae Park.
+\newblock {SWAD}: Domain generalization by seeking flat minima.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem[Cha et~al.(2022)Cha, Lee, Park, and Chun]{cha2022miro}
+Junbum Cha, Kyungjae Lee, Sungrae Park, and Sanghyuk Chun.
+\newblock Domain generalization by mutual-information regularization with
+  pre-trained models.
+\newblock In \emph{European Conference on Computer Vision}, 2022.
+
+\bibitem[Frankle et~al.(2020)Frankle, Dziugaite, Roy, and
+  Carbin]{frankle2020linear}
+Jonathan Frankle, Gintare~Karolina Dziugaite, Daniel~M. Roy, and Michael
+  Carbin.
+\newblock Linear mode connectivity and the lottery ticket hypothesis.
+\newblock In \emph{International Conference on Machine Learning}, 2020.
+
+\bibitem[Fu et~al.(2023)Fu, Zhang, Yin, Lu, and Zheng]{fu2023trajectory}
+Jingwen Fu, Zhizheng Zhang, Dacheng Yin, Yan Lu, and Nanning Zheng.
+\newblock Learning trajectories are generalization indicators.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2023.
+
+\bibitem[Garipov et~al.(2018)Garipov, Izmailov, Podoprikhin, Vetrov, and
+  Wilson]{garipov2018fge}
+Timur Garipov, Pavel Izmailov, Dmitrii Podoprikhin, Dmitry~P. Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Loss surfaces, mode connectivity, and fast ensembling of {DNN}s.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2018.
+
+\bibitem[Gulrajani and Lopez-Paz(2021)]{gulrajani2021domainbed}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Izmailov et~al.(2018)Izmailov, Podoprikhin, Garipov, Vetrov, and
+  Wilson]{izmailov2018swa}
+Pavel Izmailov, Dmitrii Podoprikhin, Timur Garipov, Dmitry~P. Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock Averaging weights leads to wider optima and better generalization.
+\newblock In \emph{Conference on Uncertainty in Artificial Intelligence}, 2018.
+
+\bibitem[Li et~al.(2021)Li, Namkoong, and Xia]{li2021worstcase}
+Mike Li, Hongseok Namkoong, and Shangzhou Xia.
+\newblock Evaluating model performance under worst-case subpopulations.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem[Morales-Brotons et~al.(2024)Morales-Brotons, Vogels, and
+  Dieuleveut]{moralesbrotons2024ema}
+Daniel Morales-Brotons, Thijs Vogels, and Aymeric Dieuleveut.
+\newblock Exponential moving average of weights in deep learning: Dynamics and
+  benefits.
+\newblock \emph{arXiv preprint arXiv:2411.18704}, 2024.
+
+\bibitem[Murali et~al.(2023)Murali, Puli, Yu, Ranganath, and
+  Batmanghelich]{murali2023spurious}
+Nihal Murali, Aahlad Puli, Ke~Yu, Rajesh Ranganath, and Kayhan Batmanghelich.
+\newblock Beyond distribution shift: Spurious features through the lens of
+  training dynamics.
+\newblock \emph{Transactions on Machine Learning Research}, 2023.
+
+\bibitem[Rahaman et~al.(2019)Rahaman, Baratin, Arpit, Draxler, Lin, Hamprecht,
+  Bengio, and Courville]{rahaman2019spectralbias}
+Nasim Rahaman, Aristide Baratin, Devansh Arpit, Felix Draxler, Min Lin, Fred~A.
+  Hamprecht, Yoshua Bengio, and Aaron Courville.
+\newblock On the spectral bias of neural networks.
+\newblock \emph{International Conference on Machine Learning}, 2019.
+
+\bibitem[Teterwak et~al.(2025)Teterwak, Saito, Tsiligkaridis, Saenko, and
+  Plummer]{teterwak2025ermpp}
+Piotr Teterwak, Kuniaki Saito, Theodoros Tsiligkaridis, Kate Saenko, and
+  Bryan~A. Plummer.
+\newblock {ERM++}: An improved baseline for domain generalization.
+\newblock In \emph{IEEE/CVF Winter Conference on Applications of Computer
+  Vision}, 2025.
+
+\bibitem[Wortsman et~al.(2022{\natexlab{a}})Wortsman, Ilharco, Gadre, Roelofs,
+  Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and
+  Schmidt]{wortsman2022soups}
+Mitchell Wortsman, Gabriel Ilharco, Samir~Yitzhak Gadre, Rebecca Roelofs,
+  Raphael Gontijo-Lopes, Ari~S. Morcos, Hongseok Namkoong, Ali Farhadi, Yair
+  Carmon, Simon Kornblith, and Ludwig Schmidt.
+\newblock Model soups: Averaging weights of multiple fine-tuned models improves
+  accuracy without increasing inference time.
+\newblock In \emph{International Conference on Machine Learning},
+  2022{\natexlab{a}}.
+
+\bibitem[Wortsman et~al.(2022{\natexlab{b}})Wortsman, Ilharco, Kim, Li,
+  Kornblith, Roelofs, Gontijo-Lopes, Hajishirzi, Farhadi, Namkoong, and
+  Schmidt]{wortsman2022wiseft}
+Mitchell Wortsman, Gabriel Ilharco, Jong~Wook Kim, Mike Li, Simon Kornblith,
+  Rebecca Roelofs, Raphael Gontijo-Lopes, Hannaneh Hajishirzi, Ali Farhadi,
+  Hongseok Namkoong, and Ludwig Schmidt.
+\newblock Robust fine-tuning of zero-shot models.
+\newblock In \emph{IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition}, 2022{\natexlab{b}}.
+
+\end{thebibliography}
