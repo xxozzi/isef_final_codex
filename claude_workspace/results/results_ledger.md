@@ -1,16 +1,16 @@
 ---
 title: Results Ledger
-description: Consolidated ledger of real completed PRISM, SWING, TSF, probe-battery, and subset-soup empirical results, baselines, ablations, and key diagnostic runs. Planning-only rows have been removed.
+description: Consolidated ledger of real completed PRISM, SWING, TSF, probe-battery, subset-soup, and strict post-hoc projection empirical results, baselines, ablations, and key diagnostic runs. Planning-only rows have been removed.
 created: 2026-03-30 22:05
-last_modified: 2026-04-05 19:10
+last_modified: 2026-04-05 20:05
 last_modified_by: agent
 status: active
 related_files: claude_workspace/results/swing_lessons_learned.md, domaingen/posthoc/swing.py, domaingen/posthoc/tsf.py, domaingen/posthoc/shotgun.py, domaingen/posthoc/moonshot_2.py, domaingen/posthoc/subset_soups.py
 key_functions:
-  - Preserve completed PRISM, SWING, TSF, probe-battery, and subset-soup empirical results in one place
+  - Preserve completed PRISM, SWING, TSF, probe-battery, subset-soup, and strict post-hoc projection empirical results in one place
   - Remove placeholder-only entries such as TBD, running, queued, and submitted rows
   - Make the current empirical conclusions easy to recover later
-latest_change: Added the focused 12-cell local GraphDiffusionSubsetSoup sweep around the current winning region on PACS art_painting.
+latest_change: Added the first strict post-hoc non-soup projection pilots on PACS art_painting and updated the conclusions to reflect that they did not beat the leading subset-soup baselines.
 change_log:
   - 2026-03-30 22:05: Initial PRISM-only ledger created
   - 2026-04-01 09:40: Initial SWING-only ledger created
@@ -18,11 +18,12 @@ change_log:
   - 2026-04-04 00:35: Added SpectralSubsetSoup, GraphDiffusionSubsetSoup, and GibbsTopKSubsetSoup replay results on PACS art_painting
   - 2026-04-05 18:05: Added TSF, SHOTGUN, MOONSHOT-2, the full-lean Gibbs rerun, and the 16-cell graph-diffusion ablation on PACS art_painting
   - 2026-04-05 19:10: Added the focused 12-cell local graph-diffusion sweep and updated the subset-soup conclusions
+  - 2026-04-05 20:05: Added TrajectoryNuisanceProjection, FisherRashomonProjection, and LogitCovarianceDebias pilot runs on PACS art_painting
 ---
 
 # Scope
 
-This file is the current source of truth for completed PRISM, SWING, and subset-soup results discussed in this project.
+This file is the current source of truth for completed PRISM, SWING, subset-soup, and strict post-hoc projection results discussed in this project.
 
 Conventions:
 
@@ -300,6 +301,21 @@ Interpretation:
 - Several nearby `cos + bestmean` cells beat their same-run uniform baselines on both full and out, which makes this branch look meaningfully more robust than it did after the first 16-cell sweep.
 - The focused sweep did not crack `89.0` on full, so the remaining bottleneck is probably no longer subset discovery alone.
 
+## 4.8 First strict post-hoc non-soup projection pilots on PACS art_painting
+
+| Method | Key config | Art full | In | Out | Same-run baseline | Baseline full | Baseline in | Baseline out | Notes |
+|---|---|---:|---:|---:|---|---:|---:|---:|---|
+| `TrajectoryNuisanceProjection` | `last_k=24, rank=4, anchor=final, beta=0.25` | 0.8320 | 0.8304 | 0.8386 | `TrajectoryNuisanceProjection-uniform` | 0.8247 | 0.8237 | 0.8289 | real local gain over its same-window uniform baseline, but far below the live leaderboard |
+| `FisherRashomonProjection` | `anchor=bestmean@600, alpha=0.85, witnesses=2` | 0.8579 | 0.8578 | 0.8582 | `FisherRashomonProjection-barycenter` | 0.8813 | 0.8786 | 0.8924 | the projection hurt badly; the strong object was the witness barycenter, which is effectively another tiny soup |
+| `LogitCovarianceDebias` | `anchor=final, gamma=0.0, ridge=1e-3` | 0.8213 | 0.8182 | 0.8337 | `LogitCovarianceDebias-anchor` | 0.8208 | 0.8188 | 0.8289 | the selected edit was the no-op `gamma=0`; this is effectively a null result for actual covariance debiasing |
+
+Interpretation:
+
+- `TrajectoryNuisanceProjection` is the only one of the three that produced a genuine method-level gain over its own same-run baseline.
+- That gain is still small in absolute terms and nowhere near the best subset-soup or PRISM-style art-painting results.
+- `FisherRashomonProjection` failed as a projection method. The within-run barycenter baseline was much stronger than the projected point, so the useful object here was the tiny witness soup, not the Fisher/Rashomon correction.
+- `LogitCovarianceDebias` did not validate its core mechanism. The chosen `gamma=0.0` means the method preferred not to apply any covariance edit at all.
+
 # 5. Current Empirical Conclusions
 
 ## 5.1 PRISM
@@ -330,7 +346,15 @@ That `+0.0034` gap is too small, especially combined with the multiple runs wher
 - The graph branch is still configuration-sensitive, but the focused sweep showed a more stable winning pocket around `cos + bestmean`.
 - The most likely path to `89+` is now a deployment change inside that winning pocket, not another broad discrete-subset search.
 
-## 5.4 Final decision on current SWING
+## 5.4 Strict non-soup projection pilots
+
+- `TrajectoryNuisanceProjection` is the only strict non-soup pilot that showed a real within-run gain over its own local baseline.
+- Even that result is not competitive with the best live subset-soup branch, so it should be treated as a weak survival signal, not a new mainline.
+- `FisherRashomonProjection` is a methodological failure in its current form: the projection underperformed its own barycenter baseline by a large margin.
+- `LogitCovarianceDebias` is effectively a null result for the debiasing idea itself, because the selected edit was the no-op `gamma=0.0`.
+- Taken together, these three pilots do not change the current leaderboard or the current main conclusion that the strongest completed branch remains the graph/Gibbs subset-soup family.
+
+## 5.5 Final decision on current SWING
 
 - Stop treating the current `SWING` formulation as the headline method.
 - Keep it as:
