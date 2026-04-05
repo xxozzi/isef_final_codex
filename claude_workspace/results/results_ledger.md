@@ -1,16 +1,18 @@
 ---
 title: Results Ledger
-description: Consolidated ledger of real completed PRISM, SWING, TSF, probe-battery, subset-soup, and strict post-hoc projection empirical results, baselines, ablations, and key diagnostic runs. Planning-only rows have been removed.
+description: Comprehensive ledger and method catalog for completed baselines, soups, probe batteries, strict post-hoc projection pilots, and replay-visible methods in the repo.
 created: 2026-03-30 22:05
-last_modified: 2026-04-05 20:05
+last_modified: 2026-04-05 14:52
 last_modified_by: agent
 status: active
 related_files: claude_workspace/results/swing_lessons_learned.md, domaingen/posthoc/swing.py, domaingen/posthoc/tsf.py, domaingen/posthoc/shotgun.py, domaingen/posthoc/moonshot_2.py, domaingen/posthoc/subset_soups.py
 key_functions:
   - Preserve completed PRISM, SWING, TSF, probe-battery, subset-soup, and strict post-hoc projection empirical results in one place
+  - Describe what each tested method actually does mechanically, not just what score it reached
+  - Track which replay-visible methods in the repo have and have not been empirically exercised
   - Remove placeholder-only entries such as TBD, running, queued, and submitted rows
   - Make the current empirical conclusions easy to recover later
-latest_change: Added the first strict post-hoc non-soup projection pilots on PACS art_painting and updated the conclusions to reflect that they did not beat the leading subset-soup baselines.
+latest_change: Expanded the ledger into a comprehensive project record with method descriptions, probe-suite implementation notes, replay-visible method inventory, and the missing weighted-graph failure branch.
 change_log:
   - 2026-03-30 22:05: Initial PRISM-only ledger created
   - 2026-04-01 09:40: Initial SWING-only ledger created
@@ -19,11 +21,12 @@ change_log:
   - 2026-04-05 18:05: Added TSF, SHOTGUN, MOONSHOT-2, the full-lean Gibbs rerun, and the 16-cell graph-diffusion ablation on PACS art_painting
   - 2026-04-05 19:10: Added the focused 12-cell local graph-diffusion sweep and updated the subset-soup conclusions
   - 2026-04-05 20:05: Added TrajectoryNuisanceProjection, FisherRashomonProjection, and LogitCovarianceDebias pilot runs on PACS art_painting
+  - 2026-04-05 14:52: Added replay-visible method inventory, detailed SHOTGUN/MOONSHOT suite descriptions, and the GraphDiffusionWeightedSubsetSoup failure study
 ---
 
 # Scope
 
-This file is the current source of truth for completed PRISM, SWING, subset-soup, and strict post-hoc projection results discussed in this project.
+This file is the current source of truth for completed baselines, PRISM-family methods, SWING/TSF, probe batteries, subset-soups, strict post-hoc projection pilots, and replay-visible method status in this project.
 
 Conventions:
 
@@ -32,6 +35,66 @@ Conventions:
 - `SWING-uniform` means the plain uniform average of the accepted safe candidate set from the same run.
 - PACS `art_painting` corresponds to replay bank:
   - `/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting`
+
+# 0. Method Catalog and Repo Inventory
+
+## 0.1 How to read the catalog
+
+- A `top-level replay method` is a direct `--methods` choice in [replay_methods.py](/Users/jaydenjeong/Work/projects/ml/isef_final_codex/domaingen/replay_methods.py).
+- A `probe suite` is a battery of cheap or semi-cheap hypotheses that may contain many internal method families.
+- A `probe family` is a family inside `SHOTGUN`, `MOONSHOT`, `MOONSHOT-2`, or `MOONSHOT-3`; these are often not standalone replay IDs unless later promoted.
+- This ledger now records both scores and mechanism-level status, because several branches failed specifically because the mechanism did not survive translation from probe space to a deployable object.
+
+## 0.2 Replay-visible methods already exercised in this project
+
+| Replay ID | Name | Implementation sketch | Current empirical status |
+|---|---|---|---|
+| `erm` | ERM replay baseline | Evaluate the saved training trajectory endpoint / selector without post-hoc editing. | tested baseline |
+| `swad` | SWAD | LossValley picks a contiguous late flat region and densely averages it. | tested baseline; strong but not current lead on art |
+| `stawa` | STAWA | Find a stationary predictive plateau and average the connected admissible window. | tested historically |
+| `stawa_new` | STAWA-new | Revised STAWA variant with newer defaults and divergence handling. | tested historically |
+| `stawa_old` | STAWA-old | Older STAWA variant retained for backward comparison. | tested historically and weaker |
+| `dcola` | D-COLA | Optimize simplex weights over a candidate pool using covariance, locality, and worst-domain structure. | tested; strong when source-domain structure is allowed |
+| `dcola_ablate` | D-COLA ablations | Run controlled D-COLA variants with pieces removed or altered. | tested diagnostic only |
+| `cross_pool_ablate` | Cross-pool ablation | Swap D-COLA and PRISM candidate pools to separate objective quality from pool quality. | tested diagnostic only |
+| `cora` | CORA | Consensus/Rashomon simplex optimization over barrier-filtered candidates. | tested historically |
+| `roar` | ROAR | Robust simplex optimization against hard source losses over an averageable Rashomon set. | tested historically |
+| `scout` | SCOUT | Robust capped coverage over PRISM-style safe actions. | tested historically |
+| `prism` | PRISM | Enumerate small safe subsets from a barrier-filtered pool and minimize implicit subgroup regret. | tested; strongest clean DG average branch |
+| `swing` | SWING | Fit a local quadratic source-shift model in the safe-pool eigenspace and shrink the final point accordingly. | tested; directional correction too weak vs `SWING-uniform` |
+| `tsf` | TSF | Filter checkpoint-to-checkpoint updates with a DCT spectral response and reconstruct one endpoint. | tested; collapsed to the final checkpoint |
+| `shotgun` | SHOTGUN | Cheap cached-prediction probe battery over many weighting and subset hypotheses. | tested probe suite |
+| `moonshot` | MOONSHOT | First expanded cached-prediction probe suite with geometry, graph, and spectral families. | tested probe suite |
+| `moonshot_2` | MOONSHOT-2 | Second expanded cached-prediction probe suite adding Gibbs, view-TTA, and support-conditioned families. | tested probe suite |
+| `moonshot_3` | MOONSHOT-3 | Direct state-update and state-search probe suite using actual weight-space edits or tiny post-hoc surgeries. | tested probe suite |
+| `spectral_subset` | SpectralSubsetSoup | Build a similarity graph on support predictions, take a spectral embedding, choose a sparse subset, then uniformly soup it. | tested; translation weaker than graph/Gibbs |
+| `graph_diffusion_subset` | GraphDiffusionSubsetSoup | Anchor on a good checkpoint, diffuse over the similarity graph, keep top-`k`, then uniformly soup them. | tested; current best subset-soup full result |
+| `graph_diffusion_weighted_subset` | GraphDiffusionWeightedSubsetSoup | Same graph-selected subset, but use diffusion mass as final soup weights. | tested and failed |
+| `gibbs_topk_subset` | GibbsTopKSubsetSoup | Score checkpoints with a Gibbs posterior over source-held losses, keep top-`k`, then uniformly soup them. | tested; alive branch |
+| `trajectory_nuisance_projection` | TrajectoryNuisanceProjection | Estimate unstable low-rank late-trajectory directions and shrink them in a single final state. | tested; small local gain only |
+| `fisher_rashomon_projection` | FisherRashomonProjection | Move from an anchor toward a witness barycenter under a Fisher-style trust metric. | tested; projection lost to barycenter baseline |
+| `logit_covariance_debias` | LogitCovarianceDebias | Apply a closed-form affine correction to the final classifier using support logit covariance. | tested; null result |
+
+## 0.3 Replay-visible methods present in the repo but not yet validated here as standalone completed branches
+
+| Replay ID | Name | Where visible | Notes |
+|---|---|---|---|
+| `choir` | CHOIR | [choir.py](/Users/jaydenjeong/Work/projects/ml/isef_final_codex/domaingen/posthoc/choir.py) | top-level replay path exists, but there is no completed standalone `CHOIR` result recorded in this ledger yet |
+| `base` | infrastructure selector | [replay_methods.py](/Users/jaydenjeong/Work/projects/ml/isef_final_codex/domaingen/replay_methods.py) | utility/infrastructure choice, not a research method |
+
+## 0.4 Probe suites: what they were actually testing
+
+| Suite | Object being manipulated | Cost model | Main purpose |
+|---|---|---|---|
+| `SHOTGUN` | cached checkpoint predictions only | cheapest | broad sweep over simple weighting/subset/routing hypotheses |
+| `MOONSHOT` | cached checkpoint predictions only | cheap | first expansion into graph, spectral, and geometry-heavy probe families |
+| `MOONSHOT-2` | cached checkpoint predictions plus cached augmented views | cheap-to-moderate | second expansion with Gibbs, support-conditioned, and augmentation-view families |
+| `MOONSHOT-3` | actual model weights / tiny state updates / state search | expensive | first nontrivial weight-space probe suite beyond cached-prediction reweighting |
+
+Important caution:
+
+- `SHOTGUN`, `MOONSHOT`, and `MOONSHOT-2` are probe-space suites. Their wins are ranking signals over cached predictions, not automatically valid deployable models.
+- `MOONSHOT-3` mixes mechanisms that are now outside the stricter current definition of acceptable post-hoc methods, because many families perform post-hoc optimization. It is still recorded here because it is part of the actual project history.
 
 # 1. Global Baselines
 
@@ -225,7 +288,72 @@ Interpretation:
 - `49` probes beat the `uniform-all` baseline on both full and out.
 - The most important deployable clue was `even_018_prob`, which suggested trajectory coverage and sparse spacing could matter more than late contiguous windows.
 
-## 4.3 MOONSHOT-2 nuclear probe sweep on PACS art_painting
+Implementation sketch:
+
+- `SHOTGUN` is a pure cached-prediction probe battery implemented in [shotgun.py](/Users/jaydenjeong/Work/projects/ml/isef_final_codex/domaingen/posthoc/shotgun.py).
+- It loads the dense checkpoint bank once, caches support/validation predictions, and then scores many global mixtures or subset rules without constructing a new weight-space model for each probe.
+- The suite is broad rather than principled: it tests whether any simple object already explains the gains, including dense averaging, sparse spacing, quality-ranked subsets, soft loss-based weights, class-conditional experts, per-example routing, and trajectory filters.
+
+### 4.2.1 SHOTGUN family inventory
+
+| Family | Probe count | Implementation sketch | Best full | Best out |
+|---|---:|---|---:|---:|
+| `center_weighting` | 70 | Use Gaussian weights centered on anchor checkpoints. | 0.84375 | 0.8655256723716381 |
+| `class_conditional` | 72 | Assign different checkpoint mixtures to different classes. | 0.8642578125 | 0.882640586797066 |
+| `dense_uniform` | 95 | Uniformly average the whole bank or contiguous windows/prefixes. | 0.87060546875 | 0.882640586797066 |
+| `diversity_subset` | 234 | Greedily pick subsets balancing held-out quality and predictive diversity. | 0.8798828125 | 0.8924205378973105 |
+| `dynamic_selection` | 192 | Choose checkpoint weights per example from confidence, margin, or entropy. | 0.865234375 | 0.8850855745721271 |
+| `hard_example_subset` | 13 | Greedily pick checkpoints that reduce hard-example loss. | 0.8603515625 | 0.8753056234718827 |
+| `loss_softmax_weighting` | 504 | Apply dense softmax weights from source losses or tail losses. | 0.8701171875 | 0.8875305623471883 |
+| `quality_subset` | 78 | Take top-`k` checkpoints by source-held quality scores. | 0.87646484375 | 0.8875305623471883 |
+| `recency_smoothing` | 61 | Bias weights toward later checkpoints with EMA or polynomial priors. | 0.86376953125 | 0.8875305623471883 |
+| `robust_statistics` | 41 | Use trimmed means, medians, rank means, majority vote, or geometric means. | 0.86572265625 | 0.8850855745721271 |
+| `routing` | 108 | Gate examples between two candidate experts using uncertainty or disagreement signals. | 0.86865234375 | 0.8850855745721271 |
+| `single_checkpoint` | 23 | Evaluate individual checkpoints directly. | 0.87109375 | 0.8753056234718827 |
+| `sparse_spacing` | 69 | Use evenly spaced or stride-phase checkpoint subsets. | 0.87158203125 | 0.8924205378973105 |
+| `trajectory_filter` | 144 | Apply temporal DCT, smoothing, or PCA filters in prediction space. | 0.865234375 | 0.8850855745721271 |
+
+Reading the `SHOTGUN` outcome:
+
+- The suite mostly falsified dense full-bank weighting stories.
+- The winners were sparse and structurally simple: quality subsets, diversity subsets, and sparse spacing.
+- That is the historical reason the later subset-soup work happened at all.
+
+## 4.3 Original MOONSHOT nuclear probe sweep on PACS art_painting
+
+| Run | Best full probe | Best full / out | Best out probe | Best full / out | Uniform-all full | Uniform-all out | Notes |
+|---|---|---|---|---|---:|---:|---|
+| `shotgun_painting_nuclear_v2_moonshot_verbose1` | `pca_quantile_pc1_k024` | `0.8735 / 0.8851` | `pca_quantile_pc3_k015` | `0.8608 / 0.8924` | 0.8643 | 0.8826 | first broader geometry/graph/spectral probe expansion beyond `SHOTGUN` |
+
+Implementation sketch:
+
+- `MOONSHOT` is implemented in [moonshot.py](/Users/jaydenjeong/Work/projects/ml/isef_final_codex/domaingen/posthoc/moonshot.py).
+- Like `SHOTGUN`, it stays in probe space over cached predictions.
+- The main novelty versus `SHOTGUN` is that it introduces checkpoint-graph objects, temporal spectral filters, and geometric subset rules derived from PCA and graph structure.
+
+### 4.3.1 MOONSHOT family inventory
+
+| Family | Probe count | Implementation sketch | Best full | Best out |
+|---|---:|---|---:|---:|
+| `geometry_subset` | 40 | Pick sparse checkpoint subsets using PCA geometry and quantile coverage. | 0.87353515625 | 0.8924205378973105 |
+| `graph_centrality` | 24 | Weight checkpoints by degree, eigenvector, or PageRank centrality. | 0.8642578125 | 0.882640586797066 |
+| `graph_diffusion` | 480 | Diffuse mass from anchor checkpoints across a similarity graph. | 0.86767578125 | 0.8850855745721271 |
+| `graph_projector` | 128 | Project trajectories through low- or high-frequency graph eigenmodes. | 0.865234375 | 0.882640586797066 |
+| `harmonic_weighting` | 84 | Use sinusoidal time weights with different envelopes. | 0.86669921875 | 0.8875305623471883 |
+| `label_fit` | 18 | Solve ridge-style weights to fit support labels directly in prediction space. | 0.8642578125 | 0.882640586797066 |
+| `loss_curve_geometry` | 35 | Exploit loss minima, turning points, and trajectory geometry. | 0.8662109375 | 0.8875305623471883 |
+| `sparse_approximation` | 44 | Approximate dense targets with sparse checkpoint supports. | 0.861328125 | 0.882640586797066 |
+| `spectral_bandpass` | 224 | Keep selected temporal frequency bands with DCT filters. | 0.8642578125 | 0.882640586797066 |
+| `spectral_subset` | 80 | Pick sparse subsets via graph spectral embeddings and medoids. | 0.8720703125 | 0.8875305623471883 |
+| `svd_reconstruction` | 80 | Reconstruct trajectory predictions with low-rank temporal SVD. | 0.86474609375 | 0.8850855745721271 |
+
+Reading the original `MOONSHOT` outcome:
+
+- It validated that geometry-derived sparse subsets were more promising than most dense spectral or graph weightings.
+- It did not yet clearly demonstrate that graph diffusion itself was strong.
+- In hindsight, this suite was an intermediate bridge: it suggested where to look, but not yet which mechanism would survive deployment.
+
+## 4.4 MOONSHOT-2 nuclear probe sweep on PACS art_painting
 
 | Run | Best full probe | Best full / out | Best out probe | Best full / out | Best balanced probe | Best full / out | Wins vs uniform on both full and out | Notes |
 |---|---|---|---|---|---|---|---:|---|
@@ -238,7 +366,97 @@ Interpretation:
 - The strongest new deployable directions coming out of probe space were graph diffusion and Gibbs top-`k`, not spectral subset alone.
 - These are probe-space results over cached predictions, not final weight-space soups.
 
-## 4.4 First probe-to-weight-space translations on PACS art_painting
+Implementation sketch:
+
+- `MOONSHOT-2` is implemented in [moonshot_2.py](/Users/jaydenjeong/Work/projects/ml/isef_final_codex/domaingen/posthoc/moonshot_2.py).
+- It inherits the cached-probability workflow from `MOONSHOT` and expands it with Gibbs posteriors, geometry-center hypotheses, spectral notch filters, support-conditioned prototype/prior rules, and a much larger augmentation-view bank.
+- This is the suite that materially changed the project direction because two of its probe families later survived translation: graph diffusion and Gibbs top-`k`.
+
+### 4.4.1 MOONSHOT-2 family inventory
+
+| Family | Probe count | Implementation sketch | Best full | Best out |
+|---|---:|---|---:|---:|
+| `geometry_center` | 10 | Use geometry-derived center weights rather than sparse subsets. | 0.80517578125 | 0.8117359413202934 |
+| `geometry_subset` | 40 | Pick sparse checkpoint subsets using PCA geometry and quantile coverage. | 0.869140625 | 0.8850855745721271 |
+| `gibbs_weighting` | 150 | Build Gibbs posteriors over checkpoints from source-held losses and priors. | 0.87841796875 | 0.8924205378973105 |
+| `graph_centrality` | 24 | Weight checkpoints by degree, eigenvector, or PageRank centrality. | 0.8642578125 | 0.882640586797066 |
+| `graph_diffusion` | 480 | Diffuse mass from anchor checkpoints across a similarity graph. | 0.8759765625 | 0.8899755501222494 |
+| `graph_projector` | 128 | Project trajectories through low- or high-frequency graph eigenmodes. | 0.86572265625 | 0.882640586797066 |
+| `harmonic_weighting` | 84 | Use sinusoidal time weights with different envelopes. | 0.86669921875 | 0.8875305623471883 |
+| `kernel_herding` | 10 | Choose sparse subsets by herding toward the trajectory mean. | 0.86083984375 | 0.882640586797066 |
+| `label_fit` | 18 | Solve ridge-style weights to fit support labels directly in prediction space. | 0.86474609375 | 0.882640586797066 |
+| `loss_curve_geometry` | 35 | Exploit loss minima, turning points, and trajectory geometry. | 0.86865234375 | 0.8850855745721271 |
+| `sparse_approximation` | 44 | Approximate dense targets with sparse checkpoint supports. | 0.86572265625 | 0.8850855745721271 |
+| `spectral_bandpass` | 224 | Keep selected temporal frequency bands with DCT filters. | 0.8642578125 | 0.882640586797066 |
+| `spectral_notch` | 24 | Delete selected temporal frequency bands rather than keeping them. | 0.8642578125 | 0.882640586797066 |
+| `spectral_subset` | 80 | Pick sparse subsets via graph spectral embeddings and medoids. | 0.873046875 | 0.8948655256723717 |
+| `support_prior` | 32 | Inject source-label priors into prediction mixtures. | 0.86474609375 | 0.882640586797066 |
+| `support_prototype` | 64 | Replace or blend predictions with support-derived class prototypes. | 0.8642578125 | 0.882640586797066 |
+| `svd_reconstruction` | 80 | Reconstruct trajectory predictions with low-rank temporal SVD. | 0.86474609375 | 0.8850855745721271 |
+| `view_tta` | 156 | Aggregate cached label-preserving augmented views without target data. | 0.87744140625 | 0.8899755501222494 |
+
+Reading the `MOONSHOT-2` outcome:
+
+- `gibbs_weighting` was the strongest full-oriented family.
+- `graph_diffusion` became strong enough to justify a real weight-space translation.
+- `spectral_subset` and `view_tta` were real probe-space positives, but only `spectral_subset` later got promoted, and it did not survive deployment as cleanly as graph/Gibbs.
+- `geometry_center` was a harsh negative result. That matters because it killed the vague “just move toward the center” story very early.
+
+## 4.5 MOONSHOT-3 nuclear merged probe sweep on PACS art_painting
+
+| Run | Probe count | Best full probe | Best full / out | Best out probe | Best full / out | Notes |
+|---|---:|---|---|---|---|---|
+| `moonshot_3_painting_final_nuclear_merged_v1` | 128 | `final_simplex_quality` | `0.8779 / 0.8875` | `bestval_simplex_quality` | `0.8765 / 0.8875` | first probe suite to test actual weight-space state search and post-hoc updates rather than only cached mixtures |
+
+Implementation sketch:
+
+- `MOONSHOT-3` is implemented in [moonshot_3.py](/Users/jaydenjeong/Work/projects/ml/isef_final_codex/domaingen/posthoc/moonshot_3.py).
+- This suite is qualitatively different from `SHOTGUN`, `MOONSHOT`, and `MOONSHOT-2`:
+  - some families do post-hoc SGD on classifier, BN-affine, featurizer, or full-model scopes
+  - some families do direct state search over checkpoint lines, planes, simplices, or local PCA subspaces
+  - some families do zero-SGD interventions such as BN-stat surgery or prototype reset
+- Under the stricter current definition of acceptable post-hoc methods, many `MOONSHOT-3` families are now out-of-scope because they do post-hoc training. They are still important historically because they tested whether there was any strong non-soup direction at all.
+
+### 4.5.1 MOONSHOT-3 family inventory
+
+| Family | Probe count | Implementation sketch | Best full | Best out |
+|---|---:|---|---:|---:|
+| `agreement_pseudo_update` | 4 | Classifier pseudo-label update gated by agreement with local teacher or anchor. | 0.80712890625 | 0.8141809290953546 |
+| `anchor_kl_l2_update` | 4 | Classifier fine-tune with KL-to-anchor plus L2 anchoring. | 0.82666015625 | 0.823960880195599 |
+| `anchor_kl_update` | 4 | Classifier fine-tune with KL regularization to anchor predictions. | 0.8125 | 0.8215158924205379 |
+| `anchor_l2_update` | 4 | Classifier fine-tune with explicit L2 pull toward anchor weights. | 0.8203125 | 0.8337408312958435 |
+| `bn_affine_update` | 4 | Optimize only BatchNorm affine parameters on support CE. | 0.7998046875 | 0.8117359413202934 |
+| `bn_consistency_update` | 4 | Optimize only BatchNorm affine parameters for view consistency. | 0.31982421875 | 0.3251833740831296 |
+| `bn_stat_surgery` | 4 | Refresh BatchNorm statistics from support data without SGD. | 0.85302734375 | 0.8557457212713936 |
+| `checkpoint_line_search` | 8 | Search along line segments between anchor and peer checkpoints. | 0.87158203125 | 0.8875305623471883 |
+| `checkpoint_plane_search` | 4 | Search in the affine plane spanned by anchor and two peers. | 0.87158203125 | 0.8704156479217604 |
+| `checkpoint_simplex_search` | 4 | Sample simplex combinations over local checkpoint neighborhoods. | 0.86083984375 | 0.8508557457212714 |
+| `consistency_update` | 8 | Optimize classifier or featurizer for view-consistency objectives. | 0.8017578125 | 0.8190709046454768 |
+| `distillation_update` | 4 | Distill from a fixed teacher soup into a smaller post-hoc update. | 0.83837890625 | 0.8484107579462102 |
+| `drift_orthogonal_update` | 4 | Update classifier while projecting away trajectory drift directions. | 0.81640625 | 0.8190709046454768 |
+| `fisher_update` | 8 | Use Fisher-preconditioned or Fisher-trust regularized post-hoc updates. | 0.82080078125 | 0.8312958435207825 |
+| `hard_example_update` | 4 | Classifier update emphasizing top-alpha hard support examples. | 0.78759765625 | 0.8019559902200489 |
+| `pca_orthogonal_update` | 4 | Classifier update orthogonal to local PCA basis directions. | 0.82421875 | 0.823960880195599 |
+| `pca_state_search` | 4 | Search a low-rank PCA state subspace directly in weight space. | 0.828125 | 0.8533007334963325 |
+| `pca_subspace_update` | 4 | Constrain classifier updates to a local PCA basis. | 0.81884765625 | 0.8361858190709046 |
+| `prototype_distill` | 4 | Prototype reset followed by distillation from a teacher. | 0.802734375 | 0.8117359413202934 |
+| `prototype_finetune` | 4 | Prototype reset followed by supervised fine-tuning. | 0.80908203125 | 0.8117359413202934 |
+| `prototype_reset` | 4 | Replace classifier with support feature class prototypes. | 0.83154296875 | 0.8508557457212714 |
+| `pseudo_consistency_update` | 4 | Mix pseudo-label and consistency losses in a post-hoc update. | 0.8095703125 | 0.8288508557457213 |
+| `pseudo_label_update` | 4 | Classifier update on confident pseudo-labels from a teacher. | 0.83740234375 | 0.8386308068459658 |
+| `quality_simplex_search` | 4 | Sample simplex states around top-quality checkpoints. | 0.8779296875 | 0.8875305623471883 |
+| `sam_update` | 8 | Post-hoc SAM-style update on classifier or full model. | 0.857421875 | 0.8655256723716381 |
+| `supervised_update` | 4 | Direct post-hoc supervised fit on support data. | 0.79150390625 | 0.7946210268948656 |
+| `trust_region_blend` | 4 | Blend anchor with nearby checkpoints under a local trust-region rule. | 0.853515625 | 0.863080684596577 |
+| `two_stage_update` | 4 | Classifier update followed by a small full-model refinement stage. | 0.8271484375 | 0.8386308068459658 |
+
+Reading the `MOONSHOT-3` outcome:
+
+- The best families were state-search families, especially `quality_simplex_search` and `checkpoint_line_search`.
+- The worst failures were the update families that tried to do too much on too little source support, especially `bn_consistency_update`.
+- `MOONSHOT-3` did not beat the best soup-based branches, but it did at least show that direct state search was not completely dead.
+
+## 4.6 First probe-to-weight-space translations on PACS art_painting
 
 | Method | Art full | In | Out | Same-run uniform full | Same-run uniform in | Same-run uniform out | Notes |
 |---|---:|---:|---:|---:|---:|---:|---|
@@ -255,7 +473,7 @@ Interpretation:
   - best out: tie between `GraphDiffusionSubsetSoup` and `GibbsTopKSubsetSoup` at `0.8924`
 - On this bank, `GibbsTopKSubsetSoup` matches the best completed PRISM full-cap art-full value (`0.8828`), and both live subset-soup methods exceed the best completed PRISM full-cap out value (`0.8875`).
 
-## 4.5 Full-lean Gibbs rerun on PACS art_painting
+## 4.7 Full-lean Gibbs rerun on PACS art_painting
 
 | Method | Prior | Loss | Temperature | k | Art full | In | Out | Same-run uniform full | Same-run uniform in | Same-run uniform out | Notes |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
@@ -267,7 +485,7 @@ Interpretation:
 - Pushing harder on `supporttail` mainly bought `out`, not a decisive jump in `full`.
 - That result motivated the later shift toward graph-focused ablations for the next push.
 
-## 4.6 `GraphDiffusionSubsetSoup` 16-cell art_painting ablation
+## 4.8 `GraphDiffusionSubsetSoup` 16-cell art_painting ablation
 
 | Config | Similarity | Anchor | Alpha | Steps | k | Art full | In | Out | Delta vs same-run uniform full | Delta vs same-run uniform out | Notes |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
@@ -281,7 +499,7 @@ Interpretation:
 - `k=16` beat `k=24` on the best full-oriented branch.
 - `GraphDiffusionSubsetSoup` is now ahead of the earlier Gibbs runs on art full, and the best full configuration also exceeded the best completed PRISM full-cap art-full result.
 
-## 4.7 Focused 12-cell local `GraphDiffusionSubsetSoup` sweep around the winning region
+## 4.9 Focused 12-cell local `GraphDiffusionSubsetSoup` sweep around the winning region
 
 | Config | Similarity | Anchor | Alpha | Steps | k | Art full | In | Out | Delta vs same-run uniform full | Delta vs same-run uniform out | Notes |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
@@ -301,7 +519,30 @@ Interpretation:
 - Several nearby `cos + bestmean` cells beat their same-run uniform baselines on both full and out, which makes this branch look meaningfully more robust than it did after the first 16-cell sweep.
 - The focused sweep did not crack `89.0` on full, so the remaining bottleneck is probably no longer subset discovery alone.
 
-## 4.8 First strict post-hoc non-soup projection pilots on PACS art_painting
+## 4.10 `GraphDiffusionWeightedSubsetSoup` failure study on PACS art_painting
+
+| Weight power | Weighted full | Weighted in | Weighted out | Selected-uniform full | Selected-uniform in | Selected-uniform out | Full-bank uniform full | Full-bank uniform in | Full-bank uniform out | Notes |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| `0.5` | 0.8521 | 0.8469 | 0.8729 | 0.8540 | 0.8499 | 0.8704 | 0.8730 | 0.8682 | 0.8924 | flattened diffusion weights still underperformed both controls |
+| `1.0` | 0.8628 | 0.8658 | 0.8509 | 0.8745 | 0.8719 | 0.8851 | 0.8740 | 0.8694 | 0.8924 | raw diffusion weights badly hurt out |
+| `1.5` | 0.8052 | 0.8017 | 0.8191 | 0.8584 | 0.8554 | 0.8704 | 0.8716 | 0.8670 | 0.8900 | sharpened weights nearly collapsed to one checkpoint |
+| `2.0` | 0.8389 | 0.8371 | 0.8460 | 0.8726 | 0.8694 | 0.8851 | 0.8750 | 0.8707 | 0.8924 | extreme sharpening was catastrophic relative to both controls |
+
+Diagnostics:
+
+- At `weight_power=0.5`, the selected weight vector still put about `58.6%` mass on one checkpoint.
+- At `weight_power=1.0`, one checkpoint took about `96.8%` of the mass.
+- At `weight_power=1.5`, one checkpoint took about `99.84%` of the mass.
+- At `weight_power=2.0`, one checkpoint took about `99.9926%` of the mass.
+- The selected checkpoint set itself changed across powers, so the sweep was not a perfectly clean apples-to-apples comparison. Even so, every weighted run lost to the simpler controls.
+
+Interpretation:
+
+- The graph-selected neighborhood was the useful object; the raw diffusion magnitudes were not.
+- Using diffusion mass as final soup coefficients caused collapse toward an anchor-like near-single-checkpoint solution.
+- This is an explicit negative result against the story that graph diffusion weights themselves should be the deployed coefficients.
+
+## 4.11 First strict post-hoc non-soup projection pilots on PACS art_painting
 
 | Method | Key config | Art full | In | Out | Same-run baseline | Baseline full | Baseline in | Baseline out | Notes |
 |---|---|---:|---:|---:|---|---:|---:|---:|---|
@@ -344,7 +585,9 @@ That `+0.0034` gap is too small, especially combined with the multiple runs wher
 - `SpectralSubsetSoup` should not be treated as a lead branch unless a later sweep materially changes the current result.
 - The important methodological update is that at least two probe-derived sparse subset ideas translated into real deployable weight-space soups without collapsing back to their same-run uniform baselines.
 - The graph branch is still configuration-sensitive, but the focused sweep showed a more stable winning pocket around `cos + bestmean`.
-- The most likely path to `89+` is now a deployment change inside that winning pocket, not another broad discrete-subset search.
+- `GraphDiffusionWeightedSubsetSoup` is now a completed negative result: raw diffusion magnitudes collapsed toward a single checkpoint and consistently underperformed both selected-uniform and full-bank uniform controls.
+- So the remaining evidence supports graph diffusion as a subset finder, not as a final coefficient generator.
+- The best completed subset-soup object is still the plain uniform soup over the selected graph-diffusion or Gibbs subset, not a weighted variant.
 
 ## 5.4 Strict non-soup projection pilots
 
