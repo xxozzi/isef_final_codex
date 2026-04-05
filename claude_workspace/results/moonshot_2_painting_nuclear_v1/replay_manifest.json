@@ -1,0 +1,38 @@
+{
+  "base_metrics": {
+    "art_painting_full_acc": 0.82080078125,
+    "test_env0_in_acc": 0.8187919463087249,
+    "test_env0_out_acc": 0.8288508557457213
+  },
+  "base_model_path": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting/model.pkl",
+  "checkpoint_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting",
+  "config_overrides": {
+    "moonshot_alpha": 0.2,
+    "moonshot_batch_size": 64,
+    "moonshot_enable_views": true,
+    "moonshot_eval_progress_every": 1,
+    "moonshot_max_checkpoints": 0,
+    "moonshot_progress_every": 1,
+    "moonshot_support_fraction": 0.7,
+    "moonshot_support_max_samples": 6144,
+    "moonshot_verbose_build": true,
+    "moonshot_view_names": "hflip,centercrop256,rotate_m10,rotate_p10,grayscale,autocontrast,lowres160,bright12",
+    "verbose": true
+  },
+  "data_dir": "/project/jje239_dgxpublicai25/jwje228/work/domaingen/data",
+  "methods": [
+    "moonshot_2"
+  ],
+  "moonshot_2_best_full_acc": 0.87841796875,
+  "moonshot_2_best_full_probe": "gibbs_recency_supporttail_t0p01_logit",
+  "moonshot_2_best_out_acc": 0.8948655256723717,
+  "moonshot_2_best_out_probe": "spectral_subset_cos_k024_r04",
+  "moonshot_2_csv_file": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/moonshot_2_painting_nuclear_v1/moonshot_2_probes.csv",
+  "moonshot_2_probe_count": 1683,
+  "moonshot_2_results_file": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/moonshot_2_painting_nuclear_v1/moonshot_2_probes.jsonl",
+  "moonshot_2_selected_checkpoint_count": 300,
+  "moonshot_2_summary_file": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/moonshot_2_painting_nuclear_v1/moonshot_2_summary.json",
+  "replay_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/moonshot_2_painting_nuclear_v1",
+  "run_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting",
+  "swad_replay_note": "This replay uses saved dense checkpoints. SWAD segment averages inside each checkpoint interval are not reconstructible post hoc unless every training step was saved."
+}

@@ -1,25 +1,28 @@
 ---
 title: Results Ledger
-description: Consolidated ledger of real completed PRISM and SWING-related empirical results, baselines, ablations, and key diagnostic runs. Planning-only rows have been removed.
+description: Consolidated ledger of real completed PRISM, SWING, TSF, probe-battery, and subset-soup empirical results, baselines, ablations, and key diagnostic runs. Planning-only rows have been removed.
 created: 2026-03-30 22:05
-last_modified: 2026-04-01 12:20
+last_modified: 2026-04-05 19:10
 last_modified_by: agent
 status: active
-related_files: claude_workspace/results/swing_lessons_learned.md, domaingen/posthoc/swing.py
+related_files: claude_workspace/results/swing_lessons_learned.md, domaingen/posthoc/swing.py, domaingen/posthoc/tsf.py, domaingen/posthoc/shotgun.py, domaingen/posthoc/moonshot_2.py, domaingen/posthoc/subset_soups.py
 key_functions:
-  - Preserve completed PRISM and SWING empirical results in one place
+  - Preserve completed PRISM, SWING, TSF, probe-battery, and subset-soup empirical results in one place
   - Remove placeholder-only entries such as TBD, running, queued, and submitted rows
   - Make the current empirical conclusions easy to recover later
-latest_change: Merged the former PRISM and SWING ledgers into one consolidated results ledger and removed all non-real planning entries.
+latest_change: Added the focused 12-cell local GraphDiffusionSubsetSoup sweep around the current winning region on PACS art_painting.
 change_log:
   - 2026-03-30 22:05: Initial PRISM-only ledger created
   - 2026-04-01 09:40: Initial SWING-only ledger created
   - 2026-04-01 12:20: Merged PRISM and SWING ledgers into one completed-results-only ledger
+  - 2026-04-04 00:35: Added SpectralSubsetSoup, GraphDiffusionSubsetSoup, and GibbsTopKSubsetSoup replay results on PACS art_painting
+  - 2026-04-05 18:05: Added TSF, SHOTGUN, MOONSHOT-2, the full-lean Gibbs rerun, and the 16-cell graph-diffusion ablation on PACS art_painting
+  - 2026-04-05 19:10: Added the focused 12-cell local graph-diffusion sweep and updated the subset-soup conclusions
 ---
 
 # Scope
 
-This file is the current source of truth for completed PRISM and SWING-related results discussed in this project.
+This file is the current source of truth for completed PRISM, SWING, and subset-soup results discussed in this project.
 
 Conventions:
 
@@ -195,16 +198,118 @@ Interpretation:
 | `swing_art_probe_e08_t05` | failed probe | Safe pool widened to 91 candidates, but local projected models again produced `nan` losses | Global local-cloud regression is too aggressive |
 | early `rank=3` attempts | diagnostic bottleneck | The main failure moved from pool size to source-fit conditioning | Rank 3 is not blocked by basin size anymore; it is blocked by estimator quality |
 
-# 4. Current Empirical Conclusions
+# 4. Probe Discovery and Subset-Soup Follow-ups
 
-## 4.1 PRISM
+## 4.1 TSF diagnostic failure on PACS art_painting
+
+| Method | Art full | In | Out | Same-run uniform full | Same-run uniform in | Same-run uniform out | Notes |
+|---|---:|---:|---:|---:|---:|---:|---|
+| `TSF` | 0.8203 | 0.8182 | 0.8289 | 0.8735 | 0.8694 | 0.8900 | deployed filter collapsed back to the final checkpoint; coefficient summary had `l1=1`, `max=1`, effectively a one-hot endpoint |
+
+Interpretation:
+
+- The current deployed `TSF` endpoint is a real negative result.
+- The replay succeeded end to end, but the method itself degenerated algebraically to the last checkpoint.
+- The same-run uniform baseline remained strong, so this was a method failure rather than a pipeline failure.
+
+## 4.2 SHOTGUN nuclear probe sweep on PACS art_painting
+
+| Run | Checkpoints | Probe count | Uniform-all full | Uniform-all in | Uniform-all out | Best full probe | Best full metrics | Best balanced probe | Best balanced metrics |
+|---|---:|---:|---:|---:|---:|---|---|---|---|
+| `shotgun_painting_nuclear_v2` | 300 | 1704 | 0.8643 | 0.8597 | 0.8826 | `diverse_supporttail_k007_l10` | `0.8799 / 0.8829 / 0.8680` | `even_018_prob` | `0.8716 / 0.8664 / 0.8924` |
+
+Interpretation:
+
+- The strongest live signal from `SHOTGUN` was sparse noncontiguous subset selection rather than continuous full-bank reweighting.
+- `49` probes beat the `uniform-all` baseline on both full and out.
+- The most important deployable clue was `even_018_prob`, which suggested trajectory coverage and sparse spacing could matter more than late contiguous windows.
+
+## 4.3 MOONSHOT-2 nuclear probe sweep on PACS art_painting
+
+| Run | Best full probe | Best full / out | Best out probe | Best full / out | Best balanced probe | Best full / out | Wins vs uniform on both full and out | Notes |
+|---|---|---|---|---|---|---|---:|---|
+| `moonshot_2_painting_nuclear_v1` | `gibbs_recency_supporttail_t0p01_logit` | `0.8784 / 0.8753` | `spectral_subset_cos_k024_r04` | `0.8711 / 0.8949` | `diffuse_cos_bestmean_a06_s01_logit` | `0.8745 / 0.8900` | 36 | no `MOONSHOT-2` probe beat `even_018_prob` on both full and out simultaneously |
+
+Interpretation:
+
+- `MOONSHOT-2` confirmed that graph/diffusion and Gibbs-style ranking were alive, while pure center weighting and several other exotic families were not.
+- The earlier `MOONSHOT` pass had only `10` probes beating uniform on both full and out; `MOONSHOT-2` raised that count to `36`.
+- The strongest new deployable directions coming out of probe space were graph diffusion and Gibbs top-`k`, not spectral subset alone.
+- These are probe-space results over cached predictions, not final weight-space soups.
+
+## 4.4 First probe-to-weight-space translations on PACS art_painting
+
+| Method | Art full | In | Out | Same-run uniform full | Same-run uniform in | Same-run uniform out | Notes |
+|---|---:|---:|---:|---:|---:|---:|---|
+| `SpectralSubsetSoup` | 0.8750 | 0.8731 | 0.8826 | 0.8755 | 0.8719 | 0.8900 | translation failed to beat its own uniform subset-soup baseline on full or out |
+| `GraphDiffusionSubsetSoup` | 0.8809 | 0.8780 | 0.8924 | 0.8740 | 0.8700 | 0.8900 | clear positive translation from probe space to deployable weight-space soup |
+| `GibbsTopKSubsetSoup` | 0.8828 | 0.8804 | 0.8924 | 0.8745 | 0.8700 | 0.8924 | best art full in this family; beats its own uniform baseline on full and in, ties on out |
+
+Interpretation:
+
+- `GraphDiffusionSubsetSoup` and `GibbsTopKSubsetSoup` survived the probe-to-weight-space translation.
+- `SpectralSubsetSoup` did not survive that translation cleanly; its own uniform baseline remained better on full and out.
+- The strongest subset-soup results so far on `art_painting` are:
+  - best art full: `GibbsTopKSubsetSoup` at `0.8828`
+  - best out: tie between `GraphDiffusionSubsetSoup` and `GibbsTopKSubsetSoup` at `0.8924`
+- On this bank, `GibbsTopKSubsetSoup` matches the best completed PRISM full-cap art-full value (`0.8828`), and both live subset-soup methods exceed the best completed PRISM full-cap out value (`0.8875`).
+
+## 4.5 Full-lean Gibbs rerun on PACS art_painting
+
+| Method | Prior | Loss | Temperature | k | Art full | In | Out | Same-run uniform full | Same-run uniform in | Same-run uniform out | Notes |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| `GibbsTopKSubsetSoup` | `recency` | `supporttail` | 0.01 | 24 | 0.8833 | 0.8798 | 0.8973 | 0.8726 | 0.8682 | 0.8900 | tail-heavy Gibbs improved out strongly but moved full only slightly beyond the earlier Gibbs run |
+
+Interpretation:
+
+- This run showed that `out` was no longer the bottleneck in the Gibbs branch.
+- Pushing harder on `supporttail` mainly bought `out`, not a decisive jump in `full`.
+- That result motivated the later shift toward graph-focused ablations for the next push.
+
+## 4.6 `GraphDiffusionSubsetSoup` 16-cell art_painting ablation
+
+| Config | Similarity | Anchor | Alpha | Steps | k | Art full | In | Out | Delta vs same-run uniform full | Delta vs same-run uniform out | Notes |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| best full | `cos` | `bestmean` | 0.4 | 1 | 16 | 0.8843 | 0.8816 | 0.8949 | +0.0112 | +0.0049 | current best art-full subset-soup result so far |
+| best out | `corr` | `bestval` | 0.6 | 1 | 24 | 0.8774 | 0.8719 | 0.8998 | +0.0044 | +0.0122 | current best out among the graph-diffusion ablation cells |
+
+Interpretation:
+
+- Only `2 / 16` tested graph-diffusion configurations were nonnegative against their same-run uniform baselines on both full and out.
+- `bestmean` was the stronger anchor for full, while `bestval` was the stronger anchor for out.
+- `k=16` beat `k=24` on the best full-oriented branch.
+- `GraphDiffusionSubsetSoup` is now ahead of the earlier Gibbs runs on art full, and the best full configuration also exceeded the best completed PRISM full-cap art-full result.
+
+## 4.7 Focused 12-cell local `GraphDiffusionSubsetSoup` sweep around the winning region
+
+| Config | Similarity | Anchor | Alpha | Steps | k | Art full | In | Out | Delta vs same-run uniform full | Delta vs same-run uniform out | Notes |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| confirmed best full | `cos` | `bestmean` | 0.40 | 1 | 16 | 0.8843 | 0.8816 | 0.8949 | +0.0112 | +0.0049 | the previous best graph cell remained the best after the local sweep |
+| near-tie full | `cos` | `bestmean` | 0.55 | 1 | 12 | 0.8838 | 0.8816 | 0.8924 | +0.0107 | +0.0049 | within about `0.05` full points of the best graph cell |
+| best focused out | `cos` | `bestmean` | 0.35 | 1 | 16 | 0.8774 | 0.8719 | 0.8998 | +0.0039 | +0.0122 | matched the strongest out value seen in the earlier broader graph sweep |
+
+Interpretation:
+
+- The focused sweep validated a real local plateau around `cos + bestmean` rather than discovering a new winner.
+- For full, the strongest region is now clearly:
+  - `similarity = cos`
+  - `anchor = bestmean`
+  - `steps = 1`
+  - `k` around `12` to `16`
+  - `alpha` in the rough range `0.25` to `0.55`, with `0.40` still best
+- Several nearby `cos + bestmean` cells beat their same-run uniform baselines on both full and out, which makes this branch look meaningfully more robust than it did after the first 16-cell sweep.
+- The focused sweep did not crack `89.0` on full, so the remaining bottleneck is probably no longer subset discovery alone.
+
+# 5. Current Empirical Conclusions
+
+## 5.1 PRISM
 
 - best clean domain-label-free PACS average in the current 4-split sweep: `PRISM`
 - current `PRISM` vs `SWAD` margin is real but small
 - current evidence still does not justify saying `PRISM` is decisively better than `SWAD`
 - the best completed full-cap `art_painting` PRISM grid cell so far is `art_a015_e002_t002_m3` at `88.28`
 
-## 4.2 SWING
+## 5.2 SWING
 
 - `SWING` is not invalid in the sense of broken math or broken implementation
 - but the current `SWING` formulation has failed the more important empirical test: it does not clearly and consistently beat `SWING-uniform`
@@ -214,7 +319,18 @@ Interpretation:
 
 That `+0.0034` gap is too small, especially combined with the multiple runs where `SWING` lost to the uniform safe-pool baseline.
 
-## 4.3 Final decision on current SWING
+## 5.3 Subset-soup follow-ups
+
+- `GraphDiffusionSubsetSoup` is currently the clearest alive follow-up branch.
+- The best current graph configuration is `cos + bestmean + alpha=0.4 + steps=1 + k=16`, which reached `0.8843 / 0.8816 / 0.8949`.
+- The focused local graph sweep found a small plateau around that cell, but did not improve on it.
+- `GibbsTopKSubsetSoup` is also alive; the full-lean rerun reached `0.8833 / 0.8798 / 0.8973`, which confirmed that the Gibbs branch can push out strongly.
+- `SpectralSubsetSoup` should not be treated as a lead branch unless a later sweep materially changes the current result.
+- The important methodological update is that at least two probe-derived sparse subset ideas translated into real deployable weight-space soups without collapsing back to their same-run uniform baselines.
+- The graph branch is still configuration-sensitive, but the focused sweep showed a more stable winning pocket around `cos + bestmean`.
+- The most likely path to `89+` is now a deployment change inside that winning pocket, not another broad discrete-subset search.
+
+## 5.4 Final decision on current SWING
 
 - Stop treating the current `SWING` formulation as the headline method.
 - Keep it as:

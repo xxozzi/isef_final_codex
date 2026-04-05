@@ -1,0 +1,34 @@
+{
+  "base_metrics": {
+    "art_painting_full_acc": 0.82080078125,
+    "test_env0_in_acc": 0.8187919463087249,
+    "test_env0_out_acc": 0.8288508557457213
+  },
+  "base_model_path": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting/model.pkl",
+  "checkpoint_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting",
+  "config_overrides": {
+    "shotgun_alpha": 0.2,
+    "shotgun_batch_size": 64,
+    "shotgun_eval_progress_every": 150,
+    "shotgun_max_checkpoints": 0,
+    "shotgun_progress_every": 25,
+    "shotgun_support_fraction": 0.7,
+    "shotgun_support_max_samples": 6144
+  },
+  "data_dir": "/project/jje239_dgxpublicai25/jwje228/work/domaingen/data",
+  "methods": [
+    "shotgun"
+  ],
+  "replay_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/shotgun_painting_nuclear_v2",
+  "run_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting",
+  "shotgun_best_full_acc": 0.8798828125,
+  "shotgun_best_full_probe": "diverse_supporttail_k007_l10",
+  "shotgun_best_out_acc": 0.8924205378973105,
+  "shotgun_best_out_probe": "even_018_prob",
+  "shotgun_csv_file": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/shotgun_painting_nuclear_v2/shotgun_probes.csv",
+  "shotgun_probe_count": 1704,
+  "shotgun_results_file": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/shotgun_painting_nuclear_v2/shotgun_probes.jsonl",
+  "shotgun_selected_checkpoint_count": 300,
+  "shotgun_summary_file": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/shotgun_painting_nuclear_v2/shotgun_summary.json",
+  "swad_replay_note": "This replay uses saved dense checkpoints. SWAD segment averages inside each checkpoint interval are not reconstructible post hoc unless every training step was saved."
+}
