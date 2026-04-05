@@ -1,0 +1,8 @@
+algorithm,dataset,test_env,trial_seed,step,selector,output_dir,complete,art_painting_full_acc,test_env0_in_acc,test_env0_out_acc
+ERM,PACS,[0],0,14999,ERM-replay,claude_workspace/results,False,0.767578125,0.762660158633313,0.7872860635696821
+ERM,PACS,[0],0,1600,SWAD-replay,claude_workspace/results,False,0.8583984375,0.8608907870652837,0.8484107579462102
+ERM,PACS,[0],0,350,STAWA-new,claude_workspace/results,False,0.8642578125,0.8657718120805369,0.8581907090464548
+ERM,PACS,[0],0,1050,STAWA-old,claude_workspace/results,False,0.80224609375,0.7998779743746187,0.8117359413202934
+ERM,PACS,[0],0,450,D-COLA,claude_workspace/results,False,0.87255859375,0.8737034777303234,0.8679706601466992
+ERM,PACS,[0],0,400,CORA,claude_workspace/results,False,0.84130859375,0.8401464307504576,0.8459657701711492
+ERM,PACS,[0],0,400,ROAR,claude_workspace/results,False,0.86328125,0.863941427699817,0.8606356968215159
