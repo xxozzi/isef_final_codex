@@ -2,7 +2,7 @@
 title: Results Ledger
 description: Comprehensive ledger and method catalog for completed baselines, soups, probe batteries, strict post-hoc projection pilots, and replay-visible methods in the repo.
 created: 2026-03-30 22:05
-last_modified: 2026-04-05 14:52
+last_modified: 2026-04-05 18:53
 last_modified_by: agent
 status: active
 related_files: claude_workspace/results/swing_lessons_learned.md, domaingen/posthoc/swing.py, domaingen/posthoc/tsf.py, domaingen/posthoc/shotgun.py, domaingen/posthoc/moonshot_2.py, domaingen/posthoc/subset_soups.py
@@ -12,7 +12,7 @@ key_functions:
   - Track which replay-visible methods in the repo have and have not been empirically exercised
   - Remove placeholder-only entries such as TBD, running, queued, and submitted rows
   - Make the current empirical conclusions easy to recover later
-latest_change: Expanded the ledger into a comprehensive project record with method descriptions, probe-suite implementation notes, replay-visible method inventory, and the missing weighted-graph failure branch.
+latest_change: Added the completed JacobianCanalizationRepair replay result and updated the strict non-soup conclusions.
 change_log:
   - 2026-03-30 22:05: Initial PRISM-only ledger created
   - 2026-04-01 09:40: Initial SWING-only ledger created
@@ -22,6 +22,7 @@ change_log:
   - 2026-04-05 19:10: Added the focused 12-cell local graph-diffusion sweep and updated the subset-soup conclusions
   - 2026-04-05 20:05: Added TrajectoryNuisanceProjection, FisherRashomonProjection, and LogitCovarianceDebias pilot runs on PACS art_painting
   - 2026-04-05 14:52: Added replay-visible method inventory, detailed SHOTGUN/MOONSHOT suite descriptions, and the GraphDiffusionWeightedSubsetSoup failure study
+  - 2026-04-05 18:53: Added JacobianCanalizationRepair as a completed strict post-hoc repair pilot on PACS art_painting
 ---
 
 # Scope
@@ -74,6 +75,7 @@ Conventions:
 | `trajectory_nuisance_projection` | TrajectoryNuisanceProjection | Estimate unstable low-rank late-trajectory directions and shrink them in a single final state. | tested; small local gain only |
 | `fisher_rashomon_projection` | FisherRashomonProjection | Move from an anchor toward a witness barycenter under a Fisher-style trust metric. | tested; projection lost to barycenter baseline |
 | `logit_covariance_debias` | LogitCovarianceDebias | Apply a closed-form affine correction to the final classifier using support logit covariance. | tested; null result |
+| `jacobian_canalization_repair` | JacobianCanalizationRepair | Freeze features, repair the linear head against validation loss while penalizing sensitivity to source-mixture reweighting. | tested; both repair variants lost to the anchor |
 
 ## 0.3 Replay-visible methods present in the repo but not yet validated here as standalone completed branches
 
@@ -542,20 +544,22 @@ Interpretation:
 - Using diffusion mass as final soup coefficients caused collapse toward an anchor-like near-single-checkpoint solution.
 - This is an explicit negative result against the story that graph diffusion weights themselves should be the deployed coefficients.
 
-## 4.11 First strict post-hoc non-soup projection pilots on PACS art_painting
+## 4.11 Strict post-hoc non-soup projection and repair pilots on PACS art_painting
 
 | Method | Key config | Art full | In | Out | Same-run baseline | Baseline full | Baseline in | Baseline out | Notes |
 |---|---|---:|---:|---:|---|---:|---:|---:|---|
 | `TrajectoryNuisanceProjection` | `last_k=24, rank=4, anchor=final, beta=0.25` | 0.8320 | 0.8304 | 0.8386 | `TrajectoryNuisanceProjection-uniform` | 0.8247 | 0.8237 | 0.8289 | real local gain over its same-window uniform baseline, but far below the live leaderboard |
 | `FisherRashomonProjection` | `anchor=bestmean@600, alpha=0.85, witnesses=2` | 0.8579 | 0.8578 | 0.8582 | `FisherRashomonProjection-barycenter` | 0.8813 | 0.8786 | 0.8924 | the projection hurt badly; the strong object was the witness barycenter, which is effectively another tiny soup |
 | `LogitCovarianceDebias` | `anchor=final, gamma=0.0, ridge=1e-3` | 0.8213 | 0.8182 | 0.8337 | `LogitCovarianceDebias-anchor` | 0.8208 | 0.8188 | 0.8289 | the selected edit was the no-op `gamma=0`; this is effectively a null result for actual covariance debiasing |
+| `JacobianCanalizationRepair` | `anchor=final, jacobian_lambda=1.0, val_loss_weight=1.0, anchor_l2=1e-4, lr=5e-4` | 0.8115 | 0.8139 | 0.8020 | `JacobianCanalizationRepair-anchor` | 0.8208 | 0.8188 | 0.8289 | the Jacobian-regularized head repair beat its matched plain repair but still damaged the anchor badly, especially on out |
 
 Interpretation:
 
-- `TrajectoryNuisanceProjection` is the only one of the three that produced a genuine method-level gain over its own same-run baseline.
+- `TrajectoryNuisanceProjection` is the only one of the four that produced a genuine method-level gain over its own same-run baseline.
 - That gain is still small in absolute terms and nowhere near the best subset-soup or PRISM-style art-painting results.
 - `FisherRashomonProjection` failed as a projection method. The within-run barycenter baseline was much stronger than the projected point, so the useful object here was the tiny witness soup, not the Fisher/Rashomon correction.
 - `LogitCovarianceDebias` did not validate its core mechanism. The chosen `gamma=0.0` means the method preferred not to apply any covariance edit at all.
+- `JacobianCanalizationRepair` is a negative result as a practical method. Its Jacobian term helped relative to the matched `JacobianCanalizationRepair-plain` control (`0.8115 / 0.8139 / 0.8020` versus `0.8042 / 0.8054 / 0.7995`), but both repaired heads were worse than leaving the anchor untouched at `0.8208 / 0.8188 / 0.8289`.
 
 # 5. Current Empirical Conclusions
 
@@ -595,7 +599,8 @@ That `+0.0034` gap is too small, especially combined with the multiple runs wher
 - Even that result is not competitive with the best live subset-soup branch, so it should be treated as a weak survival signal, not a new mainline.
 - `FisherRashomonProjection` is a methodological failure in its current form: the projection underperformed its own barycenter baseline by a large margin.
 - `LogitCovarianceDebias` is effectively a null result for the debiasing idea itself, because the selected edit was the no-op `gamma=0.0`.
-- Taken together, these three pilots do not change the current leaderboard or the current main conclusion that the strongest completed branch remains the graph/Gibbs subset-soup family.
+- `JacobianCanalizationRepair` also failed as a practical post-hoc method in its first instantiation: the Jacobian penalty improved over the matched plain head repair, but the untouched anchor was still clearly better than either repaired head.
+- Taken together, these four pilots do not change the current leaderboard or the current main conclusion that the strongest completed branch remains the graph/Gibbs subset-soup family.
 
 ## 5.5 Final decision on current SWING
 
