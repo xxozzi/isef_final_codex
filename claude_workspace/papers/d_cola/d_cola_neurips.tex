@@ -1,995 +1,943 @@
 \documentclass{article}
 
-\usepackage[preprint]{neurips}
+\PassOptionsToPackage{numbers,sort&compress}{natbib}
+\usepackage[preprint]{../../neurips}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{booktabs}
-\usepackage{amsfonts}
+\usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{mathtools}
+\usepackage{bm}
 
-\title{D-COLA: Domain-Balanced Covariance- and Locality-Aware Checkpoint Soups for Domain Generalization}
-
+\title{D-COLA: Post-hoc Domain Generalization by Mergeable Complementarity}
 \author{Anonymous Authors}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{proposition}{Proposition}
-\newtheorem{lemma}{Lemma}
-\newtheorem{corollary}{Corollary}
-\newtheorem{assumption}{Assumption}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{assumption}[theorem]{Assumption}
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}
-\newtheorem{remark}{Remark}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
 
-\newcommand{\E}{\mathbb{E}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\1}{\mathbf{1}}
-\newcommand{\TV}{\mathrm{TV}}
-\newcommand{\KL}{\mathrm{KL}}
-\newcommand{\Div}{\mathbf{Div}}
-\newcommand{\CE}{\mathrm{CE}}
-\newcommand{\argmin}{\mathop{\mathrm{arg\,min}}}
-\newcommand{\argmax}{\mathop{\mathrm{arg\,max}}}
-\newcommand{\softmax}{\mathrm{softmax}}
-\newcommand{\diam}{\mathrm{diam}}
-\newcommand{\loss}{\mathcal{L}}
-\newcommand{\risk}{\mathcal{E}}
-\newcommand{\emp}{\widehat{\mathcal{E}}}
-\newcommand{\cH}{\mathcal{H}}
-\newcommand{\cD}{\mathcal{D}}
-\newcommand{\cT}{\mathcal{T}}
-\newcommand{\cV}{\mathcal{V}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\cA}{\mathcal{A}}
 \newcommand{\cC}{\mathcal{C}}
-\newcommand{\cW}{\mathcal{W}}
-\newcommand{\cS}{\mathcal{S}}
-\newcommand{\cP}{\mathcal{P}}
-\newcommand{\cQ}{\mathcal{Q}}
-\newcommand{\btheta}{\bar{\theta}}
-\newcommand{\bw}{\bar{w}}
-\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\proj}{\operatorname{Proj}}
+\newcommand{\TBD}{\textbf{TBD}}
+\newcommand{\dcola}{\textup{\textsc{D-COLA}}}
+\newcommand{\swad}{\textup{\textsc{SWAD}}}
+\newcommand{\diwa}{\textup{\textsc{DiWA}}}
+\newcommand{\eoa}{\textup{\textsc{EoA}}}
+\newcommand{\erm}{\textup{\textsc{ERM}}}
+\newcommand{\ood}{\textup{\textsc{OOD}}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\simplex}{\Delta}
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
-\newcommand{\set}[1]{\left\{ #1 \right\}}
-\newcommand{\braces}[1]{\left( #1 \right)}
-\newcommand{\bracks}[1]{\left[ #1 \right]}
-\newcommand{\domain}[1]{\mathrm{Dom}\!\left(#1\right)}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand{\paren}[1]{\left( #1 \right)}
+\newcommand{\braces}[1]{\left\{ #1 \right\}}
+\newcommand{\thetaw}{\bar{\theta}(w)}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-We propose D-COLA, a post-hoc checkpoint-soup method for domain generalization that replaces SWAD's contiguous uniform window with a domain-balanced, covariance-aware, and locality-aware weighting rule. The method uses dense checkpoints from a single training trajectory, selects a worst-domain anchor, filters checkpoints by low interpolation barrier, and solves a convex weighting problem over cached source-domain validation predictions. The resulting weights are used to produce a single test-time model by weight averaging. The theory is first-principles motivated: we derive a worst-source-domain robust-risk certificate extending SWAD's bound, prove convexity and subgradient convergence for the post-hoc weighting stage, and bound the discrepancy between the predictive mixture optimized by D-COLA and the final weight soup under a second-order locality condition. We also prove a conditional domination result: under an explicit target-risk certificate, D-COLA's optimizer is guaranteed to achieve a no-worse certificate value than any feasible SWAD-style uniform interval. Sections reporting new D-COLA empirical results are intentionally left as TBD; however, we include the exact published DomainBed numbers of SWAD, moving-average baselines, and DiWA to define the current benchmark frontier.
+Current post-hoc domain generalization methods are usually justified by one proxy object: flatness of a checkpoint region, diversity of the members being averaged, or validation performance of a selected model. This paper argues that the larger object is \emph{mergeable complementarity}. A good post-hoc soup should combine checkpoints that correct different source-domain failures while still remaining averageable as one deployable model. We show that \dcola{} is a practical surrogate implementation of that principle. The rigorous theory is stated for a fixed retained checkpoint family and the convex weighting problem solved on that family; the anchor, prefilter, and barrier-screening stages used by the implementation are presented explicitly as operational heuristics motivated by the same principle, not as theorem-derived consequences. The theory is organized around one ideal objective: robust source-domain fit plus hidden-shift sensitivity plus a mergeability remainder. We prove an exact robust-domain-prior identity for the worst-domain term, an exact local hidden-shift identity on samplewise linear proxy losses, a variance and pairwise-covariance representation of the conflict matrix, and a conditional surrogate theorem showing that the practical weighting objective upper-bounds the ideal fixed-family objective under a direct mergeability certificate. We further prove convexity, projected-subgradient convergence, and a low-curvature face bound explaining why exact weights can matter less than locating the right complementary face of the simplex. Sections reporting new \dcola{} experiments remain intentionally marked \TBD{}, but we include exact published benchmark context from prior post-hoc domain generalization papers to define the target bar.
 \end{abstract}
 
 \section{Introduction}
-Domain generalization (DG) asks for a model that performs well on unseen target domains after training only on labeled source domains. On the standard DomainBed benchmark suite, the most influential post-hoc result in this direction is SWAD, which averages dense checkpoints within an overfit-aware interval and reports an average out-of-domain (OOD) accuracy of $66.9$ across PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet \citep{cha2021swad}. The appeal of SWAD is practical as much as empirical: it keeps a single-model test-time footprint, requires no architectural modification, and can be applied after ordinary training.
 
-However, SWAD leaves a serious theoretical gap. Its analysis upper-bounds target risk by a robust empirical source-risk term, a source-target divergence term, and a confidence term. The actual algorithm, by contrast, does not optimize this robust-risk objective. It selects a start iteration and an end iteration from validation traces and uniformly averages all checkpoints in between. The theory therefore motivates flatness, but the method is a validation-window heuristic. DiWA sharpens this tension by arguing that flatness alone does not explain why weight averaging helps in OOD settings; covariance between predictors and locality in weight space matter as well \citep{arpit2022diwa}. This suggests that the next post-hoc DG method should not merely search for a flatter interval. It should optimize a more faithful target-risk surrogate.
+Post-hoc domain generalization matters because it is one of the few robustness strategies that can be attached to a strong empirical-risk-minimization pipeline without retraining. A single training run produces a dense checkpoint trajectory, and one deployable model is chosen only after training has already finished. This regime is operationally attractive and already empirically validated: on DomainBed, \swad{} reported an average accuracy of \(66.9\) over PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet, improving \erm{} from \(63.3\) \citep{cha2021swad}. Later weight-averaging studies pushed the frontier higher, including \diwa{}, whose strongest published linear-probe setting reports \(68.0\) average accuracy \citep{rame2022diwa}. The practical question is therefore no longer whether post-hoc averaging can help. The unresolved question is \emph{what principle the final soup should optimize}.
 
-This paper develops that idea. We propose \textbf{D-COLA} (\textbf{D}omain-balanced \textbf{Co}variance- and \textbf{L}ocality-\textbf{A}ware averaging), a post-hoc checkpoint-soup method that starts from the same dense training trajectory as SWAD but replaces uniform interval averaging with a convex weighting problem over cached validation predictions. D-COLA first chooses an anchor checkpoint by minimizing the \emph{worst} source-domain validation loss rather than the average validation loss. It then filters checkpoints using a linear interpolation barrier so that averaging remains inside one connected valley. Finally, it solves for simplex weights that minimize a worst-domain predictive-mixture loss plus covariance and locality penalties, and uses those weights to output a \emph{single} test-time model by weight averaging.
+The dominant theoretical explanation in this niche is flatness. \swad{} states that ``finding flat minima results in a smaller domain generalization gap'' \citep{cha2021swad}. That theory is important, but it leaves two gaps. First, flatness mainly explains why averaging may be \emph{safe}; it does not fully explain why some checkpoint combinations are \emph{useful}. Second, it does not explain why post-hoc performance often depends on nonredundancy among the members being averaged, a point emphasized by later analyses of weight averaging under distribution shift. \diwa{} explicitly argues for a ``bias-variance-covariance-locality decomposition'' and states that to reduce weight averaging error under \ood{} shift, one should ``seek a good trade-off between diversity and locality'' \citep{rame2022diwa}. Flatness and diversity are therefore not competing stories. They are two visible faces of a larger object.
 
-The paper's main contributions are fourfold.
-\begin{itemize}
-    \item We propose a new post-hoc DG algorithm that explicitly balances three principles implied by prior theory but not jointly optimized by SWAD: worst-domain source fit, checkpoint diversity through covariance reduction, and locality through connected-valley filtering.
-    \item We derive a worst-source-domain robust-risk bound that extends SWAD's theorem and directly motivates D-COLA's first term. This formalizes a first-principles reason to replace average-domain selection with worst-domain selection.
-    \item We prove that D-COLA's second stage is a convex optimization problem, give a standard subgradient convergence guarantee, and bound the discrepancy between the optimized predictive mixture and the final weight soup under a second-order locality condition.
-    \item We prove a conditional domination theorem: if the D-COLA objective upper-bounds target risk on the feasible set, then the D-COLA optimizer achieves a certificate no worse than any feasible SWAD-style uniform interval. This is the strongest honest comparison available without using unseen-target labels.
+This paper proposes that larger object:
+\begin{quote}
+\textbf{Mergeable complementarity.} A post-hoc soup should combine checkpoints that make different domain-conditioned mistakes, while keeping the final average inside a regime where weight averaging still tracks predictive mixing.
+\end{quote}
+
+The method in this paper, \dcola{}, is not presented as an arbitrary combination of worst-domain validation, covariance shrinkage, and locality heuristics. Instead, it is presented as a surrogate solver for one ideal objective built from mergeable complementarity:
+\begin{itemize}[leftmargin=1.3em]
+    \item \textbf{Worst-domain fit}: the deployed model must not already fail on one source domain.
+    \item \textbf{Complementarity}: the members of the soup should not fail on the same source slices.
+    \item \textbf{Mergeability}: the weight-space average must remain a valid single-model approximation to the predictive mixture.
 \end{itemize}
 
-Figure~\ref{fig:overview} summarizes the workflow. We emphasize one point up front: because new D-COLA experiments have not yet been run, all empirical sections reporting our method's numbers are marked \texttt{TBD}. We nevertheless include exact published baselines from SWAD and DiWA so that the benchmark target is explicit rather than vague.
+That single principle explains both why flat minima can generalize and why flatness is not the whole story. In a conflict-free, highly mergeable region, flatness is enough and dense uniform averaging works. Outside that limit, one needs not only mergeability but also useful disagreement. This is the regime \dcola{} targets.
+
+The paper makes five contributions.
+\begin{enumerate}[leftmargin=1.4em]
+    \item We introduce \emph{mergeable complementarity} as a beyond-flatness theoretical object for post-hoc domain generalization and position \dcola{} as a surrogate implementation of that object.
+    \item We derive the worst-domain term from an exact ambiguity-set identity over unknown source-domain priors and derive the covariance term from an exact local hidden-shift sensitivity identity on samplewise linear proxy losses.
+    \item We show that the conflict matrix admits both variance and pairwise-covariance decompositions, making the complementarity interpretation explicit rather than rhetorical.
+    \item We prove a conditional surrogate theorem for the fixed-family weighting problem, together with convexity, projected-subgradient convergence, and a low-curvature face bound explaining why exact weights may matter less than support discovery.
+    \item We separate theory from implementation honestly: the rigorous contribution concerns the retained-family weighting subproblem, while worst-domain anchoring, epsilon prefiltering, and barrier screening are operational heuristics that instantiate the broader principle in the current system.
+\end{enumerate}
+
+The experimental sections remain intentionally blank for new \dcola{} results. That is deliberate. The goal of this rewrite is to make the paper theoretically coherent and publication-ready before inserting empirical tables. Exact published numbers from prior papers are included so that the benchmark bar remains concrete.
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.96\textwidth]{figures/dcola_overview.pdf}
-    \caption{Overview of D-COLA. Dense checkpoints from one training trajectory are scored by per-domain validation loss, anchored at the checkpoint minimizing worst-domain risk, filtered by a low interpolation barrier, and reweighted by a convex objective over cached predictions. The output remains a single model, not an ensemble.}
+    \includegraphics[width=\linewidth]{figures/dcola_overview.pdf}
+    \caption{\textbf{\dcola{} at a glance.} The larger principle is mergeable complementarity: choose checkpoints that cover different domain-conditioned failures, but only inside a family whose weighted average remains a valid single model. The theorem-bearing contribution concerns the fixed-family weighting problem. The implementation then instantiates that theory with practical family-construction heuristics such as worst-domain anchoring and barrier screening.}
     \label{fig:overview}
 \end{figure}
 
 \section{Related Work}
-\paragraph{Domain generalization.}
-Modern DG benchmarks popularized a careful comparison between algorithmic ideas and plain empirical risk minimization (ERM), showing that many sophisticated methods underperform well-tuned baselines \citep{gulrajani2021domainbed}. Subsequent work improved robustness either during training, for example through domain alignment or invariance objectives, or after training, by exploiting the geometry of checkpoint trajectories. D-COLA belongs to the second family: it is post-hoc, architecture-agnostic, and compatible with ordinary training pipelines.
 
-\paragraph{Post-hoc averaging for generalization.}
-Stochastic weight averaging and related moving-average procedures improve IID generalization by averaging nearby solutions in weight space \citep{izmailov2018swa}. SWAD adapted this idea to DG by densely averaging a contiguous window chosen from validation dynamics, and reported large gains on DomainBed \citep{cha2021swad}. Ensemble of Averages (EoA) and related moving-average studies further showed that model averaging can improve rank correlation between validation and test performance under shift \citep{shen2022eoa}. DiWA revisited the theory of weight averaging in OOD settings and argued that performance depends not only on flatness but also on bias, variance, covariance, and locality \citep{arpit2022diwa}. D-COLA is closest in spirit to SWAD and DiWA, but differs from both: unlike SWAD it is not constrained to uniform contiguous windows, and unlike DiWA it is designed as a \emph{single-trajectory}, \emph{single-model}, \emph{post-hoc} optimizer with a worst-domain objective.
+\paragraph{Post-hoc domain generalization.}
+DomainBed established that carefully tuned baselines remain difficult to beat under controlled evaluation \citep{gulrajani2021domainbed}. Within that benchmark culture, post-hoc methods are attractive because they preserve the original training pipeline. \swad{} made this niche serious by showing large gains from overfit-aware dense checkpoint averaging \citep{cha2021swad}. \eoa{} and related moving-average work further showed that averaging can stabilize selection under shift \citep{arpit2021ensemble}. These methods demonstrate that the final deployable model is often not the last checkpoint.
 
-\paragraph{Checkpoint soups and mode connectivity.}
-Model soups and linear mode connectivity show that weight averaging is effective when candidate models lie in a connected low-loss basin \citep{wortsman2022soups,frankle2020linear}. This motivates D-COLA's explicit barrier filter. Rather than assuming that nearby checkpoints are safe to average simply because they are temporally adjacent, D-COLA tests whether each candidate checkpoint is connected to the anchor by a low-loss interpolation path on source-domain validation data.
+\paragraph{Flatness, diversity, and weight averaging.}
+\swad{} argues that seeking flat minima reduces the domain generalization gap \citep{cha2021swad}. \diwa{} broadens that picture. Its abstract states that its ``main motivation is to increase the functional diversity across averaged models'' and its theory introduces a ``bias-variance-covariance-locality decomposition'' \citep{rame2022diwa}. In the DiWA source, the authors explicitly write that ``to reduce WA's error in \ood{}, we thus seek a good trade-off between diversity and locality'' \citep{rame2022diwa}. We take that sentence as the closest prior articulation of the object formalized here: the challenge is not flatness alone, but mergeable complementarity.
 
-\paragraph{How D-COLA differs from SWAD.}
-SWAD's output is
-\[
-\theta^{\mathrm{SWAD}} = \frac{1}{t_e - t_s + 1} \sum_{t=t_s}^{t_e} \theta_t,
-\]
-where $t_s$ and $t_e$ are selected by validation-patience heuristics \citep{cha2021swad}. D-COLA removes all three structural restrictions in that rule: the weights need not be uniform, the support need not be contiguous in time, and candidate inclusion is decided by domain balance and valley connectivity rather than by training-time chronology alone. Those changes are not ad hoc. Each one corresponds to an explicit term in the theory developed below.
+\paragraph{Mode connectivity and soups.}
+Linear mode connectivity and model soups show that weight averaging is useful only when models occupy a common compatible basin \citep{frankle2020linear,wortsman2022soups}. This is the direct ancestor of the mergeability part of our theory. The difference is conceptual. Those works justify \emph{whether} averaging is feasible. Our theory is about \emph{which} feasible averages should be preferred for domain generalization.
 
-\section{Problem Setup}
+\paragraph{Distribution shift and hidden subpopulations.}
+The classical domain adaptation theory of \citet{ben2010theory} clarifies that source-target divergence remains uncontrollable without target information. This is why post-hoc DG can only act on the controllable source-side terms. The hidden-shift term in our analysis lives in that controllable region: it measures sensitivity to local redistributions of source support mass inside each observed source domain. The resulting theory stays source-only and post-hoc.
+
+\section{Setup}
 \label{sec:setup}
-We consider $E$ labeled source domains $\cD_1,\dots,\cD_E$ and one unseen target domain $\cT$. For simplicity in the DG-style analysis inherited from SWAD, we assume a common labeling function across domains and a bounded loss $\ell : \mathcal{Y}\times\mathcal{Y}\to [0,1]$ when deriving robust-risk bounds. Let
-\[
-\risk_e(\theta) = \E_{(x,y)\sim \cD_e}\bracks{\ell(f_\theta(x), y)},
-\qquad
-\risk_T(\theta) = \E_{(x,y)\sim \cT}\bracks{\ell(f_\theta(x), y)},
-\]
-and let $\emp_e(\theta)$ denote the empirical version computed on the training split of source domain $e$.
 
-The post-hoc setting starts from a \emph{single} training run that produces a dense checkpoint pool
+We assume \(E\) labeled source domains with held-out validation splits
 \[
-\Theta_K = \set{\theta_t}_{t=1}^K.
+\cV_e = \braces{z_{e,j}}_{j=1}^{n_e},
+\qquad
+z_{e,j}=(x_{e,j}, y_{e,j}),
+\qquad
+1 \le e \le E.
 \]
-For model selection we use held-out source validation sets $\cV_1,\dots,\cV_E$, where $\cV_e$ belongs to source domain $e$. We write
+The post-hoc input is a dense single-run checkpoint bank
 \[
-\widehat{L}_e(\theta)
+\Theta_K = \braces{\theta_t}_{t=1}^{K}.
+\]
+For most theory statements we assume \(n_e=n\) for all \(e\), only to simplify notation; the empirical method does not require equal domain sizes.
+
+\paragraph{Retained family.}
+The rigorous theory is stated for an arbitrary retained family
+\[
+\cC \subseteq \braces{1,\dots,K}.
+\]
+Weights live on the simplex \(w\in\simplex^{|\cC|}\), and the deployed soup is
+\[
+\thetaw = \sum_{t\in\cC} w_t \theta_t.
+\]
+
+For checkpoint \(\theta_t\), define domainwise validation cross-entropy
+\[
+\widehat L_e(\theta_t)
 =
-\frac{1}{|\cV_e|}
-\sum_{(x,y)\in \cV_e}
-\CE\!\big(p_\theta(\cdot \mid x), y\big)
+\frac{1}{n}\sum_{j=1}^{n}
+-\log p_{\theta_t}(y_{e,j}\mid x_{e,j}).
 \]
-for validation cross-entropy on domain $e$, and
+Let
 \[
-\widehat{L}_{\mathrm{avg}}(\theta) = \frac{1}{E}\sum_{e=1}^E \widehat{L}_e(\theta),
+\widehat L_{\max}(\theta_t) = \max_{1\le e\le E}\widehat L_e(\theta_t),
 \qquad
-\widehat{L}_{\max}(\theta) = \max_{1\le e \le E} \widehat{L}_e(\theta).
+\widehat L_{\mathrm{avg}}(\theta_t)=\frac{1}{E}\sum_{e=1}^{E}\widehat L_e(\theta_t).
 \]
 
-For each checkpoint $\theta_t$ and each validation sample $(x,y)\in \cV_e$, we cache the true-class probability
+\paragraph{Predictive mixture quantities.}
+For each retained checkpoint and validation sample, define
 \[
-q_t(x,y) = p_{\theta_t}(y\mid x) \in (0,1].
+q_{e,j,t} = p_{\theta_t}(y_{e,j}\mid x_{e,j}) \in (0,1].
 \]
-These cached probabilities are sufficient to define D-COLA's optimization stage; no retraining is required.
-
-\section{Method}
-\label{sec:method}
-D-COLA has three stages: worst-domain anchoring, connected-valley filtering, and convex weight selection. Figure~\ref{fig:timeline} contrasts this with SWAD's uniform interval averaging.
-
-\begin{figure}[p]
-    \centering
-    \includegraphics[width=0.78\textwidth,height=0.88\textheight,keepaspectratio]{figures/dcola_detailed_methodology.pdf}
-    \caption{Detailed visual methodology for D-COLA. The method first computes per-domain validation losses and selects the checkpoint minimizing worst-domain loss, then filters checkpoints by interpolation barriers, estimates redundancy through a covariance proxy on cached losses, and finally solves a simplex optimization to produce one weight soup. This figure is schematic but calculation-faithful: each panel corresponds directly to a quantity in Eqs.~\eqref{eq:anchor}--\eqref{eq:objective}.}
-    \label{fig:methodology}
-\end{figure}
-
-\subsection{Worst-domain anchor}
-SWAD uses validation traces to detect a locally optimal time window. D-COLA instead centers the candidate set at the checkpoint that is best for the \emph{hardest} observed source domain:
+The predictive-mixture loss on source domain \(e\) is
 \begin{equation}
-    a \in \argmin_{1\le t\le K} \widehat{L}_{\max}(\theta_t).
-    \label{eq:anchor}
+\widehat L_e^{\mathrm{ens}}(w)
+=
+\frac{1}{n}\sum_{j=1}^{n}
+-\log\paren{\sum_{t\in\cC} w_t q_{e,j,t}}.
+\label{eq:ensloss}
 \end{equation}
-This change is motivated by the robust-risk bound in Section~\ref{sec:theory}: the source-domain average can hide domain imbalance, while the worst-domain criterion directly penalizes checkpoints that already fail on one source domain.
+The practical \dcola{} algorithm optimizes over these cached probabilities and then outputs the actual weight soup \(\thetaw\).
 
-\subsection{Connected-valley filter}
-Weight averaging is only reliable when candidate checkpoints lie in a common low-loss basin. To verify this explicitly, D-COLA measures a linear interpolation barrier between candidate checkpoint $\theta_t$ and the anchor $\theta_a$:
-\begin{equation}
-    B(t,a)
-    =
-    \max_{\alpha \in \mathcal{A}}
-    \widehat{L}_{\mathrm{avg}}\!\big((1-\alpha)\theta_a + \alpha \theta_t\big)
-    -
-    \max\set{\widehat{L}_{\mathrm{avg}}(\theta_a), \widehat{L}_{\mathrm{avg}}(\theta_t)},
-    \label{eq:barrier}
-\end{equation}
-where $\mathcal{A}\subset[0,1]$ is a fixed interpolation grid. A checkpoint is kept if it is both accurate enough and connected enough:
-\begin{equation}
-    \cC
-    =
-    \set{
-        t \in \set{1,\dots,K} :
-        \widehat{L}_{\max}(\theta_t) \le \widehat{L}_{\max}(\theta_a)+\epsilon,
-        \;
-        B(t,a) \le \tau
-    }.
-    \label{eq:candidates}
-\end{equation}
-Here $\epsilon$ controls the validation-loss radius around the anchor and $\tau$ controls basin leakage. If $\cC=\set{a}$, D-COLA reduces to returning the anchor.
+\subsection{Operational family construction in the current implementation}
+\label{subsec:heuristics}
 
-\subsection{Convex weighting on cached predictions}
-For $w\in \Delta^{|\cC|}$, where $\Delta^{|\cC|}$ is the simplex over candidate checkpoints, define the predictive mixture loss on source validation domain $e$ by
-\begin{equation}
-    \widehat{L}^{\mathrm{ens}}_e(w)
-    =
-    \frac{1}{|\cV_e|}
-    \sum_{(x,y)\in \cV_e}
-    -\log\!\Big(\sum_{t\in \cC} w_t q_t(x,y)\Big).
-    \label{eq:ensloss}
-\end{equation}
-This objective is evaluated from cached probabilities only; it never backpropagates through the training model.
+The current implementation of \dcola{} does not optimize over the full checkpoint bank directly. It first builds a retained family \(\cC\) using three operational heuristics motivated by mergeable complementarity:
+\begin{enumerate}[leftmargin=1.3em]
+    \item choose the best singleton under worst-domain source validation loss,
+    \item prefilter checkpoints within an \(\epsilon\)-window of that singleton,
+    \item remove checkpoints whose interpolation barrier to the singleton exceeds a threshold \(\tau\).
+\end{enumerate}
+These heuristics matter operationally, but they are not the main theorem-bearing object of the paper.
 
-To discourage redundant checkpoints, D-COLA computes a samplewise loss-covariance matrix. For each $e$ and each candidate $t\in \cC$, define the validation loss random variable
-\[
-\ell^e_t(x,y) = -\log q_t(x,y),
-\qquad (x,y)\sim \mathrm{Unif}(\cV_e),
-\]
-and let $C^e \in \R^{|\cC|\times |\cC|}$ be its empirical covariance matrix:
+The singleton anchor is
 \begin{equation}
-    C^e_{ij}
-    =
-    \frac{1}{|\cV_e|-1}
-    \sum_{(x,y)\in \cV_e}
-    \big(\ell^e_i(x,y)-\bar{\ell}^e_i\big)
-    \big(\ell^e_j(x,y)-\bar{\ell}^e_j\big),
-    \qquad
-    C = \frac{1}{E}\sum_{e=1}^E C^e.
-    \label{eq:cov}
+a \in \argmin_{1\le t\le K} \widehat L_{\max}(\theta_t).
+\label{eq:anchor}
 \end{equation}
-We also define the locality vector $b\in \R^{|\cC|}$ by $b_t = B(t,a)$.
-
-The D-COLA weights are the solution of
+For an interpolation grid \(\cA \subset [0,1]\), its barrier to checkpoint \(t\) is
 \begin{equation}
-    w^\star
-    \in
-    \argmin_{w\in \Delta^{|\cC|}}
-    J(w),
-    \label{eq:jopt}
+B(t,a)
+=
+\max_{\alpha\in\cA}
+\widehat L_{\mathrm{avg}}\paren{(1-\alpha)\theta_a + \alpha \theta_t}
+-
+\max\braces{\widehat L_{\mathrm{avg}}(\theta_a), \widehat L_{\mathrm{avg}}(\theta_t)}.
+\label{eq:barrier}
+\end{equation}
+The implementation then keeps
+\begin{equation}
+\cC
+=
+\braces{
+t\in\braces{1,\dots,K}:
+\widehat L_{\max}(\theta_t)\le \widehat L_{\max}(\theta_a)+\epsilon,
+\;
+B(t,a)\le \tau
+}.
+\label{eq:candidates}
+\end{equation}
+The theory below should therefore be read as follows: once a retained family \(\cC\) has been chosen, the fixed-family weighting problem admits a clean mergeable-complementarity analysis. The anchor and barrier rules above are the concrete family-construction heuristics used by the current implementation.
+
+\section{From One Principle to the Practical Objective}
+\label{sec:principle}
+
+\subsection{Ideal mergeable complementarity on a fixed family}
+
+\begin{proposition}[Worst-domain fit as a robust source-domain prior]
+\label{prop:worst_domain_prior}
+For any retained family \(\cC\) and any \(w\in \simplex^{|\cC|}\),
+\begin{equation}
+\sup_{\pi\in \simplex^{E}}
+\sum_{e=1}^{E} \pi_e \widehat L_e^{\mathrm{ens}}(w)
+=
+\max_{1\le e\le E}\widehat L_e^{\mathrm{ens}}(w).
+\label{eq:worst_domain_prior}
+\end{equation}
+\end{proposition}
+
+\begin{definition}[Mergeable complementarity objective]
+\label{def:ideal}
+Let
+\begin{equation}
+M(w)
+:=
+\max_{1\le e \le E}
+\abs{
+\widehat L_e(\thetaw)-\widehat L_e^{\mathrm{ens}}(w)
+}
+\label{eq:mergeability_remainder}
+\end{equation}
+be the \emph{mergeability remainder}: the gap between the actual single-model soup and the predictive mixture it is meant to approximate. Let \(C\) be the aggregate conflict matrix defined in Eq.~\eqref{eq:aggregate_conflict}. For constants \(\lambda_{\mathrm{sh}},\lambda_{\mathrm{mg}}>0\), define
+\begin{equation}
+\Phi(w)
+:=
+\max_{1\le e\le E}\widehat L_e^{\mathrm{ens}}(w)
+\;+\;
+\lambda_{\mathrm{sh}}\sqrt{w^\top C w}
+\;+\;
+\lambda_{\mathrm{mg}} M(w).
+\label{eq:ideal_objective}
+\end{equation}
+\end{definition}
+
+The meaning of Eq.~\eqref{eq:ideal_objective} is direct.
+\begin{itemize}[leftmargin=1.3em]
+    \item The first term requires the predictive mixture to fit the hardest observed source domain.
+    \item The second term penalizes domain-conditioned conflict: if the chosen checkpoints make the same source-domain mistakes, the centered samplewise losses remain highly correlated and \(\sqrt{w^\top Cw}\) stays large.
+    \item The third term enforces mergeability: the actual weight soup must stay close to the predictive mixture being optimized.
+\end{itemize}
+
+\subsection{Practical \dcola{} on a retained family}
+
+\dcola{} is the practical surrogate of Eq.~\eqref{eq:ideal_objective}. Its objective is
+\begin{equation}
+J(w)
+=
+\max_{1\le e\le E}\widehat L_e^{\mathrm{ens}}(w)
+\;+\;
+\lambda_{\mathrm{cov}}\,w^\top C w
+\;+\;
+\lambda_{\mathrm{loc}}\,b^\top w
+\;+\;
+\lambda_{\mathrm{ent}}\sum_{t\in\cC} w_t\log w_t,
+\label{eq:dcola_objective}
 \end{equation}
 where
-\begin{equation}
-    J(w)
-    =
-    \max_{1\le e\le E}\widehat{L}^{\mathrm{ens}}_e(w)
-    + \lambda_{\mathrm{cov}} w^\top C w
-    + \lambda_{\mathrm{loc}} b^\top w
-    + \lambda_{\mathrm{ent}} \sum_{t\in \cC} w_t \log w_t.
-    \label{eq:objective}
-\end{equation}
-The first term enforces domain balance, the second avoids placing mass on mutually redundant checkpoints, the third penalizes extrapolation away from the anchor basin, and the entropy term stabilizes the optimization by preventing brittle one-hot solutions unless strongly justified by the data.
+\[
+b_t = B(t,a),
+\qquad
+C = \frac{1}{E}\sum_{e=1}^{E} C_e.
+\]
+The first term is exact predictive-mixture fit on the hardest source domain. The second and third terms are the practical surrogates of the two theoretical penalties in Eq.~\eqref{eq:ideal_objective}. The entropy term is not part of the core theory; it is a small numerical regularizer that stabilizes optimization inside the simplex. In the implementation, \(b_t\) is instantiated by the anchor-relative interpolation barrier in Eq.~\eqref{eq:barrier}, and the optimizer returns the averaged projected-subgradient iterate rather than an exact simplex minimizer.
 
-The final single-model output is the weight soup
-\begin{equation}
-    \theta_{\mathrm{D\text{-}COLA}}
-    =
-    \sum_{t\in \cC} w^\star_t \theta_t.
-    \label{eq:finalsoup}
-\end{equation}
-
-\begin{figure}[t]
-    \centering
-    \begin{minipage}[t]{0.43\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/anchor_heatmap.pdf}
-        
-        (a) Worst-domain anchor selection.
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{0.53\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/barrier_covariance_weights.pdf}
-        
-        (b) Barrier filtering, covariance structure, and final weights.
-    \end{minipage}
-    \caption{What D-COLA is computing at each step. Left: the anchor is chosen by minimizing the maximum source-domain validation loss across checkpoints. Right: candidates are screened by interpolation barriers, redundant checkpoints are exposed by the covariance matrix, and the final simplex weights concentrate on low-barrier, nonredundant checkpoints. All panels are schematic and meant to build intuition, not to report experimental results.}
-    \label{fig:selection}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.96\textwidth]{figures/swad_vs_dcola_timeline.pdf}
-    \caption{SWAD versus D-COLA. SWAD uniformly averages a contiguous interval. D-COLA reweights a filtered candidate set around a worst-domain anchor; weights need not be uniform and support need not be contiguous in time.}
-    \label{fig:timeline}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\fbox{
-\begin{minipage}{0.94\textwidth}
-\small
-\textbf{Algorithm 1: D-COLA}
-\begin{enumerate}
-    \item Compute per-domain validation losses $\widehat{L}_e(\theta_t)$ for all source domains $e$ and checkpoints $t$.
-    \item Set the anchor to $a \leftarrow \argmin_t \max_e \widehat{L}_e(\theta_t)$.
-    \item Compute interpolation barriers $B(t,a)$ using Eq.~\eqref{eq:barrier}.
-    \item Form the candidate set $\cC$ by Eq.~\eqref{eq:candidates}.
-    \item Cache true-class probabilities $q_t(x,y)$ for all $(x,y)\in \cup_e \cV_e$ and $t\in \cC$.
-    \item Estimate the covariance matrix $C$ by Eq.~\eqref{eq:cov} and set $b_t=B(t,a)$.
-    \item Solve $w^\star \in \argmin_{w\in\Delta^{|\cC|}} J(w)$ by projected subgradient descent.
-    \item Output the single soup $\theta_{\mathrm{D\text{-}COLA}} = \sum_{t\in \cC} w_t^\star \theta_t$.
-\end{enumerate}
-\end{minipage}
-}
-\caption{Implementation summary of D-COLA.}
+\begin{algorithm}[t]
+\caption{\dcola{}}
 \label{alg:dcola}
+\begin{algorithmic}[1]
+\Require Dense checkpoint bank \(\Theta_K\), source validation splits \(\{\cV_e\}_{e=1}^{E}\), thresholds \(\epsilon,\tau\), penalty coefficients \(\lambda_{\mathrm{cov}}, \lambda_{\mathrm{loc}}, \lambda_{\mathrm{ent}}\)
+\State Compute \(\widehat L_e(\theta_t)\) for all \(e,t\)
+\State Set anchor \(a \leftarrow \argmin_t \widehat L_{\max}(\theta_t)\)
+\State Compute barriers \(B(t,a)\) by Eq.~\eqref{eq:barrier}
+\State Form candidate set \(\cC\) by Eq.~\eqref{eq:candidates}
+\State Cache \(q_{e,j,t}=p_{\theta_t}(y_{e,j}\mid x_{e,j})\) for all \(e,j,t\in\cC\)
+\State Build domain conflict matrices \(C_e\) and aggregate \(C\)
+\State Run projected subgradient descent on \(J(w)\) over \(\simplex^{|\cC|}\)
+\State Return the averaged iterate \(\bar w\) and output \(\theta_{\dcola} = \sum_{t\in\cC} \bar w_t \theta_t\)
+\end{algorithmic}
+\end{algorithm}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/dcola_surrogate_panels.pdf}
+    \caption{\textbf{From ideal principle to practical surrogate.} The theory starts with a robust source-domain fit term, a hidden-shift conflict term, and a mergeability remainder. The implementation then instantiates those ideas on a retained family using a predictive-mixture surrogate, a covariance penalty, and an anchor-relative locality proxy.}
+    \label{fig:steps}
 \end{figure}
 
 \section{Theory}
 \label{sec:theory}
-This section connects D-COLA to first principles. The broad logic is: SWAD's theorem motivates robust source-domain flatness; DiWA's analysis motivates covariance and locality control; D-COLA combines these insights in a single post-hoc objective.
 
-\subsection{Worst-domain robust risk}
-For $\gamma>0$, define the robust empirical loss on source domain $e$ by
+All theorem statements in this section are explicitly \emph{fixed-family}: they hold after a retained family \(\cC\) has been chosen. This is the theorem-bearing subproblem solved by the practical weighting stage. The anchor, epsilon prefilter, and barrier-screening rules in Section~\ref{subsec:heuristics} are implementation heuristics that instantiate the retained family in the current system.
+
+\subsection{Local hidden-shift sensitivity and the conflict term}
+
+For each domain \(e\), define the checkpoint-loss matrix
 \[
-\emp_e^\gamma(\theta)
-=
-\max_{\norm{\Delta}\le \gamma} \emp_e(\theta+\Delta).
-\]
-We also define the robust source-mixture loss and robust worst-domain loss:
-\[
-\emp_{\mathrm{mix}}^\gamma(\theta)
-=
-\frac{1}{E}\sum_{e=1}^E \emp_e^\gamma(\theta),
+L_e \in \RR^{n\times |\cC|},
 \qquad
-\emp_{\max}^\gamma(\theta)
-=
-\max_{1\le e\le E}\emp_e^\gamma(\theta).
+(L_e)_{j,t} = -\log q_{e,j,t}.
 \]
-The next theorem is a direct extension of SWAD's main bound.
-
-\begin{theorem}[Worst-domain robust-risk bound]
-\label{thm:worstbound}
-Assume the same setting as SWAD's Theorem 1: $\Theta$ is covered by sets $\set{\Theta_k}_{k=1}^N$ with $N=\lceil(\diam(\Theta)/\gamma)^d\rceil$, each $\Theta_k$ has VC dimension $v_k$, and each source domain contributes $n$ samples so that $m=nE$. Then, with probability at least $1-\delta$, every $\theta\in \Theta$ satisfies
-\begin{equation}
-    \risk_T(\theta)
-    \le
-    \emp_{\max}^\gamma(\theta)
-    + \frac{1}{2E}\sum_{e=1}^E \Div(\cD_e,\cT)
-    + \max_{1\le k\le N}
-    \sqrt{\frac{v_k\ln(m/v_k)+\ln(N/\delta)}{m}}.
-    \label{eq:worstbound}
-\end{equation}
-\end{theorem}
-
-\paragraph{Proof sketch.}
-SWAD proves Eq.~\eqref{eq:worstbound} with $\emp_{\mathrm{mix}}^\gamma(\theta)$ in place of $\emp_{\max}^\gamma(\theta)$. Since
-\[
-\emp_{\mathrm{mix}}^\gamma(\theta)
-=
-\frac{1}{E}\sum_{e=1}^E \emp_e^\gamma(\theta)
-\le
-\max_{1\le e\le E} \emp_e^\gamma(\theta)
-=
-\emp_{\max}^\gamma(\theta),
-\]
-the claimed inequality follows immediately. The full step-by-step proof is given in Appendix~\ref{app:proof_worstbound}.
-
-Theorem~\ref{thm:worstbound} does not say that minimizing worst-domain robust loss eliminates source-target divergence; it cannot. What it does say is that once the divergence term is uncontrollable, the cleanest controllable empirical term is a worst-domain robust source loss, not merely a validation-average window heuristic.
-
-\begin{theorem}[Worst-domain suboptimality certificate]
-\label{thm:suboptimality}
 Let
 \[
-\hat{\theta}_{\max}^\gamma \in \argmin_{\theta\in \Theta} \emp_{\max}^\gamma(\theta),
+u = \frac{1}{n}\one,
 \qquad
-\emp_{\mathrm{mix}}(\theta)=\frac{1}{E}\sum_{e=1}^E \emp_e(\theta).
+P_\perp = I - \frac{1}{n}\one\one^\top.
 \]
-Let $v$ be the VC dimension of $\Theta$. Under the same assumptions as Theorem~\ref{thm:worstbound}, with probability at least $1-\delta$,
-\begin{align}
-    \risk_T(\hat{\theta}_{\max}^\gamma) - \min_{\theta'\in\Theta}\risk_T(\theta')
-    &\le
-    \emp_{\max}^\gamma(\hat{\theta}_{\max}^\gamma)
-    -
-    \min_{\theta''\in\Theta}\emp_{\mathrm{mix}}(\theta'')
-    \nonumber \\
-    &\quad
-    +
-    \frac{1}{E}\sum_{e=1}^E \Div(\cD_e,\cT)
-    + c_1(\delta) + c_2(\delta),
-    \label{eq:suboptimality}
-\end{align}
-where
+For weights \(w\in\simplex^{|\cC|}\), the samplewise linear proxy losses are
 \[
-c_1(\delta)=\max_{1\le k\le N}\sqrt{\frac{v_k\ln(m/v_k)+\ln(2N/\delta)}{m}},
-\qquad
-c_2(\delta)=\sqrt{\frac{v\ln(m/v)+\ln(2/\delta)}{m}}.
+\ell_e(w)=L_e w \in \RR^n.
 \]
-\end{theorem}
+We interpret a hidden source slice inside domain \(e\) as a local reweighting of validation support mass:
+\[
+\alpha = u + \delta,
+\qquad
+\one^\top \delta = 0,
+\qquad
+\norm{\delta}_2 \le \rho_e.
+\]
 
-\paragraph{Interpretation.}
-Theorem~\ref{thm:suboptimality} is the worst-domain analogue of SWAD's theorem about robust risk minimization. It justifies D-COLA's anchor and worst-domain objective: if two checkpoints have similar average validation performance but one is substantially worse on a source minority domain, the theorem says that this imbalance can enlarge the controllable part of the target-risk certificate.
-
-\subsection{Why covariance and locality belong in the objective}
-The next proposition shows that the quadratic penalty in Eq.~\eqref{eq:objective} is not arbitrary.
-
-\begin{proposition}[Variance representation and positive semidefiniteness]
-\label{prop:psd}
-For any domain $e$ and any weight vector $w\in \Delta^{|\cC|}$,
+\begin{proposition}[Exact local hidden-shift identity]
+\label{prop:hidden_shift}
+For any domain \(e\) and any \(w\in\simplex^{|\cC|}\),
 \begin{equation}
-    \mathrm{Var}_{(x,y)\sim \mathrm{Unif}(\cV_e)}
-    \Big[\sum_{t\in \cC} w_t \ell_t^e(x,y)\Big]
-    =
-    w^\top C^e w.
-    \label{eq:psd}
+\sup_{\substack{\alpha=u+\delta\\ \one^\top\delta=0\\ \norm{\delta}_2\le \rho_e}}
+\alpha^\top \ell_e(w)
+=
+\frac{1}{n}\one^\top L_e w
+\;+\;
+\rho_e \norm{P_\perp L_e w}_2.
+\label{eq:exact_hidden_shift}
 \end{equation}
-Consequently each $C^e$ and their average $C$ are positive semidefinite.
 \end{proposition}
 
-\paragraph{Implication.}
-If a candidate set contains many nearly identical checkpoints, then $w^\top Cw$ remains large unless the optimizer concentrates on a small subset. The covariance term therefore removes a failure mode of SWAD: dense temporal checkpoints can be extremely redundant even when they are all locally flat.
-
-\subsection{Convexity and optimization}
-\begin{theorem}[Convexity of the D-COLA objective]
-\label{thm:convex}
-Assume $q_t(x,y)>0$ for every candidate checkpoint $t\in\cC$ and every validation sample $(x,y)\in \cup_e \cV_e$. Then the function $J$ in Eq.~\eqref{eq:objective} is convex on $\Delta^{|\cC|}$. If $\lambda_{\mathrm{ent}}>0$, then $J$ is strictly convex on the relative interior of the simplex.
-\end{theorem}
-
-\paragraph{Proof sketch.}
-For a fixed sample $(x,y)$, the map $w\mapsto \sum_t w_t q_t(x,y)$ is affine and positive, while $u\mapsto -\log u$ is convex on $(0,\infty)$. Thus each sample loss in Eq.~\eqref{eq:ensloss} is convex in $w$, and averaging over samples preserves convexity. The maximum over source domains is convex. By Proposition~\ref{prop:psd}, the quadratic form $w^\top Cw$ is convex. The locality term is linear, and the entropy regularizer $\sum_t w_t\log w_t$ is convex, with strict convexity on the simplex interior. Appendix~\ref{app:proof_convex} gives the complete proof.
-
-\begin{theorem}[Projected subgradient convergence]
-\label{thm:convergence}
-Let $w^\star$ be a minimizer of $J$ over $\Delta^{|\cC|}$. Suppose projected subgradient descent generates
-\[
-w^{k+1} = \Pi_{\Delta^{|\cC|}}\!\big(w^k - \eta g^k\big),
-\qquad
-g^k \in \partial J(w^k),
-\]
-and that $\norm{g^k}_2 \le G$ for all $k$. Then the Ces\`aro average $\bw^K = \frac{1}{K}\sum_{k=1}^K w^k$ satisfies
 \begin{equation}
-    J(\bw^K)-J(w^\star)
-    \le
-    \frac{\norm{w^1-w^\star}_2^2}{2\eta K} + \frac{\eta G^2}{2}.
-    \label{eq:convergence}
+C_e
+:=
+\frac{1}{n-1}L_e^\top P_\perp L_e
+\in
+\RR^{|\cC|\times |\cC|},
+\qquad
+C := \frac{1}{E}\sum_{e=1}^{E} C_e.
+\label{eq:aggregate_conflict}
 \end{equation}
-Choosing $\eta = \norm{w^1-w^\star}_2/(G\sqrt{K})$ yields the standard $O(K^{-1/2})$ rate.
-\end{theorem}
 
-Theorem~\ref{thm:convergence} matters practically because D-COLA's second stage is intended to be cheap and robust. It does not require retraining, bilevel optimization, or target-domain assumptions. Once the cached predictions and barriers are available, optimization lives in the low-dimensional simplex over candidate checkpoints.
+\begin{proposition}[Variance representation of conflict]
+\label{prop:variance_representation}
+For every domain \(e\) and every \(w\in \simplex^{|\cC|}\),
+\begin{equation}
+w^\top C_e w
+=
+\operatorname{Var}_{j\sim \mathrm{Unif}(\{1,\dots,n\})}
+\Big[
+\sum_{t\in\cC} w_t (L_e)_{j,t}
+\Big].
+\label{eq:variance_representation}
+\end{equation}
+Consequently,
+\begin{equation}
+\norm{P_\perp L_e w}_2
+=
+\sqrt{(n-1)\,w^\top C_e w}.
+\label{eq:centered_norm_covariance}
+\end{equation}
+\end{proposition}
 
-\subsection{From predictive mixtures to a single soup}
-D-COLA optimizes a predictive-mixture objective but outputs a weight soup. The next theorem quantifies the approximation gap.
+\begin{proposition}[Pairwise covariance decomposition]
+\label{prop:pairwise_covariance}
+For every domain \(e\) and every \(w\in\simplex^{|\cC|}\),
+\begin{equation}
+w^\top C_e w
+=
+\sum_{t\in\cC} w_t^2 \operatorname{Var}\!\big[(L_e)_{J,t}\big]
++
+2\sum_{\substack{s,t\in\cC\\ s<t}} w_s w_t \operatorname{Cov}\!\big[(L_e)_{J,s}, (L_e)_{J,t}\big],
+\label{eq:pairwise_covariance}
+\end{equation}
+where \(J\) is uniform on \(\{1,\dots,n\}\).
+\end{proposition}
 
-\begin{assumption}[Second-order locality]
-\label{ass:locality}
-For every validation input $x$, the probability map $\psi_x(\theta)=p_\theta(\cdot\mid x)$ is twice continuously differentiable on the convex hull of candidate checkpoints, and there exists $\beta(x)\ge 0$ such that for every $\theta,\theta'$ in that hull,
+\begin{corollary}[Quadratic majorizer of hidden-shift sensitivity]
+\label{cor:young}
+Fix \(\eta>0\). Then for every \(w\in\simplex^{|\cC|}\),
+\begin{equation}
+\lambda_{\mathrm{sh}}\sqrt{w^\top Cw}
+\le
+\frac{\lambda_{\mathrm{sh}}^2}{2\eta}
++
+\frac{\eta}{2}\,w^\top Cw.
+\label{eq:young_majorizer}
+\end{equation}
+\end{corollary}
+
+\subsection{Mergeability remainder and the locality term}
+
+\begin{assumption}[Second-order predictive smoothness]
+\label{ass:smooth}
+For every input \(x\), the probability map \(\psi_x(\theta)=p_\theta(\cdot\mid x)\) is twice continuously differentiable on \(\mathrm{conv}\braces{\theta_t:t\in\cC}\). There exists \(\beta(x)\ge 0\) such that for all \(\theta,\theta'\) in that hull,
 \[
 \norm{
-\psi_x(\theta')
--\psi_x(\theta)
--\nabla \psi_x(\theta)(\theta'-\theta)
+\psi_x(\theta')-\psi_x(\theta)-\nabla\psi_x(\theta)(\theta'-\theta)
 }_1
 \le
 \frac{\beta(x)}{2}\norm{\theta'-\theta}_2^2.
 \]
 \end{assumption}
 
-\begin{theorem}[Soup-mixture approximation]
-\label{thm:soupmix}
-Assume Assumption~\ref{ass:locality}. For any $w\in \Delta^{|\cC|}$, let $\btheta_w=\sum_{t\in \cC} w_t\theta_t$ and define the predictive mixture
+\begin{assumption}[Confidence floor]
+\label{ass:conf_floor}
+There exists \(\eta_p>0\) such that for every domain \(e\), validation sample \(z_{e,j}\), and feasible soup weight vector \(w\),
 \[
-\bar{\psi}_w(x)=\sum_{t\in \cC} w_t \psi_x(\theta_t).
+p_{\thetaw}(y_{e,j}\mid x_{e,j}) \ge \eta_p,
+\qquad
+\sum_{t\in\cC} w_t q_{e,j,t}\ge \eta_p.
 \]
-Then for every validation sample $(x,y)$,
+\end{assumption}
+
+\begin{theorem}[Soup-versus-mixture translation bound]
+\label{thm:soup_mix}
+Under Assumptions~\ref{ass:smooth} and \ref{ass:conf_floor}, for every domain \(e\) and every \(w\in \simplex^{|\cC|}\),
 \begin{equation}
-    \norm{\psi_x(\btheta_w)-\bar{\psi}_w(x)}_1
-    \le
-    \frac{\beta(x)}{2}
-    \sum_{t\in \cC} w_t \norm{\theta_t-\btheta_w}_2^2.
-    \label{eq:vectorbound}
+\abs{
+\widehat L_e(\thetaw)-\widehat L_e^{\mathrm{ens}}(w)
+}
+\le
+\frac{\bar\beta_e}{2\eta_p}
+\sum_{t\in\cC} w_t \norm{\theta_t-\thetaw}_2^2,
+\label{eq:soup_mix_bound}
 \end{equation}
-If, in addition, both $\psi_x(\btheta_w)_y$ and $\bar{\psi}_w(x)_y$ are at least $\eta>0$, then
-\begin{equation}
-    \abs{
-    \CE\!\big(\psi_x(\btheta_w),y\big)
-    -
-    \CE\!\big(\bar{\psi}_w(x),y\big)
-    }
-    \le
-    \frac{\beta(x)}{2\eta}
-    \sum_{t\in \cC} w_t \norm{\theta_t-\btheta_w}_2^2.
-    \label{eq:celossbound}
-\end{equation}
+where
+\[
+\bar\beta_e = \frac{1}{n}\sum_{j=1}^{n}\beta(x_{e,j}).
+\]
 \end{theorem}
 
-The bound shows exactly why locality matters. The predictive mixture optimized by D-COLA is a good proxy for the final soup when the weighted second moment around the soup is small. The connected-valley filter and locality penalty are designed to keep that quantity controlled.
+\begin{remark}[Barrier scores as a practical mergeability proxy]
+\label{rem:barrier_proxy}
+Theorem~\ref{thm:soup_mix} controls the mergeability remainder \(M(w)\) by a weighted second moment of checkpoint-to-soup distances. The implementation does not evaluate that quantity directly. Instead it uses interpolation barriers \(b_t=B(t,a)\) as an operational proxy for mergeability and as a family-construction diagnostic. This is a modeling choice, not a theorem.
+\end{remark}
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.78\textwidth]{figures/loss_landscape_3d.pdf}
-    \caption{Corner-view 3D schematic of the loss landscape. The anchor and retained candidate checkpoints lie inside one connected valley. A uniform interval soup can drift toward a worse point if it averages too broadly, whereas D-COLA biases the soup toward a lower-loss location by combining worst-domain selection with locality-aware weighting. This is an illustrative geometry figure, not an empirical measurement.}
-    \label{fig:landscape3d}
-\end{figure}
-
-\subsection{Conditional domination over SWAD-style uniform averaging}
-The honest way to compare D-COLA to SWAD before running experiments is through a certificate theorem rather than an unconditional accuracy claim.
-
-\begin{assumption}[Transferable target-risk certificate]
-\label{ass:certificate}
-There exists a constant $\Xi\ge 0$ such that for every feasible $w\in \Delta^{|\cC|}$,
+\begin{assumption}[Direct family-level mergeability certificate]
+\label{ass:direct_mergeability}
+For the retained family \(\cC\), there exist nonnegative coefficients \(b_t\ge 0\) and a constant \(\Lambda>0\) such that every feasible \(w\in\simplex^{|\cC|}\) satisfies
 \begin{equation}
-    \risk_T(\btheta_w)
-    \le
-    J(w) + \Xi.
-    \label{eq:certificate}
+M(w)\le \Lambda\, b^\top w.
+\label{eq:direct_mergeability}
 \end{equation}
 \end{assumption}
 
-\begin{theorem}[No-worse certificate than any feasible uniform interval]
-\label{thm:domination}
-Assume Assumption~\ref{ass:certificate}. Let $w^\star$ minimize $J$ over $\Delta^{|\cC|}$. Then for any feasible comparator $u\in \Delta^{|\cC|}$,
+\subsection{The surrogate theorem}
+
+\begin{theorem}[D-COLA as a surrogate of fixed-family mergeable complementarity]
+\label{thm:surrogate}
+Assume Assumption~\ref{ass:direct_mergeability}. Fix \(\eta>0\). For every feasible \(w\in\simplex^{|\cC|}\),
 \begin{equation}
-    \risk_T(\theta_{\mathrm{D\text{-}COLA}})
-    =
-    \risk_T(\btheta_{w^\star})
-    \le
-    J(w^\star)+\Xi
-    \le
-    J(u)+\Xi.
-    \label{eq:domination}
-\end{equation}
-In particular, if a SWAD-style uniform interval average supported on $\cC$ is encoded by a feasible weight vector $u_{\mathrm{SWAD}}$, then
-\[
-\risk_T(\theta_{\mathrm{D\text{-}COLA}})
+\Phi(w)
 \le
-J(u_{\mathrm{SWAD}})+\Xi.
+\max_{1\le e\le E}\widehat L_e^{\mathrm{ens}}(w)
++
+\frac{\eta}{2}w^\top Cw
++
+\lambda_{\mathrm{mg}}\Lambda\, b^\top w
++
+\frac{\lambda_{\mathrm{sh}}^2}{2\eta}.
+\label{eq:surrogate_bound}
+\end{equation}
+Consequently, if \(\lambda_{\mathrm{cov}}=\eta/2\) and \(\lambda_{\mathrm{loc}}=\lambda_{\mathrm{mg}}\Lambda\), then the \dcola{} objective without entropy,
+\[
+J_0(w)=\max_e \widehat L_e^{\mathrm{ens}}(w)+\lambda_{\mathrm{cov}}w^\top Cw+\lambda_{\mathrm{loc}}b^\top w,
+\]
+upper-bounds the ideal mergeable-complementarity objective up to the additive constant \(\lambda_{\mathrm{sh}}^2/(2\eta)\).
+\end{theorem}
+
+\subsection{Convexity and optimization}
+
+\begin{assumption}[Positive cached probabilities]
+\label{ass:positive_probs}
+For every retained checkpoint \(t\in\cC\), domain \(e\), and validation sample \(z_{e,j}\), \(q_{e,j,t}>0\).
+\end{assumption}
+
+\begin{theorem}[Convexity of the practical objective]
+\label{thm:convex}
+Under Assumption~\ref{ass:positive_probs}, the \dcola{} objective \(J\) in Eq.~\eqref{eq:dcola_objective} is convex on \(\simplex^{|\cC|}\). If \(\lambda_{\mathrm{ent}}>0\), it is strictly convex on the relative interior of the simplex.
+\end{theorem}
+
+\begin{theorem}[Projected-subgradient convergence]
+\label{thm:convergence}
+Let \(w^\star\) minimize \(J\) over \(\simplex^{|\cC|}\). Suppose projected subgradient descent generates
+\[
+w^{k+1} = \proj_{\simplex^{|\cC|}}\paren{w^k-\eta g^k},
+\qquad
+g^k \in \partial J(w^k),
+\]
+and \(\norm{g^k}_2\le G\) for all \(k\). Then the Ces\`aro average \(\bar w^K=\frac{1}{K}\sum_{k=1}^{K}w^k\) satisfies
+\begin{equation}
+J(\bar w^K)-J(w^\star)
+\le
+\frac{\norm{w^1-w^\star}_2^2}{2\eta K}
++
+\frac{\eta G^2}{2}.
+\label{eq:convergence_rate}
+\end{equation}
+Choosing \(\eta=\norm{w^1-w^\star}_2/(G\sqrt{K})\) yields
+\[
+J(\bar w^K)-J(w^\star)\le \frac{\norm{w^1-w^\star}_2G}{\sqrt{K}}.
 \]
 \end{theorem}
 
-Theorem~\ref{thm:domination} does \emph{not} claim that D-COLA empirically dominates SWAD on all problems. It proves something more careful and more defensible: if the D-COLA objective is a valid upper certificate on the feasible region, then optimizing it cannot be worse, in certificate value, than restricting oneself to uniform interval rules.
+\subsection{Low-curvature faces, near-uniform weights, and the flatness limit}
+
+\begin{assumption}[Stable active domain on a face]
+\label{ass:active_face}
+Fix a support set \(S\subseteq \cC\). There exists a domain \(e^\star\) such that for every \(w\in \simplex^{|S|}\),
+\[
+\max_{1\le e\le E}\widehat L_e^{\mathrm{ens}}(w)=\widehat L_{e^\star}^{\mathrm{ens}}(w).
+\]
+\end{assumption}
+
+\begin{theorem}[Low-curvature face bound]
+\label{thm:face_bound}
+Fix a support set \(S\subseteq \cC\), and let \(J_{0,S}\) denote the restriction of \(J_0\) to \(\simplex^{|S|}\). Assume Assumptions~\ref{ass:conf_floor}, \ref{ass:positive_probs}, and \ref{ass:active_face} hold on that face. Then \(J_{0,S}\) has \(L_S\)-Lipschitz gradient on the relative interior of \(\simplex^{|S|}\) with
+\begin{equation}
+L_S \le \frac{|S|}{\eta_p^2} + 2\lambda_{\mathrm{cov}}\norm{C_{SS}}_2.
+\label{eq:face_lipschitz}
+\end{equation}
+If \(w_S^\star\in \mathrm{ri}(\simplex^{|S|})\) minimizes \(J_{0,S}\) and \(u_S\) is the uniform distribution on \(S\), then
+\begin{equation}
+J_{0,S}(u_S)-J_{0,S}(w_S^\star)
+\le
+\frac{L_S}{2}\norm{u_S-w_S^\star}_2^2.
+\label{eq:uniform_face_gap}
+\end{equation}
+\end{theorem}
+
+\begin{remark}[Flatness as the low-conflict, low-remainder regime]
+\label{rem:flatness}
+When a retained face of the simplex lies inside a highly mergeable valley, the family-level remainder \(M(w)\) is small, the conflict matrix \(C_{SS}\) is nearly null, and the face curvature bound in Theorem~\ref{thm:face_bound} is small. In that regime, uniform averaging on the face is near-optimal. This is the precise sense in which flatness becomes a limiting case of the larger mergeable-complementarity framework rather than a competing theory.
+\end{remark}
 
 \begin{figure}[t]
     \centering
-    \begin{minipage}[t]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/valley_geometry.pdf}
-        
-        (a) Connected-valley intuition.
-        \label{fig:valley}
-    \end{minipage}
-    \hfill
-    \begin{minipage}[t]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{figures/certificate_terms.pdf}
-        
-        (b) How the D-COLA certificate decomposes.
-        \label{fig:certificate}
-    \end{minipage}
-    \caption{Why D-COLA adds locality and covariance to worst-domain fit. Left: averaging across a barrier can leave the low-loss basin. Right: the target-risk certificate is modeled as worst-domain fit plus redundancy and locality penalties, up to constants not controllable without target labels.}
-    \label{fig:theoryfigs}
+    \includegraphics[width=\linewidth]{figures/dcola_2d_principle.pdf}
+    \caption{\textbf{Beyond flatness in two dimensions.} Left: if the checkpoint region is flat, conflict-free, and fully mergeable, many mixtures are nearly equivalent and uniform averaging is sufficient. Right: if checkpoints remain mergeable but exhibit different domain-conditioned error profiles, the useful object is no longer flatness alone but \emph{mergeable complementarity}.}
+    \label{fig:principle}
 \end{figure}
 
-\section{Experimental Protocol and Prior Published Results}
-\label{sec:experiments}
-This section serves two purposes. First, it specifies the exact evaluation plan needed to test D-COLA fairly. Second, it records the published baseline numbers that D-COLA must beat to matter in 2026. All new D-COLA results are intentionally left blank.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/dcola_hidden_shift.pdf}
+    \caption{\textbf{What the covariance term is measuring.} Each checkpoint induces a samplewise validation-loss profile inside each source domain. When two checkpoints fail on the same hidden slice, their centered profiles are aligned and the conflict penalty stays large. When they cover different slices, their profiles are complementary and the weighted variance term drops.}
+    \label{fig:hidden_shift}
+\end{figure}
 
-\subsection{Planned protocol}
-We will follow the DomainBed evaluation protocol \citep{gulrajani2021domainbed} on PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet, using source-domain validation only for post-hoc selection. The primary comparison will be against ERM, SWAD, moving-average baselines, and DiWA under the same backbone and initialization regime. The main settings to evaluate are:
-\begin{itemize}
-    \item \textbf{Backbone and training.} ResNet-50, standard DomainBed ERM training, dense checkpoint saving.
-    \item \textbf{Primary metrics.} Average OOD accuracy across held-out domains, per-dataset OOD accuracy, and IID validation/test accuracy where applicable.
-    \item \textbf{Ablations.} Remove the worst-domain anchor, remove the covariance penalty, remove the locality filter, replace learned weights with uniform weights on $\cC$, and compare against SWAD's contiguous interval.
-    \item \textbf{Diagnostics.} Candidate-set size, barrier statistics, validation-risk trajectories, covariance spectra, and soup-versus-ensemble agreement.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/dcola_noncontiguity.pdf}
+    \caption{\textbf{Why noncontiguity can matter.} Contiguous windows are a time-based proxy. The mergeable-complementarity view says the actual object is error-structure coverage inside a mergeable region, so the best checkpoints need not be adjacent along training time.}
+    \label{fig:noncontiguity}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/dcola_3d_basin.pdf}
+    \caption{\textbf{Corner-view 3D intuition.} The final object is one single soup inside a connected valley. Barrier filtering enforces mergeability, the covariance term prefers checkpoints that cancel different failure directions, and the final soup lies inside the compatible region instead of averaging blindly across the bank.}
+    \label{fig:3d}
+\end{figure}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.86\linewidth]{figures/dcola_simplex_face.pdf}
+    \caption{\textbf{Why exact weights can matter less than finding the right face.} Once the selected checkpoints lie on a low-curvature, low-conflict face of the simplex, a large region of weights can have nearly identical objective value. This is why support discovery can matter more than precise coefficient tuning.}
+    \label{fig:simplex}
+\end{figure}
+
+\section{Experimental Protocol and Published Benchmark Context}
+\label{sec:experiments}
+
+The goal of this section is not to report \dcola{} numbers. Those remain intentionally blank. The goal is to define the protocol and the published benchmark context that any final empirical version of this paper must respect.
+
+\subsection{Planned evaluation protocol}
+
+The intended benchmark is DomainBed \citep{gulrajani2021domainbed} on PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet. The primary training pipeline is standard \erm{} with dense checkpoint saving. The post-hoc selector uses only labeled source-domain validation data. The required ablations are:
+\begin{itemize}[leftmargin=1.3em]
+    \item remove worst-domain anchoring,
+    \item remove covariance control,
+    \item remove barrier filtering,
+    \item remove the barrier-weight penalty while keeping the filter,
+    \item replace optimized weights with uniform weights on the same retained support,
+    \item compare against \swad{} and current post-hoc averaging baselines under the same backbone and data split.
 \end{itemize}
 
-\subsection{Published results that define the bar}
-Table~\ref{tab:published} collects the exact published numbers available in the local SWAD and DiWA sources. Two observations matter immediately. First, beating SWAD's $66.9$ is necessary but no longer sufficient. Second, a serious post-hoc method now has to contend with the broader weight-averaging family, where DiWA with linear probing reports $68.0$ average accuracy.
+\subsection{Published numbers that define the bar}
 
 \begin{table}[t]
     \centering
-    \caption{Published DomainBed accuracies ($\%$) from SWAD and DiWA sources. Numbers are copied from the original tables available in the local literature directory. `LP' denotes linear-probe initialization reported by DiWA.}
-    \label{tab:published}
+    \caption{Exact published DomainBed accuracies (\%) from \swad{} and \diwa{} sources. `LP' denotes the linear-probe initialization reported by \diwa{}. These are benchmark-context numbers only; no new \dcola{} results are reported here.}
+    \label{tab:published_context}
     \small
-    \resizebox{\textwidth}{!}{%
+    \adjustbox{width=\textwidth}{%
     \begin{tabular}{lllcccccc}
         \toprule
-        Regime & Method & Selection & PACS & VLCS & OfficeHome & TerraInc. & DomainNet & Avg. \\
+        Setting & Method & Weight selection & PACS & VLCS & OfficeHome & TerraInc. & DomainNet & Avg. \\
         \midrule
-        Random & ERM & N/A & 85.5 & 77.5 & 66.5 & 46.1 & 40.9 & 63.3 \\
-        Random & SWAD & Overfit-aware & 88.1 & 79.1 & 70.6 & 50.0 & 46.5 & 66.9 \\
+        Random & \erm{} & N/A & 85.5 & 77.5 & 66.5 & 46.1 & 40.9 & 63.3 \\
+        Random & \swad{} & Overfit-aware & 88.1 & 79.1 & 70.6 & 50.0 & 46.5 & 66.9 \\
         Random & MA & Uniform & 87.5 & 78.2 & 70.6 & 50.3 & 46.0 & 66.5 \\
-        Random & ENS & Uniform ($M{=}20$) & 88.0 & 78.7 & 70.5 & 51.0 & 47.4 & 67.1 \\
-        Random & DiWA & Restricted ($M{\le}20$) & 87.9 & 79.2 & 70.5 & 50.5 & 46.7 & 67.0 \\
-        Random & DiWA$^\dagger$ & Uniform ($M{=}60$) & 89.0 & 79.4 & 71.6 & 49.0 & 46.3 & 67.1 \\
+        Random & ENS & Uniform (\(M{=}20\)) & 88.0 & 78.7 & 70.5 & 51.0 & 47.4 & 67.1 \\
+        Random & \diwa{} & Restricted (\(M{\le}20\)) & 87.9 & 79.2 & 70.5 & 50.5 & 46.7 & 67.0 \\
+        Random & \diwa{}\(^{\dagger}\) & Uniform (\(M{=}60\)) & 89.0 & 79.4 & 71.6 & 49.0 & 46.3 & 67.1 \\
         \midrule
-        LP & ERM & N/A & 85.9 & 78.1 & 69.4 & 50.4 & 44.3 & 65.6 \\
+        LP & \erm{} & N/A & 85.9 & 78.1 & 69.4 & 50.4 & 44.3 & 65.6 \\
         LP & MA & Uniform & 87.8 & 78.5 & 71.5 & 51.4 & 46.6 & 67.1 \\
-        LP & ENS & Uniform ($M{=}20$) & 88.1 & 78.5 & 71.7 & 50.8 & 47.0 & 67.2 \\
-        LP & DiWA & Restricted ($M{\le}20$) & 88.0 & 78.5 & 71.5 & 51.6 & 47.7 & 67.5 \\
-        LP & DiWA & Uniform ($M{=}20$) & 88.7 & 78.4 & 72.1 & 51.4 & 47.4 & 67.6 \\
-        LP & DiWA$^\dagger$ & Uniform ($M{=}60$) & 89.0 & 78.6 & 72.8 & 51.9 & 47.7 & 68.0 \\
+        LP & ENS & Uniform (\(M{=}20\)) & 88.1 & 78.5 & 71.7 & 50.8 & 47.0 & 67.2 \\
+        LP & \diwa{} & Restricted (\(M{\le}20\)) & 88.0 & 78.5 & 71.5 & 51.6 & 47.7 & 67.5 \\
+        LP & \diwa{} & Uniform (\(M{=}20\)) & 88.7 & 78.4 & 72.1 & 51.4 & 47.4 & 67.6 \\
+        LP & \diwa{}\(^{\dagger}\) & Uniform (\(M{=}60\)) & 89.0 & 78.6 & 72.8 & 51.9 & 47.7 & 68.0 \\
         \bottomrule
-    \end{tabular}
+    \end{tabular}%
     }
 \end{table}
 
-SWAD also reports an important single-trajectory ablation on PACS and VLCS: its full method reaches $83.0$ average OOD accuracy and $91.9$ average IID accuracy, compared with $82.2$ and $91.7$ for the version without dense sampling, and $82.4$ and $91.8$ for the version without overfit-aware end selection \citep{cha2021swad}. D-COLA should therefore be judged on both OOD and IID behavior, not OOD alone.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/prior_published_results.pdf}
-    \caption{Published average DomainBed accuracies from prior post-hoc averaging methods. The bar to beat is no longer only SWAD's $66.9$; the strongest nearby published target in the local sources is DiWA with LP initialization at $68.0$.}
-    \label{fig:priorbar}
-\end{figure}
-
 \section{Results}
 \label{sec:results}
-\subsection{Main DomainBed results}
-\textbf{TBD.} This section will report the primary OOD benchmark table for D-COLA under the exact protocol described in Section~\ref{sec:experiments}. The table should include per-dataset accuracy on PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet, together with the average and standard errors across runs.
 
-\subsection{IID versus OOD trade-off}
-\textbf{TBD.} This section will quantify whether D-COLA improves both IID and OOD performance relative to SWAD, rather than merely redistributing accuracy across the two regimes.
+\subsection{Main benchmark results}
+\TBD{} This subsection will report the primary DomainBed table for \dcola{} under the protocol in Section~\ref{sec:experiments}, including per-dataset results and average accuracy.
 
-\subsection{Ablation studies}
-\textbf{TBD.} Planned ablations include anchor criterion, covariance penalty, locality filter, entropy regularization, and comparison against uniform weights on the same candidate set.
+\subsection{Worst-domain robustness}
+\TBD{} This subsection will report whether the worst-domain source-balance objective translates into stronger OOD behavior than average-domain selectors.
 
-\subsection{Soup-versus-ensemble agreement}
-\textbf{TBD.} This section will measure the empirical gap between the cached predictive mixture optimized in Eq.~\eqref{eq:jopt} and the final single-model soup in Eq.~\eqref{eq:finalsoup}, validating the locality theory in Section~\ref{sec:theory}.
+\subsection{Ablations}
+\TBD{} This subsection will report the anchor, covariance, barrier-filter, locality-penalty, and uniform-support ablations required to validate the mergeable-complementarity theory.
+
+\subsection{Soup-versus-mixture diagnostics}
+\TBD{} This subsection will report empirical measurements of the mergeability remainder \(M(w)\) and test whether low barrier cost really predicts a smaller soup-versus-mixture gap.
 
 \section{Discussion}
-The central claim of this paper is intentionally narrow. We do \emph{not} claim that D-COLA is already empirically superior to SWAD or DiWA. That would require experiments. What we do claim is that, given the current literature, SWAD's method-theory mismatch leaves a clean opening for a stronger post-hoc rule, and that D-COLA is a principled attempt to fill that opening.
 
-Three limitations are important.
-\begin{itemize}
-    \item The target-risk comparison theorem is conditional on Assumption~\ref{ass:certificate}. This is unavoidable without target labels. The contribution is therefore a certificate-improvement theorem, not a universal dominance theorem.
-    \item The soup-mixture approximation in Theorem~\ref{thm:soupmix} depends on a second-order smoothness condition and a confidence floor. These are standard locality assumptions in the weight-averaging literature, but they still need empirical validation in DG.
-    \item The covariance proxy is estimated from source-domain validation losses. If those source domains are too homogeneous, the covariance term may underrepresent the diversity required for true OOD robustness.
+The paper makes a deliberately narrow claim. It does not claim that \dcola{} already beats current post-hoc DG baselines; that remains an empirical question. It claims something more structural and more defensible:
+\begin{quote}
+The right theory object for post-hoc checkpoint soups is not flatness alone, but mergeable complementarity. \dcola{} is a practical surrogate for that object.
+\end{quote}
+
+This framing matters for three reasons.
+\begin{itemize}[leftmargin=1.3em]
+    \item It explains why barrier filtering and locality can matter in this implementation without pretending that flatness alone selects the right soup.
+    \item It explains why covariance reduction matters without drifting into pure diversity rhetoric that ignores averageability.
+    \item It clarifies the position of prior flatness-based methods: they are not wrong; they are the limiting regime where conflict and mergeability remainder are already negligible.
 \end{itemize}
 
-These limitations suggest a concrete experimental agenda rather than a dead end. The most important empirical questions are whether worst-domain anchoring improves minority-source robustness, whether the covariance penalty reduces redundant checkpoint mass, and whether the barrier filter materially improves soup-versus-ensemble agreement.
+Three limitations are immediate.
+\begin{itemize}[leftmargin=1.3em]
+    \item The rigorous contribution lives on a retained family \(\cC\). The anchor, epsilon prefilter, and barrier-screening stages of the implementation are motivated by the same principle, but they are not theorem-derived consequences of it.
+    \item The conflict derivation uses local source-supported hidden shifts inside the validation domains. This is principled and source-only, but it is still an approximation to unseen target structure and is exact only for the linear proxy \(L_e w\), not for the deployed soup loss.
+    \item The direct mergeability certificate \(M(w)\le \Lambda b^\top w\) is a conditional modeling assumption. Interpolation barriers are one plausible empirical proxy for that certificate, but not a universal one.
+\end{itemize}
 
 \section{Conclusion}
-D-COLA is a first-principles post-hoc alternative to SWAD. It keeps the operational simplicity that made SWAD compelling, but replaces uniform interval averaging with an explicit optimization over domain balance, covariance, and locality. The theory shows why these terms belong together, why the resulting optimization is tractable, and under what assumptions D-COLA enjoys a stronger certificate than SWAD-style uniform rules. The empirical results remain \texttt{TBD}, but the benchmark target is already clear: a publishable D-COLA implementation should improve on SWAD's $66.9$ and ideally challenge the broader $68.0$ class of post-hoc weight-averaging methods.
+
+\dcola{} is a post-hoc DG method, but the point of this rewrite is not merely to describe an algorithm. The point is to show that the algorithm can be understood as one coherent implementation of a larger theory. That theory is mergeable complementarity: combine checkpoints that cover different domain-conditioned failures, but only inside a family where one actual weight soup remains faithful to the predictive mixture. In this view, flatness is not discarded. It is explained as the low-conflict, low-remainder limit of the larger object. The honest scope is now explicit: the rigorous results concern the fixed-family weighting problem, and the current family-construction stages are operational heuristics motivated by the same theory. Whether the method ultimately clears the empirical bar remains a question for the \TBD{} sections. The theory, however, is now explicit, centralized, and falsifiable.
 
 \bibliographystyle{plainnat}
 \bibliography{d_cola_refs}
 
 \appendix
 
-\section{Additional Proofs and Details}
+\section{Proofs}
 
-\subsection{Proof of Theorem~\ref{thm:worstbound}}
-\label{app:proof_worstbound}
-We begin from SWAD's theorem, which states that under the same covering and VC assumptions, with probability at least $1-\delta$,
-\begin{equation}
-    \risk_T(\theta)
-    \le
-    \emp_{\mathrm{mix}}^\gamma(\theta)
-    + \frac{1}{2E}\sum_{e=1}^E \Div(\cD_e,\cT)
-    + \max_{1\le k\le N}
-    \sqrt{\frac{v_k\ln(m/v_k)+\ln(N/\delta)}{m}}
-    \label{eq:swadmain}
-\end{equation}
-for every $\theta\in\Theta$.
+\subsection{Proof of Proposition~\ref{prop:worst_domain_prior}}
 
-It remains to compare $\emp_{\mathrm{mix}}^\gamma$ and $\emp_{\max}^\gamma$.
-By definition,
-\begin{align}
-    \emp_{\mathrm{mix}}^\gamma(\theta)
-    &=
-    \frac{1}{E}\sum_{e=1}^E \emp_e^\gamma(\theta) \\
-    &\le
-    \frac{1}{E}\sum_{e=1}^E \emp_{\max}^\gamma(\theta)
-    \label{eq:mixlemax1} \\
-    &=
-    \emp_{\max}^\gamma(\theta),
-    \label{eq:mixlemax2}
-\end{align}
-where Eq.~\eqref{eq:mixlemax1} uses $\emp_e^\gamma(\theta)\le \max_j \emp_j^\gamma(\theta)$ for each $e$.
-Substituting Eq.~\eqref{eq:mixlemax2} into Eq.~\eqref{eq:swadmain} yields
+\begin{proof}
+For any \(\pi\in \simplex^{E}\),
 \[
-\risk_T(\theta)
+\sum_{e=1}^{E}\pi_e \widehat L_e^{\mathrm{ens}}(w)
 \le
-\emp_{\max}^\gamma(\theta)
-+ \frac{1}{2E}\sum_{e=1}^E \Div(\cD_e,\cT)
-+ \max_{1\le k\le N}
-\sqrt{\frac{v_k\ln(m/v_k)+\ln(N/\delta)}{m}},
-\]
-which is exactly Eq.~\eqref{eq:worstbound}. This proves Theorem~\ref{thm:worstbound}. \qed
-
-\subsection{Proof of Theorem~\ref{thm:suboptimality}}
-\label{app:proof_suboptimality}
-Let
-\[
-\theta_T^\star \in \argmin_{\theta\in\Theta}\risk_T(\theta).
-\]
-We upper-bound $\risk_T(\hat{\theta}_{\max}^\gamma)$ and lower-bound $\risk_T(\theta_T^\star)$ separately, then subtract.
-
-\paragraph{Step 1: upper bound on $\risk_T(\hat{\theta}_{\max}^\gamma)$.}
-Apply Theorem~\ref{thm:worstbound} with confidence parameter $\delta/2$. With probability at least $1-\delta/2$,
-\begin{equation}
-    \risk_T(\hat{\theta}_{\max}^\gamma)
-    \le
-    \emp_{\max}^\gamma(\hat{\theta}_{\max}^\gamma)
-    + \frac{1}{2E}\sum_{e=1}^E \Div(\cD_e,\cT)
-    + c_1(\delta),
-    \label{eq:upperhat}
-\end{equation}
-where
-\[
-c_1(\delta)=\max_{1\le k\le N}\sqrt{\frac{v_k\ln(m/v_k)+\ln(2N/\delta)}{m}}.
-\]
-
-\paragraph{Step 2: lower bound on the target optimum.}
-Define the source-mixture population risk
-\[
-\risk_{\mathrm{mix}}(\theta)=\frac{1}{E}\sum_{e=1}^E \risk_e(\theta).
-\]
-For each source domain $e$, the same bounded-loss argument used in DG generalization bounds gives
-\[
-\abs{\risk_e(\theta)-\risk_T(\theta)} \le \frac{1}{2}\Div(\cD_e,\cT).
-\]
-Averaging over $e$ yields
-\begin{equation}
-    \risk_T(\theta)
-    \ge
-    \risk_{\mathrm{mix}}(\theta)
-    - \frac{1}{2E}\sum_{e=1}^E \Div(\cD_e,\cT).
-    \label{eq:mix_to_target}
-\end{equation}
-
-Next, apply uniform convergence on the source-mixture class with confidence parameter $\delta/2$. With probability at least $1-\delta/2$, simultaneously for all $\theta\in\Theta$,
-\begin{equation}
-    \risk_{\mathrm{mix}}(\theta)
-    \ge
-    \emp_{\mathrm{mix}}(\theta)-c_2(\delta),
-    \label{eq:uniformmix}
-\end{equation}
-where
-\[
-c_2(\delta)=\sqrt{\frac{v\ln(m/v)+\ln(2/\delta)}{m}}.
-\]
-Combining Eqs.~\eqref{eq:mix_to_target} and \eqref{eq:uniformmix} and evaluating at $\theta=\theta_T^\star$ gives
-\begin{align}
-    \risk_T(\theta_T^\star)
-    &\ge
-    \emp_{\mathrm{mix}}(\theta_T^\star)
-    - \frac{1}{2E}\sum_{e=1}^E \Div(\cD_e,\cT)
-    - c_2(\delta)
-    \nonumber \\
-    &\ge
-    \min_{\theta\in\Theta}\emp_{\mathrm{mix}}(\theta)
-    - \frac{1}{2E}\sum_{e=1}^E \Div(\cD_e,\cT)
-    - c_2(\delta).
-    \label{eq:lowertheta}
-\end{align}
-
-\paragraph{Step 3: subtract the two bounds.}
-When both high-probability events hold, subtract Eq.~\eqref{eq:lowertheta} from Eq.~\eqref{eq:upperhat}:
-\begin{align}
-    \risk_T(\hat{\theta}_{\max}^\gamma)-\risk_T(\theta_T^\star)
-    &\le
-    \emp_{\max}^\gamma(\hat{\theta}_{\max}^\gamma)
-    - \min_{\theta\in\Theta}\emp_{\mathrm{mix}}(\theta)
-    \nonumber \\
-    &\quad
-    + \frac{1}{E}\sum_{e=1}^E \Div(\cD_e,\cT)
-    + c_1(\delta)+c_2(\delta).
-    \label{eq:subtractionstep}
-\end{align}
-Finally, $\risk_T(\theta_T^\star)=\min_{\theta'}\risk_T(\theta')$, so Eq.~\eqref{eq:subtractionstep} is exactly Eq.~\eqref{eq:suboptimality}. By the union bound, both events hold with probability at least $1-\delta$. This proves Theorem~\ref{thm:suboptimality}. \qed
-
-\subsection{Proof of Proposition~\ref{prop:psd}}
-\label{app:proof_psd}
-Fix a domain $e$ and define the centered random vector
-\[
-z^e(x,y)
+\max_{1\le e\le E}\widehat L_e^{\mathrm{ens}}(w)
+\cdot \sum_{e=1}^{E}\pi_e
 =
-\big(
-\ell_1^e(x,y)-\bar{\ell}_1^e,\dots,\ell_{|\cC|}^e(x,y)-\bar{\ell}_{|\cC|}^e
-\big)^\top.
+\max_{1\le e\le E}\widehat L_e^{\mathrm{ens}}(w).
 \]
-By definition of covariance,
+Equality is attained by taking \(\pi\) to be any vertex of \(\simplex^{E}\) supported on an index \(e^\star\in\arg\max_e \widehat L_e^{\mathrm{ens}}(w)\).
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:hidden_shift}}
+
+\begin{proof}
+Fix a domain \(e\) and weights \(w\in\simplex^{|\cC|}\). For any admissible perturbation \(\delta\) with \(\one^\top\delta=0\),
 \[
-C^e = \E\bracks{z^e(z^e)^\top},
+\delta^\top \ell_e(w)
+=
+\delta^\top P_\perp \ell_e(w),
 \]
-where the expectation is with respect to the uniform empirical distribution over $\cV_e$.
-For any $w\in \Delta^{|\cC|}$,
-\begin{align}
-    w^\top C^e w
-    &=
-    w^\top \E\bracks{z^e(z^e)^\top} w \\
-    &=
-    \E\bracks{w^\top z^e(z^e)^\top w} \\
-    &=
-    \E\bracks{\big(w^\top z^e\big)^2} \\
-    &=
-    \mathrm{Var}\Big(\sum_{t\in\cC} w_t \ell_t^e(x,y)\Big),
-\end{align}
-because $w^\top z^e$ is exactly the centered weighted loss.
-Since a variance is always nonnegative, $w^\top C^e w\ge 0$ for every $w$, so $C^e$ is positive semidefinite.
-An average of positive semidefinite matrices remains positive semidefinite, hence $C=\frac{1}{E}\sum_e C^e$ is also positive semidefinite. \qed
+because \(P_\perp\) is the orthogonal projector onto the subspace orthogonal to \(\one\). Therefore
+\[
+\sup_{\substack{\one^\top\delta=0\\ \norm{\delta}_2\le \rho_e}}
+\delta^\top \ell_e(w)
+=
+\sup_{\norm{\delta}_2\le \rho_e}\delta^\top P_\perp \ell_e(w).
+\]
+By Cauchy--Schwarz,
+\[
+\delta^\top P_\perp \ell_e(w)
+\le
+\norm{\delta}_2 \norm{P_\perp \ell_e(w)}_2
+\le
+\rho_e \norm{P_\perp \ell_e(w)}_2.
+\]
+Equality is attained when \(P_\perp \ell_e(w)\neq 0\) by choosing
+\[
+\delta^\star
+=
+\rho_e \frac{P_\perp \ell_e(w)}{\norm{P_\perp \ell_e(w)}_2}.
+\]
+If \(P_\perp \ell_e(w)=0\), both sides are zero. Since \(\alpha=u+\delta\),
+\[
+\sup_{\alpha}\alpha^\top \ell_e(w)
+=
+\frac{1}{n}\one^\top \ell_e(w) + \rho_e \norm{P_\perp \ell_e(w)}_2.
+\]
+Substituting \(\ell_e(w)=L_e w\) yields Eq.~\eqref{eq:exact_hidden_shift}.
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:variance_representation}}
+
+\begin{proof}
+Let \(\widetilde L_e = P_\perp L_e\). Then
+\[
+C_e = \frac{1}{n-1}\widetilde L_e^\top \widetilde L_e.
+\]
+For a uniformly sampled validation index \(J\in\braces{1,\dots,n}\),
+\[
+\operatorname{Var}\Big[\sum_t w_t (L_e)_{J,t}\Big]
+=
+\frac{1}{n-1}\sum_{j=1}^{n}\Big(\sum_t w_t (\widetilde L_e)_{j,t}\Big)^2
+=
+\frac{1}{n-1}\norm{\widetilde L_e w}_2^2
+=
+w^\top C_e w.
+\]
+This proves Eq.~\eqref{eq:variance_representation}. Since variances are nonnegative, \(C_e\succeq 0\); averaging preserves positive semidefiniteness. Finally,
+\[
+\norm{P_\perp L_e w}_2^2
+=
+\norm{\widetilde L_e w}_2^2
+=
+(n-1)w^\top C_e w.
+\]
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:pairwise_covariance}}
+
+\begin{proof}
+By Proposition~\ref{prop:variance_representation},
+\[
+w^\top C_e w
+=
+\operatorname{Var}\!\Big[\sum_{t\in\cC} w_t (L_e)_{J,t}\Big].
+\]
+Expanding the variance of a weighted sum gives
+\[
+\operatorname{Var}\!\Big[\sum_{t\in\cC} w_t (L_e)_{J,t}\Big]
+=
+\sum_{s,t\in\cC} w_s w_t \operatorname{Cov}\!\big[(L_e)_{J,s},(L_e)_{J,t}\big].
+\]
+Splitting diagonal and off-diagonal terms yields Eq.~\eqref{eq:pairwise_covariance}.
+\end{proof}
+
+\subsection{Proof of Corollary~\ref{cor:young}}
+
+\begin{proof}
+Set \(x=\sqrt{w^\top Cw}\). By Young's inequality \(ab\le a^2/(2\eta)+\eta b^2/2\),
+\[
+\lambda_{\mathrm{sh}}x
+\le
+\frac{\lambda_{\mathrm{sh}}^2}{2\eta}
++
+\frac{\eta x^2}{2}
+=
+\frac{\lambda_{\mathrm{sh}}^2}{2\eta}
++
+\frac{\eta}{2}w^\top Cw.
+\]
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:soup_mix}}
+
+\begin{proof}
+Fix domain \(e\), validation sample \((x,y)\), and weights \(w\). Let
+\[
+\bar\psi_w(x)=\sum_{t\in\cC} w_t p_{\theta_t}(\cdot\mid x).
+\]
+By Assumption~\ref{ass:smooth}, for each \(t\in\cC\),
+\[
+p_{\theta_t}(\cdot\mid x)
+=
+p_{\thetaw}(\cdot\mid x)
++
+\nabla p_{\thetaw}(\cdot\mid x)(\theta_t-\thetaw)
++
+r_t(x),
+\]
+with \(\norm{r_t(x)}_1 \le \frac{\beta(x)}{2}\norm{\theta_t-\thetaw}_2^2\). Summing against \(w_t\) cancels the first-order term because \(\sum_t w_t(\theta_t-\thetaw)=0\). Hence
+\[
+\norm{\bar\psi_w(x)-p_{\thetaw}(\cdot\mid x)}_1
+\le
+\sum_t w_t \norm{r_t(x)}_1
+\le
+\frac{\beta(x)}{2}\sum_t w_t \norm{\theta_t-\thetaw}_2^2.
+\]
+On the region where the true-class probability is at least \(\eta_p\), the map \(v\mapsto -\log v_y\) is \(1/\eta_p\)-Lipschitz in \(\ell_1\). Assumption~\ref{ass:conf_floor} therefore gives
+\[
+\abs{
+-\log p_{\thetaw}(y\mid x)
+-
+\Big(-\log \sum_t w_t q_{e,j,t}\Big)
+}
+\le
+\frac{\beta(x)}{2\eta_p}\sum_t w_t \norm{\theta_t-\thetaw}_2^2.
+\]
+Averaging over domain-\(e\) validation samples proves Eq.~\eqref{eq:soup_mix_bound}.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:surrogate}}
+
+\begin{proof}
+Starting from Eq.~\eqref{eq:ideal_objective}, apply Corollary~\ref{cor:young} to \(\lambda_{\mathrm{sh}}\sqrt{w^\top Cw}\) and Assumption~\ref{ass:direct_mergeability} to \(M(w)\). The claimed inequality follows by substitution.
+\end{proof}
 
 \subsection{Proof of Theorem~\ref{thm:convex}}
-\label{app:proof_convex}
-Fix one validation sample $(x,y)$ and define
-\[
-h_{x,y}(w) = -\log\Big(\sum_{t\in\cC} w_t q_t(x,y)\Big).
-\]
-Because each $q_t(x,y)>0$, the affine function
-\[
-a_{x,y}(w)=\sum_{t\in\cC} w_t q_t(x,y)
-\]
-takes values in $(0,\infty)$ on the simplex.
-The scalar function $\phi(u)=-\log u$ is convex on $(0,\infty)$ because
-\[
-\phi''(u)=\frac{1}{u^2}>0.
-\]
-Therefore $h_{x,y}=\phi\circ a_{x,y}$ is convex as the composition of a convex function with an affine map. Averaging over $(x,y)\in\cV_e$ preserves convexity, so each domain loss $\widehat{L}_e^{\mathrm{ens}}(w)$ is convex.
 
-Now consider the remaining terms.
-\begin{itemize}
-    \item The pointwise maximum $\max_e \widehat{L}_e^{\mathrm{ens}}(w)$ is convex because the maximum of convex functions is convex.
-    \item By Proposition~\ref{prop:psd}, $C$ is positive semidefinite, hence $w\mapsto w^\top Cw$ is convex.
-    \item The map $w\mapsto b^\top w$ is linear and therefore convex.
-    \item The map $w\mapsto \sum_t w_t\log w_t$ is convex on the simplex interior because each scalar function $u\mapsto u\log u$ has second derivative $1/u>0$ for $u>0$. Its standard continuous extension at $u=0$ by $u\log u=0$ preserves convexity on the closed simplex.
-\end{itemize}
-Since a nonnegative weighted sum of convex functions is convex, $J$ is convex.
-
-If $\lambda_{\mathrm{ent}}>0$, then the entropy term is strictly convex on the relative interior of the simplex, and adding it to other convex terms preserves strict convexity. Therefore $J$ is strictly convex on the simplex interior. This proves Theorem~\ref{thm:convex}. \qed
+\begin{proof}
+For each sample, \(w\mapsto \sum_t w_t q_{e,j,t}\) is affine and strictly positive. Since \(u\mapsto -\log u\) is convex, each samplewise predictive-mixture loss is convex in \(w\), and so is each domain mean. The maximum over domains is convex. Proposition~\ref{prop:variance_representation} gives \(C\succeq 0\), so \(w^\top Cw\) is convex. The locality term is linear. The entropy term \(\sum_t w_t\log w_t\) is convex on the simplex and strictly convex on its relative interior. Summing the terms yields the claim.
+\end{proof}
 
 \subsection{Proof of Theorem~\ref{thm:convergence}}
-\label{app:proof_convergence}
-Let $w^\star$ be any minimizer of $J$ over the simplex. Because Euclidean projection onto a closed convex set is nonexpansive,
-\begin{align}
-    \norm{w^{k+1}-w^\star}_2^2
-    &=
-    \norm{
-    \Pi_{\Delta^{|\cC|}}(w^k-\eta g^k)-\Pi_{\Delta^{|\cC|}}(w^\star)
-    }_2^2 \\
-    &\le
-    \norm{w^k-\eta g^k-w^\star}_2^2 \\
-    &=
-    \norm{w^k-w^\star}_2^2
-    -2\eta \inner{g^k}{w^k-w^\star}
-    +\eta^2\norm{g^k}_2^2.
-\end{align}
-Rearranging gives
-\begin{equation}
-    \inner{g^k}{w^k-w^\star}
-    \le
-    \frac{\norm{w^k-w^\star}_2^2-\norm{w^{k+1}-w^\star}_2^2}{2\eta}
-    +
-    \frac{\eta}{2}\norm{g^k}_2^2.
-    \label{eq:keysubgrad}
-\end{equation}
 
-Because $g^k\in\partial J(w^k)$, the subgradient inequality implies
+\begin{proof}
+Projection onto a closed convex set is nonexpansive:
 \[
-J(w^k)-J(w^\star) \le \inner{g^k}{w^k-w^\star}.
+\norm{w^{k+1}-w^\star}_2^2
+\le
+\norm{w^k-\eta g^k-w^\star}_2^2.
 \]
-Combining with Eq.~\eqref{eq:keysubgrad} and using $\norm{g^k}_2\le G$ gives
+Expanding the right-hand side and rearranging,
 \[
-J(w^k)-J(w^\star)
+\inner{g^k}{w^k-w^\star}
 \le
 \frac{\norm{w^k-w^\star}_2^2-\norm{w^{k+1}-w^\star}_2^2}{2\eta}
 +
-\frac{\eta G^2}{2}.
+\frac{\eta}{2}\norm{g^k}_2^2.
 \]
-Summing from $k=1$ to $K$ telescopes the squared-distance terms:
+The subgradient inequality gives
 \[
-\sum_{k=1}^K \big(J(w^k)-J(w^\star)\big)
+J(w^k)-J(w^\star)\le \inner{g^k}{w^k-w^\star}.
+\]
+Summing over \(k=1,\dots,K\) and using \(\norm{g^k}_2\le G\) yields
+\[
+\sum_{k=1}^{K}\big(J(w^k)-J(w^\star)\big)
 \le
 \frac{\norm{w^1-w^\star}_2^2}{2\eta}
 +
 \frac{\eta K G^2}{2}.
 \]
-By convexity of $J$,
+Convexity of \(J\) implies
 \[
-J(\bw^K)
-\le
-\frac{1}{K}\sum_{k=1}^K J(w^k).
-\]
-Therefore
-\[
-J(\bw^K)-J(w^\star)
-\le
-\frac{\norm{w^1-w^\star}_2^2}{2\eta K}
-+
-\frac{\eta G^2}{2},
-\]
-which is Eq.~\eqref{eq:convergence}. Setting $\eta=\norm{w^1-w^\star}_2/(G\sqrt{K})$ yields
-\[
-J(\bw^K)-J(w^\star)
-\le
-\frac{\norm{w^1-w^\star}_2G}{\sqrt{K}}.
-\]
-This proves Theorem~\ref{thm:convergence}. \qed
-
-\subsection{Proof of Theorem~\ref{thm:soupmix}}
-\label{app:proof_soupmix}
-Fix $w\in \Delta^{|\cC|}$ and $x$.
-Let $\btheta_w=\sum_t w_t\theta_t$.
-By Assumption~\ref{ass:locality}, for each candidate checkpoint $\theta_t$ there exists a remainder vector $r_t(x)$ such that
-\begin{equation}
-    \psi_x(\theta_t)
-    =
-    \psi_x(\btheta_w)
-    +
-    \nabla\psi_x(\btheta_w)(\theta_t-\btheta_w)
-    + r_t(x),
-    \label{eq:taylor}
-\end{equation}
-with
-\begin{equation}
-    \norm{r_t(x)}_1
-    \le
-    \frac{\beta(x)}{2}\norm{\theta_t-\btheta_w}_2^2.
-    \label{eq:remainder}
-\end{equation}
-Multiply Eq.~\eqref{eq:taylor} by $w_t$ and sum over $t\in\cC$:
-\begin{align}
-    \bar{\psi}_w(x)
-    &=
-    \sum_t w_t \psi_x(\theta_t) \\
-    &=
-    \sum_t w_t \psi_x(\btheta_w)
-    +
-    \sum_t w_t \nabla\psi_x(\btheta_w)(\theta_t-\btheta_w)
-    +
-    \sum_t w_t r_t(x).
-    \label{eq:sumtaylor}
-\end{align}
-Because $\sum_t w_t = 1$, the first sum equals $\psi_x(\btheta_w)$. Because
-\[
-\sum_t w_t (\theta_t-\btheta_w)= \sum_t w_t\theta_t-\btheta_w = 0,
-\]
-the second sum vanishes. Hence
-\[
-\bar{\psi}_w(x)-\psi_x(\btheta_w)=\sum_t w_t r_t(x).
-\]
-Applying the triangle inequality and Eq.~\eqref{eq:remainder},
-\begin{align}
-    \norm{\bar{\psi}_w(x)-\psi_x(\btheta_w)}_1
-    &\le
-    \sum_t w_t \norm{r_t(x)}_1 \\
-    &\le
-    \frac{\beta(x)}{2}\sum_t w_t \norm{\theta_t-\btheta_w}_2^2.
-\end{align}
-This proves Eq.~\eqref{eq:vectorbound}.
-
-For Eq.~\eqref{eq:celossbound}, let
-\[
-p = \psi_x(\btheta_w)_y,
+J(\bar w^K)\le \frac{1}{K}\sum_{k=1}^{K}J(w^k),
 \qquad
-\bar{p} = \bar{\psi}_w(x)_y.
+\bar w^K=\frac{1}{K}\sum_{k=1}^{K}w^k.
 \]
-By assumption, $p,\bar{p}\in[\eta,1]$. The scalar function $\phi(u)=-\log u$ has derivative magnitude $\abs{\phi'(u)}=1/u\le 1/\eta$ on $[\eta,1]$, so the mean value theorem gives
-\[
-\abs{\phi(p)-\phi(\bar{p})}\le \frac{1}{\eta}\abs{p-\bar{p}}.
-\]
-Since $\CE(\psi_x(\btheta_w),y)=-\log p$ and $\CE(\bar{\psi}_w(x),y)=-\log \bar{p}$,
-\begin{align}
-    \abs{
-    \CE(\psi_x(\btheta_w),y)-\CE(\bar{\psi}_w(x),y)
-    }
-    &\le
-    \frac{1}{\eta}\abs{p-\bar{p}} \\
-    &\le
-    \frac{1}{\eta}\norm{\psi_x(\btheta_w)-\bar{\psi}_w(x)}_1 \\
-    &\le
-    \frac{\beta(x)}{2\eta}\sum_t w_t \norm{\theta_t-\btheta_w}_2^2.
-\end{align}
-This proves Theorem~\ref{thm:soupmix}. \qed
+Dividing by \(K\) proves Eq.~\eqref{eq:convergence_rate}. The \(O(K^{-1/2})\) rate follows from the stated stepsize choice.
+\end{proof}
 
-\subsection{Proof of Theorem~\ref{thm:domination}}
-\label{app:proof_domination}
-Let $u\in \Delta^{|\cC|}$ be any feasible comparator.
-Because $w^\star$ minimizes $J$ on the feasible set,
-\[
-J(w^\star)\le J(u).
-\]
-By Assumption~\ref{ass:certificate},
-\[
-\risk_T(\btheta_{w^\star}) \le J(w^\star)+\Xi.
-\]
-Combining the two inequalities yields
-\[
-\risk_T(\btheta_{w^\star}) \le J(u)+\Xi.
-\]
-Since $\theta_{\mathrm{D\text{-}COLA}}=\btheta_{w^\star}$ by definition, Eq.~\eqref{eq:domination} follows immediately. \qed
+\subsection{Proof of Theorem~\ref{thm:face_bound}}
 
-\subsection{Additional experimental notes}
-\paragraph{What would count as a meaningful empirical win?}
-Given the published numbers in Table~\ref{tab:published}, a minimally interesting outcome is to exceed SWAD's $66.9$ while maintaining or improving IID behavior. A stronger conference-level outcome would challenge the $68.0$ regime represented by DiWA with LP initialization. Because D-COLA remains a single-model method, comparisons should report not only accuracy but also inference cost and checkpoint-storage cost.
+\begin{proof}
+Under Assumption~\ref{ass:active_face}, the restriction of \(J_{0,S}\) to the face is
+\[
+J_{0,S}(w)=\widehat L_{e^\star}^{\mathrm{ens}}(w)+\lambda_{\mathrm{cov}}w^\top C_{SS}w+\lambda_{\mathrm{loc}}b_S^\top w.
+\]
+For a fixed sample \(j\), let \(q_j\in\RR^{|S|}\) collect the true-class probabilities \(q_{e^\star,j,t}\) over \(t\in S\). Then
+\[
+\nabla^2\!\big(-\log(q_j^\top w)\big)=\frac{q_j q_j^\top}{(q_j^\top w)^2}.
+\]
+Assumption~\ref{ass:conf_floor} gives \(q_j^\top w\ge \eta_p\), so
+\[
+\norm{\nabla^2(-\log(q_j^\top w))}_2 \le \frac{\norm{q_j}_2^2}{\eta_p^2}\le \frac{|S|}{\eta_p^2},
+\]
+since each coordinate of \(q_j\) lies in \((0,1]\). Averaging over samples preserves this bound for \(\widehat L_{e^\star}^{\mathrm{ens}}\). The Hessian of \(\lambda_{\mathrm{cov}}w^\top C_{SS}w\) is \(2\lambda_{\mathrm{cov}}C_{SS}\), and the locality term is affine. Therefore the gradient of \(J_{0,S}\) is \(L_S\)-Lipschitz with \(L_S\) bounded as in Eq.~\eqref{eq:face_lipschitz}.
 
-\paragraph{Recommended ablation order.}
-The most informative ablation sequence is:
-\begin{enumerate}
-    \item worst-domain anchor with uniform weights on the filtered set,
-    \item add locality filtering,
-    \item add covariance regularization,
-    \item add entropy regularization,
-    \item compare against SWAD's original uniform interval on the same trajectory.
-\end{enumerate}
-This order isolates whether the gains come primarily from domain balancing, from connectivity control, or from de-redundancy in the checkpoint soup.
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=0.78\textwidth]{figures/covariance_tradeoff.pdf}
-    \caption{Illustrative trade-off between covariance reduction and locality. Driving covariance too low can force weights toward distant checkpoints; D-COLA seeks a point on the low-covariance, low-barrier frontier instead of optimizing either objective in isolation.}
-    \label{fig:tradeoff}
-\end{figure}
+Now let \(w_S^\star\in \mathrm{ri}(\simplex^{|S|})\) minimize \(J_{0,S}\). By the KKT conditions on the simplex face, there exists \(\nu\in\RR\) such that
+\[
+\nabla J_{0,S}(w_S^\star)=\nu \one
+\]
+on the active coordinates. Since both \(u_S\) and \(w_S^\star\) lie on the same face,
+\[
+\inner{\nabla J_{0,S}(w_S^\star)}{u_S-w_S^\star}
+=
+\nu\,\one^\top(u_S-w_S^\star)=0.
+\]
+The descent lemma for \(L_S\)-smooth functions therefore gives
+\[
+\begin{aligned}
+J_{0,S}(u_S)
+&\le
+J_{0,S}(w_S^\star)
++
+\inner{\nabla J_{0,S}(w_S^\star)}{u_S-w_S^\star}
++
+\frac{L_S}{2}\norm{u_S-w_S^\star}_2^2 \\
+&=
+J_{0,S}(w_S^\star)
++
+\frac{L_S}{2}\norm{u_S-w_S^\star}_2^2.
+\end{aligned}
+\]
+This is Eq.~\eqref{eq:uniform_face_gap}.
+\end{proof}
 
 \end{document}

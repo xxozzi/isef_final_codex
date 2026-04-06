@@ -3,139 +3,129 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{cha2021swad}
-\citation{arpit2022diwa}
+\citation{rame2022diwa}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\providecommand \oddpage@label [2]{}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \citation{gulrajani2021domainbed}
-\citation{izmailov2018swa}
 \citation{cha2021swad}
-\citation{shen2022eoa}
-\citation{arpit2022diwa}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Overview of D-COLA. Dense checkpoints from one training trajectory are scored by per-domain validation loss, anchored at the checkpoint minimizing worst-domain risk, filtered by a low interpolation barrier, and reweighted by a convex objective over cached predictions. The output remains a single model, not an ensemble.}}{2}{figure.1}\protected@file@percent }
-\newlabel{fig:overview}{{1}{2}{Overview of D-COLA. Dense checkpoints from one training trajectory are scored by per-domain validation loss, anchored at the checkpoint minimizing worst-domain risk, filtered by a low interpolation barrier, and reweighted by a convex objective over cached predictions. The output remains a single model, not an ensemble}{figure.1}{}}
+\citation{arpit2021ensemble}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{rame2022diwa}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Domain generalization.}{2}{section*.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Post-hoc averaging for generalization.}{2}{section*.2}\protected@file@percent }
-\citation{wortsman2022soups,frankle2020linear}
-\citation{cha2021swad}
-\@writefile{toc}{\contentsline {paragraph}{Checkpoint soups and mode connectivity.}{3}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{How D-COLA differs from SWAD.}{3}{section*.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Problem Setup}{3}{section.3}\protected@file@percent }
-\newlabel{sec:setup}{{3}{3}{Problem Setup}{section.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Method}{3}{section.4}\protected@file@percent }
-\newlabel{sec:method}{{4}{3}{Method}{section.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Detailed visual methodology for D-COLA. The method first computes per-domain validation losses and selects the checkpoint minimizing worst-domain loss, then filters checkpoints by interpolation barriers, estimates redundancy through a covariance proxy on cached losses, and finally solves a simplex optimization to produce one weight soup. This figure is schematic but calculation-faithful: each panel corresponds directly to a quantity in Eqs.~\eqref  {eq:anchor}--\eqref  {eq:objective}.}}{4}{figure.2}\protected@file@percent }
-\newlabel{fig:methodology}{{2}{4}{Detailed visual methodology for D-COLA. The method first computes per-domain validation losses and selects the checkpoint minimizing worst-domain loss, then filters checkpoints by interpolation barriers, estimates redundancy through a covariance proxy on cached losses, and finally solves a simplex optimization to produce one weight soup. This figure is schematic but calculation-faithful: each panel corresponds directly to a quantity in Eqs.~\eqref {eq:anchor}--\eqref {eq:objective}}{figure.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Worst-domain anchor}{5}{subsection.4.1}\protected@file@percent }
-\newlabel{eq:anchor}{{1}{5}{Worst-domain anchor}{equation.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Connected-valley filter}{5}{subsection.4.2}\protected@file@percent }
-\newlabel{eq:barrier}{{2}{5}{Connected-valley filter}{equation.2}{}}
-\newlabel{eq:candidates}{{3}{5}{Connected-valley filter}{equation.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Convex weighting on cached predictions}{5}{subsection.4.3}\protected@file@percent }
-\newlabel{eq:ensloss}{{4}{5}{Convex weighting on cached predictions}{equation.4}{}}
-\newlabel{eq:cov}{{5}{5}{Convex weighting on cached predictions}{equation.5}{}}
-\newlabel{eq:jopt}{{6}{5}{Convex weighting on cached predictions}{equation.6}{}}
-\newlabel{eq:objective}{{7}{5}{Convex weighting on cached predictions}{equation.7}{}}
-\newlabel{eq:finalsoup}{{8}{5}{Convex weighting on cached predictions}{equation.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces What D-COLA is computing at each step. Left: the anchor is chosen by minimizing the maximum source-domain validation loss across checkpoints. Right: candidates are screened by interpolation barriers, redundant checkpoints are exposed by the covariance matrix, and the final simplex weights concentrate on low-barrier, nonredundant checkpoints. All panels are schematic and meant to build intuition, not to report experimental results.}}{6}{figure.3}\protected@file@percent }
-\newlabel{fig:selection}{{3}{6}{What D-COLA is computing at each step. Left: the anchor is chosen by minimizing the maximum source-domain validation loss across checkpoints. Right: candidates are screened by interpolation barriers, redundant checkpoints are exposed by the covariance matrix, and the final simplex weights concentrate on low-barrier, nonredundant checkpoints. All panels are schematic and meant to build intuition, not to report experimental results}{figure.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces SWAD versus D-COLA. SWAD uniformly averages a contiguous interval. D-COLA reweights a filtered candidate set around a worst-domain anchor; weights need not be uniform and support need not be contiguous in time.}}{6}{figure.4}\protected@file@percent }
-\newlabel{fig:timeline}{{4}{6}{SWAD versus D-COLA. SWAD uniformly averages a contiguous interval. D-COLA reweights a filtered candidate set around a worst-domain anchor; weights need not be uniform and support need not be contiguous in time}{figure.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc domain generalization.}{2}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Flatness, diversity, and weight averaging.}{2}{section*.4}\protected@file@percent }
+\citation{frankle2020linear,wortsman2022soups}
+\citation{ben2010theory}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {D-COLA}}{} at a glance.} The larger principle is mergeable complementarity: choose checkpoints that cover different domain-conditioned failures, but only inside a family whose weighted average remains a valid single model. The theorem-bearing contribution concerns the fixed-family weighting problem. The implementation then instantiates that theory with practical family-construction heuristics such as worst-domain anchoring and barrier screening.}}{3}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:overview}{{1}{3}{\textbf {\dcola {} at a glance.} The larger principle is mergeable complementarity: choose checkpoints that cover different domain-conditioned failures, but only inside a family whose weighted average remains a valid single model. The theorem-bearing contribution concerns the fixed-family weighting problem. The implementation then instantiates that theory with practical family-construction heuristics such as worst-domain anchoring and barrier screening}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Mode connectivity and soups.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Distribution shift and hidden subpopulations.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Setup}{3}{section.3}\protected@file@percent }
+\newlabel{sec:setup}{{3}{3}{Setup}{section.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Retained family.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Predictive mixture quantities.}{4}{section*.8}\protected@file@percent }
+\newlabel{eq:ensloss}{{1}{4}{Predictive mixture quantities}{equation.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Operational family construction in the current implementation}{4}{subsection.3.1}\protected@file@percent }
+\newlabel{subsec:heuristics}{{3.1}{4}{Operational family construction in the current implementation}{subsection.3.1}{}}
+\newlabel{eq:anchor}{{2}{4}{Operational family construction in the current implementation}{equation.2}{}}
+\newlabel{eq:barrier}{{3}{4}{Operational family construction in the current implementation}{equation.3}{}}
+\newlabel{eq:candidates}{{4}{4}{Operational family construction in the current implementation}{equation.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}From One Principle to the Practical Objective}{4}{section.4}\protected@file@percent }
+\newlabel{sec:principle}{{4}{4}{From One Principle to the Practical Objective}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Ideal mergeable complementarity on a fixed family}{4}{subsection.4.1}\protected@file@percent }
+\newlabel{prop:worst_domain_prior}{{4.1}{4}{Worst-domain fit as a robust source-domain prior}{theorem.4.1}{}}
+\newlabel{eq:worst_domain_prior}{{5}{4}{Worst-domain fit as a robust source-domain prior}{equation.5}{}}
+\newlabel{def:ideal}{{4.2}{4}{Mergeable complementarity objective}{theorem.4.2}{}}
+\newlabel{eq:mergeability_remainder}{{6}{4}{Mergeable complementarity objective}{equation.6}{}}
+\newlabel{eq:ideal_objective}{{7}{4}{Mergeable complementarity objective}{equation.7}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {D-COLA}}{}}}{5}{algorithm.1}\protected@file@percent }
+\newlabel{alg:dcola}{{1}{5}{\dcola {}}{algorithm.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {From ideal principle to practical surrogate.} The theory starts with a robust source-domain fit term, a hidden-shift conflict term, and a mergeability remainder. The implementation then instantiates those ideas on a retained family using a predictive-mixture surrogate, a covariance penalty, and an anchor-relative locality proxy.}}{5}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:steps}{{2}{5}{\textbf {From ideal principle to practical surrogate.} The theory starts with a robust source-domain fit term, a hidden-shift conflict term, and a mergeability remainder. The implementation then instantiates those ideas on a retained family using a predictive-mixture surrogate, a covariance penalty, and an anchor-relative locality proxy}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Practical \textup  {\textsc  {D-COLA}}{} on a retained family}{5}{subsection.4.2}\protected@file@percent }
+\newlabel{eq:dcola_objective}{{8}{5}{Practical \dcola {} on a retained family}{equation.8}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Theory}{6}{section.5}\protected@file@percent }
 \newlabel{sec:theory}{{5}{6}{Theory}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Worst-domain robust risk}{6}{subsection.5.1}\protected@file@percent }
-\newlabel{thm:worstbound}{{1}{6}{Worst-domain robust-risk bound}{theorem.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Implementation summary of D-COLA.}}{7}{figure.5}\protected@file@percent }
-\newlabel{alg:dcola}{{5}{7}{Implementation summary of D-COLA}{figure.5}{}}
-\newlabel{eq:worstbound}{{9}{7}{Worst-domain robust-risk bound}{equation.9}{}}
-\@writefile{toc}{\contentsline {paragraph}{Proof sketch.}{7}{section*.5}\protected@file@percent }
-\newlabel{thm:suboptimality}{{2}{7}{Worst-domain suboptimality certificate}{theorem.2}{}}
-\newlabel{eq:suboptimality}{{10}{7}{Worst-domain suboptimality certificate}{equation.10}{}}
-\@writefile{toc}{\contentsline {paragraph}{Interpretation.}{7}{section*.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Why covariance and locality belong in the objective}{7}{subsection.5.2}\protected@file@percent }
-\newlabel{prop:psd}{{1}{8}{Variance representation and positive semidefiniteness}{proposition.1}{}}
-\newlabel{eq:psd}{{11}{8}{Variance representation and positive semidefiniteness}{equation.11}{}}
-\@writefile{toc}{\contentsline {paragraph}{Implication.}{8}{section*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Convexity and optimization}{8}{subsection.5.3}\protected@file@percent }
-\newlabel{thm:convex}{{3}{8}{Convexity of the D-COLA objective}{theorem.3}{}}
-\@writefile{toc}{\contentsline {paragraph}{Proof sketch.}{8}{section*.8}\protected@file@percent }
-\newlabel{thm:convergence}{{4}{8}{Projected subgradient convergence}{theorem.4}{}}
-\newlabel{eq:convergence}{{12}{8}{Projected subgradient convergence}{equation.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}From predictive mixtures to a single soup}{8}{subsection.5.4}\protected@file@percent }
-\newlabel{ass:locality}{{1}{8}{Second-order locality}{assumption.1}{}}
-\newlabel{thm:soupmix}{{5}{8}{Soup-mixture approximation}{theorem.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Corner-view 3D schematic of the loss landscape. The anchor and retained candidate checkpoints lie inside one connected valley. A uniform interval soup can drift toward a worse point if it averages too broadly, whereas D-COLA biases the soup toward a lower-loss location by combining worst-domain selection with locality-aware weighting. This is an illustrative geometry figure, not an empirical measurement.}}{9}{figure.6}\protected@file@percent }
-\newlabel{fig:landscape3d}{{6}{9}{Corner-view 3D schematic of the loss landscape. The anchor and retained candidate checkpoints lie inside one connected valley. A uniform interval soup can drift toward a worse point if it averages too broadly, whereas D-COLA biases the soup toward a lower-loss location by combining worst-domain selection with locality-aware weighting. This is an illustrative geometry figure, not an empirical measurement}{figure.6}{}}
-\newlabel{eq:vectorbound}{{13}{9}{Soup-mixture approximation}{equation.13}{}}
-\newlabel{eq:celossbound}{{14}{9}{Soup-mixture approximation}{equation.14}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Conditional domination over SWAD-style uniform averaging}{9}{subsection.5.5}\protected@file@percent }
-\newlabel{ass:certificate}{{2}{9}{Transferable target-risk certificate}{assumption.2}{}}
-\newlabel{eq:certificate}{{15}{9}{Transferable target-risk certificate}{equation.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Local hidden-shift sensitivity and the conflict term}{6}{subsection.5.1}\protected@file@percent }
+\newlabel{prop:hidden_shift}{{5.1}{6}{Exact local hidden-shift identity}{theorem.5.1}{}}
+\newlabel{eq:exact_hidden_shift}{{9}{6}{Exact local hidden-shift identity}{equation.9}{}}
+\newlabel{eq:aggregate_conflict}{{10}{6}{Local hidden-shift sensitivity and the conflict term}{equation.10}{}}
+\newlabel{prop:variance_representation}{{5.2}{6}{Variance representation of conflict}{theorem.5.2}{}}
+\newlabel{eq:variance_representation}{{11}{6}{Variance representation of conflict}{equation.11}{}}
+\newlabel{eq:centered_norm_covariance}{{12}{6}{Variance representation of conflict}{equation.12}{}}
+\newlabel{prop:pairwise_covariance}{{5.3}{6}{Pairwise covariance decomposition}{theorem.5.3}{}}
+\newlabel{eq:pairwise_covariance}{{13}{6}{Pairwise covariance decomposition}{equation.13}{}}
+\newlabel{cor:young}{{5.4}{6}{Quadratic majorizer of hidden-shift sensitivity}{theorem.5.4}{}}
+\newlabel{eq:young_majorizer}{{14}{6}{Quadratic majorizer of hidden-shift sensitivity}{equation.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Mergeability remainder and the locality term}{6}{subsection.5.2}\protected@file@percent }
+\newlabel{ass:smooth}{{5.5}{6}{Second-order predictive smoothness}{theorem.5.5}{}}
+\newlabel{ass:conf_floor}{{5.6}{7}{Confidence floor}{theorem.5.6}{}}
+\newlabel{thm:soup_mix}{{5.7}{7}{Soup-versus-mixture translation bound}{theorem.5.7}{}}
+\newlabel{eq:soup_mix_bound}{{15}{7}{Soup-versus-mixture translation bound}{equation.15}{}}
+\newlabel{rem:barrier_proxy}{{5.8}{7}{Barrier scores as a practical mergeability proxy}{theorem.5.8}{}}
+\newlabel{ass:direct_mergeability}{{5.9}{7}{Direct family-level mergeability certificate}{theorem.5.9}{}}
+\newlabel{eq:direct_mergeability}{{16}{7}{Direct family-level mergeability certificate}{equation.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}The surrogate theorem}{7}{subsection.5.3}\protected@file@percent }
+\newlabel{thm:surrogate}{{5.10}{7}{D-COLA as a surrogate of fixed-family mergeable complementarity}{theorem.5.10}{}}
+\newlabel{eq:surrogate_bound}{{17}{7}{D-COLA as a surrogate of fixed-family mergeable complementarity}{equation.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Convexity and optimization}{7}{subsection.5.4}\protected@file@percent }
+\newlabel{ass:positive_probs}{{5.11}{7}{Positive cached probabilities}{theorem.5.11}{}}
+\newlabel{thm:convex}{{5.12}{7}{Convexity of the practical objective}{theorem.5.12}{}}
+\newlabel{thm:convergence}{{5.13}{7}{Projected-subgradient convergence}{theorem.5.13}{}}
+\newlabel{eq:convergence_rate}{{18}{7}{Projected-subgradient convergence}{equation.18}{}}
 \citation{gulrajani2021domainbed}
-\newlabel{fig:valley}{{5.5}{10}{Conditional domination over SWAD-style uniform averaging}{equation.16}{}}
-\newlabel{fig:certificate}{{5.5}{10}{Conditional domination over SWAD-style uniform averaging}{equation.16}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Why D-COLA adds locality and covariance to worst-domain fit. Left: averaging across a barrier can leave the low-loss basin. Right: the target-risk certificate is modeled as worst-domain fit plus redundancy and locality penalties, up to constants not controllable without target labels.}}{10}{figure.7}\protected@file@percent }
-\newlabel{fig:theoryfigs}{{7}{10}{Why D-COLA adds locality and covariance to worst-domain fit. Left: averaging across a barrier can leave the low-loss basin. Right: the target-risk certificate is modeled as worst-domain fit plus redundancy and locality penalties, up to constants not controllable without target labels}{figure.7}{}}
-\newlabel{thm:domination}{{6}{10}{No-worse certificate than any feasible uniform interval}{theorem.6}{}}
-\newlabel{eq:domination}{{16}{10}{No-worse certificate than any feasible uniform interval}{equation.16}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Experimental Protocol and Prior Published Results}{10}{section.6}\protected@file@percent }
-\newlabel{sec:experiments}{{6}{10}{Experimental Protocol and Prior Published Results}{section.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Planned protocol}{10}{subsection.6.1}\protected@file@percent }
-\citation{cha2021swad}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Published DomainBed accuracies ($\%$) from SWAD and DiWA sources. Numbers are copied from the original tables available in the local literature directory. `LP' denotes linear-probe initialization reported by DiWA.}}{11}{table.1}\protected@file@percent }
-\newlabel{tab:published}{{1}{11}{Published DomainBed accuracies ($\%$) from SWAD and DiWA sources. Numbers are copied from the original tables available in the local literature directory. `LP' denotes linear-probe initialization reported by DiWA}{table.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Published average DomainBed accuracies from prior post-hoc averaging methods. The bar to beat is no longer only SWAD's $66.9$; the strongest nearby published target in the local sources is DiWA with LP initialization at $68.0$.}}{11}{figure.8}\protected@file@percent }
-\newlabel{fig:priorbar}{{8}{11}{Published average DomainBed accuracies from prior post-hoc averaging methods. The bar to beat is no longer only SWAD's $66.9$; the strongest nearby published target in the local sources is DiWA with LP initialization at $68.0$}{figure.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Published results that define the bar}{11}{subsection.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Results}{11}{section.7}\protected@file@percent }
-\newlabel{sec:results}{{7}{11}{Results}{section.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Main DomainBed results}{11}{subsection.7.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Beyond flatness in two dimensions.} Left: if the checkpoint region is flat, conflict-free, and fully mergeable, many mixtures are nearly equivalent and uniform averaging is sufficient. Right: if checkpoints remain mergeable but exhibit different domain-conditioned error profiles, the useful object is no longer flatness alone but \emph  {mergeable complementarity}.}}{8}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:principle}{{3}{8}{\textbf {Beyond flatness in two dimensions.} Left: if the checkpoint region is flat, conflict-free, and fully mergeable, many mixtures are nearly equivalent and uniform averaging is sufficient. Right: if checkpoints remain mergeable but exhibit different domain-conditioned error profiles, the useful object is no longer flatness alone but \emph {mergeable complementarity}}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Low-curvature faces, near-uniform weights, and the flatness limit}{8}{subsection.5.5}\protected@file@percent }
+\newlabel{ass:active_face}{{5.14}{8}{Stable active domain on a face}{theorem.5.14}{}}
+\newlabel{thm:face_bound}{{5.15}{8}{Low-curvature face bound}{theorem.5.15}{}}
+\newlabel{eq:face_lipschitz}{{19}{8}{Low-curvature face bound}{equation.19}{}}
+\newlabel{eq:uniform_face_gap}{{20}{8}{Low-curvature face bound}{equation.20}{}}
+\newlabel{rem:flatness}{{5.16}{8}{Flatness as the low-conflict, low-remainder regime}{theorem.5.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Experimental Protocol and Published Benchmark Context}{8}{section.6}\protected@file@percent }
+\newlabel{sec:experiments}{{6}{8}{Experimental Protocol and Published Benchmark Context}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Planned evaluation protocol}{8}{subsection.6.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {What the covariance term is measuring.} Each checkpoint induces a samplewise validation-loss profile inside each source domain. When two checkpoints fail on the same hidden slice, their centered profiles are aligned and the conflict penalty stays large. When they cover different slices, their profiles are complementary and the weighted variance term drops.}}{9}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:hidden_shift}{{4}{9}{\textbf {What the covariance term is measuring.} Each checkpoint induces a samplewise validation-loss profile inside each source domain. When two checkpoints fail on the same hidden slice, their centered profiles are aligned and the conflict penalty stays large. When they cover different slices, their profiles are complementary and the weighted variance term drops}{figure.caption.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Why noncontiguity can matter.} Contiguous windows are a time-based proxy. The mergeable-complementarity view says the actual object is error-structure coverage inside a mergeable region, so the best checkpoints need not be adjacent along training time.}}{9}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:noncontiguity}{{5}{9}{\textbf {Why noncontiguity can matter.} Contiguous windows are a time-based proxy. The mergeable-complementarity view says the actual object is error-structure coverage inside a mergeable region, so the best checkpoints need not be adjacent along training time}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Published numbers that define the bar}{9}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Results}{9}{section.7}\protected@file@percent }
+\newlabel{sec:results}{{7}{9}{Results}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Main benchmark results}{9}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Worst-domain robustness}{9}{subsection.7.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Corner-view 3D intuition.} The final object is one single soup inside a connected valley. Barrier filtering enforces mergeability, the covariance term prefers checkpoints that cancel different failure directions, and the final soup lies inside the compatible region instead of averaging blindly across the bank.}}{10}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:3d}{{6}{10}{\textbf {Corner-view 3D intuition.} The final object is one single soup inside a connected valley. Barrier filtering enforces mergeability, the covariance term prefers checkpoints that cancel different failure directions, and the final soup lies inside the compatible region instead of averaging blindly across the bank}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Ablations}{10}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Soup-versus-mixture diagnostics}{10}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{10}{section.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {Why exact weights can matter less than finding the right face.} Once the selected checkpoints lie on a low-curvature, low-conflict face of the simplex, a large region of weights can have nearly identical objective value. This is why support discovery can matter more than precise coefficient tuning.}}{11}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:simplex}{{7}{11}{\textbf {Why exact weights can matter less than finding the right face.} Once the selected checkpoints lie on a low-curvature, low-conflict face of the simplex, a large region of weights can have nearly identical objective value. This is why support discovery can matter more than precise coefficient tuning}{figure.caption.14}{}}
 \bibstyle{plainnat}
 \bibdata{d_cola_refs}
-\bibcite{arpit2022diwa}{{1}{2022{a}}{{Arpit et~al.}}{{Arpit, D'Ascoli, Nguyen, Yu, Chin, Bengio, and Hjelm}}}
-\bibcite{shen2022eoa}{{2}{2022{b}}{{Arpit et~al.}}{{Arpit, Wang, Zhou, and Xiong}}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}IID versus OOD trade-off}{12}{subsection.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Ablation studies}{12}{subsection.7.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Soup-versus-ensemble agreement}{12}{subsection.7.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{12}{section.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{12}{section.9}\protected@file@percent }
+\bibcite{arpit2021ensemble}{{1}{2022}{{Arpit et~al.}}{{Arpit, Wang, Zhou, and Xiong}}}
+\bibcite{ben2010theory}{{2}{2010}{{Ben-David et~al.}}{{Ben-David, Blitzer, Crammer, and Pereira}}}
 \bibcite{cha2021swad}{{3}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
 \bibcite{frankle2020linear}{{4}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
 \bibcite{gulrajani2021domainbed}{{5}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
-\bibcite{izmailov2018swa}{{6}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{rame2022diwa}{{6}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
 \bibcite{wortsman2022soups}{{7}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Proofs and Details}{13}{appendix.A}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Theorem~\ref {thm:worstbound}}{13}{subsection.A.1}\protected@file@percent }
-\newlabel{app:proof_worstbound}{{A.1}{13}{Proof of Theorem~\ref {thm:worstbound}}{subsection.A.1}{}}
-\newlabel{eq:swadmain}{{17}{13}{Proof of Theorem~\ref {thm:worstbound}}{equation.17}{}}
-\newlabel{eq:mixlemax1}{{19}{13}{Proof of Theorem~\ref {thm:worstbound}}{equation.19}{}}
-\newlabel{eq:mixlemax2}{{20}{13}{Proof of Theorem~\ref {thm:worstbound}}{equation.20}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Theorem~\ref {thm:suboptimality}}{13}{subsection.A.2}\protected@file@percent }
-\newlabel{app:proof_suboptimality}{{A.2}{13}{Proof of Theorem~\ref {thm:suboptimality}}{subsection.A.2}{}}
-\@writefile{toc}{\contentsline {paragraph}{Step 1: upper bound on $\mathcal  {E}_T(\hat  {\theta }_{\max }^\gamma )$.}{14}{section*.10}\protected@file@percent }
-\newlabel{eq:upperhat}{{21}{14}{Step 1: upper bound on $\risk _T(\hat {\theta }_{\max }^\gamma )$}{equation.21}{}}
-\@writefile{toc}{\contentsline {paragraph}{Step 2: lower bound on the target optimum.}{14}{section*.11}\protected@file@percent }
-\newlabel{eq:mix_to_target}{{22}{14}{Step 2: lower bound on the target optimum}{equation.22}{}}
-\newlabel{eq:uniformmix}{{23}{14}{Step 2: lower bound on the target optimum}{equation.23}{}}
-\newlabel{eq:lowertheta}{{24}{14}{Step 2: lower bound on the target optimum}{equation.24}{}}
-\@writefile{toc}{\contentsline {paragraph}{Step 3: subtract the two bounds.}{14}{section*.12}\protected@file@percent }
-\newlabel{eq:subtractionstep}{{25}{14}{Step 3: subtract the two bounds}{equation.25}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Proof of Proposition~\ref {prop:psd}}{14}{subsection.A.3}\protected@file@percent }
-\newlabel{app:proof_psd}{{A.3}{14}{Proof of Proposition~\ref {prop:psd}}{subsection.A.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Theorem~\ref {thm:convex}}{15}{subsection.A.4}\protected@file@percent }
-\newlabel{app:proof_convex}{{A.4}{15}{Proof of Theorem~\ref {thm:convex}}{subsection.A.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Theorem~\ref {thm:convergence}}{15}{subsection.A.5}\protected@file@percent }
-\newlabel{app:proof_convergence}{{A.5}{15}{Proof of Theorem~\ref {thm:convergence}}{subsection.A.5}{}}
-\newlabel{eq:keysubgrad}{{33}{16}{Proof of Theorem~\ref {thm:convergence}}{equation.33}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Proof of Theorem~\ref {thm:soupmix}}{16}{subsection.A.6}\protected@file@percent }
-\newlabel{app:proof_soupmix}{{A.6}{16}{Proof of Theorem~\ref {thm:soupmix}}{subsection.A.6}{}}
-\newlabel{eq:taylor}{{34}{16}{Proof of Theorem~\ref {thm:soupmix}}{equation.34}{}}
-\newlabel{eq:remainder}{{35}{16}{Proof of Theorem~\ref {thm:soupmix}}{equation.35}{}}
-\newlabel{eq:sumtaylor}{{37}{16}{Proof of Theorem~\ref {thm:soupmix}}{equation.37}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Proof of Theorem~\ref {thm:domination}}{17}{subsection.A.7}\protected@file@percent }
-\newlabel{app:proof_domination}{{A.7}{17}{Proof of Theorem~\ref {thm:domination}}{subsection.A.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Additional experimental notes}{17}{subsection.A.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{What would count as a meaningful empirical win?}{17}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Recommended ablation order.}{17}{section*.14}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Illustrative trade-off between covariance reduction and locality. Driving covariance too low can force weights toward distant checkpoints; D-COLA seeks a point on the low-covariance, low-barrier frontier instead of optimizing either objective in isolation.}}{18}{figure.9}\protected@file@percent }
-\newlabel{fig:tradeoff}{{9}{18}{Illustrative trade-off between covariance reduction and locality. Driving covariance too low can force weights toward distant checkpoints; D-COLA seeks a point on the low-covariance, low-barrier frontier instead of optimizing either objective in isolation}{figure.9}{}}
-\gdef \@abspage@last{18}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Exact published DomainBed accuracies (\%) from \textup  {\textsc  {SWAD}}{} and \textup  {\textsc  {DiWA}}{} sources. `LP' denotes the linear-probe initialization reported by \textup  {\textsc  {DiWA}}{}. These are benchmark-context numbers only; no new \textup  {\textsc  {D-COLA}}{} results are reported here.}}{12}{table.caption.15}\protected@file@percent }
+\newlabel{tab:published_context}{{1}{12}{Exact published DomainBed accuracies (\%) from \swad {} and \diwa {} sources. `LP' denotes the linear-probe initialization reported by \diwa {}. These are benchmark-context numbers only; no new \dcola {} results are reported here}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{12}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs}{13}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Proposition~\ref {prop:worst_domain_prior}}{13}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Proposition~\ref {prop:hidden_shift}}{13}{subsection.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Proof of Proposition~\ref {prop:variance_representation}}{13}{subsection.A.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Proposition~\ref {prop:pairwise_covariance}}{13}{subsection.A.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Corollary~\ref {cor:young}}{14}{subsection.A.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Proof of Theorem~\ref {thm:soup_mix}}{14}{subsection.A.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Proof of Theorem~\ref {thm:surrogate}}{14}{subsection.A.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Proof of Theorem~\ref {thm:convex}}{14}{subsection.A.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.9}Proof of Theorem~\ref {thm:convergence}}{14}{subsection.A.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.10}Proof of Theorem~\ref {thm:face_bound}}{15}{subsection.A.10}\protected@file@percent }
+\gdef \@abspage@last{15}

@@ -2,140 +2,139 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\citation{cha2021wad}
-\citation{cha2021wad}
-\citation{cha2021wad}
+\citation{cha2021swad}
+\citation{cha2021swad}
 \citation{rame2022diwa}
 \citation{cha2022miro}
-\providecommand \oddpage@label [2]{}
+\citation{cha2021swad}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{izmailov2018swa}
+\citation{garipov2018fge}
+\citation{wortsman2022soups}
 \citation{li2018mldg}
 \citation{rame2022fishr}
-\citation{wortsman2022soups}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {MAIWA}}{} end-to-end on the full checkpoint bank.} The method starts from the entire bank, computes per-domain held-out losses on every checkpoint, forms Gibbs-specialized posteriors for each domain, and optimizes one global bank posterior $w$ by minimizing pooled risk plus average adaptation information. There is no preselection stage.}}{3}{figure.caption.4}\protected@file@percent }
+\citation{catoni2007pac,donsker1975asymptotic}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {\textup  {\textsc  {MAIWA}}{} acts directly on the full checkpoint bank.} Each source domain induces a specialization posterior \(q_i^w\) from the same shared prior \(w\). The method minimizes pooled bank risk plus the information needed to specialize the shared prior to each domain, then returns one final weighted soup.}}{3}{figure.caption.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:pipeline}{{1}{3}{\textbf {\maiwa {} end-to-end on the full checkpoint bank.} The method starts from the entire bank, computes per-domain held-out losses on every checkpoint, forms Gibbs-specialized posteriors for each domain, and optimizes one global bank posterior $w$ by minimizing pooled risk plus average adaptation information. There is no preselection stage}{figure.caption.4}{}}
-\@writefile{toc}{\contentsline {paragraph}{What this paper does and does not claim.}{3}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Contributions.}{3}{section*.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Method}{3}{section.2}\protected@file@percent }
-\newlabel{sec:method}{{2}{3}{Method}{section.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Setup}{3}{subsection.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Two deployment modes.}{4}{section*.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Domain-specialized posteriors and adaptation information}{4}{subsection.2.2}\protected@file@percent }
-\newlabel{eq:q-def}{{9}{4}{Domain-specialized posteriors and adaptation information}{equation.9}{}}
-\newlabel{eq:adapt-def}{{10}{4}{Domain-specialized posteriors and adaptation information}{equation.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}The \textup  {\textsc  {MAIWA}}{} objective}{4}{subsection.2.3}\protected@file@percent }
-\newlabel{eq:maiwa-objective}{{13}{4}{The \maiwa {} objective}{equation.13}{}}
-\newlabel{fig:simplex3d}{{2a}{5}{A 3D view of the full-bank simplex}{figure.caption.6}{}}
-\newlabel{sub@fig:simplex3d}{{a}{5}{A 3D view of the full-bank simplex}{figure.caption.6}{}}
-\newlabel{fig:objectiveslice}{{2b}{5}{Objective contours on a 3-checkpoint slice}{figure.caption.6}{}}
-\newlabel{sub@fig:objectiveslice}{{b}{5}{Objective contours on a 3-checkpoint slice}{figure.caption.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Geometric intuition.} Left: the shared posterior $w$ lives in the full-bank simplex, and each source domain induces a Gibbs-specialized tilt $q_i^w$ toward its preferred checkpoints. Right: on a 3-checkpoint slice, the \textup  {\textsc  {MAIWA}}{} objective trades pooled risk against specialization cost. The method acts on the full simplex directly; there is no separate screening or feasible-set construction.}}{5}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:simplex}{{2}{5}{\textbf {Geometric intuition.} Left: the shared posterior $w$ lives in the full-bank simplex, and each source domain induces a Gibbs-specialized tilt $q_i^w$ toward its preferred checkpoints. Right: on a 3-checkpoint slice, the \maiwa {} objective trades pooled risk against specialization cost. The method acts on the full simplex directly; there is no separate screening or feasible-set construction}{figure.caption.6}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {MAIWA}}{} (\textsc  {Minimum Adaptation Information Weight Averaging})}}{5}{algorithm.1}\protected@file@percent }
-\newlabel{alg:maiwa}{{1}{5}{\maiwa {} (\textsc {Minimum Adaptation Information Weight Averaging})}{algorithm.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Optimization algorithm}{5}{subsection.2.4}\protected@file@percent }
-\newlabel{eq:pgd}{{14}{5}{Optimization algorithm}{equation.14}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}The core information-theoretic identity}{5}{section.3}\protected@file@percent }
-\newlabel{sec:variational}{{3}{5}{The core information-theoretic identity}{section.3}{}}
-\newlabel{prop:variational}{{1}{6}{Variational form of domain specialization}{proposition.1}{}}
-\newlabel{eq:freeenergy-def}{{15}{6}{Variational form of domain specialization}{equation.15}{}}
-\newlabel{eq:freeenergy-logsum}{{16}{6}{Variational form of domain specialization}{equation.16}{}}
-\newlabel{eq:adapt-gap}{{17}{6}{Variational form of domain specialization}{equation.17}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Theory}{6}{section.4}\protected@file@percent }
-\newlabel{sec:theory}{{4}{6}{Theory}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Differential properties of the adaptation-information term}{6}{subsection.4.1}\protected@file@percent }
-\newlabel{eq:Ai-ratio}{{21}{6}{Differential properties of the adaptation-information term}{equation.21}{}}
-\newlabel{prop:grad-hess}{{2}{6}{Gradient and Hessian}{proposition.2}{}}
-\newlabel{eq:Ai-grad}{{22}{6}{Gradient and Hessian}{equation.22}{}}
-\newlabel{eq:Ai-hess}{{23}{6}{Gradient and Hessian}{equation.23}{}}
-\newlabel{eq:J-grad}{{24}{6}{Gradient and Hessian}{equation.24}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Optimization theory}{6}{subsection.4.2}\protected@file@percent }
-\newlabel{sec:opt-theory}{{4.2}{6}{Optimization theory}{subsection.4.2}{}}
-\newlabel{ass:bounded}{{1}{6}{Bounded held-out losses}{assumption.1}{}}
-\newlabel{thm:smooth}{{1}{6}{Global smoothness on the full-bank $\varepsilon $-simplex}{theorem.1}{}}
-\newlabel{thm:pgd}{{2}{7}{Convergence of projected gradient descent}{theorem.2}{}}
-\newlabel{eq:descent}{{28}{7}{Convergence of projected gradient descent}{equation.28}{}}
-\newlabel{eq:stationarity-rate}{{29}{7}{Convergence of projected gradient descent}{equation.29}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}High-temperature expansion: flatness as a proxy}{7}{subsection.4.3}\protected@file@percent }
-\newlabel{sec:hightemp}{{4.3}{7}{High-temperature expansion: flatness as a proxy}{subsection.4.3}{}}
-\newlabel{thm:smallbeta}{{3}{7}{High-temperature expansion}{theorem.3}{}}
-\newlabel{eq:Ai-smallbeta}{{30}{7}{High-temperature expansion}{equation.30}{}}
-\newlabel{eq:Ai-variance}{{31}{7}{High-temperature expansion}{equation.31}{}}
-\newlabel{cor:quadratic}{{1}{7}{Quadratic-basin interpretation}{corollary.1}{}}
-\newlabel{fig:regimes}{{3a}{8}{High- and low-temperature regimes}{figure.caption.7}{}}
-\newlabel{sub@fig:regimes}{{a}{8}{High- and low-temperature regimes}{figure.caption.7}{}}
-\newlabel{fig:quadratic}{{3b}{8}{Quadratic-basin flatness as a second-order proxy}{figure.caption.7}{}}
-\newlabel{sub@fig:quadratic}{{b}{8}{Quadratic-basin flatness as a second-order proxy}{figure.caption.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {How one objective explains two empirical stories.} Left: as temperature changes, the same adaptation-information functional moves from a broad variance-sensitive regime to a sharp support-coverage regime. Right: under a quadratic local model, flatness appears as the low-adaptation-information limit because variance across the bank is controlled by Hessian--covariance interactions.}}{8}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:regimes-quad}{{3}{8}{\textbf {How one objective explains two empirical stories.} Left: as temperature changes, the same adaptation-information functional moves from a broad variance-sensitive regime to a sharp support-coverage regime. Right: under a quadratic local model, flatness appears as the low-adaptation-information limit because variance across the bank is controlled by Hessian--covariance interactions}{figure.caption.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Low-temperature limit: complementarity as support coverage}{8}{subsection.4.4}\protected@file@percent }
-\newlabel{sec:lowtemp}{{4.4}{8}{Low-temperature limit: complementarity as support coverage}{subsection.4.4}{}}
-\newlabel{ass:unique}{{2}{8}{Unique domain-optimal checkpoints}{assumption.2}{}}
-\newlabel{thm:lowtemp}{{4}{8}{Low-temperature asymptotics}{theorem.4}{}}
-\newlabel{eq:lowtemp}{{38}{8}{Low-temperature asymptotics}{equation.38}{}}
-\newlabel{cor:counts}{{2}{8}{Optimal coverage weights in the low-temperature limit}{corollary.2}{}}
-\citation{izmailov2018swa,wortsman2022soups}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}A separation theorem}{9}{subsection.4.5}\protected@file@percent }
-\newlabel{sec:separation}{{4.5}{9}{A separation theorem}{subsection.4.5}{}}
-\newlabel{thm:separation}{{5}{9}{Pooled-risk indifference versus adaptation-information preference}{theorem.5}{}}
-\newlabel{eq:separation-matrix}{{43}{9}{Pooled-risk indifference versus adaptation-information preference}{equation.43}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Soup compression as a controlled approximation}{9}{subsection.4.6}\protected@file@percent }
-\newlabel{sec:soup}{{4.6}{9}{Soup compression as a controlled approximation}{subsection.4.6}{}}
-\newlabel{ass:predictor}{{3}{9}{Local predictor smoothness}{assumption.3}{}}
-\newlabel{prop:soup}{{3}{9}{Mixture-to-soup approximation}{proposition.3}{}}
-\newlabel{eq:soup-bound}{{46}{9}{Mixture-to-soup approximation}{equation.46}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{9}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Why this is beyond flatness.}{9}{section*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Why the full-bank formulation matters.}{9}{section*.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{What the theory does not prove.}{9}{section*.11}\protected@file@percent }
-\citation{cha2021wad}
+\newlabel{fig:pipeline}{{1}{3}{\textbf {\maiwa {} acts directly on the full checkpoint bank.} Each source domain induces a specialization posterior \(q_i^w\) from the same shared prior \(w\). The method minimizes pooled bank risk plus the information needed to specialize the shared prior to each domain, then returns one final weighted soup}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc DG and checkpoint averaging.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Weight averaging and local linearity.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-domain transfer and gradient agreement.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Information-theoretic and variational viewpoints.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What this paper is not.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Method}{3}{section.3}\protected@file@percent }
+\newlabel{sec:method}{{3}{3}{Method}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Setup}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Domain specialization as minimum-information tilting}{4}{subsection.3.2}\protected@file@percent }
+\newlabel{def:posterior}{{1}{4}{Domain-specialized posterior}{definition.1}{}}
+\newlabel{eq:gibbs_posterior}{{7}{4}{Domain-specialized posterior}{equation.7}{}}
+\newlabel{prop:variational}{{1}{4}{Variational specialization identity}{proposition.1}{}}
+\newlabel{eq:variational_specialization}{{8}{4}{Variational specialization identity}{equation.8}{}}
+\newlabel{eq:free_energy}{{9}{4}{Variational specialization identity}{equation.9}{}}
+\newlabel{def:adapt_kl}{{2}{4}{Adaptation information}{definition.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Slogan.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}The full-bank \textup  {\textsc  {MAIWA}}{} objective}{4}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:main_objective}{{11}{4}{The full-bank \maiwa {} objective}{equation.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {2D simplex view.} The shared prior \(w\) lives in the simplex of full-bank weights. Each domain \(i\) induces a specialization posterior \(q_i^w\) by tilting the same prior. \textup  {\textsc  {MAIWA}}{} chooses \(w\) so that these tilts stay small on average.}}{5}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:simplex2d}{{2}{5}{\textbf {2D simplex view.} The shared prior \(w\) lives in the simplex of full-bank weights. Each domain \(i\) induces a specialization posterior \(q_i^w\) by tilting the same prior. \maiwa {} chooses \(w\) so that these tilts stay small on average}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Closed-form adaptation information and gradients}{5}{subsection.3.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {3D corner view of the full-bank simplex.} When domains prefer different checkpoint atoms, the shared prior must sit in the interior and cover them. This is the complementarity regime explained by \textup  {\textsc  {MAIWA}}{}'s large-\(\beta \) limit.}}{6}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:simplex3d}{{3}{6}{\textbf {3D corner view of the full-bank simplex.} When domains prefer different checkpoint atoms, the shared prior must sit in the interior and cover them. This is the complementarity regime explained by \maiwa {}'s large-\(\beta \) limit}{figure.caption.10}{}}
+\newlabel{prop:closed_form}{{2}{6}{Closed form and gradient}{proposition.2}{}}
+\newlabel{eq:Ai_closed}{{15}{6}{Closed form and gradient}{equation.15}{}}
+\newlabel{eq:Ai_gradient}{{16}{6}{Closed form and gradient}{equation.16}{}}
+\newlabel{eq:J_gradient}{{17}{6}{Closed form and gradient}{equation.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Optimization}{6}{subsection.3.5}\protected@file@percent }
+\newlabel{eq:pgd}{{18}{6}{Optimization}{equation.18}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {MAIWA}}{} (\textsc  {Minimum Adaptation Information Weight Averaging})}}{7}{algorithm.1}\protected@file@percent }
+\newlabel{alg:maiwa}{{1}{7}{\maiwa {} (\textsc {Minimum Adaptation Information Weight Averaging})}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Why Adaptation Information Goes Beyond Flatness}{7}{section.4}\protected@file@percent }
+\newlabel{sec:theory}{{4}{7}{Why Adaptation Information Goes Beyond Flatness}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Small-\(\beta \): flatness emerges as a proxy}{7}{subsection.4.1}\protected@file@percent }
+\newlabel{thm:small_beta}{{1}{7}{Small-\(\beta \) expansion}{theorem.1}{}}
+\newlabel{eq:free_small_beta}{{19}{7}{Small-\(\beta \) expansion}{equation.19}{}}
+\newlabel{eq:Ai_small_beta}{{20}{7}{Small-\(\beta \) expansion}{equation.20}{}}
+\newlabel{cor:quadratic_flatness}{{1}{7}{Local quadratic flatness is a special case}{corollary.1}{}}
+\citation{wortsman2022soups}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Large-\(\beta \): complementarity becomes support coverage}{8}{subsection.4.2}\protected@file@percent }
+\newlabel{thm:large_beta}{{2}{8}{Large-\(\beta \) limit}{theorem.2}{}}
+\newlabel{cor:coverage}{{2}{8}{Optimal coverage in the large-\(\beta \) limit}{corollary.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}A concrete separation from pooled-risk-only reasoning}{8}{subsection.4.3}\protected@file@percent }
+\newlabel{prop:separation}{{3}{8}{A bank example that pooled loss cannot distinguish}{proposition.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Two asymptotic faces of the same objective.} In the small-\(\beta \) regime, adaptation information behaves like loss variance across the bank, which makes flatness the right proxy. In the large-\(\beta \) regime, it behaves like support coverage of domain-optimal checkpoints, which makes complementarity the right proxy.}}{9}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:beta_regimes}{{4}{9}{\textbf {Two asymptotic faces of the same objective.} In the small-\(\beta \) regime, adaptation information behaves like loss variance across the bank, which makes flatness the right proxy. In the large-\(\beta \) regime, it behaves like support coverage of domain-optimal checkpoints, which makes complementarity the right proxy}{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}From bank weights to one deployable soup}{9}{subsection.4.4}\protected@file@percent }
+\newlabel{ass:linearity}{{1}{9}{Local linearity of the bank hull}{assumption.1}{}}
+\newlabel{prop:soup_translation}{{4}{9}{Soup-translation bound}{proposition.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Local-linearity bridge.} The same bank weights drive the optimization objective and the final weighted soup. Under local linearity, the predictive mixture induced by bank weights upper-bounds the true soup risk up to a small residual term.}}{10}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:soup_translation}{{5}{10}{\textbf {Local-linearity bridge.} The same bank weights drive the optimization objective and the final weighted soup. Under local linearity, the predictive mixture induced by bank weights upper-bounds the true soup risk up to a small residual term}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Optimization guarantee}{10}{subsection.4.5}\protected@file@percent }
+\newlabel{thm:convergence}{{3}{10}{Projected-gradient convergence on the full bank}{theorem.3}{}}
+\newlabel{eq:LJ}{{37}{10}{Projected-gradient convergence on the full bank}{equation.37}{}}
+\citation{gulrajani2021domainbed,li2017pacs,fang2013vlcs,venkateswara2017officehome,beery2018terraincognita,peng2019domainnet}
+\citation{cha2021swad,rame2022diwa,cha2022miro}
+\citation{cha2021swad,rame2022diwa}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Optimization remains one simplex problem.} \textup  {\textsc  {MAIWA}}{} does not preselect a candidate set and then optimize on top of it. The entire checkpoint bank stays live throughout optimization.}}{11}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:landscape}{{6}{11}{\textbf {Optimization remains one simplex problem.} \maiwa {} does not preselect a candidate set and then optimize on top of it. The entire checkpoint bank stays live throughout optimization}{figure.caption.13}{}}
+\citation{cha2021swad}
+\citation{rame2022diwa}
 \citation{cha2022miro}
-\citation{cha2021wad}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{cha2022miro}
+\citation{li2018mldg,cha2022miro}
+\citation{cha2021swad}
 \citation{rame2022diwa}
 \citation{cha2022miro}
 \citation{cha2022miro}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Low-temperature complementarity.} Each column is a checkpoint, each row is a source domain, and darker cells indicate lower domain loss. When different domains prefer different checkpoints, the adaptation-information term becomes a code-length penalty for missing those checkpoints. The full-bank posterior therefore spreads mass across complementary atoms instead of collapsing to a single point.}}{10}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:coverage}{{4}{10}{\textbf {Low-temperature complementarity.} Each column is a checkpoint, each row is a source domain, and darker cells indicate lower domain loss. When different domains prefer different checkpoints, the adaptation-information term becomes a code-length penalty for missing those checkpoints. The full-bank posterior therefore spreads mass across complementary atoms instead of collapsing to a single point}{figure.caption.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published DomainBed reference points.} Exact numbers copied from the cited papers. The evaluation protocols are not identical in every case, so these rows are reference points rather than one-for-one replacements for a same-bank replay study.}}{10}{table.caption.12}\protected@file@percent }
-\newlabel{tab:published}{{1}{10}{\textbf {Published DomainBed reference points.} Exact numbers copied from the cited papers. The evaluation protocols are not identical in every case, so these rows are reference points rather than one-for-one replacements for a same-bank replay study}{table.caption.12}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Published reference points and experimental protocol}{10}{section.6}\protected@file@percent }
-\newlabel{sec:experiments}{{6}{10}{Published reference points and experimental protocol}{section.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Published reference points}{10}{subsection.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Planned \textup  {\textsc  {MAIWA}}{} evaluation}{10}{subsection.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Core benchmark.}{10}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Bank construction.}{10}{section*.14}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Hyperparameters.}{10}{section*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Ablations.}{10}{section*.16}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Expected comparisons.}{10}{section*.17}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Planned main table.} All \textup  {\textsc  {MAIWA}}{} rows are intentionally blank because these runs have not been executed yet.}}{11}{table.caption.18}\protected@file@percent }
-\newlabel{tab:tbd-main}{{2}{11}{\textbf {Planned main table.} All \maiwa {} rows are intentionally blank because these runs have not been executed yet}{table.caption.18}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{11}{section.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A}Full proofs}{12}{appendix.A}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Proposition~\ref {prop:variational}}{12}{subsection.A.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Proposition~\ref {prop:grad-hess}}{13}{subsection.A.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Proof of Theorem~\ref {thm:smooth}}{14}{subsection.A.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Theorem~\ref {thm:pgd}}{14}{subsection.A.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Step 1: smoothness inequality.}{14}{section*.19}\protected@file@percent }
-\newlabel{eq:descent-lemma}{{86}{14}{Step 1: smoothness inequality}{equation.86}{}}
-\@writefile{toc}{\contentsline {paragraph}{Step 2: projection optimality.}{15}{section*.20}\protected@file@percent }
-\newlabel{eq:proj-ineq}{{91}{15}{Step 2: projection optimality}{equation.91}{}}
-\@writefile{toc}{\contentsline {paragraph}{Step 3: one-step descent.}{15}{section*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Step 4: telescoping sum.}{15}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Step 5: stationarity of limit points.}{15}{section*.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Theorem~\ref {thm:smallbeta}}{16}{subsection.A.5}\protected@file@percent }
-\newlabel{eq:AK}{{103}{16}{Proof of Theorem~\ref {thm:smallbeta}}{equation.103}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Proof of Corollary~\ref {cor:quadratic}}{16}{subsection.A.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Proof of Theorem~\ref {thm:lowtemp}}{17}{subsection.A.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Proof of Corollary~\ref {cor:counts}}{17}{subsection.A.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.9}Proof of Theorem~\ref {thm:separation}}{18}{subsection.A.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.10}Proof of Proposition~\ref {prop:soup}}{18}{subsection.A.10}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published DomainBed context from prior work.} The \textup  {\textsc  {SWAD}}{} row reproduces the single-number ResNet-50 five-dataset table from \citet  {cha2021swad}. The \textup  {\textsc  {DiWA}}{} row reproduces the strongest LP multi-run row from \citet  {rame2022diwa}. The \textup  {\textsc  {MIRO}}{} rows reproduce the numbers reported in \citet  {cha2022miro}. These are informative published reference points, not identical protocols.}}{12}{table.caption.14}\protected@file@percent }
+\newlabel{tab:published_context}{{1}{12}{\textbf {Published DomainBed context from prior work.} The \swad {} row reproduces the single-number ResNet-50 five-dataset table from \citet {cha2021swad}. The \diwa {} row reproduces the strongest LP multi-run row from \citet {rame2022diwa}. The \miro {} rows reproduce the numbers reported in \citet {cha2022miro}. These are informative published reference points, not identical protocols}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Experimental Protocol and Published Baselines}{12}{section.5}\protected@file@percent }
+\newlabel{sec:experiments}{{5}{12}{Experimental Protocol and Published Baselines}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Protocol to be executed}{12}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Published baseline context}{12}{subsection.5.2}\protected@file@percent }
 \bibstyle{plainnat}
 \bibdata{references}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Additional experimental placeholders}{19}{appendix.B}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Implementation details}{19}{subsection.B.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Compute budget}{19}{subsection.B.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Per-dataset tables}{19}{subsection.B.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Sensitivity plots}{19}{subsection.B.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Failure cases}{19}{subsection.B.5}\protected@file@percent }
-\gdef \@abspage@last{19}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Planned primary \textup  {\textsc  {MAIWA}}{} results table.} All cells for the new method are intentionally left as \textbf  {TBD}{} until the runs are executed.}}{13}{table.caption.15}\protected@file@percent }
+\newlabel{tab:main_tbd}{{2}{13}{\textbf {Planned primary \maiwa {} results table.} All cells for the new method are intentionally left as \TBD {} until the runs are executed}{table.caption.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Planned diagnostics.} These quantities will test the theory directly rather than only reporting accuracy.}}{13}{table.caption.16}\protected@file@percent }
+\newlabel{tab:diagnostics_tbd}{{3}{13}{\textbf {Planned diagnostics.} These quantities will test the theory directly rather than only reporting accuracy}{table.caption.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Result tables to be filled after execution}{13}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion and Limitations}{13}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What is genuinely new.}{13}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What is assumed rather than proved.}{13}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What could falsify the theory.}{13}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why the full-bank formulation matters.}{13}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{13}{section.7}\protected@file@percent }
+\bibcite{cha2021wad}{{1}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{cha2022miro}{{2}{2022}{{Cha et~al.}}{{Cha, Lee, Park, and Chun}}}
+\bibcite{izmailov2018swa}{{3}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{li2018mldg}{{4}{2018}{{Li et~al.}}{{Li, Yang, Song, and Hospedales}}}
+\bibcite{rame2022fishr}{{5}{2022}{{Rame et~al.}}{{Rame, Dancette, and Cord}}}
+\bibcite{rame2022diwa}{{6}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\bibcite{wortsman2022soups}{{7}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Li, Kim, Hajishirzi, Farhadi, Namkoong, and Schmidt}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {Two views of the same object.} The shared prior \(w\) is chosen once on the full bank. Domains do not each get their own selector; they only get their own specialization tilt from the same prior.}}{14}{figure.caption.22}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {Optimization and deployment intuition.} The left panel emphasizes that \textup  {\textsc  {MAIWA}}{} is one simplex optimization over the full bank. The right panel emphasizes that the same weights define the bank objective and the final soup.}}{15}{figure.caption.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Visual Intuition}{15}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B}Proofs}{15}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Proof of Proposition~\ref {prop:variational}}{15}{subsection.B.1}\protected@file@percent }
+\newlabel{eq:var_problem_appendix}{{40}{15}{Proof of Proposition~\ref {prop:variational}}{equation.40}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Proof of Proposition~\ref {prop:closed_form}}{16}{subsection.B.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Proof of Theorem~\ref {thm:small_beta}}{17}{subsection.B.3}\protected@file@percent }
+\newlabel{eq:Ai_free_identity}{{69}{17}{Proof of Theorem~\ref {thm:small_beta}}{equation.69}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Proof of Corollary~\ref {cor:quadratic_flatness}}{18}{subsection.B.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}Proof of Theorem~\ref {thm:large_beta}}{18}{subsection.B.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Proof of Corollary~\ref {cor:coverage}}{19}{subsection.B.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Proof of Proposition~\ref {prop:separation}}{20}{subsection.B.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.8}Proof of Proposition~\ref {prop:soup_translation}}{20}{subsection.B.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.9}Proof of Theorem~\ref {thm:convergence}}{21}{subsection.B.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 1: Hessian bound for \(A_i\).}{21}{section*.24}\protected@file@percent }
+\newlabel{eq:hessian_A}{{112}{21}{Step 1: Hessian bound for \(A_i\)}{equation.112}{}}
+\@writefile{toc}{\contentsline {paragraph}{Step 2: Smoothness of \(J\).}{21}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 3: Projected-gradient descent and stationarity.}{21}{section*.26}\protected@file@percent }
+\newlabel{eq:descentlemma}{{122}{21}{Step 3: Projected-gradient descent and stationarity}{equation.122}{}}
+\newlabel{eq:projineq}{{126}{22}{Step 3: Projected-gradient descent and stationarity}{equation.126}{}}
+\gdef \@abspage@last{22}

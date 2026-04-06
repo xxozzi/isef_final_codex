@@ -1,48 +1,46 @@
-This is BibTeX, Version 0.99d
+This is BibTeX, Version 0.99d (TeX Live 2025)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: d_cola_neurips.aux
-Reallocating 'name_of_file' (item size: 1) to 9 items.
 The style file: plainnat.bst
-Reallocating 'name_of_file' (item size: 1) to 12 items.
 Database file #1: d_cola_refs.bib
 You've used 7 entries,
             2773 wiz_defined-function locations,
-            621 strings with 6441 characters,
-and the built_in function-call counts, 4058 in all, are:
-= -- 296
-> -- 381
+            624 strings with 6361 characters,
+and the built_in function-call counts, 4047 in all, are:
+= -- 302
+> -- 363
 < -- 1
-+ -- 128
-- -- 120
-* -- 359
-:= -- 650
++ -- 121
+- -- 114
+* -- 357
+:= -- 642
 add.period$ -- 21
 call.type$ -- 7
-change.case$ -- 61
-chr.to.int$ -- 6
+change.case$ -- 59
+chr.to.int$ -- 7
 cite$ -- 14
-duplicate$ -- 163
-empty$ -- 277
-format.name$ -- 129
-if$ -- 821
-int.to.chr$ -- 2
+duplicate$ -- 164
+empty$ -- 287
+format.name$ -- 123
+if$ -- 823
+int.to.chr$ -- 1
 int.to.str$ -- 1
 missing$ -- 7
 newline$ -- 43
 num.names$ -- 28
-pop$ -- 146
+pop$ -- 140
 preamble$ -- 1
-purify$ -- 54
+purify$ -- 52
 quote$ -- 0
-skip$ -- 124
+skip$ -- 125
 stack$ -- 0
-substring$ -- 14
-swap$ -- 15
+substring$ -- 39
+swap$ -- 13
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 77
 warning$ -- 0
-while$ -- 21
+while$ -- 23
 width$ -- 0
-write$ -- 91
+write$ -- 92

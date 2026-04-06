@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  6 APR 2026 12:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  6 APR 2026 15:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**d_cola_neurips.tex
-(./d_cola_neurips.tex
+**main.tex
+(./main.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -593,27 +593,27 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count328
 \l__pdf_internal_box=\box63
 )
-(./d_cola_neurips.aux)
-\openout1 = `d_cola_neurips.aux'.
+(./main.aux)
+\openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 62.
-LaTeX Font Info:    ... okay on input line 62.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -681,28 +681,28 @@ LaTeX Font Info:    ... okay on input line 62.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 62.
-(./d_cola_neurips.out) (./d_cola_neurips.out)
+Package hyperref Info: Link coloring OFF on input line 69.
+(./main.out) (./main.out)
 \@outlinefile=\write3
-\openout3 = `d_cola_neurips.out'.
+\openout3 = `main.out'.
 
 Package microtype Info: Patching varwidth to enable character protrusion.
 \MT@vwid@leftmargin=\dimen271
 \MT@vwid@rightmargin=\dimen272
-LaTeX Info: Redefining \microtypecontext on input line 62.
-Package microtype Info: Applying patch `item' on input line 62.
-Package microtype Info: Applying patch `toc' on input line 62.
-Package microtype Info: Applying patch `eqnum' on input line 62.
-Package microtype Info: Applying patch `footnote' on input line 62.
-Package microtype Info: Applying patch `verbatim' on input line 62.
-LaTeX Info: Redefining \microtypesetup on input line 62.
+LaTeX Info: Redefining \microtypecontext on input line 69.
+Package microtype Info: Applying patch `item' on input line 69.
+Package microtype Info: Applying patch `toc' on input line 69.
+Package microtype Info: Applying patch `eqnum' on input line 69.
+Package microtype Info: Applying patch `footnote' on input line 69.
+Package microtype Info: Applying patch `verbatim' on input line 69.
+LaTeX Info: Redefining \microtypesetup on input line 69.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 62.
+LaTeX Info: Redefining \showhyphens on input line 69.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -740,7 +740,7 @@ Package caption Info: End \AtBeginDocument code.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 65.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 72.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -749,7 +749,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 65.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 72.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -764,77 +764,79 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
 al/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 8
-3.
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 9
+4.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-<figures/dcola_overview.pdf, id=157, 897.35912pt x 296.59608pt>
-File: figures/dcola_overview.pdf Graphic file (type pdf)
-<use figures/dcola_overview.pdf>
-Package pdftex.def Info: figures/dcola_overview.pdf  used on input line 103.
-(pdftex.def)             Requested size: 397.48499pt x 131.37613pt.
+<figures/cda_overview.png, id=169, 798.1318pt x 180.90085pt>
+File: figures/cda_overview.png Graphic file (type png)
+<use figures/cda_overview.png>
+Package pdftex.def Info: figures/cda_overview.png  used on input line 115.
+(pdftex.def)             Requested size: 397.48499pt x 90.09134pt.
 
 
 [2]
 
-[3 <./figures/dcola_overview.pdf>]
+[3 <./figures/cda_overview.png>]
 
 [4]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 291.
-<figures/dcola_surrogate_panels.pdf, id=282, 847.48952pt x 256.1299pt>
-File: figures/dcola_surrogate_panels.pdf Graphic file (type pdf)
-<use figures/dcola_surrogate_panels.pdf>
-Package pdftex.def Info: figures/dcola_surrogate_panels.pdf  used on input line
- 308.
-(pdftex.def)             Requested size: 397.48499pt x 120.13094pt.
+<figures/cda_surrogate_panels.png, id=256, 740.54166pt x 280.49794pt>
+File: figures/cda_surrogate_panels.png Graphic file (type png)
+<use figures/cda_surrogate_panels.png>
+Package pdftex.def Info: figures/cda_surrogate_panels.png  used on input line 3
+25.
+(pdftex.def)             Requested size: 397.48499pt x 150.55498pt.
 
 
-[5 <./figures/dcola_surrogate_panels.pdf>]
+[5 <./figures/cda_surrogate_panels.png>]
+<figures/cda_flatness_vs_canalization.png, id=272, 686.11331pt x 277.11028pt>
+File: figures/cda_flatness_vs_canalization.png Graphic file (type png)
+<use figures/cda_flatness_vs_canalization.png>
+Package pdftex.def Info: figures/cda_flatness_vs_canalization.png  used on inpu
+t line 382.
+(pdftex.def)             Requested size: 194.76982pt x 78.66434pt.
+<figures/cda_hidden_shift_simplex.png, id=273, 346.896pt x 304.43738pt>
+File: figures/cda_hidden_shift_simplex.png Graphic file (type png)
+<use figures/cda_hidden_shift_simplex.png>
+Package pdftex.def Info: figures/cda_hidden_shift_simplex.png  used on input li
+ne 387.
+(pdftex.def)             Requested size: 194.76982pt x 170.9297pt.
 
-[6]
+
+[6 <./figures/cda_flatness_vs_canalization.png> <./figures/cda_hidden_shift_sim
+plex.png>]
 
 [7]
-<figures/dcola_2d_principle.pdf, id=446, 827.40428pt x 255.83089pt>
-File: figures/dcola_2d_principle.pdf Graphic file (type pdf)
-<use figures/dcola_2d_principle.pdf>
-Package pdftex.def Info: figures/dcola_2d_principle.pdf  used on input line 566
-.
-(pdftex.def)             Requested size: 397.48499pt x 122.90282pt.
-<figures/dcola_hidden_shift.pdf, id=447, 797.93071pt x 319.98991pt>
-File: figures/dcola_hidden_shift.pdf Graphic file (type pdf)
-<use figures/dcola_hidden_shift.pdf>
-Package pdftex.def Info: figures/dcola_hidden_shift.pdf  used on input line 573
-.
-(pdftex.def)             Requested size: 397.48499pt x 159.40375pt.
-<figures/dcola_noncontiguity.pdf, id=448, 826.6674pt x 319.99187pt>
-File: figures/dcola_noncontiguity.pdf Graphic file (type pdf)
-<use figures/dcola_noncontiguity.pdf>
-Package pdftex.def Info: figures/dcola_noncontiguity.pdf  used on input line 58
-0.
-(pdftex.def)             Requested size: 397.48499pt x 153.858pt.
-<figures/dcola_3d_basin.pdf, id=449, 346.6792pt x 346.6792pt>
-File: figures/dcola_3d_basin.pdf Graphic file (type pdf)
-<use figures/dcola_3d_basin.pdf>
-Package pdftex.def Info: figures/dcola_3d_basin.pdf  used on input line 587.
-(pdftex.def)             Requested size: 397.48499pt x 397.50891pt.
-<figures/dcola_simplex_face.pdf, id=450, 410.49359pt x 363.37355pt>
-File: figures/dcola_simplex_face.pdf Graphic file (type pdf)
-<use figures/dcola_simplex_face.pdf>
-Package pdftex.def Info: figures/dcola_simplex_face.pdf  used on input line 594
-.
-(pdftex.def)             Requested size: 341.83733pt x 302.61462pt.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 540.
+<figures/cda_method_panels.png, id=312, 831.78253pt x 186.32109pt>
+File: figures/cda_method_panels.png Graphic file (type png)
+<use figures/cda_method_panels.png>
+Package pdftex.def Info: figures/cda_method_panels.png  used on input line 559.
+
+(pdftex.def)             Requested size: 397.48499pt x 89.03792pt.
 
 
-[8 <./figures/dcola_2d_principle.pdf>]
+[8]
 
-[9 <./figures/dcola_hidden_shift.pdf> <./figures/dcola_noncontiguity.pdf>]
+[9 <./figures/cda_method_panels.png>]
+<figures/cda_3d_basin.png, id=345, 590.80725pt x 435.42674pt>
+File: figures/cda_3d_basin.png Graphic file (type png)
+<use figures/cda_3d_basin.png>
+Package pdftex.def Info: figures/cda_3d_basin.png  used on input line 674.
+(pdftex.def)             Requested size: 194.76982pt x 143.54509pt.
+<figures/cda_simplex_face.png, id=346, 321.37566pt x 295.17778pt>
+File: figures/cda_simplex_face.png Graphic file (type png)
+<use figures/cda_simplex_face.png>
+Package pdftex.def Info: figures/cda_simplex_face.png  used on input line 679.
+(pdftex.def)             Requested size: 194.76982pt x 178.90063pt.
 
-[10 <./figures/dcola_3d_basin.pdf>]
 
-[11 <./figures/dcola_simplex_face.pdf>] (./d_cola_neurips.bbl)
+[10 <./figures/cda_3d_basin.png> <./figures/cda_simplex_face.png>]
+
+[11]
 
 [12]
 
@@ -842,46 +844,47 @@ Package pdftex.def Info: figures/dcola_simplex_face.pdf  used on input line 594
 
 [14]
 
-[15] (./d_cola_neurips.aux)
+[15]
+
+[16] (./main.bbl
+
+[17])
+
+[18] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `d_cola_neurips.out' has not changed.
-(rerunfilecheck)             Checksum: 3E63FCDFFFF6010AC12EE989E3BB494C;6571.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: ACBC6A1E5492B3B5EC31245FB70D4958;7311.
  ) 
 Here is how much of TeX's memory you used:
- 18630 strings out of 473190
- 298281 string characters out of 5715801
- 744041 words of memory out of 5000000
- 41147 multiletter control sequences out of 15000+600000
- 633179 words of font info for 302 fonts, out of 8000000 for 9000
+ 18689 strings out of 473190
+ 298814 string characters out of 5715801
+ 743623 words of memory out of 5000000
+ 41164 multiletter control sequences out of 15000+600000
+ 617395 words of font info for 298 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,1844b,604s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,1851b,612s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb><
-/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
-usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
-sr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr
-/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/l
-ocal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loc
-al/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
-/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/te
-xlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texli
-ve/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/
-2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2
-025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/202
-5/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2025/texm
-f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/
-texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist
-/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/typ
-e1/urw/times/utmri8a.pfb>
-Output written on d_cola_neurips.pdf (15 pages, 615021 bytes).
+></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></u
+sr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/loca
+l/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/t
+exlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
+xlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texl
+ive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texliv
+e/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/te
+xlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025
+/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dis
+t/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (18 pages, 1185926 bytes).
 PDF statistics:
- 854 PDF objects out of 1000 (max. 8388607)
- 484 compressed objects within 5 object streams
- 120 named destinations out of 1000 (max. 500000)
- 60724 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 560 PDF objects out of 1000 (max. 8388607)
+ 491 compressed objects within 5 object streams
+ 155 named destinations out of 1000 (max. 500000)
+ 50508 words of extra memory for PDF output out of 51595 (max. 10000000)
 

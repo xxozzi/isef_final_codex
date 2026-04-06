@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  6 APR 2026 02:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  6 APR 2026 02:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -22,13 +22,11 @@ File: size10.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen141
-) (./neurips.sty
-
-LaTeX Warning: You have requested package `neurips',
-               but the package provides `neurips_2021'.
-
+)
+(./neurips_2021.sty
 Package: neurips_2021 2021/03/31 NeurIPS 2021 submission/camera-ready style fil
 e
+
 (/usr/local/texlive/2025/texmf-dist/tex/latex/environ/environ.sty
 Package: environ 2014/05/04 v0.3 A new way to define environments
 
@@ -379,71 +377,17 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks27
 \@floatcapt=\box56
 )
-(/usr/local/texlive/2025/texmf-dist/tex/latex/adjustbox/adjustbox.sty
-Package: adjustbox 2025/02/26 v1.3c Adjusting TeX boxes (trim, clip, ...)
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
-
-(/usr/local/texlive/2025/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-(/usr/local/texlive/2025/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks28
-\XKV@tempa@toks=\toks29
-)
-\XKV@depth=\count298
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-))
-(/usr/local/texlive/2025/texmf-dist/tex/latex/adjustbox/adjcalc.sty
-Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
--ends (calc, etex, pgfmath)
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/adjustbox/trimclip.sty
-Package: trimclip 2025/02/21 v1.2a Trim and clip general TeX material
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/collectbox/collectbox.sty
-Package: collectbox 2022/10/17 v0.4c Collect macro arguments as boxes
-\collectedbox=\box57
-)
-\tc@llx=\dimen181
-\tc@lly=\dimen182
-\tc@urx=\dimen183
-\tc@ury=\dimen184
-Package trimclip Info: Using driver 'tc-pdftex.def'.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
-File: tc-pdftex.def 2025/02/26 v2.3 Clipping driver for pdftex
-))
-\adjbox@Width=\dimen185
-\adjbox@Height=\dimen186
-\adjbox@Depth=\dimen187
-\adjbox@Totalheight=\dimen188
-\adjbox@pwidth=\dimen189
-\adjbox@pheight=\dimen190
-\adjbox@pdepth=\dimen191
-\adjbox@ptotalheight=\dimen192
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
-Package: ifoddpage 2022/10/18 v1.2 Conditionals for odd/even page detection
-\c@checkoddpage=\count299
-)
-(/usr/local/texlive/2025/texmf-dist/tex/latex/varwidth/varwidth.sty
-Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
-\@vwid@box=\box58
-\sift@deathcycles=\count300
-\@vwid@loff=\dimen193
-\@vwid@roff=\dimen194
-))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
-\thm@style=\toks30
-\thm@bodyfont=\toks31
-\thm@headfont=\toks32
-\thm@notefont=\toks33
-\thm@headpunct=\toks34
+\thm@style=\toks28
+\thm@bodyfont=\toks29
+\thm@headfont=\toks30
+\thm@notefont=\toks31
+\thm@headpunct=\toks32
 \thm@preskip=\skip64
 \thm@postskip=\skip65
 \thm@headsep=\skip66
-\dth@everypar=\toks35
+\dth@everypar=\toks33
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2024/11/05 v2.17t AMS math features
@@ -455,61 +399,61 @@ Package: amstext 2021/08/26 v2.01 AMS text
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks36
-\ex@=\dimen195
+\@emptytoks=\toks34
+\ex@=\dimen181
 ))
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen196
+\pmbraise@=\dimen182
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count301
+\inf@bad=\count298
 LaTeX Info: Redefining \frac on input line 233.
-\uproot@=\count302
-\leftroot@=\count303
+\uproot@=\count299
+\leftroot@=\count300
 LaTeX Info: Redefining \overline on input line 398.
 LaTeX Info: Redefining \colon on input line 409.
-\classnum@=\count304
-\DOTSCASE@=\count305
+\classnum@=\count301
+\DOTSCASE@=\count302
 LaTeX Info: Redefining \ldots on input line 495.
 LaTeX Info: Redefining \dots on input line 498.
 LaTeX Info: Redefining \cdots on input line 619.
-\Mathstrutbox@=\box59
-\strutbox@=\box60
+\Mathstrutbox@=\box57
+\strutbox@=\box58
 LaTeX Info: Redefining \big on input line 721.
 LaTeX Info: Redefining \Big on input line 722.
 LaTeX Info: Redefining \bigg on input line 723.
 LaTeX Info: Redefining \Bigg on input line 724.
-\big@size=\dimen197
+\big@size=\dimen183
 LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
-\macc@depth=\count306
+\macc@depth=\count303
 LaTeX Info: Redefining \bmod on input line 904.
 LaTeX Info: Redefining \pmod on input line 909.
 LaTeX Info: Redefining \smash on input line 939.
 LaTeX Info: Redefining \relbar on input line 969.
 LaTeX Info: Redefining \Relbar on input line 970.
-\c@MaxMatrixCols=\count307
+\c@MaxMatrixCols=\count304
 \dotsspace@=\muskip18
-\c@parentequation=\count308
-\dspbrk@lvl=\count309
-\tag@help=\toks37
-\row@=\count310
-\column@=\count311
-\maxfields@=\count312
-\andhelp@=\toks38
-\eqnshift@=\dimen198
-\alignsep@=\dimen199
-\tagshift@=\dimen256
-\tagwidth@=\dimen257
-\totwidth@=\dimen258
-\lineht@=\dimen259
-\@envbody=\toks39
+\c@parentequation=\count305
+\dspbrk@lvl=\count306
+\tag@help=\toks35
+\row@=\count307
+\column@=\count308
+\maxfields@=\count309
+\andhelp@=\toks36
+\eqnshift@=\dimen184
+\alignsep@=\dimen185
+\tagshift@=\dimen186
+\tagwidth@=\dimen187
+\totwidth@=\dimen188
+\lineht@=\dimen189
+\@envbody=\toks37
 \multlinegap=\skip68
 \multlinetaggap=\skip69
-\mathdisplay@stack=\toks40
+\mathdisplay@stack=\toks38
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
 )
@@ -521,46 +465,46 @@ Package: mathtools 2024/10/04 v1.31 mathematical typesetting tools
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count313
-\calc@Bcount=\count314
-\calc@Adimen=\dimen260
-\calc@Bdimen=\dimen261
+\calc@Acount=\count310
+\calc@Bcount=\count311
+\calc@Adimen=\dimen190
+\calc@Bdimen=\dimen191
 \calc@Askip=\skip70
 \calc@Bskip=\skip71
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count315
+\calc@Ccount=\count312
 \calc@Cskip=\skip72
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/mathtools/mhsetup.sty
 Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 )
-\g_MT_multlinerow_int=\count316
-\l_MT_multwidth_dim=\dimen262
+\g_MT_multlinerow_int=\count313
+\l_MT_multwidth_dim=\dimen192
 \origjot=\skip73
-\l_MT_shortvdotswithinadjustabove_dim=\dimen263
-\l_MT_shortvdotswithinadjustbelow_dim=\dimen264
-\l_MT_above_intertext_sep=\dimen265
-\l_MT_below_intertext_sep=\dimen266
-\l_MT_above_shortintertext_sep=\dimen267
-\l_MT_below_shortintertext_sep=\dimen268
-\xmathstrut@box=\box61
-\xmathstrut@dim=\dimen269
+\l_MT_shortvdotswithinadjustabove_dim=\dimen193
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen194
+\l_MT_above_intertext_sep=\dimen195
+\l_MT_below_intertext_sep=\dimen196
+\l_MT_above_shortintertext_sep=\dimen197
+\l_MT_below_shortintertext_sep=\dimen198
+\xmathstrut@box=\box59
+\xmathstrut@dim=\dimen199
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2025/02/06 v3.11 Customized lists
 \labelindent=\skip74
-\enit@outerparindent=\dimen270
-\enit@toks=\toks41
-\enit@inbox=\box62
-\enit@count@id=\count317
-\enitdp@description=\count318
+\enit@outerparindent=\dimen256
+\enit@toks=\toks39
+\enit@inbox=\box60
+\enit@count@id=\count314
+\enitdp@description=\count315
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
-\@float@every@algorithm=\toks42
-\c@algorithm=\count319
+\@float@every@algorithm=\toks40
+\c@algorithm=\count316
 )
 (/usr/local/texlive/2025/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
@@ -569,59 +513,51 @@ Package: algpseudocode
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count320
-\c@ALG@rem=\count321
-\c@ALG@nested=\count322
+\c@ALG@line=\count317
+\c@ALG@rem=\count318
+\c@ALG@nested=\count319
 \ALG@tlm=\skip75
 \ALG@thistlm=\skip76
-\c@ALG@Lnr=\count323
-\c@ALG@blocknr=\count324
-\c@ALG@storecount=\count325
-\c@ALG@tmpcounter=\count326
+\c@ALG@Lnr=\count320
+\c@ALG@blocknr=\count321
+\c@ALG@storecount=\count322
+\c@ALG@tmpcounter=\count323
 \ALG@tmplength=\skip77
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/local/texlive/2025/texmf-dist/tex/latex/bbm-macros/bbm.sty
-Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
-LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
-(Font)                  U/bbm/m/n --> U/bbm/bx/n on input line 33.
-LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
-(Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
 )
-\c@theorem=\count327
-\c@proposition=\count328
-\c@lemma=\count329
-\c@corollary=\count330
-\c@definition=\count331
-\c@assumption=\count332
-\c@remark=\count333
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+\c@theorem=\count324
+\c@proposition=\count325
+\c@lemma=\count326
+\c@corollary=\count327
+\c@definition=\count328
+\c@assumption=\count329
+\c@remark=\count330
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count334
-\l__pdf_internal_box=\box63
-)
-(./main.aux)
+\l__color_backend_stack_int=\count331
+\l__pdf_internal_box=\box61
+) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 74.
-LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 71.
+LaTeX Font Info:    ... okay on input line 71.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -689,28 +625,25 @@ LaTeX Font Info:    ... okay on input line 74.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 74.
+Package hyperref Info: Link coloring OFF on input line 71.
 (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
-Package microtype Info: Patching varwidth to enable character protrusion.
-\MT@vwid@leftmargin=\dimen271
-\MT@vwid@rightmargin=\dimen272
-LaTeX Info: Redefining \microtypecontext on input line 74.
-Package microtype Info: Applying patch `item' on input line 74.
-Package microtype Info: Applying patch `toc' on input line 74.
-Package microtype Info: Applying patch `eqnum' on input line 74.
-Package microtype Info: Applying patch `footnote' on input line 74.
-Package microtype Info: Applying patch `verbatim' on input line 74.
-LaTeX Info: Redefining \microtypesetup on input line 74.
+LaTeX Info: Redefining \microtypecontext on input line 71.
+Package microtype Info: Applying patch `item' on input line 71.
+Package microtype Info: Applying patch `toc' on input line 71.
+Package microtype Info: Applying patch `eqnum' on input line 71.
+Package microtype Info: Applying patch `footnote' on input line 71.
+Package microtype Info: Applying patch `verbatim' on input line 71.
+LaTeX Info: Redefining \microtypesetup on input line 71.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 74.
+LaTeX Info: Redefining \showhyphens on input line 71.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -720,17 +653,17 @@ File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count335
-\scratchdimen=\dimen273
-\scratchbox=\box64
-\nofMPsegments=\count336
-\nofMParguments=\count337
-\everyMPshowfont=\toks43
-\MPscratchCnt=\count338
-\MPscratchDim=\dimen274
-\MPnumerator=\count339
-\makeMPintoPDFobject=\count340
-\everyMPtoPDFconversion=\toks44
+\scratchcounter=\count332
+\scratchdimen=\dimen257
+\scratchbox=\box62
+\nofMPsegments=\count333
+\nofMParguments=\count334
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count335
+\MPscratchDim=\dimen258
+\MPnumerator=\count336
+\makeMPintoPDFobject=\count337
+\everyMPtoPDFconversion=\toks42
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -748,7 +681,7 @@ Package caption Info: End \AtBeginDocument code.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 77.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 74.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -757,7 +690,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 77.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 74.
 
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -767,24 +700,24 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 
-Package natbib Warning: Citation `cha2021wad' on page 1 undefined on input line
- 79.
+Package natbib Warning: Citation `cha2021swad' on page 1 undefined on input lin
+e 81.
 
 
-Package natbib Warning: Citation `cha2021wad' on page 1 undefined on input line
- 88.
-
-
-Package natbib Warning: Citation `cha2021wad' on page 1 undefined on input line
- 88.
+Package natbib Warning: Citation `cha2021swad' on page 1 undefined on input lin
+e 81.
 
 
 Package natbib Warning: Citation `rame2022diwa' on page 1 undefined on input li
-ne 88.
+ne 81.
 
 
 Package natbib Warning: Citation `cha2022miro' on page 1 undefined on input lin
-e 88.
+e 81.
+
+
+Package natbib Warning: Citation `cha2021swad' on page 1 undefined on input lin
+e 83.
 
 
 
@@ -793,152 +726,547 @@ e 88.
 
 {/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/loc
 al/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}]
-
-Package natbib Warning: Citation `li2018mldg' on page 2 undefined on input line
- 90.
-
-
-Package natbib Warning: Citation `rame2022fishr' on page 2 undefined on input l
-ine 90.
+<figures/maiwa_pipeline.pdf, id=165, 686.565pt x 220.35123pt>
+File: figures/maiwa_pipeline.pdf Graphic file (type pdf)
+<use figures/maiwa_pipeline.pdf>
+Package pdftex.def Info: figures/maiwa_pipeline.pdf  used on input line 124.
+(pdftex.def)             Requested size: 397.48499pt x 127.5718pt.
 
 
-Package natbib Warning: Citation `wortsman2022soups' on page 2 undefined on inp
-ut line 90.
+Package natbib Warning: Citation `cha2021swad' on page 2 undefined on input lin
+e 132.
 
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
-07.
+
+Package natbib Warning: Citation `rame2022diwa' on page 2 undefined on input li
+ne 132.
+
+
+
+[2]
+
+Package natbib Warning: Citation `izmailov2018swa' on page 3 undefined on input
+ line 135.
+
+
+Package natbib Warning: Citation `garipov2018fge' on page 3 undefined on input 
+line 135.
+
+
+Package natbib Warning: Citation `wortsman2022soups' on page 3 undefined on inp
+ut line 135.
+
+
+Package natbib Warning: Citation `li2018mldg' on page 3 undefined on input line
+ 138.
+
+
+Package natbib Warning: Citation `rame2022fishr' on page 3 undefined on input l
+ine 138.
+
+
+Package natbib Warning: Citation `catoni2007pac' on page 3 undefined on input l
+ine 141.
+
+
+Package natbib Warning: Citation `donsker1975asymptotic' on page 3 undefined on
+ input line 141.
+
+
+
+[3 <./figures/maiwa_pipeline.pdf>]
+
+LaTeX Warning: Reference `eq:gibbs_posterior' on page 4 undefined on input line
+ 197.
+
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
+45.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 
-[2]
-<figures/maiwa_pipeline.pdf, id=173, 686.565pt x 220.35123pt>
-File: figures/maiwa_pipeline.pdf Graphic file (type pdf)
-<use figures/maiwa_pipeline.pdf>
-Package pdftex.def Info: figures/maiwa_pipeline.pdf  used on input line 134.
-(pdftex.def)             Requested size: 397.48499pt x 127.5718pt.
-
-
-[3 <./figures/maiwa_pipeline.pdf>]
-<figures/maiwa_simplex_3d.pdf, id=281, 359.47098pt x 386.6977pt>
-File: figures/maiwa_simplex_3d.pdf Graphic file (type pdf)
-<use figures/maiwa_simplex_3d.pdf>
-Package pdftex.def Info: figures/maiwa_simplex_3d.pdf  used on input line 242.
-(pdftex.def)             Requested size: 194.76982pt x 209.5217pt.
-<figures/maiwa_objective_simplex.pdf, id=282, 419.89082pt x 336.03142pt>
-File: figures/maiwa_objective_simplex.pdf Graphic file (type pdf)
-<use figures/maiwa_objective_simplex.pdf>
-Package pdftex.def Info: figures/maiwa_objective_simplex.pdf  used on input lin
-e 249.
-(pdftex.def)             Requested size: 194.76982pt x 155.87357pt.
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 272.
-
-
 [4]
 
-[5 <./figures/maiwa_simplex_3d.pdf> <./figures/maiwa_objective_simplex.pdf>]
+LaTeX Warning: File `simplex_specialization_2d.pdf' not found on input line 258
+.
+
+
+! Package pdftex.def Error: File `simplex_specialization_2d.pdf' not found: usi
+ng draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.258 ...linewidth]{simplex_specialization_2d.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+LaTeX Warning: File `simplex_specialization_3d.pdf' not found on input line 265
+.
+
+
+! Package pdftex.def Error: File `simplex_specialization_3d.pdf' not found: usi
+ng draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.265 ...linewidth]{simplex_specialization_3d.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+
+[5{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
+]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 336.
+
+
+LaTeX Warning: Reference `eq:J_gradient' on page 6 undefined on input line 350.
+
+
+
 
 [6]
-<figures/maiwa_regimes.pdf, id=418, 646.20045pt x 315.22636pt>
-File: figures/maiwa_regimes.pdf Graphic file (type pdf)
-<use figures/maiwa_regimes.pdf>
-Package pdftex.def Info: figures/maiwa_regimes.pdf  used on input line 528.
-(pdftex.def)             Requested size: 194.76982pt x 95.01114pt.
-<figures/maiwa_flatness_quadratic.pdf, id=419, 619.35388pt x 283.43571pt>
-File: figures/maiwa_flatness_quadratic.pdf Graphic file (type pdf)
-<use figures/maiwa_flatness_quadratic.pdf>
-Package pdftex.def Info: figures/maiwa_flatness_quadratic.pdf  used on input li
-ne 535.
-(pdftex.def)             Requested size: 194.76982pt x 89.13135pt.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 364.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\beta' on input line 364.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 410.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\beta' on input line 410.
+
 
 
 [7]
-LaTeX Font Info:    Trying to load font information for U+bbm on input line 583
+
+LaTeX Warning: Reference `thm:large_beta' on page 8 undefined on input line 438
 .
- (/usr/local/texlive/2025/texmf-dist/tex/latex/bbm-macros/ubbm.fd
-File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
-)
-
-[8 <./figures/maiwa_regimes.pdf> <./figures/maiwa_flatness_quadratic.pdf>]
-
-Package natbib Warning: Citation `izmailov2018swa' on page 9 undefined on input
- line 661.
 
 
-Package natbib Warning: Citation `wortsman2022soups' on page 9 undefined on inp
-ut line 661.
+LaTeX Warning: Reference `cor:coverage' on page 8 undefined on input line 459.
 
-<figures/maiwa_support_coverage.pdf, id=572, 629.99759pt x 225.91603pt>
-File: figures/maiwa_support_coverage.pdf Graphic file (type pdf)
-<use figures/maiwa_support_coverage.pdf>
-Package pdftex.def Info: figures/maiwa_support_coverage.pdf  used on input line
- 665.
-(pdftex.def)             Requested size: 397.48499pt x 142.54156pt.
+
+LaTeX Warning: File `beta_regimes.pdf' not found on input line 463.
+
+
+! Package pdftex.def Error: File `beta_regimes.pdf' not found: using draft sett
+ing.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.463 ...phics[width=\linewidth]{beta_regimes.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Package natbib Warning: Citation `wortsman2022soups' on page 8 undefined on inp
+ut line 500.
+
+
+
+[8]
+
+LaTeX Warning: Reference `ass:linearity' on page 9 undefined on input line 519.
+
+
+
+LaTeX Warning: File `soup_translation.pdf' not found on input line 534.
+
+
+! Package pdftex.def Error: File `soup_translation.pdf' not found: using draft 
+setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.534 ...s[width=\linewidth]{soup_translation.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
 
 
 [9]
 
-Package natbib Warning: Citation `cha2021wad' on page 10 undefined on input lin
-e 700.
+[10]
+
+LaTeX Warning: File `simplex_objective_landscape.pdf' not found on input line 5
+85.
 
 
-Package natbib Warning: Citation `cha2022miro' on page 10 undefined on input li
-ne 701.
+! Package pdftex.def Error: File `simplex_objective_landscape.pdf' not found: u
+sing draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.585 ...newidth]{simplex_objective_landscape.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
 
 
-Package natbib Warning: Citation `cha2021wad' on page 10 undefined on input lin
-e 702.
+Package natbib Warning: Citation `gulrajani2021domainbed' on page 11 undefined 
+on input line 595.
 
 
-Package natbib Warning: Citation `rame2022diwa' on page 10 undefined on input l
-ine 703.
+Package natbib Warning: Citation `li2017pacs' on page 11 undefined on input lin
+e 595.
 
 
-Package natbib Warning: Citation `cha2022miro' on page 10 undefined on input li
-ne 704.
+Package natbib Warning: Citation `fang2013vlcs' on page 11 undefined on input l
+ine 595.
 
 
-Package natbib Warning: Citation `cha2022miro' on page 10 undefined on input li
-ne 705.
+Package natbib Warning: Citation `venkateswara2017officehome' on page 11 undefi
+ned on input line 595.
 
 
+Package natbib Warning: Citation `beery2018terraincognita' on page 11 undefined
+ on input line 595.
 
-[10 <./figures/maiwa_support_coverage.pdf>]
+
+Package natbib Warning: Citation `peng2019domainnet' on page 11 undefined on in
+put line 595.
+
+
+Package natbib Warning: Citation `cha2021swad' on page 11 undefined on input li
+ne 595.
+
+
+Package natbib Warning: Citation `rame2022diwa' on page 11 undefined on input l
+ine 595.
+
+
+Package natbib Warning: Citation `cha2022miro' on page 11 undefined on input li
+ne 595.
+
+
+Package natbib Warning: Citation `cha2021swad' on page 11 undefined on input li
+ne 595.
+
+
+Package natbib Warning: Citation `rame2022diwa' on page 11 undefined on input l
+ine 595.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [11]
 
-[12
+LaTeX Warning: Reference `tab:published_context' on page 12 undefined on input 
+line 624.
 
-]
 
-[13]
+Package natbib Warning: Citation `cha2021swad' on page 12 undefined on input li
+ne 629.
+
+
+Package natbib Warning: Citation `rame2022diwa' on page 12 undefined on input l
+ine 629.
+
+
+Package natbib Warning: Citation `cha2022miro' on page 12 undefined on input li
+ne 629.
+
+
+Package natbib Warning: Citation `cha2021swad' on page 12 undefined on input li
+ne 629.
+
+
+Package natbib Warning: Citation `rame2022diwa' on page 12 undefined on input l
+ine 629.
+
+
+Package natbib Warning: Citation `cha2022miro' on page 12 undefined on input li
+ne 629.
+
+
+Package natbib Warning: Citation `li2018mldg' on page 12 undefined on input lin
+e 635.
+
+
+Package natbib Warning: Citation `cha2022miro' on page 12 undefined on input li
+ne 635.
+
+
+Package natbib Warning: Citation `cha2021swad' on page 12 undefined on input li
+ne 636.
+
+
+Package natbib Warning: Citation `rame2022diwa' on page 12 undefined on input l
+ine 637.
+
+
+Package natbib Warning: Citation `cha2022miro' on page 12 undefined on input li
+ne 638.
+
+
+Package natbib Warning: Citation `cha2022miro' on page 12 undefined on input li
+ne 639.
+
+
+LaTeX Warning: Reference `prop:soup_translation' on page 12 undefined on input 
+line 682.
+
+
+
+[12]
+
+LaTeX Warning: Reference `ass:linearity' on page 13 undefined on input line 695
+.
+
+
+LaTeX Warning: Reference `tab:diagnostics_tbd' on page 13 undefined on input li
+ne 698.
+
+(./main.bbl
+
+[13])
+
+LaTeX Warning: File `simplex_specialization_2d.pdf' not found on input line 718
+.
+
+
+! Package pdftex.def Error: File `simplex_specialization_2d.pdf' not found: usi
+ng draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.718 ...linewidth]{simplex_specialization_2d.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `simplex_specialization_3d.pdf' not found on input line 724
+.
+
+
+! Package pdftex.def Error: File `simplex_specialization_3d.pdf' not found: usi
+ng draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.724 ...linewidth]{simplex_specialization_3d.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `simplex_objective_landscape.pdf' not found on input line 7
+34.
+
+
+! Package pdftex.def Error: File `simplex_objective_landscape.pdf' not found: u
+sing draft setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.734 ...newidth]{simplex_objective_landscape.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: File `soup_translation.pdf' not found on input line 740.
+
+
+! Package pdftex.def Error: File `soup_translation.pdf' not found: using draft 
+setting.
+
+See the pdftex.def package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.740 ...s[width=\linewidth]{soup_translation.pdf}
+                                                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
 
 [14]
 
 [15]
-Overfull \hbox (22.90164pt too wide) detected at line 1238
-[]
- []
+
+LaTeX Warning: Reference `eq:free_energy' on page 16 undefined on input line 83
+5.
+
+
+LaTeX Warning: Reference `prop:closed_form' on page 16 undefined on input line 
+838.
+
+
+LaTeX Warning: Reference `def:adapt_kl' on page 16 undefined on input line 841.
+
+
+
+LaTeX Warning: Reference `eq:gibbs_posterior' on page 16 undefined on input lin
+e 847.
+
+
+LaTeX Warning: Reference `eq:Ai_closed' on page 16 undefined on input line 875.
+
 
 
 
 [16]
 
+LaTeX Warning: Reference `eq:Ai_gradient' on page 17 undefined on input line 90
+5.
+
+
+LaTeX Warning: Reference `eq:main_objective' on page 17 undefined on input line
+ 907.
+
+
+LaTeX Warning: Reference `eq:J_gradient' on page 17 undefined on input line 915
+.
+
+
+LaTeX Warning: Reference `thm:small_beta' on page 17 undefined on input line 91
+8.
+
+
+LaTeX Warning: Reference `eq:free_small_beta' on page 17 undefined on input lin
+e 951.
+
+
+LaTeX Warning: Reference `eq:Ai_free_identity' on page 17 undefined on input li
+ne 976.
+
+
+
 [17]
 
+LaTeX Warning: Reference `eq:Ai_small_beta' on page 18 undefined on input line 
+1006.
+
+
+LaTeX Warning: Reference `cor:quadratic_flatness' on page 18 undefined on input
+ line 1009.
+
+
+LaTeX Warning: Reference `thm:small_beta' on page 18 undefined on input line 10
+37.
+
+
+LaTeX Warning: Reference `thm:large_beta' on page 18 undefined on input line 10
+48.
+
+
+
 [18]
-No file main.bbl.
+
+LaTeX Warning: Reference `cor:coverage' on page 19 undefined on input line 1126
+.
+
+
+LaTeX Warning: Reference `prop:separation' on page 19 undefined on input line 1
+170.
+
+
+
+[19]
+
+LaTeX Warning: Reference `thm:large_beta' on page 20 undefined on input line 11
+83.
+
+
+LaTeX Warning: Reference `thm:large_beta' on page 20 undefined on input line 11
+94.
+
+
+LaTeX Warning: Reference `prop:soup_translation' on page 20 undefined on input 
+line 1207.
+
+
+LaTeX Warning: Reference `ass:linearity' on page 20 undefined on input line 121
+4.
+
+
+LaTeX Warning: Reference `thm:convergence' on page 20 undefined on input line 1
+257.
+
+
+LaTeX Warning: Reference `prop:closed_form' on page 20 undefined on input line 
+1263.
+
+
+
+[20]
+
+LaTeX Warning: Reference `eq:Ai_gradient' on page 21 undefined on input line 12
+67.
+
+
+LaTeX Warning: Reference `eq:hessian_A' on page 21 undefined on input line 1296
+.
+
+
+LaTeX Warning: Reference `eq:LJ' on page 21 undefined on input line 1331.
+
+
+LaTeX Warning: Reference `eq:projineq' on page 21 undefined on input line 1376.
+
+
+
+LaTeX Warning: Reference `eq:descentlemma' on page 21 undefined on input line 1
+376.
+
+
+
+[21]
 
 Package natbib Warning: There were undefined citations.
 
 
 
-[19] (./main.aux)
+[22] (./main.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
+
+
+LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
@@ -949,42 +1277,110 @@ Package rerunfilecheck Warning: File `main.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 9AC0A0387CA9EF51FFC599083E8D65AD;6571
-(rerunfilecheck)             After:  4F9B906241132DCC1C6068CBAA984167;6521.
+(rerunfilecheck)             Before: 4F9B906241132DCC1C6068CBAA984167;6521
+(rerunfilecheck)             After:  CBA115EB4B8936807374A5A9A40A2617;6006.
  ) 
 Here is how much of TeX's memory you used:
- 18733 strings out of 473190
- 299445 string characters out of 5715801
- 741102 words of memory out of 5000000
- 41143 multiletter control sequences out of 15000+600000
- 627040 words of font info for 286 fonts, out of 8000000 for 9000
+ 17808 strings out of 473190
+ 284113 string characters out of 5715801
+ 722313 words of memory out of 5000000
+ 40201 multiletter control sequences out of 15000+600000
+ 627471 words of font info for 312 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1334b,708s stack positions out of 10000i,1000n,20000p,200000b,200000s
- </Users/jaydenjeong/Library/texlive/2025/texmf-var/fonts/pk/ljfour/public/bb
-m/bbm10.600pk></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
-pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb
-></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
-usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr
-/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
-local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/lo
-cal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/loca
-l/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/
-texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/te
-xlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/loca
-l/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/
-local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texl
-ive/2025/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/
-texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist
-/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (19 pages, 549570 bytes).
+ 75i,12n,79p,2200b,755s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+pdfTeX warning (dest): name{subsection.A.10} has been referenced but does not e
+xist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.9} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.8} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.7} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.6} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.5} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.4} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.3} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.2} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.A.1} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.2} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.6.1} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.4.6} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.2.4} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.2.3} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.2.2} has been referenced but does not ex
+ist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{subsection.2.1} has been referenced but does not ex
+ist, replaced by a fixed one
+
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></us
+r/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
+local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/lo
+cal/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loca
+l/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
+texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/tex
+live/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
+e/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2
+025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/20
+25/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2025
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2025/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2025/texmf
+-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2025/t
+exmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/20
+25/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2025
+/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dis
+t/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/ty
+pe1/urw/times/utmri8a.pfb>
+Output written on main.pdf (22 pages, 360074 bytes).
 PDF statistics:
- 961 PDF objects out of 1000 (max. 8388607)
- 642 compressed objects within 7 object streams
- 242 named destinations out of 1000 (max. 500000)
- 62271 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 703 PDF objects out of 1000 (max. 8388607)
+ 558 compressed objects within 6 object streams
+ 258 named destinations out of 1000 (max. 500000)
+ 60710 words of extra memory for PDF output out of 61914 (max. 10000000)
 

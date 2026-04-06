@@ -1,492 +1,439 @@
 #!/usr/bin/env python
+"""Generate original figures for the D-COLA paper."""
+
+from __future__ import annotations
+
+import os
 from pathlib import Path
 
-import matplotlib
-matplotlib.use("Agg")
+os.environ.setdefault("MPLBACKEND", "Agg")
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/mplconfig-dcola")
+
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import Normalize
-from matplotlib.patches import ConnectionPatch, FancyArrowPatch, FancyBboxPatch, Rectangle
+from matplotlib.patches import Circle, Ellipse, FancyArrowPatch, FancyBboxPatch, Polygon, Rectangle
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 
 
 ROOT = Path(__file__).resolve().parent
-OUT_DIR = ROOT / "figures"
+FIG_DIR = ROOT / "figures"
+
+BG = "#f6f2ea"
+LIGHT = "#fffdf8"
+INK = "#1d2433"
+BLUE = "#4c78a8"
+TEAL = "#2a9d8f"
+ORANGE = "#e76f51"
+GOLD = "#e9c46a"
+PLUM = "#8b6f9b"
+GREEN = "#6b8e23"
+GRAY = "#d5cfbf"
+RED = "#b0413e"
 
 
-def setup_style() -> None:
+def setup() -> None:
     plt.rcParams.update(
         {
-            "font.size": 10,
+            "font.family": "DejaVu Serif",
+            "font.size": 11,
             "axes.titlesize": 12,
-            "axes.labelsize": 10,
-            "figure.facecolor": "white",
-            "axes.facecolor": "white",
-            "savefig.facecolor": "white",
-            "font.family": "serif",
+            "axes.labelsize": 11,
+            "xtick.labelsize": 9,
+            "ytick.labelsize": 9,
+            "figure.dpi": 220,
+            "savefig.bbox": "tight",
+            "savefig.pad_inches": 0.05,
+            "figure.facecolor": BG,
+            "axes.facecolor": BG,
+            "axes.edgecolor": INK,
+            "axes.labelcolor": INK,
+            "text.color": INK,
+            "xtick.color": INK,
+            "ytick.color": INK,
+            "axes.spines.top": False,
+            "axes.spines.right": False,
         }
     )
+    FIG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def save(fig: plt.Figure, name: str) -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT_DIR / name, bbox_inches="tight")
+    fig.savefig(FIG_DIR / name, bbox_inches="tight")
     plt.close(fig)
 
 
-def draw_covariance_panel(ax, matrix, title, xlabel, ylabel):
-    cmap = plt.get_cmap("magma")
-    norm = Normalize(vmin=0.0, vmax=1.0)
-    n = matrix.shape[0]
-    for i in range(n):
-        for j in range(n):
-            value = matrix[i, j]
-            face = cmap(norm(value))
-            rect = Rectangle(
-                (j, i),
-                1.0,
-                1.0,
-                facecolor=face,
-                edgecolor=(1.0, 1.0, 1.0, 0.9),
-                linewidth=1.2,
-            )
-            ax.add_patch(rect)
-    ax.set_xlim(0, n)
-    ax.set_ylim(n, 0)
-    ax.set_aspect("equal")
-    ax.set_facecolor("#f6f1eb")
-    ax.set_title(title)
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-    ax.set_xticks(np.arange(n) + 0.5)
-    ax.set_yticks(np.arange(n) + 0.5)
-    ax.set_xticklabels([rf"$c_{i}$" for i in range(1, n + 1)])
-    ax.set_yticklabels([rf"$c_{i}$" for i in range(1, n + 1)])
-    for spine in ax.spines.values():
-        spine.set_linewidth(1.1)
-        spine.set_color("#333333")
-    for i in range(n):
-        for j in range(n):
-            value = matrix[i, j]
-            text_color = "white" if value < 0.70 else "black"
-            ax.text(j + 0.5, i + 0.5, f"{value:.2f}", ha="center", va="center", color=text_color, fontsize=8, fontweight="semibold")
-    sm = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
-    sm.set_array([])
-    return sm
-
-
-def add_box(ax, xy, width, height, text, facecolor, edgecolor="#222222"):
-    box = FancyBboxPatch(
-        xy,
-        width,
-        height,
-        boxstyle="round,pad=0.02,rounding_size=0.05",
-        linewidth=1.2,
-        facecolor=facecolor,
-        edgecolor=edgecolor,
-    )
-    ax.add_patch(box)
-    ax.text(
-        xy[0] + width / 2,
-        xy[1] + height / 2,
-        text,
-        ha="center",
-        va="center",
-        wrap=True,
+def arrow(ax, start, end, color=INK, lw=1.6, ms=18, alpha=1.0) -> None:
+    ax.add_patch(
+        FancyArrowPatch(
+            start,
+            end,
+            arrowstyle="-|>",
+            mutation_scale=ms,
+            lw=lw,
+            color=color,
+            alpha=alpha,
+        )
     )
 
 
-def add_arrow(ax, start, end, color="#333333"):
-    arrow = FancyArrowPatch(
-        start,
-        end,
-        arrowstyle="-|>",
-        mutation_scale=12,
-        linewidth=1.4,
-        color=color,
+def box(ax, xy, wh, title: str, subtitle: str, color: str) -> None:
+    x0, y0 = xy
+    w, h = wh
+    ax.add_patch(
+        FancyBboxPatch(
+            (x0, y0),
+            w,
+            h,
+            boxstyle="round,pad=0.18,rounding_size=0.16",
+            facecolor=LIGHT,
+            edgecolor=color,
+            linewidth=1.8,
+        )
     )
-    ax.add_patch(arrow)
+    ax.text(x0 + 0.5 * w, y0 + 0.67 * h, title, ha="center", va="center", fontsize=12, fontweight="bold")
+    ax.text(x0 + 0.5 * w, y0 + 0.30 * h, subtitle, ha="center", va="center", fontsize=9.5, wrap=True)
 
 
-def make_overview() -> None:
-    fig, ax = plt.subplots(figsize=(12, 3.2))
-    ax.set_xlim(0, 10.8)
-    ax.set_ylim(0, 2.4)
+def surface_height(x: np.ndarray, y: np.ndarray) -> np.ndarray:
+    valley = 0.08 * x**2 + 0.06 * y**2 + 0.020 * x * y
+    wrinkle = 0.11 * np.sin(1.1 * x) * np.cos(0.85 * y)
+    ridge = 0.22 * np.exp(-1.8 * ((x - 1.2) ** 2 + 0.7 * (y + 0.1) ** 2))
+    return valley + wrinkle + ridge + 0.12
+
+
+def figure_overview() -> None:
+    fig, ax = plt.subplots(figsize=(15.2, 5.2))
+    ax.set_xlim(0, 19.2)
+    ax.set_ylim(0, 5.5)
     ax.axis("off")
 
-    boxes = [
-        ((0.2, 0.8), 1.7, 0.9, "Dense checkpoint\npool", "#d8e6f2"),
-        ((2.2, 0.8), 1.8, 0.9, "Worst-domain\nanchor", "#f6d8ae"),
-        ((4.4, 0.8), 2.0, 0.9, "Connected-valley\nfilter", "#d9ead3"),
-        ((6.9, 0.8), 2.1, 0.9, "Convex weight\nselection", "#ead1dc"),
-        ((9.4, 0.8), 1.1, 0.9, "Single\nsoup", "#f4cccc"),
+    stages = [
+        (0.45, "Failure profiles", "checkpoints disagree on which source slices they miss", BLUE),
+        (4.7, "Conflict structure", "redundant failures stay aligned; complementary ones cancel", ORANGE),
+        (8.95, "Mergeable region", "only averages that stay faithful to one model are admissible", TEAL),
+        (13.2, "Final soup", "solve one convex weighting problem on the retained family", GREEN),
     ]
-    for pos, w, h, text, color in boxes:
-        add_box(ax, pos, w, h, text, color)
+    for x0, title, subtitle, color in stages:
+        box(ax, (x0, 1.55), (3.3, 2.0), title, subtitle, color)
+    for x in [4.15, 8.4, 12.65]:
+        arrow(ax, (x, 2.55), (x + 0.35, 2.55))
 
-    for x0, x1 in [(1.9, 2.2), (4.0, 4.4), (6.4, 6.9), (9.0, 9.4)]:
-        add_arrow(ax, (x0, 1.25), (x1, 1.25))
+    xs = np.linspace(0.95, 3.25, 12)
+    prof1 = 2.55 + 0.48 * np.sin(np.linspace(0.1, 2.8, 12))
+    prof2 = 2.35 + 0.32 * np.sin(np.linspace(0.35, 3.05, 12))
+    prof3 = 2.75 - 0.42 * np.sin(np.linspace(0.2, 2.9, 12))
+    for yy, color in [(prof1, RED), (prof2, ORANGE), (prof3, TEAL)]:
+        ax.plot(xs, yy, color=color, lw=2.0)
 
-    ax.text(2.95, 0.35, r"$a=\arg\min_t \max_e \widehat{L}_e(\theta_t)$", ha="center")
-    ax.text(5.4, 0.35, r"$\widehat{L}_{\max} \leq \widehat{L}_{\max}(\theta_a)+\epsilon,\; B(t,a)\leq \tau$", ha="center")
-    ax.text(7.95, 0.35, r"$\min_{w\in\Delta} \max_e \widehat{L}^{\mathrm{ens}}_e(w)+\lambda_{\mathrm{cov}}w^\top Cw+\lambda_{\mathrm{loc}}b^\top w$", ha="center")
+    cluster_x = np.array([5.35, 5.95, 6.55, 7.15, 7.75])
+    cluster_y = np.array([2.95, 2.45, 2.8, 2.2, 2.65])
+    ax.scatter(cluster_x[:2], cluster_y[:2], s=70, color=RED, edgecolor=LIGHT, linewidth=0.9)
+    ax.scatter(cluster_x[2:], cluster_y[2:], s=70, color=TEAL, edgecolor=LIGHT, linewidth=0.9)
+    ax.add_patch(Ellipse((5.68, 2.68), 1.05, 0.9, angle=10, facecolor=RED, alpha=0.10, edgecolor=RED, linewidth=1.5))
+    ax.add_patch(Ellipse((7.15, 2.55), 1.45, 1.05, angle=-5, facecolor=TEAL, alpha=0.10, edgecolor=TEAL, linewidth=1.5))
+    ax.text(6.6, 1.25, "covariance penalizes overlap", ha="center", fontsize=10, color=ORANGE)
+
+    region = Ellipse((10.65, 2.55), 2.75, 1.45, angle=8, facecolor=TEAL, alpha=0.10, edgecolor=TEAL, linewidth=1.8)
+    ax.add_patch(region)
+    safe_pts = np.array([[9.7, 2.15], [10.1, 3.0], [10.65, 2.45], [11.2, 2.95], [11.7, 2.2]])
+    ax.scatter(safe_pts[:, 0], safe_pts[:, 1], s=44, color=TEAL, edgecolor=LIGHT, linewidth=0.8)
+    ax.plot([9.55, 10.0, 10.55, 11.1, 11.65], [2.05, 2.75, 3.0, 2.65, 2.15], color=BLUE, lw=2.0, alpha=0.8)
+    ax.text(10.65, 4.38, "flatness is the low-conflict limit", ha="center", fontsize=10, color=PLUM)
+
+    sel = np.array([[13.85, 2.1], [14.75, 3.05], [15.65, 2.25]])
+    ax.scatter(sel[:, 0], sel[:, 1], s=74, color=ORANGE, edgecolor=LIGHT, linewidth=0.8)
+    soup = np.array([14.78, 2.45])
+    ax.scatter([soup[0]], [soup[1]], s=150, color=GREEN, edgecolor=LIGHT, linewidth=1.0)
+    for pt in sel:
+        ax.plot([soup[0], pt[0]], [soup[1], pt[1]], color=GREEN, alpha=0.4, lw=1.2)
+    ax.text(14.9, 1.18, "one deployable soup", ha="center", fontsize=10, color=GREEN)
+
+    ax.text(9.6, 0.45, "mergeable complementarity", fontsize=14, ha="center")
     save(fig, "dcola_overview.pdf")
 
 
-def make_timeline() -> None:
-    fig, axes = plt.subplots(2, 1, figsize=(11, 3.6), sharex=True)
-    times = np.arange(1, 15)
+def figure_surrogate_panels() -> None:
+    fig, axs = plt.subplots(1, 4, figsize=(15.0, 4.2))
+    for ax in axs:
+        ax.set_xlim(0, 10)
+        ax.set_ylim(0, 6)
+        ax.axis("off")
 
-    for ax in axes:
-        ax.set_xlim(0.5, 14.5)
-        ax.set_ylim(0, 1.2)
-        ax.spines[["left", "right", "top"]].set_visible(False)
-        ax.set_yticks([])
-        ax.grid(axis="x", alpha=0.15)
+    axs[0].set_title("1. Robust source-domain fit")
+    simplex = Polygon([[1.3, 1.4], [8.4, 1.4], [4.85, 5.0]], closed=True, facecolor=LIGHT, edgecolor=PLUM, linewidth=1.6)
+    axs[0].add_patch(simplex)
+    for pt, label in [((1.3, 1.4), r"$\pi_1$"), ((8.4, 1.4), r"$\pi_2$"), ((4.85, 5.0), r"$\pi_3$")]:
+        axs[0].scatter([pt[0]], [pt[1]], s=54, color=PLUM, edgecolor=LIGHT, linewidth=0.7)
+        axs[0].text(pt[0], pt[1] - 0.42, label, ha="center", fontsize=10)
+    axs[0].scatter([4.85], [4.25], s=120, marker="*", color=GOLD, edgecolor=INK, linewidth=0.8)
+    axs[0].text(4.85, 0.58, r"$\sup_{\pi\in\Delta^E}\sum_e \pi_e \widehat L_e^{\mathrm{ens}}(w)=\max_e \widehat L_e^{\mathrm{ens}}(w)$", ha="center", fontsize=10)
 
-    axes[0].set_title("SWAD: contiguous uniform averaging")
-    axes[1].set_title("D-COLA: filtered nonuniform soup around worst-domain anchor")
+    axs[1].set_title("2. Hidden-shift conflict")
+    x = np.arange(1, 11)
+    y1 = np.array([2.0, 2.4, 3.0, 3.4, 3.1, 2.5, 1.9, 1.5, 1.8, 2.3])
+    y2 = np.array([1.8, 2.2, 2.8, 3.25, 3.0, 2.4, 1.85, 1.55, 1.75, 2.15])
+    y3 = np.array([2.7, 2.3, 1.8, 1.35, 1.55, 2.15, 2.9, 3.35, 3.1, 2.75])
+    for yy, color in [(y1, RED), (y2, ORANGE), (y3, TEAL)]:
+        axs[1].plot(x, yy, color=color, lw=2.0)
+    axs[1].axhline(2.35, color=INK, lw=0.9, alpha=0.35)
+    axs[1].text(5.5, 0.58, r"$\sup_{\delta^\top \mathbf{1}=0,\;\|\delta\|\leq \rho}\delta^\top L_e w = \rho\|P_\perp L_e w\|_2$", ha="center", fontsize=10)
 
-    axes[0].hlines(0.5, 1, 14, color="#999999", linewidth=1.2)
-    axes[1].hlines(0.5, 1, 14, color="#999999", linewidth=1.2)
+    axs[2].set_title("3. Mergeability remainder")
+    axs[2].add_patch(Ellipse((4.5, 3.1), 4.2, 2.3, angle=10, facecolor=TEAL, alpha=0.10, edgecolor=TEAL, linewidth=1.6))
+    pts = np.array([[2.7, 2.5], [3.6, 3.6], [4.7, 3.05], [5.6, 3.55], [6.25, 2.45]])
+    axs[2].scatter(pts[:, 0], pts[:, 1], s=50, color=TEAL, edgecolor=LIGHT, linewidth=0.8)
+    mix = np.array([4.3, 3.0])
+    soup = np.array([5.2, 2.65])
+    axs[2].scatter([mix[0]], [mix[1]], s=115, color=BLUE, edgecolor=LIGHT, linewidth=0.9)
+    axs[2].scatter([soup[0]], [soup[1]], s=115, color=GREEN, edgecolor=LIGHT, linewidth=0.9)
+    arrow(axs[2], mix, soup, color=INK, lw=1.4, ms=16)
+    axs[2].text(4.3, 4.45, "predictive mixture", color=BLUE, ha="center")
+    axs[2].text(5.2, 1.75, "single soup", color=GREEN, ha="center")
+    axs[2].text(5.0, 0.58, r"$M(w)=\max_e |\widehat L_e(\bar\theta(w))-\widehat L_e^{\mathrm{ens}}(w)|$", ha="center", fontsize=10)
 
-    axes[0].scatter(times, np.full_like(times, 0.5), s=25, color="#88aacc", zorder=3)
-    window = np.arange(5, 11)
-    axes[0].scatter(window, np.full_like(window, 0.5), s=95, color="#1f77b4", zorder=4)
-    axes[0].text(7.5, 0.92, "uniform interval", ha="center", color="#1f77b4")
-    axes[0].text(5, 0.13, r"$t_s$", ha="center")
-    axes[0].text(10, 0.13, r"$t_e$", ha="center")
-
-    weights = np.array([0.0, 0.0, 0.07, 0.0, 0.16, 0.21, 0.0, 0.18, 0.0, 0.14, 0.1, 0.0, 0.14, 0.0])
-    mask = weights > 0
-    sizes = 30 + 420 * weights[mask]
-    axes[1].scatter(times, np.full_like(times, 0.5), s=25, color="#b7b7b7", zorder=3)
-    axes[1].scatter(times[mask], np.full(mask.sum(), 0.5), s=sizes, color="#d62728", zorder=4)
-    axes[1].scatter([6], [0.5], s=180, marker="*", color="#ffbf00", edgecolor="#444444", zorder=5)
-    axes[1].text(6, 0.92, "anchor", ha="center", color="#7f6000")
-    axes[1].text(10.7, 0.92, "nonuniform weights after filtering", ha="center", color="#d62728")
-    axes[1].set_xlabel("Checkpoint index")
-    save(fig, "swad_vs_dcola_timeline.pdf")
-
-
-def synthetic_loss(x, y):
-    valley1 = 0.35 * ((x + 1.0) ** 2 + 1.8 * (y - 0.1) ** 2)
-    valley2 = 0.48 * ((x - 1.1) ** 2 + 1.3 * (y + 0.2) ** 2)
-    ridge = 1.6 * np.exp(-2.4 * (x ** 2 + (y + 0.1) ** 2))
-    return np.minimum(valley1, valley2 + 0.25) + ridge
-
-
-def method_heatmap_data():
-    losses = np.array(
-        [
-            [1.08, 0.96, 0.82, 0.71, 0.60, 0.50, 0.46, 0.49, 0.53, 0.57, 0.65, 0.72, 0.80, 0.92],
-            [0.88, 0.79, 0.67, 0.58, 0.54, 0.50, 0.47, 0.48, 0.52, 0.59, 0.66, 0.70, 0.76, 0.84],
-            [1.22, 1.00, 0.87, 0.74, 0.61, 0.53, 0.45, 0.46, 0.49, 0.56, 0.63, 0.70, 0.83, 1.05],
-            [0.95, 0.82, 0.76, 0.67, 0.59, 0.55, 0.51, 0.50, 0.54, 0.60, 0.64, 0.69, 0.75, 0.83],
-        ]
-    )
-    return losses, losses.max(axis=0), int(np.argmin(losses.max(axis=0)))
-
-
-def candidate_weights():
-    return np.array([0.00, 0.00, 0.05, 0.00, 0.16, 0.21, 0.18, 0.00, 0.14, 0.00, 0.11, 0.15, 0.00, 0.00])
-
-
-def make_valley_geometry() -> None:
-    fig, ax = plt.subplots(figsize=(5.2, 4.1))
-    xs = np.linspace(-2.4, 2.4, 300)
-    ys = np.linspace(-2.0, 2.0, 300)
-    xx, yy = np.meshgrid(xs, ys)
-    zz = synthetic_loss(xx, yy)
-    levels = np.linspace(0.15, 2.6, 14)
-    cs = ax.contourf(xx, yy, zz, levels=levels, cmap="YlGnBu")
-    fig.colorbar(cs, ax=ax, fraction=0.046, pad=0.04)
-
-    candidates = np.array(
-        [
-            [-1.52, 0.15],
-            [-1.26, 0.09],
-            [-1.05, 0.06],
-            [-0.88, 0.03],
-            [-0.68, 0.00],
-        ]
-    )
-    anchor = np.array([-1.03, 0.06])
-    soup = np.average(candidates, axis=0, weights=np.array([0.27, 0.46, 0.27, 0.00, 0.00]))
-
-    ax.plot(candidates[:, 0], candidates[:, 1], "o", color="#d62728", label="candidate checkpoints")
-    ax.plot(anchor[0], anchor[1], marker="*", markersize=14, color="#ffbf00", markeredgecolor="#222222", label="anchor")
-    ax.plot(soup[0], soup[1], marker="D", markersize=7, color="white", markeredgecolor="#222222", label="D-COLA soup")
-    for point in candidates:
-        ax.plot([anchor[0], point[0]], [anchor[1], point[1]], color="white", alpha=0.55, linewidth=1.3)
-    ax.text(0.62, 1.55, "high barrier", color="black")
-    ax.annotate("", xy=(0.12, 0.75), xytext=(0.82, 1.38), arrowprops={"arrowstyle": "->", "lw": 1.2})
-    ax.set_xlabel("Weight-space direction 1")
-    ax.set_ylabel("Weight-space direction 2")
-    ax.legend(loc="lower left", fontsize=8, frameon=True)
-    save(fig, "valley_geometry.pdf")
-
-
-def make_landscape_3d() -> None:
-    fig = plt.figure(figsize=(7.0, 5.6))
-    ax = fig.add_subplot(111, projection="3d")
-    xs = np.linspace(-2.2, 2.2, 120)
-    ys = np.linspace(-1.9, 1.9, 120)
-    xx, yy = np.meshgrid(xs, ys)
-    zz = synthetic_loss(xx, yy)
-
-    ax.plot_surface(xx, yy, zz, cmap="YlGnBu", alpha=0.82, linewidth=0, antialiased=True)
-    ax.contour(xx, yy, zz, zdir="z", offset=0.0, levels=12, colors="white", alpha=0.45, linewidths=0.6)
-
-    candidates = np.array(
-        [
-            [-1.55, 0.15],
-            [-1.24, 0.10],
-            [-1.02, 0.06],
-            [-0.82, 0.02],
-            [-0.52, -0.02],
-            [-0.18, -0.05],
-        ]
-    )
-    vals = synthetic_loss(candidates[:, 0], candidates[:, 1])
-    dcola = np.average(candidates, axis=0, weights=np.array([0.30, 0.40, 0.18, 0.08, 0.04, 0.00]))
-    swad = candidates.mean(axis=0)
-    marker_lift = 0.08
-    vals_lifted = vals + marker_lift
-    dcola_z = synthetic_loss(dcola[0], dcola[1]) + marker_lift
-    swad_z = synthetic_loss(swad[0], swad[1]) + marker_lift
-    ax.plot(candidates[:, 0], candidates[:, 1], vals_lifted, "-o", color="#d62728", linewidth=2.2, markersize=5.5, label="candidate valley")
-    ax.scatter([candidates[2, 0]], [candidates[2, 1]], [vals[2] + 0.12], marker="*", s=260, color="#ffbf00", edgecolor="#333333", depthshade=False, label="anchor")
-    ax.scatter([dcola[0]], [dcola[1]], [dcola_z], marker="D", s=92, color="white", edgecolor="#111111", depthshade=False, label="D-COLA soup")
-    ax.scatter([swad[0]], [swad[1]], [swad_z], marker="s", s=92, color="#1f77b4", edgecolor="#111111", depthshade=False, label="uniform interval soup")
-    ax.text(dcola[0] + 0.16, dcola[1] - 0.12, dcola_z + 0.18, "D-COLA", color="#111111")
-    ax.text(swad[0] + 0.20, swad[1] + 0.06, swad_z + 0.28, "uniform soup", color="#1f77b4")
-    ax.set_xlabel("Direction 1")
-    ax.set_ylabel("Direction 2")
-    ax.set_zlabel("Validation loss")
-    ax.set_zlim(0.0, 2.5)
-    ax.set_box_aspect((1.2, 1.0, 0.55))
-    ax.view_init(elev=55, azim=-148)
-    ax.set_title("Illustrative corner-view loss landscape")
-    ax.legend(loc="upper left", fontsize=8)
-    save(fig, "loss_landscape_3d.pdf")
-
-
-def make_anchor_heatmap() -> None:
-    losses, worst, anchor = method_heatmap_data()
-    domains = ["Dom 1", "Dom 2", "Dom 3", "Dom 4"]
-    checkpoints = np.arange(1, losses.shape[1] + 1)
-
-    fig, (ax0, ax1) = plt.subplots(2, 1, figsize=(8.4, 5.0), gridspec_kw={"height_ratios": [2.2, 1.1]}, sharex=True)
-    im = ax0.imshow(losses, aspect="auto", cmap="YlOrRd")
-    fig.colorbar(im, ax=ax0, fraction=0.03, pad=0.02)
-    ax0.set_yticks(np.arange(len(domains)))
-    ax0.set_yticklabels(domains)
-    ax0.set_title("Worst-domain anchor selection")
-    ax0.scatter([anchor], [2], marker="*", s=250, color="#1f77b4", edgecolor="white")
-    ax0.text(anchor + 0.2, 2.35, "anchor checkpoint", color="#1f77b4")
-
-    ax1.plot(checkpoints, worst, "-o", color="#444444", linewidth=1.8)
-    ax1.scatter([checkpoints[anchor]], [worst[anchor]], s=110, color="#1f77b4", zorder=4)
-    ax1.set_ylabel(r"$\max_e \widehat{L}_e$")
-    ax1.set_xlabel("Checkpoint index")
-    ax1.grid(alpha=0.2)
-    ax1.annotate("min worst-domain loss", xy=(checkpoints[anchor], worst[anchor]), xytext=(checkpoints[anchor] + 1.1, worst[anchor] + 0.16), arrowprops={"arrowstyle": "->"})
-    save(fig, "anchor_heatmap.pdf")
-
-
-def make_barrier_weights() -> None:
-    fig, axes = plt.subplots(1, 3, figsize=(11.5, 3.6), gridspec_kw={"width_ratios": [1.2, 1.0, 1.0]})
-    alpha = np.linspace(0, 1, 100)
-    pass_curve = 0.42 + 0.06 * np.sin(np.pi * alpha) ** 2
-    fail_curve = 0.44 + 0.32 * np.sin(np.pi * alpha) ** 2
-
-    axes[0].plot(alpha, pass_curve, color="#2ca02c", linewidth=2.0, label="passes barrier")
-    axes[0].plot(alpha, fail_curve, color="#d62728", linewidth=2.0, label="fails barrier")
-    axes[0].axhline(0.56, linestyle="--", color="#555555", linewidth=1.2)
-    axes[0].text(0.02, 0.575, r"threshold $\tau$", color="#555555")
-    axes[0].set_xlabel(r"Interpolation coefficient $\alpha$")
-    axes[0].set_ylabel("Average validation loss")
-    axes[0].set_title("Barrier screening")
-    axes[0].legend(fontsize=8, frameon=True)
-    axes[0].grid(alpha=0.2)
-
-    cov = np.array(
-        [
-            [1.00, 0.82, 0.75, 0.15, 0.10],
-            [0.82, 1.00, 0.78, 0.17, 0.13],
-            [0.75, 0.78, 1.00, 0.20, 0.14],
-            [0.15, 0.17, 0.20, 1.00, 0.62],
-            [0.10, 0.13, 0.14, 0.62, 1.00],
-        ]
-    )
-    im = draw_covariance_panel(
-        axes[1],
-        cov,
-        "Loss covariance",
-        "Candidate checkpoint $j$",
-        "Candidate checkpoint $i$",
-    )
-    fig.colorbar(im, ax=axes[1], fraction=0.048, pad=0.04)
-
-    w = np.array([0.02, 0.04, 0.08, 0.26, 0.19, 0.15, 0.11, 0.09, 0.06])
-    axes[2].bar(np.arange(1, len(w) + 1), w, color="#d62728", edgecolor="#333333")
-    axes[2].set_ylim(0, 0.32)
-    axes[2].set_title("Final simplex weights")
-    axes[2].set_xlabel("Candidate index")
-    axes[2].set_ylabel(r"$w_t$")
-    axes[2].grid(axis="y", alpha=0.2)
-    save(fig, "barrier_covariance_weights.pdf")
-
-
-def make_detailed_methodology() -> None:
-    losses, worst, anchor = method_heatmap_data()
-    weights = candidate_weights()
-    fig = plt.figure(figsize=(8.2, 14.0))
-    gs = fig.add_gridspec(4, 1, hspace=1.05)
-    ax_heat = fig.add_subplot(gs[0, 0])
-    ax_barrier = fig.add_subplot(gs[1, 0])
-    ax_cov = fig.add_subplot(gs[2, 0])
-    ax_weight = fig.add_subplot(gs[3, 0])
-    fig.subplots_adjust(left=0.12, right=0.88, top=0.96, bottom=0.05)
-
-    im = ax_heat.imshow(losses, aspect="auto", cmap="YlOrRd")
-    ax_heat.set_title(r"Step 1. Score checkpoints and choose $a=\arg\min_t \max_e \widehat{L}_e(\theta_t)$", pad=12)
-    ax_heat.set_xlabel("Checkpoint index")
-    ax_heat.set_ylabel("Source domain")
-    ax_heat.set_xticks(np.arange(losses.shape[1]))
-    ax_heat.set_xticklabels(np.arange(1, losses.shape[1] + 1))
-    ax_heat.set_yticks(range(4))
-    ax_heat.set_yticklabels(["$e_1$", "$e_2$", "$e_3$", "$e_4$"])
-    ax_heat.scatter([anchor], [2], marker="*", s=240, color="#1f77b4", edgecolor="white", linewidth=1.3, zorder=4)
-    ax_heat.annotate("worst-domain anchor", xy=(anchor, 2), xytext=(anchor + 2.0, 3.25), color="#1f77b4", arrowprops={"arrowstyle": "->", "lw": 1.2})
-    fig.colorbar(im, ax=ax_heat, fraction=0.03, pad=0.02, label="Validation loss")
-
-    alpha = np.linspace(0, 1, 100)
-    curves = [
-        (0.46 + 0.04 * np.sin(np.pi * alpha) ** 2, "#2ca02c", "candidate A: keep"),
-        (0.47 + 0.09 * np.sin(np.pi * alpha) ** 2, "#98df8a", "candidate B: keep"),
-        (0.49 + 0.28 * np.sin(np.pi * alpha) ** 2, "#d62728", "candidate C: reject"),
+    axs[3].set_title("4. Convex surrogate on a face")
+    tri = Polygon([[1.5, 1.3], [8.2, 1.3], [4.85, 5.0]], closed=True, facecolor=LIGHT, edgecolor=GREEN, linewidth=1.6)
+    axs[3].add_patch(tri)
+    levels = [
+        np.array([[2.2, 1.75], [7.4, 1.75], [4.85, 4.35]]),
+        np.array([[2.8, 2.05], [6.8, 2.05], [4.85, 3.85]]),
+        np.array([[3.35, 2.35], [6.3, 2.35], [4.85, 3.45]]),
     ]
-    for curve, color, label in curves:
-        ax_barrier.plot(alpha, curve, color=color, linewidth=2.4, label=label)
-    ax_barrier.axhline(0.58, linestyle="--", color="#555555", linewidth=1.3)
-    ax_barrier.text(0.02, 0.595, r"threshold $\tau$", color="#555555")
-    ax_barrier.set_title(r"Step 2. Filter by interpolation barrier $B(t,a)$", pad=12)
-    ax_barrier.set_xlabel(r"Interpolation coefficient $\alpha$")
-    ax_barrier.set_ylabel("Average validation loss")
-    ax_barrier.set_xlim(0, 1)
-    ax_barrier.grid(alpha=0.22)
-    ax_barrier.legend(loc="upper right", fontsize=9, frameon=True)
+    for poly, alpha in zip(levels, [0.10, 0.15, 0.22]):
+        axs[3].add_patch(Polygon(poly, closed=True, facecolor=GREEN, alpha=alpha, edgecolor=GREEN, linewidth=1.0))
+    axs[3].scatter([4.85], [2.8], s=125, color=GREEN, edgecolor=LIGHT, linewidth=1.0)
+    axs[3].text(4.85, 0.58, r"$\max_e \widehat L_e^{\mathrm{ens}} + \lambda_{\mathrm{cov}} w^\top Cw + \lambda_{\mathrm{loc}} b^\top w$", ha="center", fontsize=10)
+    save(fig, "dcola_surrogate_panels.pdf")
 
-    cov = np.array(
+
+def figure_2d_principle() -> None:
+    fig, axs = plt.subplots(1, 2, figsize=(13.2, 5.2))
+
+    ax = axs[0]
+    ax.set_title("Flat, conflict-free regime")
+    ax.add_patch(Ellipse((0.0, 0.0), 5.8, 3.4, angle=10, facecolor=TEAL, alpha=0.10, edgecolor=TEAL, linewidth=1.8))
+    path = np.array([[-2.0, -0.7], [-1.35, 0.0], [-0.75, 0.6], [-0.1, 0.95], [0.55, 0.88], [1.2, 0.42], [1.8, -0.18]])
+    ax.plot(path[:, 0], path[:, 1], color=BLUE, lw=2.2)
+    ax.scatter(path[:, 0], path[:, 1], s=44, color=BLUE, edgecolor=LIGHT, linewidth=0.8)
+    soup = path.mean(axis=0)
+    ax.scatter([soup[0]], [soup[1]], s=135, color=GOLD, edgecolor=LIGHT, linewidth=1.0, zorder=5)
+    ax.text(0.0, -1.78, "low conflict + low remainder: width alone is enough", ha="center", fontsize=10)
+    ax.set_xlabel("mergeable direction 1")
+    ax.set_ylabel("mergeable direction 2")
+    ax.set_aspect("equal")
+
+    ax = axs[1]
+    ax.set_title("Mergeable complementarity regime")
+    ax.add_patch(Ellipse((0.0, 0.0), 5.8, 3.5, angle=10, facecolor=TEAL, alpha=0.10, edgecolor=TEAL, linewidth=1.8))
+    bank = np.array([[-2.1, -0.75], [-1.55, 0.03], [-0.95, 0.6], [-0.2, 0.98], [0.6, 0.88], [1.1, 0.28], [1.75, -0.33]])
+    ax.plot(bank[:, 0], bank[:, 1], color=GRAY, lw=1.8, alpha=0.8)
+    ax.scatter(bank[:, 0], bank[:, 1], s=36, color=GRAY, edgecolor=LIGHT, linewidth=0.8)
+    sel = bank[[1, 3, 6]]
+    ax.scatter(sel[:, 0], sel[:, 1], s=74, color=ORANGE, edgecolor=LIGHT, linewidth=0.8, zorder=4)
+    final = np.average(sel, axis=0, weights=np.array([0.28, 0.42, 0.30]))
+    ax.scatter([final[0]], [final[1]], s=135, color=GREEN, edgecolor=LIGHT, linewidth=1.0, zorder=5)
+    dirs = [(-0.40, 0.38), (0.36, 0.10), (-0.32, -0.35)]
+    for pt, direction, color in zip(sel, dirs, [RED, BLUE, PLUM]):
+        ax.arrow(pt[0], pt[1], direction[0], direction[1], width=0.010, head_width=0.12, head_length=0.14, color=color, alpha=0.75, length_includes_head=True)
+    ax.text(0.0, -1.82, "same mergeable region, but the best soup is determined by conflict cancellation", ha="center", fontsize=10)
+    ax.set_xlabel("mergeable direction 1")
+    ax.set_ylabel("mergeable direction 2")
+    ax.set_aspect("equal")
+    save(fig, "dcola_2d_principle.pdf")
+
+
+def figure_hidden_shift() -> None:
+    fig, axs = plt.subplots(1, 2, figsize=(13.8, 4.6))
+
+    ax = axs[0]
+    ax.set_title("Centered loss profiles reveal hidden-slice conflict")
+    xs = np.arange(1, 13)
+    r1 = np.array([0.42, 0.38, 0.30, 0.16, -0.05, -0.24, -0.33, -0.28, -0.08, 0.10, 0.25, 0.34])
+    r2 = np.array([0.40, 0.36, 0.28, 0.14, -0.04, -0.20, -0.30, -0.25, -0.06, 0.08, 0.21, 0.31])
+    c1 = np.array([-0.26, -0.18, -0.07, 0.07, 0.22, 0.30, 0.35, 0.22, 0.06, -0.08, -0.18, -0.27])
+    for yy, color, label in [(r1, RED, r"$c_1$"), (r2, ORANGE, r"$c_2$"), (c1, TEAL, r"$c_3$")]:
+        ax.plot(xs, yy, color=color, lw=2.0, label=label)
+    ax.axhline(0.0, color=INK, lw=1.0, alpha=0.4)
+    ax.set_xlabel("validation slice index")
+    ax.set_ylabel("centered negative log-probability")
+    ax.legend(frameon=False, loc="upper right")
+
+    ax = axs[1]
+    ax.set_title("Block structure: redundancy vs complementarity")
+    block = np.array(
         [
-            [1.00, 0.86, 0.80, 0.20, 0.10, 0.08],
-            [0.86, 1.00, 0.83, 0.18, 0.12, 0.09],
-            [0.80, 0.83, 1.00, 0.16, 0.11, 0.10],
-            [0.20, 0.18, 0.16, 1.00, 0.66, 0.58],
-            [0.10, 0.12, 0.11, 0.66, 1.00, 0.72],
-            [0.08, 0.09, 0.10, 0.58, 0.72, 1.00],
+            [1.0, 0.92, 0.22, 0.18, 0.20],
+            [0.92, 1.0, 0.24, 0.20, 0.18],
+            [0.22, 0.24, 1.0, 0.66, 0.62],
+            [0.18, 0.20, 0.66, 1.0, 0.74],
+            [0.20, 0.18, 0.62, 0.74, 1.0],
         ]
     )
-    im2 = draw_covariance_panel(
-        ax_cov,
-        cov,
-        r"Step 3. Estimate the covariance proxy $C$",
-        "Candidate checkpoint $j$",
-        "Candidate checkpoint $i$",
-    )
-    fig.colorbar(im2, ax=ax_cov, fraction=0.03, pad=0.02, label="Empirical covariance")
-
-    keep_idx = np.arange(1, len(weights) + 1)
-    ax_weight.bar(keep_idx, weights, color="#d62728", edgecolor="#333333")
-    ax_weight.set_title(r"Step 4. Optimize $J(w)$ and form the final soup", pad=12)
-    ax_weight.set_xlabel("Retained candidate checkpoint")
-    ax_weight.set_ylabel(r"Weight $w_t$")
-    ax_weight.set_ylim(0, 0.25)
-    ax_weight.grid(axis="y", alpha=0.22)
-    ax_weight.text(
-        0.02,
-        0.97,
-        "Convex objective:\nworst-domain fit + covariance\n+ locality + entropy",
-        transform=ax_weight.transAxes,
-        va="top",
-        fontsize=9,
-        bbox={"facecolor": "white", "edgecolor": "#bbbbbb", "boxstyle": "round,pad=0.25", "alpha": 0.92},
-    )
-
-    arrow_kw = {"arrowstyle": "-|>", "mutation_scale": 20, "linewidth": 1.6, "color": "#444444"}
-    fig.add_artist(ConnectionPatch((0.5, -0.18), (0.5, 1.12), "axes fraction", "axes fraction", axesA=ax_heat, axesB=ax_barrier, **arrow_kw))
-    fig.add_artist(ConnectionPatch((0.5, -0.18), (0.5, 1.12), "axes fraction", "axes fraction", axesA=ax_barrier, axesB=ax_cov, **arrow_kw))
-    fig.add_artist(ConnectionPatch((0.5, -0.18), (0.5, 1.12), "axes fraction", "axes fraction", axesA=ax_cov, axesB=ax_weight, **arrow_kw))
-    save(fig, "dcola_detailed_methodology.pdf")
+    n = block.shape[0]
+    for i in range(n):
+        for j in range(n):
+            val = block[i, j]
+            color = plt.cm.magma(0.22 + 0.68 * val)
+            ax.add_patch(Rectangle((j, n - 1 - i), 1, 1, facecolor=color, edgecolor=LIGHT, linewidth=1.2))
+    ax.add_patch(Rectangle((0, 3), 2, 2, fill=False, edgecolor=RED, linewidth=2.0))
+    ax.add_patch(Rectangle((2, 0), 3, 3, fill=False, edgecolor=TEAL, linewidth=2.0))
+    ax.text(1.0, 5.35, "redundant block", ha="center", color=RED)
+    ax.text(3.5, -0.45, "complementary block", ha="center", color=TEAL)
+    ax.set_xlim(0, n)
+    ax.set_ylim(0, n)
+    ax.set_aspect("equal")
+    ax.set_xticks(np.arange(n) + 0.5)
+    ax.set_yticks(np.arange(n) + 0.5)
+    ax.set_xticklabels([rf"$c_{k}$" for k in range(1, n + 1)])
+    ax.set_yticklabels([rf"$c_{k}$" for k in range(n, 0, -1)])
+    ax.set_xlabel("checkpoint index")
+    ax.set_ylabel("checkpoint index")
+    save(fig, "dcola_hidden_shift.pdf")
 
 
-def make_certificate_terms() -> None:
-    fig, ax = plt.subplots(figsize=(6.0, 4.0))
+def figure_noncontiguity() -> None:
+    fig, axs = plt.subplots(1, 2, figsize=(13.8, 4.8))
+    bank_x = np.linspace(0.8, 9.2, 12)
+    bank_y = 2.8 + 0.85 * np.sin(np.linspace(-0.9, 2.8, 12))
+
+    ax = axs[0]
+    ax.set_title("Contiguous window can stay redundant")
+    ax.plot(bank_x, bank_y, color=BLUE, lw=2.1)
+    ax.scatter(bank_x, bank_y, s=38, color=GRAY, edgecolor=LIGHT, linewidth=0.8)
+    contig = np.arange(4, 8)
+    colors = [RED, RED, ORANGE, ORANGE]
+    for idx, color in zip(contig, colors):
+        ax.scatter([bank_x[idx]], [bank_y[idx]], s=88, color=color, edgecolor=LIGHT, linewidth=0.8, zorder=4)
+    ax.add_patch(Rectangle((3.6, 1.25), 3.0, 3.0, fill=False, edgecolor=RED, linewidth=1.8, linestyle="--"))
+    ax.text(5.1, 0.55, "time adjacency can keep the same failure mode", ha="center", fontsize=10)
+    ax.set_xlim(0.3, 9.7)
+    ax.set_ylim(0.5, 5.2)
+    ax.set_xlabel("checkpoint time")
+    ax.set_ylabel("trajectory coordinate")
+
+    ax = axs[1]
+    ax.set_title("Noncontiguous support can cover different failures")
+    ax.plot(bank_x, bank_y, color=BLUE, lw=2.1, alpha=0.8)
+    ax.scatter(bank_x, bank_y, s=38, color=GRAY, edgecolor=LIGHT, linewidth=0.8)
+    chosen = [1, 5, 10]
+    chosen_colors = [RED, ORANGE, TEAL]
+    for idx, color in zip(chosen, chosen_colors):
+        ax.scatter([bank_x[idx]], [bank_y[idx]], s=92, color=color, edgecolor=LIGHT, linewidth=0.8, zorder=4)
+    soup = np.average(np.column_stack([bank_x[chosen], bank_y[chosen]]), axis=0, weights=np.array([0.32, 0.36, 0.32]))
+    ax.scatter([soup[0]], [soup[1]], s=145, color=GREEN, edgecolor=LIGHT, linewidth=1.0, zorder=5)
+    for idx in chosen:
+        ax.plot([soup[0], bank_x[idx]], [soup[1], bank_y[idx]], color=GREEN, alpha=0.35, lw=1.2)
+    ax.text(5.25, 0.55, "error-structure coverage, not time adjacency, determines the useful face", ha="center", fontsize=10)
+    ax.set_xlim(0.3, 9.7)
+    ax.set_ylim(0.5, 5.2)
+    ax.set_xlabel("checkpoint time")
+    ax.set_ylabel("trajectory coordinate")
+    save(fig, "dcola_noncontiguity.pdf")
+
+
+def figure_3d_basin() -> None:
+    fig = plt.figure(figsize=(11.2, 6.1))
+    ax = fig.add_subplot(111, projection="3d")
+
+    xs = np.linspace(-2.7, 2.7, 140)
+    ys = np.linspace(-2.3, 2.5, 140)
+    X, Y = np.meshgrid(xs, ys)
+    Z = surface_height(X, Y)
+    ax.plot_surface(X, Y, Z, cmap="YlGnBu", linewidth=0, antialiased=True, alpha=0.86)
+    ax.contour(X, Y, Z, zdir="z", offset=0.0, levels=11, colors="white", linewidths=0.7, alpha=0.45)
+
+    traj = np.array([[-2.0, -0.8], [-1.45, -0.05], [-0.95, 0.6], [-0.25, 0.98], [0.55, 0.86], [1.05, 0.32], [1.62, -0.28], [2.0, -0.9]])
+    traj_z = surface_height(traj[:, 0], traj[:, 1]) + 0.06
+    ax.plot(traj[:, 0], traj[:, 1], traj_z, color=BLUE, lw=2.6)
+    ax.scatter(traj[:, 0], traj[:, 1], traj_z, color=BLUE, s=34, depthshade=False)
+
+    selected = traj[[1, 3, 6]]
+    sel_z = surface_height(selected[:, 0], selected[:, 1]) + 0.08
+    soup = np.average(selected, axis=0, weights=np.array([0.28, 0.42, 0.30]))
+    soup_z = surface_height(soup[0], soup[1]) + 0.12
+    bad = np.array([1.65, 1.45])
+    bad_z = surface_height(bad[0], bad[1]) + 0.12
+
+    ax.scatter(selected[:, 0], selected[:, 1], sel_z, color=ORANGE, s=80, depthshade=False)
+    ax.scatter([soup[0]], [soup[1]], [soup_z], color=GREEN, s=125, depthshade=False)
+    ax.scatter([bad[0]], [bad[1]], [bad_z], color=RED, s=105, depthshade=False)
+    for pt, pz in zip(selected, sel_z):
+        ax.plot([soup[0], pt[0]], [soup[1], pt[1]], [soup_z, pz], color=GREEN, alpha=0.38, lw=1.3)
+
+    ax.text(-1.8, -1.15, traj_z[0] + 0.18, "trajectory bank", color=BLUE)
+    ax.text(0.2, -0.25, surface_height(0.2, -0.25) + 0.32, "mergeable face", color=TEAL)
+    ax.text(soup[0] + 0.08, soup[1] - 0.10, soup_z + 0.18, "final soup", color=GREEN)
+    ax.text(bad[0] + 0.08, bad[1] + 0.08, bad_z + 0.18, "invalid cross-ridge average", color=RED)
+
+    ax.view_init(elev=28, azim=-61)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_zticks([])
+    ax.set_xlabel("mergeable direction 1")
+    ax.set_ylabel("mergeable direction 2")
+    ax.set_zlabel("loss")
+    save(fig, "dcola_3d_basin.pdf")
+
+
+def figure_simplex_face() -> None:
+    fig, ax = plt.subplots(figsize=(7.2, 6.4))
+    ax.set_xlim(-0.08, 1.08)
+    ax.set_ylim(-0.08, 0.98)
     ax.axis("off")
-    add_box(ax, (0.15, 2.55), 1.9, 0.7, "Worst-domain\npredictive fit", "#f6d8ae")
-    add_box(ax, (2.4, 2.55), 1.7, 0.7, "Covariance\npenalty", "#ead1dc")
-    add_box(ax, (4.45, 2.55), 1.4, 0.7, "Locality\npenalty", "#d9ead3")
-    add_box(ax, (2.1, 1.3), 2.0, 0.75, "D-COLA objective\n$J(w)$", "#d8e6f2")
-    add_box(ax, (2.05, 0.2), 2.1, 0.75, "Target-risk\ncertificate", "#f4cccc")
-    add_arrow(ax, (1.1, 2.55), (2.75, 2.05))
-    add_arrow(ax, (3.25, 2.55), (3.1, 2.05))
-    add_arrow(ax, (5.05, 2.55), (3.45, 2.05))
-    add_arrow(ax, (3.1, 1.3), (3.1, 0.95))
-    ax.text(0.35, 3.55, r"$J(w)=\max_e \widehat{L}^{\mathrm{ens}}_e(w)+\lambda_{\mathrm{cov}}w^\top Cw+\lambda_{\mathrm{loc}}b^\top w+\lambda_{\mathrm{ent}}\Omega(w)$")
-    ax.text(1.2, -0.1, r"$R_T(\bar{\theta}_w)\leq J(w)+\Xi$ under Assumption 4", color="#7a0000")
-    ax.set_xlim(0, 6.1)
-    ax.set_ylim(-0.3, 3.9)
-    save(fig, "certificate_terms.pdf")
 
+    A = np.array([0.0, 0.0])
+    B = np.array([1.0, 0.0])
+    C = np.array([0.5, 0.866])
+    tri = Polygon([A, B, C], closed=True, facecolor=LIGHT, edgecolor=PLUM, linewidth=1.8)
+    ax.add_patch(tri)
 
-def make_prior_results() -> None:
-    labels = ["ERM", "SWAD", "MA", "ENS", "DiWA", "DiWA LP"]
-    values = [63.3, 66.9, 66.5, 67.1, 67.0, 68.0]
-    colors = ["#999999", "#1f77b4", "#4c78a8", "#72b7b2", "#e45756", "#f58518"]
-    fig, ax = plt.subplots(figsize=(7.2, 4.1))
-    bars = ax.bar(labels, values, color=colors, edgecolor="#333333", linewidth=0.8)
-    ax.set_ylim(60, 69)
-    ax.set_ylabel("Average DomainBed accuracy (%)")
-    ax.set_title("Published post-hoc DG baselines")
-    ax.grid(axis="y", alpha=0.2)
-    for bar, value in zip(bars, values):
-        ax.text(bar.get_x() + bar.get_width() / 2, value + 0.12, f"{value:.1f}", ha="center", va="bottom")
-    ax.axhline(66.9, linestyle="--", linewidth=1.2, color="#1f77b4")
-    ax.text(5.15, 67.08, "SWAD bar", color="#1f77b4", va="bottom")
-    save(fig, "prior_published_results.pdf")
+    def bary_to_xy(w1: float, w2: float, w3: float) -> np.ndarray:
+        return w1 * A + w2 * B + w3 * C
 
+    samples = []
+    values = []
+    for i in range(41):
+        for j in range(41 - i):
+            w1 = i / 40
+            w2 = j / 40
+            w3 = 1 - w1 - w2
+            xy = bary_to_xy(w1, w2, w3)
+            val = 0.18 * (w1 - 0.28) ** 2 + 0.14 * (w2 - 0.34) ** 2 + 0.06 * (w3 - 0.38) ** 2
+            val += 0.02 * (w1 - w2) * (w2 - w3)
+            samples.append(xy)
+            values.append(val)
+    samples = np.array(samples)
+    values = np.array(values)
+    levels = np.linspace(values.min(), values.max(), 7)
+    tcf = ax.tricontourf(samples[:, 0], samples[:, 1], values, levels=levels, cmap="YlGn", alpha=0.75)
+    for coll in tcf.collections:
+        coll.set_edgecolor("face")
 
-def make_tradeoff() -> None:
-    fig, ax = plt.subplots(figsize=(6.2, 4.2))
-    locality = np.array([0.12, 0.18, 0.23, 0.28, 0.34, 0.42, 0.51, 0.61, 0.74, 0.88])
-    covariance = np.array([0.92, 0.75, 0.63, 0.56, 0.48, 0.43, 0.38, 0.36, 0.34, 0.33])
-    ax.plot(locality, covariance, "-o", color="#444444", alpha=0.7)
-    pick = 4
-    ax.scatter(locality[pick], covariance[pick], s=130, color="#d62728", label="D-COLA operating point", zorder=5)
-    ax.annotate("too local,\nhigh redundancy", xy=(0.14, 0.89), xytext=(0.03, 0.97), arrowprops={"arrowstyle": "->"})
-    ax.annotate("too diverse,\nhigh barrier", xy=(0.85, 0.34), xytext=(0.88, 0.54), arrowprops={"arrowstyle": "->"})
-    ax.set_xlabel("Locality penalty / barrier surrogate")
-    ax.set_ylabel("Covariance surrogate")
-    ax.set_title("Covariance-locality trade-off")
-    ax.grid(alpha=0.2)
-    ax.legend(frameon=True)
-    save(fig, "covariance_tradeoff.pdf")
+    active_face = np.array([bary_to_xy(0.55, 0.0, 0.45), bary_to_xy(0.0, 0.58, 0.42)])
+    ax.plot(active_face[:, 0], active_face[:, 1], color=BLUE, lw=3.0)
+    opt = bary_to_xy(0.28, 0.34, 0.38)
+    uni = bary_to_xy(1 / 3, 1 / 3, 1 / 3)
+    ax.scatter([opt[0]], [opt[1]], s=140, color=GREEN, edgecolor=LIGHT, linewidth=1.0, zorder=5)
+    ax.scatter([uni[0]], [uni[1]], s=120, color=GOLD, edgecolor=LIGHT, linewidth=1.0, zorder=5)
+    ax.text(opt[0] + 0.05, opt[1] + 0.03, r"$w_S^\star$", color=GREEN)
+    ax.text(uni[0] - 0.11, uni[1] - 0.08, r"$u_S$", color=GOLD)
+    ax.text(0.5, 0.93, "low-curvature face", ha="center", color=BLUE)
+    ax.text(A[0] - 0.02, A[1] - 0.06, r"$c_1$", ha="center")
+    ax.text(B[0] + 0.02, B[1] - 0.06, r"$c_2$", ha="center")
+    ax.text(C[0], C[1] + 0.05, r"$c_3$", ha="center")
+    ax.text(0.5, -0.05, "uniform and optimal weights can be close once the correct face is found", ha="center", fontsize=10)
+    save(fig, "dcola_simplex_face.pdf")
 
 
 def main() -> None:
-    setup_style()
-    make_overview()
-    make_timeline()
-    make_valley_geometry()
-    make_landscape_3d()
-    make_anchor_heatmap()
-    make_barrier_weights()
-    make_detailed_methodology()
-    make_certificate_terms()
-    make_prior_results()
-    make_tradeoff()
+    setup()
+    figure_overview()
+    figure_surrogate_panels()
+    figure_2d_principle()
+    figure_hidden_shift()
+    figure_noncontiguity()
+    figure_3d_basin()
+    figure_simplex_face()
 
 
 if __name__ == "__main__":

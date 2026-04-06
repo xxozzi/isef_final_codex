@@ -1,0 +1,160 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{gulrajani2021domainbed}
+\citation{cha2021swad}
+\citation{arpit2021ensemble}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc domain generalization.}{2}{section*.3}\protected@file@percent }
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\citation{garipov2018fge,frankle2020linear,wortsman2022soups}
+\citation{bousquet2002stability,hardt2016sgd}
+\citation{simard1991tangent}
+\citation{koh2017influence,duchi2020variance,duchi2021learning}
+\citation{ben2010theory}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Two-part structure of the paper.} Left: the theorem-bearing object is model-level source-mixture sensitivity under a local tangent perturbation model, which yields a target-risk upper bound under source-supported hidden shift. Right: on a completed checkpoint bank, \textup  {\textsc  {CDA}}{} is the operational surrogate obtained by expanding that objective and replacing it with worst-domain source fit, an interaction-based hidden-shift term, and a mergeability penalty.}}{3}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:overview}{{1}{3}{\textbf {Two-part structure of the paper.} Left: the theorem-bearing object is model-level source-mixture sensitivity under a local tangent perturbation model, which yields a target-risk upper bound under source-supported hidden shift. Right: on a completed checkpoint bank, \cda {} is the operational surrogate obtained by expanding that objective and replacing it with worst-domain source fit, an interaction-based hidden-shift term, and a mergeability penalty}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Flatness, diversity, and weight averaging.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stability and data-distribution perturbations.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{DG theory and robust source risk.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Distributional Canalization}{3}{section.3}\protected@file@percent }
+\newlabel{sec:canalization}{{3}{3}{Distributional Canalization}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Model-level setup}{3}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:ambiguity}{{1}{3}{Model-level setup}{equation.1}{}}
+\newlabel{eq:model_robust_risk}{{2}{4}{Model-level setup}{equation.2}{}}
+\newlabel{def:sensitivity}{{3.1}{4}{Source-mixture sensitivity}{theorem.3.1}{}}
+\newlabel{eq:sensitivity}{{3}{4}{Source-mixture sensitivity}{equation.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Why low source-mixture sensitivity improves generalization}{4}{subsection.3.2}\protected@file@percent }
+\newlabel{ass:source_supported}{{3.2}{4}{Source-supported hidden shift}{theorem.3.2}{}}
+\newlabel{eq:source_supported}{{4}{4}{Source-supported hidden shift}{equation.4}{}}
+\newlabel{thm:target_control}{{3.3}{4}{Target-risk control by distributional canalization}{theorem.3.3}{}}
+\newlabel{eq:target_control_abstract}{{5}{4}{Target-risk control by distributional canalization}{equation.5}{}}
+\newlabel{eq:target_control_explicit}{{6}{4}{Target-risk control by distributional canalization}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Exact ambiguity identity}{4}{subsection.3.3}\protected@file@percent }
+\newlabel{prop:exact_identity}{{3.4}{4}{Exact local hidden-shift identity for the tangent model}{theorem.3.4}{}}
+\newlabel{eq:exact_identity}{{7}{4}{Exact local hidden-shift identity for the tangent model}{equation.7}{}}
+\newlabel{eq:exact_sensitivity}{{8}{4}{Exact local hidden-shift identity for the tangent model}{equation.8}{}}
+\newlabel{prop:worst_domain_prior}{{3.5}{4}{Worst-domain risk as a robust prior}{theorem.3.5}{}}
+\newlabel{eq:worst_domain_identity}{{9}{4}{Worst-domain risk as a robust prior}{equation.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Canalization decomposes into fit, sensitivity, and interaction.} Left: local source-mixture ambiguity over domain weights. Middle: the exact sensitivity term becomes a centered norm. Right: under a local affine response model, that norm induces pairwise interactions between checkpoints, revealing redundancy and complementarity.}}{5}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:surrogate}{{2}{5}{\textbf {Canalization decomposes into fit, sensitivity, and interaction.} Left: local source-mixture ambiguity over domain weights. Middle: the exact sensitivity term becomes a centered norm. Right: under a local affine response model, that norm induces pairwise interactions between checkpoints, revealing redundancy and complementarity}{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Variance and interaction decompositions}{5}{subsection.3.4}\protected@file@percent }
+\newlabel{prop:variance_form}{{3.6}{5}{Variance form}{theorem.3.6}{}}
+\newlabel{eq:variance_form}{{10}{5}{Variance form}{equation.10}{}}
+\newlabel{eq:affine_proxy}{{11}{5}{Variance and interaction decompositions}{equation.11}{}}
+\newlabel{prop:interaction}{{3.7}{5}{Interaction decomposition under the affine proxy}{theorem.3.7}{}}
+\newlabel{eq:quadratic_canalization}{{12}{5}{Interaction decomposition under the affine proxy}{equation.12}{}}
+\newlabel{eq:pairwise_interaction}{{13}{5}{Interaction decomposition under the affine proxy}{equation.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Why flatness can help under this larger theory}{5}{subsection.3.5}\protected@file@percent }
+\newlabel{thm:flatness_corollary}{{3.8}{5}{Low-curvature aligned neighborhoods imply canalization}{theorem.3.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Why canalization and pooled flatness can disagree.} Left: two minima can have the same pooled curvature while differing in source-mixture sensitivity. Right: the local hidden-shift ambiguity set lives in source-mixture space, not parameter space.}}{6}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:principle}{{3}{6}{\textbf {Why canalization and pooled flatness can disagree.} Left: two minima can have the same pooled curvature while differing in source-mixture sensitivity. Right: the local hidden-shift ambiguity set lives in source-mixture space, not parameter space}{figure.caption.8}{}}
+\newlabel{eq:flatness_bound}{{14}{6}{Low-curvature aligned neighborhoods imply canalization}{equation.14}{}}
+\newlabel{thm:separation}{{3.9}{6}{Constructive separation from pooled flatness}{theorem.3.9}{}}
+\newlabel{eq:separation_losses}{{15}{6}{Constructive separation from pooled flatness}{equation.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Canalized Domain Averaging}{6}{section.4}\protected@file@percent }
+\newlabel{sec:method}{{4}{6}{Canalized Domain Averaging}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Checkpoint bank and theorem-aligned objective}{6}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:ens_loss}{{16}{7}{Checkpoint bank and theorem-aligned objective}{equation.16}{}}
+\newlabel{eq:theorem_aligned_family}{{17}{7}{Checkpoint bank and theorem-aligned objective}{equation.17}{}}
+\newlabel{eq:mergeability}{{18}{7}{Checkpoint bank and theorem-aligned objective}{equation.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}From the theorem-aligned objective to \textup  {\textsc  {CDA}}{}}{7}{subsection.4.2}\protected@file@percent }
+\newlabel{ass:affine}{{4.1}{7}{Local affine response model}{theorem.4.1}{}}
+\newlabel{thm:surrogate_upper}{{4.2}{7}{Quadratic surrogate upper bound}{theorem.4.2}{}}
+\newlabel{eq:surrogate_upper}{{19}{7}{Quadratic surrogate upper bound}{equation.19}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces \textup  {\textsc  {CDA}}{} on a checkpoint bank}}{8}{algorithm.1}\protected@file@percent }
+\newlabel{alg:cda}{{1}{8}{\cda {} on a checkpoint bank}{algorithm.1}{}}
+\newlabel{eq:practical_objective}{{20}{8}{From the theorem-aligned objective to \cda {}}{equation.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Operational family construction for the surrogate}{8}{subsection.4.3}\protected@file@percent }
+\newlabel{subsec:family}{{4.3}{8}{Operational family construction for the surrogate}{subsection.4.3}{}}
+\newlabel{eq:anchor}{{21}{8}{Operational family construction for the surrogate}{equation.21}{}}
+\newlabel{eq:family}{{22}{8}{Operational family construction for the surrogate}{equation.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Theory for the Practical Objective}{8}{section.5}\protected@file@percent }
+\newlabel{sec:theory}{{5}{8}{Theory for the Practical Objective}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Convexity and optimization}{8}{subsection.5.1}\protected@file@percent }
+\newlabel{prop:convexity}{{5.1}{8}{Convexity}{theorem.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {What the practical \textup  {\textsc  {CDA}}{} pipeline is doing.} Every panel here is operational rather than theorem-bearing. The bank is first restricted by a heuristic mergeability screen. The optimizer then chooses weights to reduce worst-domain source loss while suppressing an interaction-based surrogate of hidden-shift sensitivity. The final output is still one deployable soup, and the predictive-mixture-to-soup bridge is controlled only conditionally through mergeability.}}{9}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:method}{{4}{9}{\textbf {What the practical \cda {} pipeline is doing.} Every panel here is operational rather than theorem-bearing. The bank is first restricted by a heuristic mergeability screen. The optimizer then chooses weights to reduce worst-domain source loss while suppressing an interaction-based surrogate of hidden-shift sensitivity. The final output is still one deployable soup, and the predictive-mixture-to-soup bridge is controlled only conditionally through mergeability}{figure.caption.9}{}}
+\newlabel{thm:convergence}{{5.2}{9}{Projected-subgradient convergence}{theorem.5.2}{}}
+\newlabel{eq:psg_rate}{{23}{9}{Projected-subgradient convergence}{equation.23}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Exact control of the deployed soup is conditional}{9}{subsection.5.2}\protected@file@percent }
+\newlabel{ass:mergeability}{{5.3}{9}{Mergeability remainder}{theorem.5.3}{}}
+\newlabel{eq:mergeability_assumption}{{24}{9}{Mergeability remainder}{equation.24}{}}
+\newlabel{thm:transfer}{{5.4}{9}{Predictive-mixture-to-single-soup transfer}{theorem.5.4}{}}
+\newlabel{eq:max_transfer}{{25}{9}{Predictive-mixture-to-single-soup transfer}{equation.25}{}}
+\newlabel{eq:canal_transfer}{{26}{9}{Predictive-mixture-to-single-soup transfer}{equation.26}{}}
+\newlabel{eq:objective_transfer}{{27}{9}{Predictive-mixture-to-single-soup transfer}{equation.27}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Mergeability and support discovery.} Left: a corner-view illustration of a locally mergeable region inside a checkpoint bank. Right: once a complementary face of the simplex is found, objective curvature can be low enough that exact weights matter less than the support itself.}}{10}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:3d}{{5}{10}{\textbf {Mergeability and support discovery.} Left: a corner-view illustration of a locally mergeable region inside a checkpoint bank. Right: once a complementary face of the simplex is found, objective curvature can be low enough that exact weights matter less than the support itself}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Why exact weights can matter less than support discovery}{10}{subsection.5.3}\protected@file@percent }
+\newlabel{thm:face}{{5.5}{10}{Low-curvature face bound}{theorem.5.5}{}}
+\newlabel{eq:face_bound}{{28}{10}{Low-curvature face bound}{equation.28}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Empirical Evaluation}{10}{section.6}\protected@file@percent }
+\newlabel{sec:experiments}{{6}{10}{Empirical Evaluation}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Evaluation protocol}{10}{subsection.6.1}\protected@file@percent }
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{arpit2021ensemble}
+\citation{rame2022diwa}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {Published benchmark context from prior post-hoc DG papers.} These are exact published numbers, copied from the cited sources. They are reference context, not direct head-to-head reruns under a single codebase.}}{11}{table.caption.11}\protected@file@percent }
+\newlabel{tab:published_context}{{1}{11}{\textbf {Published benchmark context from prior post-hoc DG papers.} These are exact published numbers, copied from the cited sources. They are reference context, not direct head-to-head reruns under a single codebase}{table.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Published PACS domain-wise context.} Values are exact published out-of-domain accuracies from the cited papers.}}{11}{table.caption.12}\protected@file@percent }
+\newlabel{tab:pacs_context}{{2}{11}{\textbf {Published PACS domain-wise context.} Values are exact published out-of-domain accuracies from the cited papers}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Published benchmark context}{11}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Manuscript replacement tables}{11}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}What would count as evidence for the theory}{11}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{11}{section.7}\protected@file@percent }
+\newlabel{sec:discussion}{{7}{11}{Discussion}{section.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Why this is beyond flatness.}{11}{section*.16}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Expected full-benchmark table for final replacement.} Gray italic values are placeholders, not empirical claims.}}{12}{table.caption.13}\protected@file@percent }
+\newlabel{tab:expected_main}{{3}{12}{\textbf {Expected full-benchmark table for final replacement.} Gray italic values are placeholders, not empirical claims}{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Expected PACS domain-wise table for final replacement.} Gray italic values are placeholders, not empirical claims.}}{12}{table.caption.14}\protected@file@percent }
+\newlabel{tab:expected_pacs}{{4}{12}{\textbf {Expected PACS domain-wise table for final replacement.} Gray italic values are placeholders, not empirical claims}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {paragraph}{Why complementarity appears automatically.}{12}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why mergeability must remain explicit.}{12}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What would falsify the paper's thesis.}{12}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Limitations}{12}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{12}{section.9}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces \textbf  {Expected ablation table for final replacement.} Gray italic values are placeholders, not empirical claims.}}{13}{table.caption.15}\protected@file@percent }
+\newlabel{tab:expected_ablation}{{5}{13}{\textbf {Expected ablation table for final replacement.} Gray italic values are placeholders, not empirical claims}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Proofs}{13}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Proof of Theorem~\ref {thm:target_control}}{13}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Proof of Proposition~\ref {prop:exact_identity}}{13}{subsection.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Proof of Proposition~\ref {prop:worst_domain_prior}}{14}{subsection.A.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Proposition~\ref {prop:variance_form}}{14}{subsection.A.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Proof of Proposition~\ref {prop:interaction}}{14}{subsection.A.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Proof of Theorem~\ref {thm:surrogate_upper}}{14}{subsection.A.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Proof of Theorem~\ref {thm:flatness_corollary}}{15}{subsection.A.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Proof of Theorem~\ref {thm:separation}}{15}{subsection.A.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.9}Proof of Proposition~\ref {prop:convexity}}{16}{subsection.A.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.10}Proof of Theorem~\ref {thm:convergence}}{16}{subsection.A.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.11}Proof of Theorem~\ref {thm:transfer}}{16}{subsection.A.11}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{arpit2021ensemble}{{1}{2022}{{Arpit et~al.}}{{Arpit, Wang, Zhou, and Xiong}}}
+\bibcite{ben2010theory}{{2}{2010}{{Ben-David et~al.}}{{Ben-David, Blitzer, Crammer, and Pereira}}}
+\bibcite{bousquet2002stability}{{3}{2002}{{Bousquet and Elisseeff}}{{}}}
+\bibcite{cha2021swad}{{4}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{duchi2020variance}{{5}{2020}{{Duchi and Namkoong}}{{}}}
+\bibcite{duchi2021learning}{{6}{2021}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{frankle2020linear}{{7}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{garipov2018fge}{{8}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\bibcite{gulrajani2021domainbed}{{9}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{hardt2016sgd}{{10}{2016}{{Hardt et~al.}}{{Hardt, Recht, and Singer}}}
+\bibcite{koh2017influence}{{11}{2017}{{Koh and Liang}}{{}}}
+\bibcite{rame2022diwa}{{12}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.12}Proof of Theorem~\ref {thm:face}}{17}{subsection.A.12}\protected@file@percent }
+\bibcite{simard1991tangent}{{13}{1992}{{Simard et~al.}}{{Simard, Victorri, LeCun, and Denker}}}
+\bibcite{wortsman2022soups}{{14}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\gdef \@abspage@last{18}
