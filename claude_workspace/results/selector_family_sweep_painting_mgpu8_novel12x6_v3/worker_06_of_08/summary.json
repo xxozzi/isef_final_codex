@@ -1,0 +1,7 @@
+{
+  "best_mean_full_acc": 0.8857421875,
+  "best_scheme": "blackwell_target_set_selector__target_epsilon_0p015",
+  "failed_count": 0,
+  "record_count": 9,
+  "success_count": 9
+}

@@ -1,0 +1,7 @@
+{
+  "best_mean_full_acc": 0.875,
+  "best_scheme": "checkpoint_banzhaf_selector__positive_mass_0p6",
+  "failed_count": 0,
+  "record_count": 10,
+  "success_count": 10
+}

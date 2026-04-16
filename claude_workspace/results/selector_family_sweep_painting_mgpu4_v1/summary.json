@@ -1,0 +1,7 @@
+{
+  "best_mean_full_acc": 0.88134765625,
+  "best_scheme": "topological_persistence_selector__feature_persistence_prob_0p9",
+  "failed_count": 0,
+  "record_count": 53,
+  "success_count": 53
+}

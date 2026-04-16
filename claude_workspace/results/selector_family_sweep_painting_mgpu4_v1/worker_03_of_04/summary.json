@@ -1,0 +1,7 @@
+{
+  "best_mean_full_acc": 0.87548828125,
+  "best_scheme": "dpp_repulsive_subset__feature_gainfloor_loss_0p05",
+  "failed_count": 0,
+  "record_count": 13,
+  "success_count": 13
+}

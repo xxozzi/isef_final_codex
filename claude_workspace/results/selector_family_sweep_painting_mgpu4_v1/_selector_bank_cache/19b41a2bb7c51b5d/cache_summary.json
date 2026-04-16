@@ -1,0 +1,18 @@
+{
+  "bank_cache_version": "selector_family_bank_cache_v1",
+  "cache_key": "19b41a2bb7c51b5d",
+  "checkpoint_count": 300,
+  "keys": [
+    "curve_indices",
+    "quality_curve",
+    "quantile_curves",
+    "quantile_prefix_means",
+    "sorted_losses",
+    "support_losses",
+    "support_mean_losses",
+    "support_tail_losses",
+    "support_true_probs",
+    "validation_losses"
+  ],
+  "support_example_count": 1111
+}

@@ -1,0 +1,189 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{izmailov2018swa,garipov2018mode,frankle2020linear,cha2021swad,wortsman2022soups}
+\citation{rame2022diwa,arpit2022eoa}
+\citation{gulrajani2021domainbed}
+\@writefile{toc}{\contentsline {paragraph}{Contributions.}{2}{section*.2}\protected@file@percent }
+\citation{gulrajani2021domainbed}
+\citation{li2017deeper}
+\citation{ben2010theory}
+\citation{izmailov2018swa}
+\citation{garipov2018mode,frankle2020linear}
+\citation{wortsman2022soups}
+\citation{cha2021swad}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {CDA certificate anatomy.} The target-risk certificate decomposes into source fit, source-mixture sensitivity, and a mergeability remainder. Flatness-based methods primarily control the mergeability term. Diversity-based methods help when centered domain responses cancel under the chosen weights.}}{3}{figure.caption.4}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:certificate}{{1}{3}{\textbf {CDA certificate anatomy.} The target-risk certificate decomposes into source fit, source-mixture sensitivity, and a mergeability remainder. Flatness-based methods primarily control the mergeability term. Diversity-based methods help when centered domain responses cancel under the chosen weights}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Roadmap.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Domain generalization and model selection.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Flatness-based post-hoc averaging.}{3}{section*.6}\protected@file@percent }
+\citation{rame2022diwa}
+\citation{arpit2022eoa}
+\citation{bousquet2002stability,hardt2016sgd}
+\citation{koh2017influence}
+\citation{duchi2020variance,duchi2021dro}
+\citation{simard1992tangent}
+\citation{floyd1989sample,graepel2005pacbayes}
+\citation{blackwell1956analog}
+\@writefile{toc}{\contentsline {paragraph}{Diversity-based post-hoc averaging.}{4}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stability, local robustness, and reweighting.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Compression, version spaces, and Blackwell target sets.}{4}{section*.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Distributional Canalization}{4}{section.3}\protected@file@percent }
+\newlabel{sec:theory}{{3}{4}{Distributional Canalization}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Source-supported hidden shift}{4}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:ambiguity_set}{{1}{5}{Source-supported hidden shift}{equation.1}{}}
+\newlabel{ass:hidden_shift}{{3.1}{5}{Source-supported hidden shift}{theorem.3.1}{}}
+\newlabel{eq:hidden_shift}{{2}{5}{Source-supported hidden shift}{equation.2}{}}
+\newlabel{thm:cda_certificate}{{3.2}{5}{CDA target-risk certificate}{theorem.3.2}{}}
+\newlabel{eq:cda_certificate}{{3}{5}{CDA target-risk certificate}{equation.3}{}}
+\newlabel{cor:exact_robust}{{3.3}{5}{Exact local robust source risk}{theorem.3.3}{}}
+\newlabel{eq:exact_robust}{{4}{5}{Exact local robust source risk}{equation.4}{}}
+\newlabel{prop:worst_domain_prior}{{3.4}{5}{Worst-domain source fit as a robust prior}{theorem.3.4}{}}
+\newlabel{eq:worst_domain_prior}{{5}{5}{Worst-domain source fit as a robust prior}{equation.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Diversity as centered domain-response cancellation}{6}{subsection.3.2}\protected@file@percent }
+\newlabel{prop:interaction}{{3.5}{6}{Pairwise interaction decomposition}{theorem.3.5}{}}
+\newlabel{eq:interaction_decomp}{{6}{6}{Pairwise interaction decomposition}{equation.6}{}}
+\newlabel{eq:quadratic_canalization}{{7}{6}{Pairwise interaction decomposition}{equation.7}{}}
+\newlabel{cor:variance}{{3.6}{6}{Variance and pairwise-domain form}{theorem.3.6}{}}
+\newlabel{eq:variance_pairwise}{{8}{6}{Variance and pairwise-domain form}{equation.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Flatness as mergeability control}{6}{subsection.3.3}\protected@file@percent }
+\newlabel{def:mergeability}{{3.7}{6}{Mergeability remainder}{theorem.3.7}{}}
+\newlabel{thm:soup_certificate}{{3.8}{6}{Retained-family soup certificate}{theorem.3.8}{}}
+\newlabel{eq:soup_certificate}{{9}{6}{Retained-family soup certificate}{equation.9}{}}
+\newlabel{prop:flatness}{{3.9}{7}{Low-curvature flatness implies mergeability}{theorem.3.9}{}}
+\newlabel{eq:flatness_mergeability}{{10}{7}{Low-curvature flatness implies mergeability}{equation.10}{}}
+\newlabel{thm:pooled_separation}{{3.10}{7}{Constructive separation from pooled flatness}{theorem.3.10}{}}
+\newlabel{eq:pooled_sep_losses}{{11}{7}{Constructive separation from pooled flatness}{equation.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Why pooled flatness and CDA can disagree.} Left: two minima can have the same pooled curvature while differing in source-mixture sensitivity. Right: the hidden-shift ambiguity set lives in source-mixture space, which is why a centered domain-response term can distinguish models that pooled curvature treats as equivalent.}}{8}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:principle}{{2}{8}{\textbf {Why pooled flatness and CDA can disagree.} Left: two minima can have the same pooled curvature while differing in source-mixture sensitivity. Right: the hidden-shift ambiguity set lives in source-mixture space, which is why a centered domain-response term can distinguish models that pooled curvature treats as equivalent}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Version-Space Compression for Checkpoint Families}{8}{section.4}\protected@file@percent }
+\newlabel{sec:vsc}{{4}{8}{Version-Space Compression for Checkpoint Families}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Threshold-disagreement preservation}{8}{subsection.4.1}\protected@file@percent }
+\newlabel{eq:full_disagreement}{{12}{8}{Threshold-disagreement preservation}{equation.12}{}}
+\newlabel{eq:vsc_mismatch}{{13}{8}{Threshold-disagreement preservation}{equation.13}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Version-space compression selector}}{9}{algorithm.1}\protected@file@percent }
+\newlabel{alg:vsc}{{1}{9}{Version-space compression selector}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Compression-style certificate}{9}{subsection.4.2}\protected@file@percent }
+\newlabel{ass:vsc_bridge}{{4.1}{9}{Disagreement-to-certificate bridge}{theorem.4.1}{}}
+\newlabel{eq:vsc_bridge}{{14}{9}{Disagreement-to-certificate bridge}{equation.14}{}}
+\newlabel{thm:vsc_bound}{{4.2}{9}{Version-space compression tradeoff}{theorem.4.2}{}}
+\newlabel{eq:vsc_bound}{{15}{9}{Version-space compression tradeoff}{equation.15}{}}
+\newlabel{cor:noncontiguous}{{4.3}{9}{Non-contiguity is allowed by the certificate}{theorem.4.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Version-space compression on the art-painting split.} The selected family contains 18 non-contiguous checkpoints from a 300-checkpoint bank. The mismatch to the full-bank threshold-disagreement mask drops from \(0.3078\) to \(0.0477\), crossing the \(0.05\) tolerance.}}{10}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:vsc}{{3}{10}{\textbf {Version-space compression on the art-painting split.} The selected family contains 18 non-contiguous checkpoints from a 300-checkpoint bank. The mismatch to the full-bank threshold-disagreement mask drops from \(0.3078\) to \(0.0477\), crossing the \(0.05\) tolerance}{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}CDA Weighting Rules}{10}{section.5}\protected@file@percent }
+\newlabel{sec:weights}{{5}{10}{CDA Weighting Rules}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Pivotality-shift guard}{10}{subsection.5.1}\protected@file@percent }
+\newlabel{eq:pivotality}{{16}{10}{Pivotality-shift guard}{equation.16}{}}
+\newlabel{eq:piv_score}{{17}{10}{Pivotality-shift guard}{equation.17}{}}
+\newlabel{eq:piv_weight}{{18}{10}{Pivotality-shift guard}{equation.18}{}}
+\newlabel{prop:piv_taylor}{{5.1}{10}{First-order interpretation of pivotality}{theorem.5.1}{}}
+\newlabel{eq:piv_taylor}{{19}{10}{First-order interpretation of pivotality}{equation.19}{}}
+\citation{blackwell1956analog}
+\newlabel{prop:piv_linear_proxy}{{5.2}{11}{Positive-score normalization improves the linearized proxy}{theorem.5.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Blackwell-dual target weights}{11}{subsection.5.2}\protected@file@percent }
+\newlabel{eq:blackwell_target}{{20}{11}{Blackwell-dual target weights}{equation.20}{}}
+\newlabel{eq:bd_objective}{{21}{11}{Blackwell-dual target weights}{equation.21}{}}
+\newlabel{prop:bd_projection}{{5.3}{11}{Attainability-gap interpretation of \bd {}}{theorem.5.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Two CDA-derived weighting rules.} \textup  {\textsc  {CDA-Piv}}{} favors checkpoints that are pivotal under leave-one-out removal while penalizing source-mixture sensitivity. \textup  {\textsc  {CDA-BD}}{} moves the source-domain loss vector toward the coordinatewise best-loss target set with entropy regularization.}}{12}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:weights}{{4}{12}{\textbf {Two CDA-derived weighting rules.} \piv {} favors checkpoints that are pivotal under leave-one-out removal while penalizing source-mixture sensitivity. \bd {} moves the source-domain loss vector toward the coordinatewise best-loss target set with entropy regularization}{figure.caption.12}{}}
+\newlabel{prop:target_set}{{5.4}{12}{Target-set certificate control}{theorem.5.4}{}}
+\newlabel{eq:bd_bound}{{22}{12}{Target-set certificate control}{equation.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}From Certificate to Practical Recipe}{12}{section.6}\protected@file@percent }
+\newlabel{sec:method_overview}{{6}{12}{From Certificate to Practical Recipe}{section.6}{}}
+\citation{li2017deeper}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces \textbf  {How each practical component maps to the CDA certificate.}}}{13}{table.caption.13}\protected@file@percent }
+\newlabel{tab:component_map}{{1}{13}{\textbf {How each practical component maps to the CDA certificate.}}{table.caption.13}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Practical CDA pipeline}}{13}{algorithm.2}\protected@file@percent }
+\newlabel{alg:cda_pipeline}{{2}{13}{Practical CDA pipeline}{algorithm.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Experimental Protocol}{14}{section.7}\protected@file@percent }
+\newlabel{sec:experiments}{{7}{14}{Experimental Protocol}{section.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Main PACS replay results}{14}{subsection.7.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {PACS replay results with the fixed VSC selector.} All rows use the same selector, \( \texttt  {version\_space\_compression\_selector\_\_margin\_eps\_0p5\_0p05}\). Accuracy is in percent.}}{15}{table.caption.14}\protected@file@percent }
+\newlabel{tab:main_pacs}{{2}{15}{\textbf {PACS replay results with the fixed VSC selector.} All rows use the same selector, \( \texttt {version\_space\_compression\_selector\_\_margin\_eps\_0p5\_0p05}\). Accuracy is in percent}{table.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {PACS replay summary.} The fixed VSC selector produces non-singleton families on all four target splits. \textup  {\textsc  {CDA-Piv}}{} is strongest on cartoon, \textup  {\textsc  {CDA-BD}}{} is strongest on sketch and photo, and the two rules are nearly tied in mean full accuracy while differing slightly in mean out accuracy.}}{15}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:pacs}{{5}{15}{\textbf {PACS replay summary.} The fixed VSC selector produces non-singleton families on all four target splits. \piv {} is strongest on cartoon, \bd {} is strongest on sketch and photo, and the two rules are nearly tied in mean full accuracy while differing slightly in mean out accuracy}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Cross-split weight behavior on the fixed selector}{15}{subsection.7.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Detailed VSC plus CDA-weight results.} Accuracy is in percent.}}{16}{table.caption.16}\protected@file@percent }
+\newlabel{tab:full_in_out}{{3}{16}{\textbf {Detailed VSC plus CDA-weight results.} Accuracy is in percent}{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Mean PACS accuracies across the four completed target splits.} Accuracy is in percent.}}{16}{table.caption.17}\protected@file@percent }
+\newlabel{tab:mean_metrics}{{4}{16}{\textbf {Mean PACS accuracies across the four completed target splits.} Accuracy is in percent}{table.caption.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Split-by-split analysis}{16}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Art painting.}{16}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cartoon.}{16}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sketch.}{16}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Photo.}{16}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Selector analysis}{16}{subsection.7.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {Full-accuracy matrix on the fixed VSC selector.} The color map shows how weight rules behave across PACS target splits when the selector is frozen. \textup  {\textsc  {CDA-Piv}}{} has the best mean full accuracy by a very small margin, while \textup  {\textsc  {CDA-BD}}{} is strongest on sketch and photo and tied at the top tier on art.}}{17}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:weight_matrix}{{6}{17}{\textbf {Full-accuracy matrix on the fixed VSC selector.} The color map shows how weight rules behave across PACS target splits when the selector is frozen. \piv {} has the best mean full accuracy by a very small margin, while \bd {} is strongest on sketch and photo and tied at the top tier on art}{figure.caption.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {Selector tradeoff: single-split peak versus cross-split stability.} The Blackwell target-set selector is stronger on art, but it collapses to a singleton on cartoon. VSC is weaker on art but remains a large non-singleton family on both splits. This is the main reason the paper reports VSC as the selector story.}}{17}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:selector_stability}{{7}{17}{\textbf {Selector tradeoff: single-split peak versus cross-split stability.} The Blackwell target-set selector is stronger on art, but it collapses to a singleton on cartoon. VSC is weaker on art but remains a large non-singleton family on both splits. This is the main reason the paper reports VSC as the selector story}{figure.caption.23}{}}
+\citation{cha2021swad}
+\citation{cha2021swad}
+\citation{rame2022diwa}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces \textbf  {Art-focused family sweeps show family-size dependence of weighting gains.} These rows come from completed focused family-weight sweeps on the original art families. Accuracy is in percent.}}{18}{table.caption.24}\protected@file@percent }
+\newlabel{tab:art_family_sweeps}{{5}{18}{\textbf {Art-focused family sweeps show family-size dependence of weighting gains.} These rows come from completed focused family-weight sweeps on the original art families. Accuracy is in percent}{table.caption.24}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Weight-rule analysis}{18}{subsection.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.6}Published benchmark context}{18}{subsection.7.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces \textbf  {Published benchmark context from prior post-hoc DG work.} Numbers are accuracies in percent and should be read as protocol context, not direct comparison to the replay experiments in this paper.}}{19}{table.caption.25}\protected@file@percent }
+\newlabel{tab:published_context}{{6}{19}{\textbf {Published benchmark context from prior post-hoc DG work.} Numbers are accuracies in percent and should be read as protocol context, not direct comparison to the replay experiments in this paper}{table.caption.25}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{19}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What CDA explains.}{19}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why non-contiguous checkpoints can be averageable.}{19}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why the selector is deliberately conservative.}{19}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{How to read the empirical claims.}{19}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why the cartoon split matters disproportionately.}{19}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why the paper reports VSC plus CDA weights.}{19}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Implications for future post-hoc DG method design.}{20}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What a stronger future validation would look like.}{20}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Limitations}{20}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{20}{section.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Proof Details}{21}{appendix.A}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Support-function interpretation of the CDA certificate}{21}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Expanded proof of the retained-family soup certificate}{21}{subsection.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Expanded proof of Proposition~\ref {prop:flatness}}{22}{subsection.A.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}Proof of Theorem~\ref {thm:pooled_separation}}{22}{subsection.A.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Expanded proof of Theorem~\ref {thm:vsc_bound}}{22}{subsection.A.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}Expanded proof of Proposition~\ref {prop:target_set}}{23}{subsection.A.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.7}Uniform estimation for retained families}{23}{subsection.A.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.8}Convexity of the theorem-level weighting surrogate}{23}{subsection.A.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.9}Relationship between \textup  {\textsc  {CDA-BD}}{} and the CDA certificate}{23}{subsection.A.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {B}Implementation Details}{23}{appendix.B}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{references}
+\bibcite{arpit2022eoa}{{1}{2022}{{Arpit et~al.}}{{Arpit, Wang, Zhou, and Xiong}}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Additional Selector Diagnostics}{24}{appendix.C}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces \textbf  {Selector comparison on the two splits where the tradeoff is most visible.} Accuracy is best completed full accuracy under the finished weight comparisons for that selector family.}}{24}{table.caption.34}\protected@file@percent }
+\newlabel{tab:selector_tradeoff}{{7}{24}{\textbf {Selector comparison on the two splits where the tradeoff is most visible.} Accuracy is best completed full accuracy under the finished weight comparisons for that selector family}{table.caption.34}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Per-Split Empirical Notes}{24}{appendix.D}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Art painting.}{24}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cartoon.}{24}{section*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sketch.}{24}{section*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Photo.}{24}{section*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {E}Full Split-Level Weight Comparison}{24}{appendix.E}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces \textbf  {Fixed VSC selector crossed with selected weight rules.} Full accuracies are in percent.}}{24}{table.caption.39}\protected@file@percent }
+\newlabel{tab:all_weights}{{8}{24}{\textbf {Fixed VSC selector crossed with selected weight rules.} Full accuracies are in percent}{table.caption.39}{}}
+\bibcite{ben2010theory}{{2}{2010}{{Ben-David et~al.}}{{Ben-David, Blitzer, Crammer, and Pereira}}}
+\bibcite{blackwell1956analog}{{3}{1956}{{Blackwell}}{{}}}
+\bibcite{bousquet2002stability}{{4}{2002}{{Bousquet and Elisseeff}}{{}}}
+\bibcite{cha2021swad}{{5}{2021}{{Cha et~al.}}{{Cha, Chun, Lee, Cho, Park, Lee, and Park}}}
+\bibcite{duchi2020variance}{{6}{2020}{{Duchi and Namkoong}}{{}}}
+\bibcite{duchi2021dro}{{7}{2021}{{Duchi et~al.}}{{Duchi, Glynn, and Namkoong}}}
+\bibcite{floyd1989sample}{{8}{1989}{{Floyd and Warmuth}}{{}}}
+\bibcite{frankle2020linear}{{9}{2020}{{Frankle et~al.}}{{Frankle, Dziugaite, Roy, and Carbin}}}
+\bibcite{garipov2018mode}{{10}{2018}{{Garipov et~al.}}{{Garipov, Izmailov, Podoprikhin, Vetrov, and Wilson}}}
+\bibcite{graepel2005pacbayes}{{11}{2005}{{Graepel et~al.}}{{Graepel, Herbrich, and Shawe-Taylor}}}
+\bibcite{gulrajani2021domainbed}{{12}{2021}{{Gulrajani and Lopez-Paz}}{{}}}
+\bibcite{hardt2016sgd}{{13}{2016}{{Hardt et~al.}}{{Hardt, Recht, and Singer}}}
+\bibcite{izmailov2018swa}{{14}{2018}{{Izmailov et~al.}}{{Izmailov, Podoprikhin, Garipov, Vetrov, and Wilson}}}
+\bibcite{koh2017influence}{{15}{2017}{{Koh and Liang}}{{}}}
+\bibcite{li2017deeper}{{16}{2017}{{Li et~al.}}{{Li, Yang, Song, and Hospedales}}}
+\bibcite{rame2022diwa}{{17}{2022}{{Ram{\'e} et~al.}}{{Ram{\'e}, Kirchmeyer, Rahier, Rakotomamonjy, Gallinari, and Cord}}}
+\bibcite{simard1992tangent}{{18}{1992}{{Simard et~al.}}{{Simard, Victorri, LeCun, and Denker}}}
+\bibcite{wortsman2022soups}{{19}{2022}{{Wortsman et~al.}}{{Wortsman, Ilharco, Gadre, Roelofs, Gontijo-Lopes, Morcos, Namkoong, Farhadi, Carmon, Kornblith, and Schmidt}}}
+\gdef \@abspage@last{26}

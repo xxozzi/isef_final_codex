@@ -1,0 +1,32 @@
+{
+  "family_name": "graphdiff_fixed_family_weight_sweep_novel75",
+  "family_steps": [
+    250,
+    350,
+    450,
+    600,
+    650,
+    850,
+    900,
+    950,
+    1000,
+    1250,
+    1300,
+    1550,
+    2050,
+    2100,
+    3000,
+    3400,
+    4100,
+    4550,
+    5100,
+    6650,
+    6800,
+    7450,
+    8000,
+    13950
+  ],
+  "num_shards": 4,
+  "run_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting",
+  "shard_index": 1
+}

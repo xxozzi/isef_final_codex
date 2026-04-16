@@ -1,0 +1,228 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage[table]{xcolor}
+\usepackage{caption}
+
+\newcommand{\data}[1]{\textsc{#1}}
+\newcommand{\Expected}[1]{#1}
+\newcommand{\Best}[1]{\textbf{\Expected{#1}}}
+\newcommand{\Second}[1]{\underline{\Expected{#1}}}
+
+\begin{document}
+
+\section*{CDA Expected Ablation Tables}
+
+All values in this document are \emph{expected placeholders}, not measured results.
+They are aligned to the expected CDA headline numbers used in
+\texttt{cda\_swad\_style\_tables.tex} and to the qualitative ordering defended in the
+paper: the canalization term is expected to matter most, the mergeability term and
+worst-domain source fit should matter materially, and exact optimized simplex weights
+should matter less than finding the right support.
+
+\begin{table}[H]
+\centering
+\small
+\caption{\textbf{Expected CDA component ablations across five benchmarks.} The full CDA row is fixed to the expected headline results in the benchmark comparison tables. Each ablation removes or replaces one paper-level component while keeping the rest of the pipeline unchanged.}
+\label{tab:cda_component_ablations_all}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccc|c}
+\toprule
+\textbf{Variant} & \data{PACS} & \data{VLCS} & \data{OfficeHome} & \data{TerraInc} & \data{DomainNet} & \textbf{Avg.} \\
+\midrule
+CDA & \Best{89.1} & \Best{79.5} & \Best{72.9} & \Best{52.3} & \Best{47.8} & \Best{68.3} \\
+uniform-on-support & \Second{89.0} & \Second{79.3} & \Second{72.7} & \Second{52.1} & \Second{47.6} & \Second{68.1} \\
+pooled-fit in place of worst-domain fit & \Expected{88.7} & \Expected{79.0} & \Expected{72.4} & \Expected{51.6} & \Expected{47.1} & \Expected{67.8} \\
+w/o mergeability term & \Expected{88.4} & \Expected{78.8} & \Expected{72.1} & \Expected{51.1} & \Expected{46.9} & \Expected{67.5} \\
+window-only retained family & \Expected{88.1} & \Expected{78.5} & \Expected{71.8} & \Expected{50.8} & \Expected{46.6} & \Expected{67.2} \\
+w/o canalization term & \Expected{87.8} & \Expected{78.1} & \Expected{71.4} & \Expected{50.3} & \Expected{46.2} & \Expected{66.8} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\caption{\textbf{Expected CDA component ablations on} \data{PACS}\textbf{.}}
+\label{tab:cda_pacs_ablation_expected}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Variant} & \textbf{A} & \textbf{C} & \textbf{P} & \textbf{S} & \textbf{Avg.} \\
+\midrule
+CDA & \Best{89.4} & \Best{84.2} & \Best{98.1} & \Best{84.6} & \Best{89.1} \\
+uniform-on-support & \Second{89.3} & \Second{84.0} & \Second{98.0} & \Second{84.5} & \Second{89.0} \\
+pooled-fit in place of worst-domain fit & \Expected{89.0} & \Expected{83.7} & \Expected{97.8} & \Expected{84.2} & \Expected{88.7} \\
+w/o mergeability term & \Expected{88.6} & \Expected{83.4} & \Expected{97.5} & \Expected{84.0} & \Expected{88.4} \\
+window-only retained family & \Expected{88.3} & \Expected{83.1} & \Expected{97.3} & \Expected{83.7} & \Expected{88.1} \\
+w/o canalization term & \Expected{87.9} & \Expected{82.7} & \Expected{97.1} & \Expected{83.4} & \Expected{87.8} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\caption{\textbf{Expected CDA component ablations on} \data{VLCS}\textbf{.}}
+\label{tab:cda_vlcs_ablation_expected}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Variant} & \textbf{C} & \textbf{L} & \textbf{S} & \textbf{V} & \textbf{Avg.} \\
+\midrule
+CDA & \Best{98.6} & \Best{64.5} & \Best{75.5} & \Best{79.3} & \Best{79.5} \\
+uniform-on-support & \Second{98.4} & \Second{64.3} & \Second{75.3} & \Second{79.1} & \Second{79.3} \\
+pooled-fit in place of worst-domain fit & \Expected{98.3} & \Expected{64.1} & \Expected{75.1} & \Expected{78.7} & \Expected{79.0} \\
+w/o mergeability term & \Expected{98.1} & \Expected{63.9} & \Expected{74.8} & \Expected{78.5} & \Expected{78.8} \\
+window-only retained family & \Expected{97.9} & \Expected{63.6} & \Expected{74.6} & \Expected{78.1} & \Expected{78.5} \\
+w/o canalization term & \Expected{97.7} & \Expected{63.2} & \Expected{74.2} & \Expected{77.5} & \Expected{78.1} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\caption{\textbf{Expected CDA component ablations on} \data{OfficeHome}\textbf{.}}
+\label{tab:cda_officehome_ablation_expected}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Variant} & \textbf{A} & \textbf{C} & \textbf{P} & \textbf{R} & \textbf{Avg.} \\
+\midrule
+CDA & \Best{68.1} & \Best{59.7} & \Best{81.0} & \Best{82.8} & \Best{72.9} \\
+uniform-on-support & \Second{67.9} & \Second{59.5} & \Second{80.8} & \Second{82.6} & \Second{72.7} \\
+pooled-fit in place of worst-domain fit & \Expected{67.6} & \Expected{59.1} & \Expected{80.5} & \Expected{82.4} & \Expected{72.4} \\
+w/o mergeability term & \Expected{67.3} & \Expected{58.8} & \Expected{80.2} & \Expected{82.1} & \Expected{72.1} \\
+window-only retained family & \Expected{67.0} & \Expected{58.5} & \Expected{79.9} & \Expected{81.8} & \Expected{71.8} \\
+w/o canalization term & \Expected{66.6} & \Expected{58.1} & \Expected{79.6} & \Expected{81.4} & \Expected{71.4} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\caption{\textbf{Expected CDA component ablations on} \data{TerraIncognita}\textbf{.}}
+\label{tab:cda_terrainc_ablation_expected}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Variant} & \textbf{L100} & \textbf{L38} & \textbf{L43} & \textbf{L46} & \textbf{Avg.} \\
+\midrule
+CDA & \Best{57.5} & \Best{48.2} & \Best{61.2} & \Best{42.3} & \Best{52.3} \\
+uniform-on-support & \Second{57.2} & \Second{47.9} & \Second{60.9} & \Second{42.4} & \Second{52.1} \\
+pooled-fit in place of worst-domain fit & \Expected{56.6} & \Expected{47.3} & \Expected{60.2} & \Expected{42.1} & \Expected{51.6} \\
+w/o mergeability term & \Expected{56.1} & \Expected{46.9} & \Expected{59.8} & \Expected{41.6} & \Expected{51.1} \\
+window-only retained family & \Expected{55.8} & \Expected{46.5} & \Expected{59.4} & \Expected{41.5} & \Expected{50.8} \\
+w/o canalization term & \Expected{55.2} & \Expected{45.9} & \Expected{58.8} & \Expected{41.3} & \Expected{50.3} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\caption{\textbf{Expected CDA component ablations on} \data{DomainNet}\textbf{.}}
+\label{tab:cda_domainnet_ablation_expected}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lccccccc}
+\toprule
+\textbf{Variant} & \textbf{clip} & \textbf{info} & \textbf{paint} & \textbf{quick} & \textbf{real} & \textbf{sketch} & \textbf{Avg.} \\
+\midrule
+CDA & \Best{67.1} & \Best{23.2} & \Best{54.8} & \Best{16.6} & \Best{67.9} & \Best{57.4} & \Best{47.8} \\
+uniform-on-support & \Second{66.9} & \Second{23.1} & \Second{54.6} & \Second{16.5} & \Second{67.6} & \Second{57.1} & \Second{47.6} \\
+pooled-fit in place of worst-domain fit & \Expected{66.4} & \Expected{22.8} & \Expected{54.0} & \Expected{16.3} & \Expected{67.0} & \Expected{56.2} & \Expected{47.1} \\
+w/o mergeability term & \Expected{66.0} & \Expected{22.5} & \Expected{53.7} & \Expected{16.0} & \Expected{66.6} & \Expected{55.8} & \Expected{46.9} \\
+window-only retained family & \Expected{65.9} & \Expected{22.3} & \Expected{53.5} & \Expected{15.9} & \Expected{66.4} & \Expected{55.6} & \Expected{46.6} \\
+w/o canalization term & \Expected{65.3} & \Expected{21.8} & \Expected{52.9} & \Expected{15.6} & \Expected{65.9} & \Expected{55.4} & \Expected{46.2} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\small
+\caption{\textbf{Expected sensitivity to the canalization coefficient \(\lambda_{\mathrm{can}}\).} This table is intended to show that removing canalization hurts most, moderate canalization is best, and heavy over-regularization is slightly suboptimal.}
+\label{tab:cda_lambda_can_expected}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccc|c}
+\toprule
+\(\lambda_{\mathrm{can}}\) & \data{PACS} & \data{VLCS} & \data{OfficeHome} & \data{TerraInc} & \data{DomainNet} & \textbf{Avg.} \\
+\midrule
+\Expected{0.00} & \Expected{87.8} & \Expected{78.1} & \Expected{71.4} & \Expected{50.3} & \Expected{46.2} & \Expected{66.8} \\
+\Expected{0.05} & \Expected{88.7} & \Expected{79.0} & \Expected{72.3} & \Expected{51.5} & \Expected{47.1} & \Expected{67.7} \\
+\Expected{0.10} & \Best{89.1} & \Best{79.5} & \Best{72.9} & \Best{52.3} & \Best{47.8} & \Best{68.3} \\
+\Expected{0.20} & \Second{89.0} & \Second{79.3} & \Second{72.7} & \Second{52.1} & \Second{47.6} & \Second{68.1} \\
+\Expected{0.40} & \Expected{88.4} & \Expected{78.9} & \Expected{72.2} & \Expected{51.2} & \Expected{47.0} & \Expected{67.5} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\caption{\textbf{Expected sensitivity to the mergeability coefficient \(\lambda_{\mathrm{mg}}\).} The expected pattern is that removing mergeability hurts, a moderate penalty is best, and very strong mergeability regularization starts to discard useful complementary checkpoints.}
+\label{tab:cda_lambda_mg_expected}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccc|c}
+\toprule
+\(\lambda_{\mathrm{mg}}\) & \data{PACS} & \data{VLCS} & \data{OfficeHome} & \data{TerraInc} & \data{DomainNet} & \textbf{Avg.} \\
+\midrule
+\Expected{0.00} & \Expected{88.4} & \Expected{78.8} & \Expected{72.1} & \Expected{51.1} & \Expected{46.9} & \Expected{67.5} \\
+\Expected{0.05} & \Expected{88.9} & \Expected{79.2} & \Expected{72.6} & \Expected{51.9} & \Expected{47.5} & \Expected{68.0} \\
+\Expected{0.10} & \Best{89.1} & \Best{79.5} & \Best{72.9} & \Best{52.3} & \Best{47.8} & \Best{68.3} \\
+\Expected{0.20} & \Second{89.0} & \Second{79.4} & \Second{72.8} & \Second{52.1} & \Second{47.6} & \Second{68.2} \\
+\Expected{0.40} & \Expected{88.6} & \Expected{79.0} & \Expected{72.3} & \Expected{51.6} & \Expected{47.2} & \Expected{67.7} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\caption{\textbf{Expected sensitivity to the entropy regularizer \(\lambda_{\mathrm{ent}}\).} The expected effect is mild relative to the main CDA terms: some entropy helps stabilize support weights, but the choice is secondary to canalization and mergeability.}
+\label{tab:cda_lambda_ent_expected}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccc|c}
+\toprule
+\(\lambda_{\mathrm{ent}}\) & \data{PACS} & \data{VLCS} & \data{OfficeHome} & \data{TerraInc} & \data{DomainNet} & \textbf{Avg.} \\
+\midrule
+\Expected{0.000} & \Expected{88.7} & \Expected{79.1} & \Expected{72.5} & \Expected{51.8} & \Expected{47.4} & \Expected{67.9} \\
+\Expected{0.001} & \Second{89.0} & \Second{79.4} & \Second{72.8} & \Second{52.2} & \Second{47.7} & \Second{68.2} \\
+\Expected{0.010} & \Best{89.1} & \Best{79.5} & \Best{72.9} & \Best{52.3} & \Best{47.8} & \Best{68.3} \\
+\Expected{0.050} & \Expected{88.9} & \Expected{79.3} & \Expected{72.6} & \Expected{52.0} & \Expected{47.5} & \Expected{68.1} \\
+\Expected{0.100} & \Expected{88.5} & \Expected{78.9} & \Expected{72.0} & \Expected{51.4} & \Expected{47.0} & \Expected{67.6} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\caption{\textbf{Expected retained-family sensitivity.} These rows use CDA paper terminology rather than the earlier prototype names. The expected ordering is that a default retained family is best, uniform weighting on the right support nearly ties, and overly restrictive or overly loose retained families degrade performance.}
+\label{tab:cda_family_sensitivity_expected}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lccccc|c}
+\toprule
+\textbf{Retained family variant} & \data{PACS} & \data{VLCS} & \data{OfficeHome} & \data{TerraInc} & \data{DomainNet} & \textbf{Avg.} \\
+\midrule
+window-only retained family & \Expected{88.1} & \Expected{78.5} & \Expected{71.8} & \Expected{50.8} & \Expected{46.6} & \Expected{67.2} \\
+tight retained family & \Expected{88.8} & \Expected{79.2} & \Expected{72.5} & \Expected{51.9} & \Expected{47.4} & \Expected{68.0} \\
+default retained family & \Best{89.1} & \Best{79.5} & \Best{72.9} & \Best{52.3} & \Best{47.8} & \Best{68.3} \\
+loose retained family & \Second{88.9} & \Second{79.3} & \Second{72.7} & \Second{52.0} & \Second{47.5} & \Second{68.1} \\
+full-bank simplex & \Expected{88.5} & \Expected{78.9} & \Expected{72.2} & \Expected{51.4} & \Expected{47.0} & \Expected{67.6} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}

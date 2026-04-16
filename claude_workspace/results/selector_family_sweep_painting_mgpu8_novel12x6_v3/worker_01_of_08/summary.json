@@ -1,0 +1,7 @@
+{
+  "best_mean_full_acc": 0.87841796875,
+  "best_scheme": "version_space_compression_selector__margin_eps_0p6_0p05",
+  "failed_count": 0,
+  "record_count": 10,
+  "success_count": 10
+}

@@ -1,0 +1,7 @@
+{
+  "best_mean_full_acc": 0.88720703125,
+  "best_scheme": "soup_marginal_contribution__power_2p0",
+  "failed_count": 0,
+  "record_count": 187,
+  "success_count": 187
+}
