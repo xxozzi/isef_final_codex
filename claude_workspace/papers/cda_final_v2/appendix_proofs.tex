@@ -1,0 +1,191 @@
+\section{Proofs and Additional Technical Detail}
+
+\subsection{Proof of Theorem~\ref{thm:cda_certificate}}
+
+\begin{proof}
+Write \(\alpha_T=\ub+\delta_T\), where \(\one^\top\delta_T=0\) and \(\norm{\delta_T}_2\le \rho\). Then
+\[
+\alpha_T^\top L(\theta)
+=
+\ub^\top L(\theta)+\delta_T^\top L(\theta)
+=
+\bar L(\theta)+\delta_T^\top P_\perp L(\theta),
+\]
+because \(\delta_T^\top\one=0\). By Cauchy--Schwarz,
+\[
+\delta_T^\top P_\perp L(\theta)
+\le
+\norm{\delta_T}_2\norm{P_\perp L(\theta)}_2
+\le
+\rho\norm{P_\perp L(\theta)}_2.
+\]
+Substituting this into Assumption~\ref{ass:hidden_shift} gives Eq.~\eqref{eq:cda_certificate}.
+\end{proof}
+
+\subsection{Proof of Corollary~\ref{cor:exact_robust}}
+
+\begin{proof}
+The upper bound follows immediately from the proof of Theorem~\ref{thm:cda_certificate}. If \(P_\perp L(\theta)\neq 0\), choose
+\[
+\delta^\star=\rho\frac{P_\perp L(\theta)}{\norm{P_\perp L(\theta)}_2}.
+\]
+Then \(\one^\top \delta^\star = 0\) and \(\norm{\delta^\star}_2 = \rho\), so \(\ub+\delta^\star\in\cA_\rho\), and
+\[
+(\ub+\delta^\star)^\top L(\theta)
+=
+\bar L(\theta)+\rho\norm{P_\perp L(\theta)}_2.
+\]
+If \(P_\perp L(\theta)=0\), every feasible \(\delta\) yields the same value \(\bar L(\theta)\).
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:soup_certificate}}
+
+\begin{proof}
+By Theorem~\ref{thm:cda_certificate},
+\[
+L_T(\thetaw)
+\le
+\bar L(\thetaw)+\rho\norm{P_\perp L(\thetaw)}_2+\epsilon_{\rm app}.
+\]
+Let \(\Delta(w)=L(\thetaw)-z(w)\), so \(\norm{\Delta(w)}_2=M(w)\). Then
+\[
+\bar L(\thetaw)
+=
+\bar z(w)+\frac{1}{E}\one^\top\Delta(w)
+\le
+\bar z(w)+E^{-1/2}M(w),
+\]
+and
+\[
+\norm{P_\perp L(\thetaw)}_2
+\le
+\norm{P_\perp z(w)}_2+\norm{P_\perp \Delta(w)}_2
+\le
+\norm{P_\perp z(w)}_2+M(w).
+\]
+Combining the inequalities proves Eq.~\eqref{eq:soup_certificate}.
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:target_set}}
+
+\begin{proof}
+Let \(d=z(w)-b\). Then \(\norm{d}_2\le \eta\). We have
+\[
+\bar z(w)
+=
+\bar b+\frac{1}{E}\one^\top d
+\le
+\bar b+E^{-1/2}\eta.
+\]
+Also,
+\[
+\norm{P_\perp z(w)}_2
+\le
+\norm{P_\perp b}_2+\norm{P_\perp d}_2
+\le
+\norm{P_\perp b}_2+\eta.
+\]
+Adding the two bounds gives Eq.~\eqref{eq:bd_bound}.
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:flat_merge}}
+
+\begin{proof}
+Fix a source domain \(e\). By Taylor's theorem with a Lipschitz-gradient remainder, for every endpoint \(\theta_j\) in the convex hull of the retained family,
+\[
+L_e(\theta_j)
+=
+L_e(\thetaw)
++\inner{\nabla L_e(\thetaw)}{\theta_j-\thetaw}
++R_{e,j},
+\qquad
+|R_{e,j}|
+\le
+\frac{\beta_e}{2}\norm{\theta_j-\thetaw}_2^2 .
+\]
+Multiplying by \(w_j\) and summing over \(j\) gives
+\[
+\sum_{j=1}^k w_j L_e(\theta_j)
+=
+L_e(\thetaw)
++\inner{\nabla L_e(\thetaw)}{\sum_{j=1}^k w_j(\theta_j-\thetaw)}
++\sum_{j=1}^k w_jR_{e,j}.
+\]
+Because \(\thetaw=\sum_j w_j\theta_j\),
+\[
+\sum_{j=1}^k w_j(\theta_j-\thetaw)=0.
+\]
+Therefore,
+\[
+\left|L_e(\thetaw)-\sum_{j=1}^k w_j L_e(\theta_j)\right|
+\le
+\sum_{j=1}^k w_j |R_{e,j}|
+\le
+\frac{\beta_e}{2}\sum_{j=1}^k w_j\norm{\theta_j-\thetaw}_2^2 ,
+\]
+which proves Eq.~\eqref{eq:flat_merge}. Taking the Euclidean norm over source domains yields
+\[
+M(w)
+\le
+\left(
+\sum_{e=1}^{E}
+\left[
+\frac{\beta_e}{2}\sum_{j=1}^k w_j\norm{\theta_j-\thetaw}_2^2
+\right]^2
+\right)^{1/2},
+\]
+and factoring out the common weighted parameter-spread term proves Eq.~\eqref{eq:flat_merge_vector}.
+\end{proof}
+
+\section{Reporting and Protocol Details}
+\label{app:reporting}
+
+\subsection{Reporting and provenance conventions}
+
+The benchmark package covers \data{PACS}, \data{VLCS}, \data{OfficeHome}, \data{TerraIncognita}, and \data{DomainNet}. The main metric is out-of-domain accuracy. Published baseline rows follow the SWAD-style comparison tables and the DiWA comparison row used in the main text. Rows marked with \(\dagger\) are published or source-table rows. Rows marked with \(\ddagger\), when shown in extended tables, are reproduced or context rows and are not used as headline evidence unless their protocol exactly matches the comparison being made. The \cda{} row is the \(5\mathrm{k}\)-step method comparison package used throughout the main manuscript.
+
+Red spans produced by \verb|\prov|, \verb|\provnum|, and \verb|\provcaption| mark the structured analysis layer. The manuscript preamble defines a submission-mode guard that raises a hard LaTeX error whenever any such span remains active in submission mode.
+
+\subsection{Method hyperparameters}
+
+The headline \cda{} pipeline uses the source-support disagreement threshold \(\gamma=0.5\), selector tolerance \(\varepsilon_{\rm vsc}=0.05\), pivotality sensitivity coefficient \(\alpha=0.75\), positive-score stabilizer \(\eta=10^{-6}\), and target-set entropy coefficient \(\lambda_{\rm ent}=0.02\). Unless otherwise stated, the retained-family selector has no fixed cardinality cap; it stops when the marginal improvement in \(d_{\rm vsc}(S,\mathcal{B};\gamma)\) falls below \(\varepsilon_{\rm vsc}\). The reported \bd{} solution is obtained by optimizing Eq.~\eqref{eq:bd_objective} over the probability simplex for the retained family returned by Algorithm~\ref{alg:vsc}.
+
+\subsection{Diagnostic protocol}
+
+\prov{For selector diagnostics, retained-family size is the number of checkpoints returned by Algorithm~\ref{alg:vsc}; disagreement mismatch is \(d_{\rm vsc}(S,\mathcal{B};\gamma)\) expressed as a percentage of source-support examples; weight entropy is \(-\sum_j w_j\log w_j\); and certificate-proxy reduction is the decrease in \(\Phi(w)=\bar z(w)+\rho\norm{P_\perp z(w)}_2\) relative to the uniform retained-family soup.}
+
+\subsection{Flatness and loss-surface diagnostic details}
+\label{app:loss_surface}
+
+\prov{The flatness diagnostics use the definitions in Eq.~\eqref{eq:source_flatness} and Eq.~\eqref{eq:mixture_flatness}. For each deployed parameter vector, random perturbation directions \(v\) are sampled from an isotropic Gaussian and normalized to \(\norm{v}_2=1\). The reported estimate averages \(100\) Monte Carlo samples per radius. This estimator follows the same practical motivation as the SWAD local-flatness analysis: it is cheaper than Hessian-spectrum estimation and directly measures local loss increase around the deployed solution.}
+
+\prov{The loss-surface visualization uses three trajectory weights \(\theta_1,\theta_2,\theta_3\) and constructs two axes}
+\[
+u=\theta_2-\theta_1,
+\qquad
+\tilde v=(\theta_3-\theta_1)-\frac{\inner{\theta_3-\theta_1}{u}}{\norm{u}_2^2}u,
+\qquad
+v=\frac{\tilde v}{\norm{\tilde v}_2}\norm{u}_2 .
+\]
+\prov{The plotted plane is \(\theta(a,b)=\theta_1+a u+b v\). For each grid point, the average source loss \(\bar L(\theta(a,b))\) and the centered source-mixture sensitivity \(\norm{P_\perp L(\theta(a,b))}_2\) are evaluated on the same source-validation split used for post-hoc deployment. The ERM endpoint, uniform late-window soup, and CDA-BD soup are projected onto this plane by least squares in the span of \(u\) and \(v\).}
+
+\subsection{Algorithmic summary of CDA}
+
+\begin{algorithm}[H]
+\caption{\cda{} deployment}
+\label{alg:cda}
+\begin{algorithmic}[1]
+\Require Checkpoint bank \(\cB\), source-support predictions, source-domain losses, selector tolerance \(\varepsilon_{\rm vsc}\), ambiguity radius \(\rho\)
+\State Run Algorithm~\ref{alg:vsc} to obtain retained family \(S=\{\theta_1,\ldots,\theta_k\}\)
+\State Form source-loss matrix \(R=[L(\theta_1),\ldots,L(\theta_k)]\in\mathbb{R}^{E\times k}\)
+\If{using \piv{}}
+    \State Compute leave-one-out pivotalities \(\pi_j=\Phi(u^{(-j)})-\Phi(u)\)
+    \State Compute sensitivity-guarded weights by Eq.~\eqref{eq:piv_score}--\eqref{eq:piv_weight}
+\Else
+    \State Compute coordinatewise target \(b_e=\min_j R_{e,j}\)
+    \State Solve Eq.~\eqref{eq:bd_objective} over \(w\in\Delta^k\)
+\EndIf
+\State Deploy \(\thetaw=\sum_{j=1}^k w_j\theta_j\)
+\State Report source-only diagnostics \(d_{\rm vsc}\), \(\Phi(w)\), weight entropy, and \(M(w)\)
+\end{algorithmic}
+\end{algorithm}
