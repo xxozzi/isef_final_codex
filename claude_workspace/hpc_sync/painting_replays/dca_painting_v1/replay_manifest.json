@@ -1,0 +1,22 @@
+{
+  "base_metrics": {
+    "art_painting_full_acc": 0.82080078125,
+    "test_env0_in_acc": 0.8187919463087249,
+    "test_env0_out_acc": 0.8288508557457213
+  },
+  "base_model_path": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting/model.pkl",
+  "checkpoint_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting",
+  "config_overrides": {},
+  "data_dir": "/project/jje239_dgxpublicai25/jwje228/work/domaingen/data",
+  "dca_metrics": {
+    "art_painting_full_acc": 0.873046875,
+    "test_env0_in_acc": 0.8718730933496034,
+    "test_env0_out_acc": 0.8777506112469438
+  },
+  "methods": [
+    "dca"
+  ],
+  "replay_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/replays/dca_painting_v1",
+  "run_dir": "/project/jje239_dgxpublicai25/jwje228/work/results/erm_replay_bank_painting",
+  "swad_replay_note": "This replay uses saved dense checkpoints. SWAD segment averages inside each checkpoint interval are not reconstructible post hoc unless every training step was saved."
+}
