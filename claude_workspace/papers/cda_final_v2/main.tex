@@ -110,7 +110,7 @@ Dayton, Ohio, USA\\
 
 \begin{abstract}
 \vspace{-.5em}
-Post-hoc domain generalization (PDG) methods aim to generalize machine learning models to unseen target domains using only source-domain information leveraged after training. Unlike train-time DG methods, which typically require retraining to apply a new method, PDG methods operate on an existing checkpoint bank in weight space, making them 1) practical to deploy at scale and 2) model-agnostic. Further, PDG methods such as SWAD and DiWA have shown that post-hoc checkpoint averaging can be just as, and often, even more effective than train-time methods. SWAD motivates averaging through flatness and overfit-aware sampling, and DiWA motivates it through diversity-aware averaging across independently trained mergeable models. While these methods are effective, they summarize source behavior through aggregate signals and do not directly consider loss distribution across individual source domains or whether retained checkpoints complement one another, leaving useful diagnostic information unused, as recent work on QRM has shown. We propose a finer-grained deployment property called ``distributional canalization'': the stability of per-domain losses under perturbations of the relative source-domain emphasis. We show that, under a local source-supported model of target shift, target risk can be bounded in terms of canalization, and that low average source loss alone does not guarantee it. Motivated by this result, we propose CDA, which implements the canalization objective via a checkpoint bank compression algorithm (Version Space Compression) and a nonuniform checkpoint weigher (CDA-BD) which work together to promote stability across source domains. On the five DomainBed benchmarks, CDA reaches 68.3 average OOD accuracy, vs. 63.3 for ERM, 66.9 for SWAD, and 68.0 for DiWA.
+Post-hoc domain generalization (PDG) asks how to deploy a model after training when only source-domain evidence is available. This setting is narrower than train-time DG, but it is operationally important: if a completed run has produced a checkpoint bank, a post-hoc method can choose a final weight-space soup without retraining the backbone or increasing inference cost. Existing PDG methods show that this restriction is not merely convenient. SWAD motivates dense checkpoint averaging through flatness and overfit-aware sampling, while DiWA motivates weight averaging through diversity across mergeable models. These explanations are effective but incomplete: aggregate source loss, flatness, and diversity do not say whether the final deployed model is stable when source domains are reweighted. We propose a finer-grained deployment property, \emph{distributional canalization}: low sensitivity of the source-domain loss vector to local source-mixture shifts, together with a small mismatch between endpoint-family losses and the actual averaged soup. Under a local source-supported hidden-shift model, target risk decomposes into source fit, source-mixture sensitivity, and a mergeability remainder. This decomposition motivates CDA, a post-hoc pipeline that first compresses the checkpoint bank by preserving source-support disagreement structure, then weights the retained family with a certificate-derived target-set rule. On the five DomainBed benchmarks, CDA reaches 68.3 average OOD accuracy, versus 63.3 for ERM, 66.9 for SWAD, and 68.0 for DiWA.
 \end{abstract}
 
 \section{Introduction}
@@ -157,10 +157,10 @@ ERM & 85.5 & 77.5 & 66.5 & 46.1 & 40.9 & 63.3\\
 \vspace{-1.0em}
 \end{wraptable}
 
-Table~\ref{tab:intro_summary} summarizes the empirical position. CDA reaches a \(68.3\) average across \data{PACS}, \data{VLCS}, \data{OfficeHome}, \data{TerraIncognita}, and \data{DomainNet}, compared with \(66.9\) for SWAD and \(68.0\) for DiWA in the comparison package. \prov{The expanded analysis in Sections~\ref{sec:method} and~\ref{sec:experiments} further shows that this gain is accompanied by lower local source flatness, lower source-mixture flatness, lower checkpoint-selection fluctuation, and stronger performance when CDA is applied to alternate checkpoint banks.}
+Table~\ref{tab:intro_summary} summarizes the empirical position. CDA reaches a \(68.3\) average across \data{PACS}, \data{VLCS}, \data{OfficeHome}, \data{TerraIncognita}, and \data{DomainNet}, compared with \(66.9\) for SWAD and \(68.0\) for DiWA in the comparison package. The margin over DiWA is small, so our claim is not that CDA universally dominates all post-hoc averaging. The claim is sharper: a source-mixture certificate gives a coherent reason for which checkpoints should be retained and how they should be weighted. \prov{The expanded analysis in Sections~\ref{sec:method} and~\ref{sec:experiments} further shows that this gain is accompanied by lower local source flatness, lower source-mixture flatness, lower checkpoint-selection fluctuation, and stronger performance when CDA is applied to alternate checkpoint banks.}
 
 \paragraph{Relationship to prior DG work.}
-DG methods have evolved through invariant representation learning, adversarial alignment, meta-learning, distributional robustness, style augmentation, and causal or invariance-oriented objectives \citep{muandet2013domain,ganin2016domain,li2018learning,arjovsky2019invariant,Sagawa2020GroupDRO,zhou2021domain}. CDA does not compete with those methods by changing the training objective. It competes at deployment time: given a checkpoint bank, it chooses a family and a weight vector. This makes it closest to SWA, SWAD, model soups, DiWA, and EoA \citep{izmailov2018swa,cha2021swad,wortsman2022soups,rame2022diwa,arpit2022eoa}. The distinguishing feature is the source-mixture certificate. Flatness matters because it reduces local deployment sensitivity; diversity matters when centered source-domain responses cancel; averaging matters only when the soup remains mergeable.
+CDA does not compete with training-time DG methods by changing the optimization objective. It competes at deployment time: given a checkpoint bank, it chooses a retained family and a weight vector. This makes the method closest to SWAD, model soups, DiWA, and EoA, but the distinguishing feature is the source-mixture certificate. Flatness matters because it reduces local deployment sensitivity; diversity matters when centered source-domain responses cancel; averaging matters only when the soup remains mergeable.
 
 \paragraph{Contributions.}
 We make four contributions.
@@ -170,6 +170,18 @@ We make four contributions.
     \item We instantiate the view as \cda{}, combining version-space compression with two certificate-derived weighting rules: guarded pivotality and balanced target-set projection.
     \item We provide a SWAD-style empirical package: five-benchmark results, conventional-generalization comparison, combination studies, ablations, flatness diagnostics, loss-surface visualization, and checkpoint-selection sensitivity analysis.
 \end{enumerate}
+
+\section{Related Work and Positioning}
+\label{sec:related}
+
+\paragraph{Domain generalization and source-only model selection.}
+Domain generalization has been studied through invariant representations, adversarial alignment, meta-learning, distributional robustness, and style perturbation \citep{muandet2013domain,ganin2016domain,li2018learning,arjovsky2019invariant,Sagawa2020GroupDRO,zhou2021domain}. DomainBed made this literature harder to evaluate casually by showing that many DG algorithms lose their apparent advantage under controlled model selection and strong ERM baselines \citep{gulrajani2021domainbed}. CDA follows that stricter lesson. It does not introduce another training-time objective. It asks what can be justified once the training trajectory already exists and target labels remain unavailable.
+
+\paragraph{Weight averaging and post-hoc DG.}
+SWA showed that weight averaging can move a model toward wider optima \citep{izmailov2018swa}. SWAD adapted this idea to DG by selecting dense late-training averages from overfit-aware validation behavior \citep{cha2021swad}. Model soups and DiWA showed that averaging independently trained or diverse mergeable models can improve deployment without increasing inference cost \citep{wortsman2022soups,rame2022diwa}. EoA further studies average selection in DG-style model-selection settings \citep{arpit2022eoa}. CDA is in this family, but it changes the object being measured: the selected soup is judged by source-domain response geometry, not by time, flatness, or diversity alone.
+
+\paragraph{Robustness, compression, and vector payoffs.}
+The CDA certificate is closest in spirit to local distributionally robust optimization over source-domain mixtures \citep{duchi2020variance,duchi2021dro}. Its retained-family view also touches sample compression and PAC-Bayesian compression ideas \citep{floyd1989sample,graepel2005pacbayes}, because the final deployment is a compressed subset of a larger trajectory. The \bd{} weighting rule is inspired by a vector-payoff perspective: different checkpoints can be good on different source domains, so a useful family should make a balanced low-loss vector approximately attainable \citep{blackwell1956analog}. The contribution is not any one of these ingredients in isolation. It is the connection between source-mixture robustness, checkpoint-family compression, and the mergeability remainder of an actual deployed weight-space soup.
 
 \section{A Theoretical Relationship between Distributional Canalization and Domain Generalization}
 \label{sec:theory}
@@ -188,6 +200,20 @@ P_\perp = I - \frac{1}{E}\one\one^\top
 \]
 denote the orthogonal projector onto the zero-sum subspace. Then \(P_\perp L(\theta)\) is the centered source-domain response vector, and \(\norm{P_\perp L(\theta)}_2\) measures how uneven the model's behavior is across the source domains.
 
+There are two useful ways to formalize a nearby source-mixture shift. The literal simplex-constrained ambiguity set is
+\[
+\cA_\rho^\Delta
+=
+\braces{\alpha\in\simplex^E:\norm{\alpha-\ub}_2\le\rho}.
+\]
+For the certificate below we use its local tangent relaxation
+\[
+\cA_\rho
+=
+\braces{\ub+\delta:\one^\top\delta=0,\ \norm{\delta}_2\le\rho}.
+\]
+When \(\ub+\delta\) remains nonnegative, this is an ordinary source-mixture redistribution. When the ball crosses the simplex boundary, it should be read as a first-order local relaxation. This distinction matters because the tangent set gives a closed-form source-only penalty, while the simplex-constrained robust value can clip at the boundary.
+
 \begin{assumption}[Source-supported hidden shift]
 \label{ass:hidden_shift}
 There exist \(\rho \ge 0\), \(\epsilon_{\rm app} \ge 0\), and a fixed \(\alpha_T \in \cA_\rho\) such that every candidate model satisfies
@@ -199,7 +225,7 @@ L_T(\theta) \le \alpha_T^\top L(\theta) + \epsilon_{\rm app},
 \end{equation}
 \end{assumption}
 
-Assumption~\ref{ass:hidden_shift} is deliberately narrow. It does not claim that all target shifts are source-supported. It says that, over the candidate family under study, the target behaves like a nearby redistribution of source-domain mass up to an approximation term. That is enough to force a concrete deployment criterion.
+Assumption~\ref{ass:hidden_shift} is deliberately narrow. It does not claim that all target shifts are source-supported. It says that, over the candidate family under study, the target behaves like a nearby source-mixture perturbation up to an approximation term. That is enough to force a concrete deployment criterion.
 
 \begin{theorem}[CDA target-risk certificate]
 \label{thm:cda_certificate}
@@ -214,7 +240,7 @@ L_T(\theta)
 
 Theorem~\ref{thm:cda_certificate} turns the post-hoc DG problem into a source-only objective. A model can fail under hidden shift even when its average source loss is low, because the source mean hides how sharply its risk changes as source-domain mass is reallocated. The certificate therefore separates \emph{fit} from \emph{source-mixture sensitivity}.
 
-\begin{corollary}[Exact local robust source risk]
+\begin{corollary}[Exact tangent robust source risk]
 \label{cor:exact_robust}
 For the tangent ambiguity set \(\cA_\rho\),
 \begin{equation}
@@ -289,6 +315,8 @@ d_{\rm vsc}(S,\cB;\gamma)
 
 \vsc{} greedily adds the checkpoint that most reduces the mismatch until the mismatch falls below \(\eps_{\rm vsc}\) or a family-size cap is reached. The goal is not to imitate late-window averaging. The goal is to keep just enough of the bank that the downstream weighting rule still sees the relevant source-support distinctions.
 
+This is an empirical bridge rather than a theorem. The certificate is stated in terms of source-domain loss vectors, while the selector observes source-support prediction structure. We use the disagreement mask because it is a cheap source-only proxy for the examples on which checkpoints occupy different functional regions. If a retained family erases those disagreements, then later source-loss weighting is forced to operate on an already-collapsed family. If it preserves them, the weighting rule still has access to directions along which source-domain responses can cancel.
+
 \begin{algorithm}[t]
 \caption{Version-space compression selector}
 \label{alg:vsc}
@@ -316,6 +344,26 @@ d_{\rm vsc}(S,\cB;\gamma)
     \caption{\textbf{Version-space compression as a source-support preservation step.} The selector keeps a non-contiguous checkpoint family only when the retained family still reproduces the full bank's disagreement mask on source examples. This is why CDA selection is not just another late-window averaging rule.}
     \label{fig:vsc_mechanism}
 \end{figure}
+
+\begin{table}[t]
+\centering
+\tabfont
+\caption{\provcaption{\textbf{Expected selector bridge diagnostics.} This provisional table makes the intended VSC-to-certificate bridge explicit: the retained family should preserve source-support disagreement while improving the source-loss geometry available to the weighting rule.}}
+\label{tab:vsc_bridge}
+\begin{adjustbox}{max width=\linewidth}
+\begin{tabular}{lcccc}
+\toprule
+\prov{Selector} & \prov{Family size} & \prov{Disagreement mismatch (\%)} & \prov{Loss-vector span residual} & \prov{\(\Phi(u)\) reduction} \\
+\midrule
+\prov{Uniform late window} & \provnum{24.0} & \provnum{18.2} & \provnum{0.42} & \provnum{0.11} \\
+\prov{Random non-contiguous family} & \provnum{19.8} & \provnum{24.5} & \provnum{0.39} & \provnum{0.08} \\
+\prov{\vsc{} retained family} & \provnum{19.8} & \provnum{4.7} & \provnum{0.21} & \provnum{0.19} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+\prov{Table~\ref{tab:vsc_bridge} is the diagnostic that should decide whether the VSC story is actually doing work. The mismatch column measures whether the compressed family preserves the full bank's source-support disagreement mask. The loss-vector residual asks whether retained checkpoints still span the useful source-domain response directions. The \(\Phi(u)\) column evaluates the unweighted retained family under the fit-plus-sensitivity proxy before any nonuniform CDA weighting is applied.}
 
 \subsection{Two weighting rules from the same certificate}
 
@@ -418,6 +466,8 @@ L_T(\thetaw)
 
 Theorem~\ref{thm:soup_certificate} is the method-level bridge. It says the selector and weight rule govern the source-fit and source-mixture terms, while mergeability governs how faithfully those endpoint-domain quantities transfer to the actual deployed soup.
 
+Operationally, this is also where CDA remains practical. The final artifact is a single parameter vector \(\thetaw\), so inference cost is the same as the base model. When the backbone contains batch-normalization layers, the deployed soup should refresh its batch-normalization statistics on source data before final evaluation, matching standard weight-averaging practice. That refresh is a deployment detail, not a new training stage: no target labels or target samples are used.
+
 \begin{proposition}[Local flatness controls first-order soup mismatch]
 \label{prop:flat_merge}
 Let \(S=\{\theta_1,\ldots,\theta_k\}\) be a retained family and let \(\thetaw=\sum_j w_j\theta_j\). Suppose each source loss \(L_e\) is differentiable on the convex hull of \(S\) and has \(\beta_e\)-Lipschitz gradient there. Then
@@ -444,7 +494,7 @@ Proposition~\ref{prop:flat_merge} gives the flatness connection that is missing 
 
 \subsection{Empirical analysis of the CDA mechanism}
 
-The CDA pipeline leaves behind diagnostics that are scientifically useful before the final benchmark table is considered. Following the empirical style of SWAD, we analyze the learned solution through local flatness, loss-surface geometry, checkpoint-selection sensitivity, and component ablations. All diagnostic definitions are source-only.
+The CDA pipeline leaves behind diagnostics that are scientifically useful before the final benchmark table is considered. Following the empirical style of SWAD, we analyze the learned solution through local flatness, loss-surface geometry, checkpoint-selection sensitivity, and component ablations. All diagnostic definitions are source-only. Red rows and red figure captions in this draft are provisional by construction; they mark the expected analysis layer that must be verified before the manuscript can be treated as submission-ready.
 
 \paragraph{Local flatness analysis.}
 For a deployed parameter vector \(\theta\), define the ordinary source-loss flatness quantity
@@ -547,7 +597,7 @@ Diagnostic & \prov{\vsc{} + uniform} & \prov{\vsc{} + \piv{}} & \prov{\vsc{} + \
 Following the DomainBed and SWAD evaluation style \citep{gulrajani2021domainbed,cha2021swad}, we evaluate on five standard DG benchmarks: \data{PACS} (9,991 images, 7 classes, 4 domains), \data{VLCS} (10,729 images, 5 classes, 4 domains), \data{OfficeHome} (15,588 images, 65 classes, 4 domains), \data{TerraIncognita} (24,788 images, 10 classes, 4 domains), and \data{DomainNet} (586,575 images, 345 classes, 6 domains) \citep{li2017pacs,fang2013vlcs,venkateswara2017officehome,beery2018terraincognita,peng2019domainnet}. For each target-domain split, the target domain is held out, the remaining domains are used as sources, and the method must choose its deployed model without target labels. The canonical comparison rows use a ResNet-50 backbone initialized from ImageNet weights and the DomainBed-style source-validation protocol \citep{he2016_cvpr_resnet,gulrajani2021domainbed}.
 
 \textbf{CDA deployment protocol.}
-CDA is applied after checkpoint-bank construction. The selector observes source-support predictions and source-domain losses only. Unless otherwise stated, \(\gamma=0.5\), \(\varepsilon_{\rm vsc}=0.05\), \(\alpha=0.75\), and \(\lambda_{\rm ent}=0.02\). Appendix~\ref{app:reporting} gives the provenance convention and hyperparameter details. The main result table reports the provided \(5\mathrm{k}\)-step CDA comparison package. Red diagnostic and component rows use the same method definitions and are mechanically guarded by the placeholder macros.
+CDA is applied after checkpoint-bank construction. The selector observes source-support predictions and source-domain losses only; it does not use target-domain labels or target-domain model selection. Because the loss vector \(L(\theta)\) is domain-indexed, CDA assumes the standard DG setting in which source-domain identities are known. Unless otherwise stated, \(\gamma=0.5\), \(\varepsilon_{\rm vsc}=0.05\), \(\alpha=0.75\), and \(\lambda_{\rm ent}=0.02\). The headline \bd{} rule does not require choosing \(\rho\); \piv{} and certificate-proxy diagnostics use \(\rho=\provnum{1.0}\) unless otherwise stated. Appendix~\ref{app:reporting} gives the provenance convention and hyperparameter details. The main result table reports the provided \(5\mathrm{k}\)-step CDA comparison package. Red diagnostic and component rows use the same method definitions and are mechanically guarded by the placeholder macros.
 
 \textbf{Evaluation metrics.}
 We report out-of-domain accuracy for each target domain and the average across target domains. For benchmark summary tables, the final average is the unweighted average across benchmark-level averages, matching the SWAD-style comparison convention. For mechanism figures, we report source-only diagnostics: \(\sourceflat\), \(\mixflat\), disagreement mismatch, certificate proxy reduction, mergeability proxy, and checkpoint-selection fluctuation.
@@ -771,10 +821,16 @@ That decomposition explains why non-contiguous averaging can be defensible. If t
 \prov{The component analysis points to one additional lesson: selector aggressiveness and weighting sophistication should not be optimized independently. Over-compression can erase the family geometry that sophisticated weighting needs, while under-structured weighting can squander the selector's retained diversity.}
 
 \paragraph{Limitation: source-supported hidden shift.}
-The theory depends on a source-supported hidden-shift assumption. If the target shift is driven by mechanisms that are not well approximated by nearby redistributions of source-domain mass, then the CDA certificate can become loose or irrelevant. The ambiguity set is local, and its usefulness is tied to that locality. This is the same kind of limitation that appears in any source-only DG guarantee: without assumptions linking the target to the sources, target-domain performance cannot be inferred from source-domain data alone.
+The theory depends on a source-supported hidden-shift assumption. If the target shift is driven by mechanisms that are not well approximated by nearby redistributions of source-domain mass, then the CDA certificate can become loose or irrelevant. The ambiguity set used for the closed-form certificate is also a local tangent relaxation. When nonnegativity of mixture weights matters, one should either restrict the radius so the local ball remains inside the simplex or use the simplex-constrained ambiguity set, whose exact robust value can clip at the boundary. This is the same kind of limitation that appears in any source-only DG guarantee: without assumptions linking the target to the sources, target-domain performance cannot be inferred from source-domain data alone.
 
 \paragraph{Limitation: post-hoc deployment scope.}
 The paper studies a post-hoc deployment problem rather than the full training-time DG problem. That is a strength analytically because it concentrates the scientific question, but it narrows what the evidence can establish. A strong CDA result is a statement about checkpoint-bank deployment under source-only evidence, not a statement that the training pipeline itself has solved DG in a universal sense.
+
+\paragraph{Limitation: source-domain identities are used.}
+CDA is source-only but not domain-label-free. The method uses source-domain loss vectors, so it assumes source examples carry domain identities during post-hoc selection. This is standard in DomainBed-style DG, but it is stricter than a setting where all source examples are pooled without domain labels.
+
+\paragraph{Limitation: VSC is a surrogate bridge.}
+The certificate is written in terms of source-domain loss vectors, while VSC preserves source-support disagreement masks. The connection is empirically motivated: preserving functional disagreement should preserve the source-response directions that weighting can use. It is not a theorem. If the bridge diagnostics in Table~\ref{tab:vsc_bridge} fail, the selector should be revised or the VSC story should be weakened.
 
 \paragraph{Limitation: mergeability is empirical.}
 The retained-family certificate includes a mergeability remainder \(M(w)\). Proposition~\ref{prop:flat_merge} links this term to local smoothness and parameter spread, but the actual size of \(M(w)\) is empirical. If selected checkpoints are not linearly connected through a low-loss region, a source-loss-vector improvement at the endpoint-family level may not transfer to the deployed soup.
