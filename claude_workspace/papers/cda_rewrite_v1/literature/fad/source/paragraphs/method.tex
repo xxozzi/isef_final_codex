@@ -1,0 +1,163 @@
+\section{Method}
+In in-distribution generalization tasks, sharpness-aware optimization methods show outstanding performance \cite{foret2021sharpness}. We theoretically show that optimizing both zeroth-order and first-order flatness strengthens out-of-distribution performance via a generalization bound. We propose a unified optimization framework to optimize zeroth-order and first-order flatness effectively and efficiently. We present the connection between Hessian spectra and our regularization term and give the convergence analysis of our method.
+
+\paragraph{Notations} We use $\calX$ and $\calY$ to denote the space of input $X$ and outcome $Y$, respectively. We use $\Delta_{\calY}$ to denote a distribution on $\calY$.
+Let $S = \{(x_i, y_i)\}_{i=1}^n$ denote the training dataset with $n$ data-points drawn independently from the training distribution $\calD_{\train}$. We consider the covariate shift scenario \cite{ben2006analysis,shimodaira2000improving,xu2022theoretical} and assume that the conditional probabilities are invariant across training and test distributions (\textit{i.e.}, $P_{\train}(Y|X) = P_{\test}(Y|X)$). The invariant conditional probability is denoted as $P(Y|X)$.
+A prediction model $f_{\bftheta}: \calX \rightarrow \Delta_{\calY}$ parametrized by $\bftheta \in \caltheta \subseteq \mathbb{R}^d$ with dimension $d$ maps an input to a simplex on $\calY$, which indicates the predicted probability of each class\footnote{We use $\Delta_{\calY}$ to denote the non-deterministic function case. This formulation also includes deterministic function cases.}. $\caltheta$ is the hypothesis set. We further assume that the ground truth model $\bftheta^*$ that characterizes $P(Y|X)$ is in the hypothesis set $\caltheta$.
+
+Let $\ell: \Delta_\calY \times \Delta_\calY \rightarrow \bbR_{+}$ define a loss function over $\Delta_\calY$. For any hypotheses $\bftheta_1, \bftheta_2 \in \caltheta$, the expected loss $\calL_{\calD}(\bftheta_1, \bftheta_2)$ for distribution $\calD$ is given as $\calL_{\calD}(\bftheta_1, \bftheta_2) = \bbE_{x \sim \calD}\left[\ell(f_{\bftheta_1}(x), f_{\bftheta_2}(x))\right]$. To simplify the notations, we use $\calL_\train$ and $\calL_\test$ to denote the expected loss $\calL_{\calD_\train}$ and $\calL_{\calD_\test}$ in training and test distributions, respectively. In addition, we use $\error_{\train}(\bftheta) = \calL_{\train}\left(\bftheta, \bftheta^*\right)$ and $\error_{\test}(\bftheta) = \calL_{\test}\left(\bftheta, \bftheta^*\right)$ to denote the loss of a function $\bftheta \in \caltheta$ \textit{w.r.t.} the true labeling function 
+$\bftheta^*$ in the two distributions. We use $\errortrain(\bftheta)$ to denote the empirical loss function \textit{w.r.t.} the $n$ samples $S$ from the training distribution. In addition, we assume that $\errortrain(\bftheta)$ is twice differentiable throughout the paper and we use $\nabla \errortrain(\bftheta)$ and $\nabla^2 \errortrain(\bftheta)$ to denote the derivative and Hessian matrix, respectively.
+
+\subsection{A General Flatness-Aware Optimization for DG}
+
+In in-distribution generalization tasks, it is shown that the zeroth-order flatness can be not strong enough in cases where $\rho$ covers multiple minima or the maximum loss in $\rho$ is misaligned with the uptrend of loss and first-order flatness can help improve it \cite{Zhang2023GradientNA}. 
+But both zeroth-order and first-order flatness require first-order approximations in practice.
+Thus optimizing both zeroth-order and first-order flatness together leads to stronger generalization than both of them \cite{Zhang2023GradientNA}. 
+Yet optimizing first-order flatness requires the calculation of Hessian or Hessian-vector products, which introduces heavy computation overhead. As a result, we aim to accelerate the optimization in a Hessian-free way for OOD generalization.
+
+
+Formally, the zeroth-order and first-order flatness are defined as follows \cite{foret2021sharpness,zhuang2022surrogate,Zhang2023GradientNA}.
+\begin{definition}[$\rho$-zeroth-order flatness] \label{defn:zeroth-order}
+    For any $\rho > 0$, the $\rho$-zeroth-order flatness $\sam_{\rho}(\bftheta)$ of function $\errortrain(\bftheta)$ at a point $\bftheta$ is defined as
+    \begin{equation} \label{eq:sam}
+    \small
+        \sam_{\rho}(\bftheta) \triangleq \max_{\bftheta' \in B(\bftheta, \rho)} \left(\errortrain(\bftheta') - \errortrain(\bftheta)\right), \quad \forall \bftheta \in \caltheta.
+    \end{equation}
+    Here $\rho$ is the perturbation radius that controls the magnitude of the neighborhood.
+\end{definition}
+
+\begin{definition}[$\rho$-first-order flatness] \label{defn:first-order}
+    For any $\rho > 0$, the $\rho$-first-order flatness $\gam_{\rho}(\bftheta)$ of function $\errortrain(\bftheta)$ at a point $\bftheta$ is defined as
+    \begin{equation} \label{eq:GAM}
+        \gam_{\rho}(\bftheta) \triangleq \rho \cdot \max_{\bftheta' \in B(\bftheta, \rho)} \left\|\nabla \errortrain(\bftheta')\right\|, \quad \forall \bftheta \in \caltheta.
+    \end{equation}
+    Here $\rho$ is the perturbation radius similar to Definition \ref{defn:zeroth-order}.
+\end{definition}
+
+Based on these definitions, we propose to jointly optimize zeroth-order and first-order flatness through the following linear combination of the two flatness metrics.
+\begin{equation} \label{eq:fad}
+    \fad_{\rho, \alpha}(\bftheta) = \alpha \sam_{\rho}(\bftheta) + (1 - \alpha) \gam_{\rho}(\bftheta),
+\end{equation}
+where $\alpha$ is a hyper-parameter that controls the trade-off between zeroth-order and first-order flatness. Since both flatness are related to the maximal eigenvalue of the Hessian matrices \cite{zhuang2022surrogate,Zhang2023GradientNA}, we can derive that $\fad_{\rho, \alpha}(\bftheta)$ is also related to the maximal eigenvalue. Specifically, when a point $\bftheta^*$ is a local minimum of $\errortrain(\bftheta)$ and $\errortrain(\bftheta)$ can be second-order Taylor approximated in the neighbourhood of $\bftheta^*$, then
+\begin{equation} \label{eq:fad-eigen}
+  \lambda_{\max}\left(\nabla^2 \errortrain(\bftheta^*)\right) = \frac{\fad_{\rho, \alpha}(\bftheta^*)}{\rho^2\left(1 - \frac{\alpha}{2}\right)}.
+\end{equation}
+See Appendix A for details. Since the maximal eigenvalue is a proper measure of the curvature of minima \cite{kaur2022maximum,keskar2016large} and related to generalization abilities \cite{Zhang2023GradientNA,chen2021vision,jastrzkebski2017three}, optimizing Equation \eqref{eq:fad} would hopefully improve the DG performances, which we demonstrate in Section~\ref{sect:fad-and-dg}.
+
+Then the overall objective of our method, Flatness-Aware minimization for Domain generalization (FAD), is as follows.
+\begin{equation} \label{eq:all-loss}
+    \allloss(\bftheta) = \errortrain(\bftheta) + \beta \cdot \fad_{\rho, \alpha}(\bftheta).
+\end{equation}
+The strength of FAD regularization is controlled by a hyperparameter $\beta$.
+
+\subsection{Flatness Penalty and DG Performance} \label{sect:fad-and-dg}
+
+We give a generalization bound to demonstrate that FAD controls the generalization error on test distribution as follows. 
+
+\begin{proposition} \label{prop:ood-bound}
+    Suppose the per-data-point loss function $\ell$ is differentiable, symmetric, bounded by $M$, and obeys the triangle inequality. Suppose $\bftheta^* \in \caltheta$. Fix $\rho > 0$ and $\bftheta \in \caltheta$. Then with probability at least $1 - \delta$ over training set $S$ generated from the distribution $\calD$,
+    \begin{equation} \label{eq:main-bound}
+        \small
+        \begin{aligned}
+            & \, \bbE_{\epsilon_i \sim N(0, \rho^2/(\sqrt{d} + \sqrt{\log n})^2)}[\error_{\test}(\bftheta + \bfepsilon)] \\
+            \le & \, \errortrain(\bftheta) + \fad_{\rho, \alpha}(\bftheta) \\ 
+            + & \, \sup_{\bftheta_1, \bftheta_2 \in \caltheta}\left|\calL_{\train}(\bftheta_1, \bftheta_2) - \calL_{\test}(\bftheta_1, \bftheta_2)\right| + \frac{M}{\sqrt{n}} \\
+            + & \, \sqrt{\frac{\frac{1}{4} d \log \left(1+\frac{\|\bftheta\|^2\left(\sqrt{d} + \sqrt{\log n}\right)^2}{d \rho^2}\right)+\frac{1}{4}+\log \frac{n}{\delta}+2 \log (6 n+3 d)}{n-1}}.
+        \end{aligned}
+    \end{equation}
+\end{proposition}
+
+\begin{remark}
+    The term $\sup_{\bftheta_1, \bftheta_2 \in \caltheta}|\cdot|$ corresponds to the discrepancy distance \cite{mansour2009domain}, which measures the covariate shift between the training domain and the unknown test domain. Please note that in DG/OOD generalization tasks, the information on test distribution is unavailable in the optimization phase. Thus one cannot intervene in the third term on RHS. Thus optimizing the regularization of FAD (the second term on RHS) with ERM loss on training data leads to better generalization on test data.
+    
+\end{remark}
+
+\subsection{Algorithm Details} \label{sect:algorithm-detail}
+\begin{algorithm}[t]
+\caption{Flatness-Aware Minimization for Domain Generalization (FAD)}
+\label{alg:all}
+\begin{algorithmic}[1]
+    \State \textbf{Input:} Batch size $b$, Learning rate $\eta_t$, Perturbation radius $\rho_t$, Trade-off coefficients $\alpha$, $\beta$, Small constant $\xi$
+    \State $t \leftarrow 0$, $\bftheta_0 \leftarrow$ initial parameters
+    \While{$\bftheta_t$ not converged}
+        \State Sample $W_t$ from the training data with $b$ instances
+        \State $\bfg_{t,0} \leftarrow \nabla \hat{\error}_{W_t}(\bftheta_t)$
+        \State $\tilde{\bftheta}_{t,1} \leftarrow \bftheta_t + \rho_t \cdot \bfg_{t,0} / (\|\bfg_{t,0}\|+\xi)$
+        \State $\bfg_{t,1} \leftarrow \nabla \hat{\error}_{W_t}(\tilde{\bftheta}_{t,1})$
+        \State $\bfh_{t,0} \leftarrow \bfg_{t,1} - \bfg_{t,0}$ \Comment{gradient of $\sam_{\rho_t}(\bftheta_t)$}
+        \State $\tilde{\bftheta}_{t,2} \leftarrow \bftheta_t + \rho_t \cdot \bfh_{t,0} / (\|\bfh_{t,0}\|+\xi)$
+        \State $\bfg_{t,2} \leftarrow \nabla \hat{\error}_{W_t}(\tilde{\bftheta}_{t,2})$
+        \State $\tilde{\bftheta}_{t,3} \leftarrow \tilde{\bftheta}_{t,2} + \rho_t \cdot \bfg_{t,2} / (\|\bfg_{t,2}\|+\xi)$
+        \State $\bfg_{t,3} = \nabla \hat{\error}_{W_t}(\tilde{\bftheta}_{t,3})$
+        \State $\bfh_{t,1} \leftarrow \bfg_{t,3} - \bfg_{t,2}$ \Comment{gradient of $\gam_{\rho_t}(\bftheta_t)$}
+        \State $\bftheta_{t+1} \leftarrow \bftheta_t - \eta_t(\bfg_{t,0} + \beta(\alpha \bfh_{t,0} + (1 - \alpha)\bfh_{t,1}))$
+        \State $t \leftarrow t + 1$
+    \EndWhile
+    \State \Return{$\bftheta_t$}
+\end{algorithmic}
+\end{algorithm}
+
+Although the regularization of FAD controls the OOD generalization error, directly optimizing it 
+suffers from significant computational costs.
+Previous works \cite{yao2020pyhessian,Zhang2023GradientNA} propose to calculate second order gradient with Hessian-vector product, yet the cost increases fast as the model dimension grows. Inspired by \cite{singh2020woodfisher,zhao2022penalizing}, we approximate second-order gradient with first-order gradients and optimize zeroth-order and first-order flatness simultaneously as follows. 
+
+\paragraph{Optimization and acceleration}
+At each round, suppose the perturbation radius is set to $\rho_t$, then the gradient of $\allloss(\bftheta_t)$ at the point $\bftheta_t$ in Equation \eqref{eq:all-loss} is approximated as follows.
+
+\noindent \underline{The gradient of $\sam_{\rho_t}(\bftheta_t)$}. Following \cite{foret2021sharpness}, let
+\begin{equation}
+    \begin{aligned}
+        \tilde{\bftheta}_{t, 1} & = \bftheta_t + \rho_t \cdot \frac{\bfg_{t,0}}{\|\bfg_{t,0}\|} \quad \text{where} \quad \bfg_{t,0} = \nabla \errortrain (\bftheta_t), \\
+        \bfg_{t,1} & = \nabla \errortrain(\tilde{\bftheta}_{t,1}).
+    \end{aligned}
+\end{equation}
+Then the gradient of $\sam_{\rho_t}(\bftheta_t)$ is approximated by
+\begin{equation} \label{eq:gradient-sam}
+    \nabla \sam_{\rho_t}(\bftheta_t) \approx \bfg_{t,1} - \bfg_{t,0}.
+\end{equation}
+
+\noindent \underline{The gradient of $\gam_{\rho_t}(\bftheta_t)$}. \cite{Zhang2023GradientNA} propose to approximate the gradient through the following procedure
+\begin{equation*}
+    \small
+    \nabla \gam_{\rho_t}(\bftheta_t) \approx \rho_t \cdot \nabla \left\|\nabla \errortrain(\bftheta^{\text{adv}}_t)\right\|, \bftheta^{\text{adv}}_t = \bftheta_t + \rho_t \cdot \frac{\nabla \left\|\nabla \errortrain(\bftheta_t)\right\|}{\left\|\nabla \|\nabla \errortrain(\bftheta_t)\|\right\|}.
+\end{equation*}
+One can approximate $\nabla\|\nabla \errortrain(\bftheta_t)\|$ with first-order gradient as follows.
+\begin{equation*}
+    \nabla\left\|\nabla \errortrain(\bftheta_t)\right\| \approx \frac{\nabla \errortrain(\tilde{\bftheta}_{t,1}) - \nabla \errortrain(\bftheta_t)}{\rho_t} = \frac{\bfg_{t,1} - \bfg_{t,0}}{\rho_t},
+\end{equation*}
+Thus we can approximate the gradient of $\gam_{\rho_t}(\bftheta_t)$ efficiently and rewrite the term as follows. The details of the derivation can be found in Appendix A.
+\begin{equation} \label{eq:gradient-gam}
+    \begin{aligned}
+        \nabla \gam_{\rho_t}(\bftheta_t) & \approx \bfg_{t,3} - \bfg_{t,2}, \quad \text{where} \\
+        \tilde{\bftheta}_{t,2} & = \bftheta_t + \rho_t \cdot \frac{\bfg_{t,1} - \bfg_{t,0}}{\|\bfg_{t,1} - \bfg_{t,0}\|}, \quad \bfg_{t,2} = \nabla \errortrain(\tilde{\bftheta}_{t,2}), \\
+        \tilde{\bftheta}_{t,3} & = \tilde{\bftheta}_{t,2} + \rho_t \frac{\bfg_{t,2}}{\|\bfg_{t,2}\|}, \quad \bfg_{t,3} = \nabla \errortrain(\tilde{\bftheta}_{t,3}).
+    \end{aligned}
+\end{equation}
+Please note that the terms $\bfg_{t,1}$ and $\bfg_{t,1}$ for optimizing zeroth-order flatness $\sam_{\rho_t}(\bftheta_t)$ are preserved in the approximation of $\gam_{\rho_t}(\bftheta_t)$ and thus causes no overhead.
+Combining the gradient approximation steps as shown in Equations \eqref{eq:gradient-sam} and \eqref{eq:gradient-gam}, we can obtain the unified optimization framework as shown in Algorithm \ref{alg:all}.
+
+
+\paragraph{Convergence analysis} To analyze the convergence property of Algorithm \ref{alg:all}, we first introduce the Lipschitz smooth assumption that are adopted commonly in optimization-related literature \cite{allen2018neon2,xu2018first,zhuang2022surrogate}.
+
+\begin{definition} \label{defn:loss-smooth}
+    For a function $J: \caltheta \rightarrow \bbR$, $J$ is $\gamma_2$-Lipschitz smooth if
+    \begin{equation}
+        \forall \bftheta_1, \bftheta_2 \in \caltheta, \left\|\nabla J(\bftheta_1) - \nabla J(\bftheta_2)\right\| \le \gamma_2 \|\bftheta_1 - \bftheta_2\|.
+    \end{equation}
+\end{definition}
+
+Let $\bfDelta_t = \bfg_{t,0} + \beta(\alpha \bfh_{t,0} + (1 - \alpha)\bfh_{t,1})$ be the estimated gradient at round $t$ as shown in Line 14 in Algorithm~\ref{alg:all}. Now we can prove that the algorithm would eventually converge by the following theorem.
+
+\begin{theorem} \label{thrm:convergence-main}
+    Suppose $\errortrain(\bftheta)$ is $\gamma$-Lipschitz smooth and bounded by $M$. For any timestamp $t \in \{0, 1, \dots, T\}$ and any $\bftheta \in \caltheta$, suppose we can obtain noisy and bounded observations $f_t(\bftheta)$ of $\nabla \errortrain(\bftheta)$ such that
+    \begin{equation}
+        \bbE[f_t(\bftheta)] = \nabla \errortrain(\bftheta), \quad \|f_t(\bftheta)\| \le G.
+    \end{equation}
+    Then with learning rate $\eta_t = \eta_0 / \sqrt{t}$ and perturbation radius $\rho_t = \rho_0 / \sqrt{t}$,
+    \begin{equation}
+        \sum_{t=1}^T \bbE\left[\left\|\bfDelta_t\right\|^2\right] \le \frac{C_1 + C_2 \log T}{\sqrt{T}},
+    \end{equation}
+    for some constants $C_1$ and $C_2$ that only depend on $\gamma_1, \gamma_2, G, M, \eta_0, \rho_0$, $\alpha, \beta$.
+\end{theorem}
+
+Thus, the convergence of FAD is guaranteed, and we show the convergence rate of FAD empirically in Section~\ref{sec:overhead}.

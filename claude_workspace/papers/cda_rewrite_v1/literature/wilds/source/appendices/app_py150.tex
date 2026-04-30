@@ -1,0 +1,126 @@
+\subsection{\Py}\label{sec:app_py150}
+
+Code completion models---autocomplete tools used by programmers to suggest subsequent source code tokens, such as the names of API calls---are commonly used to reduce the effort of software development \citep{robbes2008program,bruch2009learning,nguyen2015graph,proksch2015intelligent,franks2015cacheca}.
+These models are typically trained on data collected from existing codebases but then deployed more generally across other codebases, which may have different distributions of API usages \citep{nita2010using,proksch2016evaluating,allamanis2017smartpaste}. This shift across codebases can cause substantial performance drops in code completion models.
+Moreover, prior studies of real-world usage of code completion models have noted that these models can generalize poorly on some important subpopulations of tokens such as method names \citep{hellendoorn2019code}.
+
+We study this problem using a variant of the Py150 Dataset, originally developed by \citet{raychev2016probabilistic} and adapted to a code completion task by \citet{CodeXGLUE}.
+
+\subsubsection{Setup}
+\paragraph{Problem setting.}
+We consider a hybrid domain generalization and subpopulation shift problem, where the domains are codebases (GitHub repositories), and our goal is to learn code completion models that generalize to source code written in new codebases.
+Concretely, the input $x$ is a sequence of source code tokens taken from a single file, the label $y$ is the next token (e.g., \texttt{"environ"}, \texttt{"communicate"} in Figure \ref{fig:dataset_py150}), and the domain $d$ is an integer that identifies the repository that the source code belongs to.
+We aim to solve both a domain generalization problem across codebases and improve subpopulation performance on class and methods tokens.
+
+\paragraph{Data.}
+The dataset comprises 150,000 Python source code files from 8,421 different repositories on GitHub (\href{https://github.com/}{\texttt{github.com}}).  Each source code file is associated with the repository ID so that code from the same repository can be linked.
+
+We split the dataset by randomly partitioning the data by repositories:
+\begin{enumerate}
+  \item \textbf{Training:} 79,866 code files from 5,477 repositories.
+  \item \textbf{Validation (OOD):} 5,160 code files from different 261 repositories.
+  \item \textbf{Test (OOD):} 39,974 code files from different 2,471 repositories.
+  \item \textbf{Validation (ID):} 5,000 code files from the same repositories as the training set (but different files).
+  \item \textbf{Test (ID):} 20,000 code files from the same repositories as the training set (but different files).
+\end{enumerate}
+The repositories are randomly distributed across the training, validation (OOD), and test (OOD) sets.
+As we use models pre-trained on the CodeSearchNet dataset \citep{husain2019codesearchnet}, which partially overlaps with the Py150 dataset, we ensured that all GitHub repositories used in CodeSearchNet only appear in the training set in \Py and not in the validation/test sets.
+
+Table \ref{tab:py150_token_stats} shows the token statistics of the source code files, as well as the token type breakdown (e.g., class, method, punctuator, keyword, literal).
+The tokens are defined by the built-in Python tokenizer and the CodeGPT tokenizer, following \citet{CodeXGLUE}.
+Training and evaluation are conducted at the token-level (more details are provided below).
+
+\begin{table*}[tbp]
+    \caption{Token statistics for \Py.}\label{tab:py150_token_stats}
+  \centering
+  \scalebox{0.85}{
+  \begin{tabular}{lccccccc}
+  \toprule
+    Split & \#Files & \#Total tokens & \#Class & \#Method & \#Punctuator & \#Keyword & \#Literal  \\
+  \midrule
+    Training & 79,866 & 14,129,619 & 894,753 & 789,456 & 4,512,143 & 1,246,624 & 1,649,653 \\
+    Validation (ID) & 5,000 & 882,745 & 55,645 & 48,866 & 282,568 & 77,230 & 105,456\\
+    Test (ID) & 20,000 & 3,539,524 & 222,822 & 194,293 & 1,130,607  & 313,008  & 420,232  \\
+    Validation (OOD) & 5,160 & 986,638  & 65,237 & 56,756 & 310,914 & 84,677 & 111,282 \\
+    Test (OOD) & 39,974 & 7,340,433 & 444,713 & 412,700 & 2,388,151 & 640,939 & 869,083 \\
+  \bottomrule
+  \end{tabular}
+  }
+\end{table*}
+
+\paragraph{Evaluation.}
+We evaluate models by their accuracy on predicting class and method tokens in the test set code files. This subpopulation metric is inspired by \citet{hellendoorn2019code}, which finds that in real-world settings, developers primarily use code completion tools for completing class names and method names;
+in contrast, measuring average token accuracy would prioritize common tokens such as punctuators, which are often not a problem in real-world settings.
+
+\paragraph{Potential leverage.} We provide the GitHub repository that each source code files was derived from, which training algorithms can leverage.
+As programming tools like code completion are expected to be used across codebases in real applications \citep{nita2010using,allamanis2017smartpaste}, it is important for models to learn generalizable representations of code and extrapolate well on unseen codebases.
+We hope that approaches using the provided repository annotations can learn to factor out common features and codebase-specific features, resulting in more robust models.
+
+Additionally, besides the (integer) IDs of repositories, we also provide the repository names and file names in natural language as extra metadata. While we only use the repository IDs in our baseline experiments described below, the extra natural language annotations can potentially be leveraged as well to adapt models to target repositories/files.
+
+
+\subsubsection{Baseline results}
+\label{sec:dataset_py150_result}
+
+\paragraph{Model.} For all experiments, we use the CodeGPT model \citep{CodeXGLUE} pre-trained on CodeSearchNet \citep{husain2019codesearchnet} as our model and finetune it on \Py, using all the tokens in the training set.
+We tokenize input source code by the CodeGPT tokenizer and take blocks of length 256 tokens.
+We then train the CodeGPT model with a batch size of 6 (with $6 \times 256 = 1,536$ tokens), a learning rate of $8 \times 10^{-5}$, no $L_2$ regularization, and the AdamW optimizer \citep{loshchilov2019decoupled} for 3 epochs with early stopping.
+Using the hyperparameters from \citet{CodeXGLUE} as a starting point, we selected the above hyperparameters by a grid search over learning rates $\{8 \times 10^{-4}, 8 \times 10^{-5}, 8 \times 10^{-6} \}$ and $L_2$ regularization strength $\{ 0, 0.01, 0.1 \}$. All other hyperparameters were simply set to standard/default values.
+
+\paragraph{ERM results and performance drops.}
+\reftab{results_py150} shows that model performance on class and method tokens dropped substantially from 75.4\% on the train-to-train in-distribution repositories in the Test (ID) set to 67.9\% on the out-of-distribution repositories in the Test (OOD) set.
+This gap shrinks if we evaluate the model on all tokens (instead of class and method tokens): accuracy drops from 74.5\% on Test (ID) to 69.6\% on Test (OOD). This is because the evaluation across all tokens includes many tokens that are used universally across repositories, such as punctuators and keywords.
+
+We only ran a train-to-train comparison because there are a relatively large number of domains (repositories) split i.i.d.~between the training and test sets, which suggests that the training and test sets should be ``equally difficult''.
+We therefore do not expect test-to-test and mixed-to-test comparisons to yield significantly different results.
+
+\paragraph{Additional baseline methods.}
+We trained CORAL, IRM, and Group DRO baselines, treating each repository as a domain. For CORAL and IRM, we find that the smaller penalties give slightly better generalization performance ($\lambda = 1$ for CORAL and $\lambda = 1$ for IRM).
+Compared to the ERM baseline, while CORAL and IRM reduced the performance gap between ID and OOD, neither of them improved upon ERM on the final OOD performance.
+
+\begin{table*}[tbp]
+\caption{Baseline results on \Py. We report both the model's accuracy on predicting class and method tokens and accuracy on all tokens trained using ERM, CORAL, IRM and group DRO. Standard deviations over 3 trials are in parentheses.}
+  \centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{lcccccccc}
+  \toprule
+    & \multicolumn{2}{c}{Validation (ID)} & \multicolumn{2}{c}{Validation (OOD)} & \multicolumn{2}{c}{Test (ID)} & \multicolumn{2}{c}{Test (OOD)}\\
+  Algorithm & Method/class  & All &  Method/class  & All &  Method/class  & All &  Method/class & All \\
+\midrule
+ERM & 75.5 (0.5) & 74.6 (0.4) & 68.0 (0.1) &  69.4 (0.1) & \textbf{75.4} (0.4) & \textbf{74.5} (0.4) &  \textbf{67.9} (0.1) & \textbf{69.6} (0.1)  \\
+CORAL & 70.7 (0.0) &  70.9 (0.1) & 65.7 (0.2) &  67.2 (0.1) & 70.6 (0.0) &  70.8 (0.1) & 65.9 (0.1) &  67.9 (0.0) \\
+IRM &  67.3 (1.1) & 68.4 (0.7) & 63.9 (0.3) &  65.6 (0.1) & 67.3(1.1) & 68.3 (0.7) & 64.3 (0.2) & 66.4 (0.1) \\
+Group DRO &  70.8 (0.0) & 71.2 (0.1) &  65.4 (0.0) & 67.3 (0.0) & 70.8 (0.0) & 71.0 (0.0) & 65.9 (0.1) & 67.9 (0.0)\\
+\bottomrule
+\end{tabular}
+}
+\label{tab:results_py150}
+\end{table*}
+
+
+\subsubsection{Broader context}
+Machine learning can aid programming and software engineering in various ways:
+automatic code completion \citep{raychev2014code,svyatkovskiy2019pythia},
+program synthesis \citep{bunel2018leveraging,kulal2019spoc},
+program repair \citep{vasic2019neural,yasunaga2020graph},
+code search \citep{husain2019codesearchnet},
+and code summarization \citep{allamanis2015suggesting}.
+However, these systems face several forms of distribution shifts when deployed in practice.
+One major challenge is the shifts across codebases (which our \Py dataset focuses on), where systems need to adapt to factors such as project content, coding conventions, or library or API usage in each codebase \citep{nita2010using,allamanis2017smartpaste}.
+A second source of shifts is programming languages, which includes adaptation across different domain-specific languages (DSLs), e.g., in robotic environments \citep{shin2019synthetic};
+and across different versions of languages, e.g., Python 2 and 3 \citep{malloy2017quantifying}.
+Another challenge is the shift from synthetic training sets to real usage: for instance, \cite{hellendoorn2019code} show that existing code completion systems, which are typically trained as language models on source code, perform poorly on the real completion instances that are most commonly used by developers in IDEs, such as API calls (class and method calls).
+
+\subsubsection{Additional details}
+
+\paragraph{Data split.}
+We generate the splits in the following steps. First, to avoid test set contamination, we took all of the repositories in CodeSearchNet (which, as a reminder, is used to pretrain our baseline model) and assigned them to the training set. Second, we randomly split all of the remaining repositories into three groups: Validation (OOD), Test (OOD), and Others. Finally, to generate the ID splits, we randomly split the files in the Others repositories into three sets: Training, Validation (ID), and Test (ID).
+
+
+\paragraph{Modifications to the original dataset.}
+The original Py150 dataset \citep{raychev2016probabilistic} splits the total 150k files into 100k training files and 50k test files,
+regardless of the repository that each file was from.
+In \Py, we re-split the dataset based on repositories to construct the aforementioned train, validation (ID), validation (OOD), test (ID), and test (OOD) sets.
+
+Additionally, in the Py150 code completion task introduced in \citet{CodeXGLUE}, models are evaluated by the accuracy of predicting every token in source code. However, according to developer studies, this evaluation may include various tokens that are rarely used in real code completion, such as punctuators, strings, numerals, etc. \citep{robbes2008program,proksch2016evaluating, hellendoorn2019code}.
+To define a task closer to real applications, in \Py we focus on class name and method name prediction (which are used most commonly by developers).

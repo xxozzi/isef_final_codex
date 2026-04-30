@@ -1,0 +1,30 @@
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.1}
+\caption{\small\textbf{Out-of-domain accuracies (\%) on} \data{TerraIncognita}\textbf{.}}
+\begin{tabular}{lllll|c}
+\toprule
+\textbf{Algorithm} & \textbf{L100} & \textbf{L38} & \textbf{L43} & \textbf{L46} & \textbf{Avg} \\
+\midrule
+MMD$^\dagger$ & 41.9 \scriptsize$\pm3.0$ & 34.8 \scriptsize$\pm1.0$ & 57.0 \scriptsize$\pm1.9$ & 35.2 \scriptsize$\pm1.8$ & 42.2 \\
+GroupDRO$^\dagger$ & 41.2 \scriptsize$\pm0.7$ & 38.6 \scriptsize$\pm2.1$ & 56.7 \scriptsize$\pm0.9$ & 36.4 \scriptsize$\pm2.1$ & 43.2 \\
+Mixstyle$^\ddagger$ & 54.3 \scriptsize$\pm1.1$ & 34.1 \scriptsize$\pm1.1$ & 55.9 \scriptsize$\pm1.1$ & 31.7 \scriptsize$\pm2.1$ & 44.0 \\
+ARM$^\dagger$ & 49.3 \scriptsize$\pm0.7$ & 38.3 \scriptsize$\pm2.4$ & 55.8 \scriptsize$\pm0.8$ & 38.7 \scriptsize$\pm1.3$ & 45.5 \\
+MTL$^\dagger$ & 49.3 \scriptsize$\pm1.2$ & 39.6 \scriptsize$\pm6.3$ & 55.6 \scriptsize$\pm1.1$ & 37.8 \scriptsize$\pm0.8$ & 45.6 \\
+CDANN$^\dagger$ & 47.0 \scriptsize$\pm1.9$ & 41.3 \scriptsize$\pm4.8$ & 54.9 \scriptsize$\pm1.7$ & 39.8 \scriptsize$\pm2.3$ & 45.8 \\
+ERM$^\dagger$ & 49.8 \scriptsize$\pm4.4$ & 42.1 \scriptsize$\pm1.4$ & 56.9 \scriptsize$\pm1.8$ & 35.7 \scriptsize$\pm3.9$ & 46.1 \\
+VREx$^\dagger$ & 48.2 \scriptsize$\pm4.3$ & 41.7 \scriptsize$\pm1.3$ & 56.8 \scriptsize$\pm0.8$ & 38.7 \scriptsize$\pm3.1$ & 46.4 \\
+RSC$^\dagger$ & 50.2 \scriptsize$\pm2.2$ & 39.2 \scriptsize$\pm1.4$ & 56.3 \scriptsize$\pm1.4$ & \textbf{40.8} \scriptsize$\pm0.6$ & 46.6 \\
+DANN$^\dagger$ & 51.1 \scriptsize$\pm3.5$ & 40.6 \scriptsize$\pm0.6$ & 57.4 \scriptsize$\pm0.5$ & 37.7 \scriptsize$\pm1.8$ & 46.7 \\
+IRM$^\dagger$ & 54.6 \scriptsize$\pm1.3$ & 39.8 \scriptsize$\pm1.9$ & 56.2 \scriptsize$\pm1.8$ & 39.6 \scriptsize$\pm0.8$ & 47.6 \\
+CORAL$^\dagger$ & 51.6 \scriptsize$\pm2.4$ & 42.2 \scriptsize$\pm1.0$ & 57.0 \scriptsize$\pm1.0$ & 39.8 \scriptsize$\pm2.9$ & 47.7 \\
+MLDG$^\dagger$ & 54.2 \scriptsize$\pm3.0$ & 44.3 \scriptsize$\pm1.1$ & 55.6 \scriptsize$\pm0.3$ & 36.9 \scriptsize$\pm2.2$ & 47.8 \\
+I-Mixup & \textbf{59.6} \scriptsize$\pm2.0$ & 42.2 \scriptsize$\pm1.4$ & 55.9 \scriptsize$\pm0.8$ & 33.9 \scriptsize$\pm1.4$ & 47.9 \\
+SagNet$^\dagger$ & 53.0 \scriptsize$\pm2.9$ & 43.0 \scriptsize$\pm2.5$ & 57.9 \scriptsize$\pm0.6$ & 40.4 \scriptsize$\pm1.3$ & 48.6 \\
+ERM$^\ddagger$ & 54.3 \scriptsize$\pm0.4$ & 42.5 \scriptsize$\pm0.7$ & 55.6 \scriptsize$\pm0.3$ & 38.8 \scriptsize$\pm2.5$ & 47.8 \\
+\midrule
+Ours & 55.4 \scriptsize$\pm0.0$ & \textbf{44.9} \scriptsize$\pm1.1$ & \textbf{59.7} \scriptsize$\pm0.4$ & 39.9 \scriptsize$\pm0.2$ & \textbf{50.0} \\
+\bottomrule
+\end{tabular}
+\end{table}

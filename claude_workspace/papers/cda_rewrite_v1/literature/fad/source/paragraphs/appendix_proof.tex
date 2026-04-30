@@ -1,0 +1,206 @@
+\section{Omitted proofs}
+\subsection{Derivation of Equation (3)}
+\begin{claim} [Restatement of Equation (3)] \label{claim:eigen-value}
+    When a point $\bftheta^*$ is a local minimum of $\errortrain(\bftheta)$ and $\errortrain(\bftheta)$ can be second-order Taylor approximated in the neighbourhood of $\bftheta^*$, then
+    \begin{equation} \label{eq:fad-eigen-restate}
+      \lambda_{\max}\left(\nabla^2 \errortrain(\bftheta^*)\right) = \frac{\fad_{\rho, \alpha}(\bftheta^*)}{\rho^2\left(1 - \frac{\alpha}{2}\right)}.
+    \end{equation}
+\end{claim}
+
+\begin{proof} [Derivation of Claim \ref{claim:eigen-value}]
+    Suppose a point $\bftheta^*$ is a local minimum of $\errortrain(\bftheta)$ and $\errortrain(\bftheta)$ can be second-order Taylor approximated in the neighbourhood of $\bftheta^*$. Then according to \cite[Lemma 3.3]{zhuang2022surrogate}, we have
+    \begin{equation} \label{eq:sam-eigen}
+        \lambda_{\max}\left(\nabla^2 \errortrain(\bftheta^*)\right) = \frac{2 \sam_{\rho}(\bftheta^*)}{\rho^2}.
+    \end{equation}
+    In addition, according to \cite[Lemma 4.1]{Zhang2023GradientNA}, we have
+    \begin{equation} \label{eq:gam-eigen}
+        \lambda_{\max}\left(\nabla^2 \errortrain(\bftheta^*)\right) = \frac{\gam_{\rho}(\bftheta^*)}{\rho^2}.
+    \end{equation}
+    Combining Equations \eqref{eq:sam-eigen} and \eqref{eq:gam-eigen}, we have
+    \begin{equation}
+        \frac{\fad_{\rho, \alpha}(\bftheta^*)}{\rho^2} = \alpha \cdot \frac{\sam(\bftheta^*)}{\rho^2} + (1-\alpha) \cdot \frac{\gam(\bftheta^*)}{\rho^2} = \left(\frac{\alpha}{2} + 1 - \alpha\right)\lambda_{\max}\left(\nabla^2 \errortrain(\bftheta^*)\right) = \left(1 - \frac{\alpha}{2}\right)\lambda_{\max}\left(\nabla^2 \errortrain(\bftheta^*)\right).
+    \end{equation}
+    Now the claim follows.
+\end{proof}
+
+\subsection{Derivation of Equation (9)}
+\begin{claim} [Restatement of Equation (9)] \label{claim:gradient}
+    The gradient of $\gam_{\rho_t}(\bftheta_t)$ can be approximated as follows
+    \begin{equation}
+        \begin{aligned}
+            \nabla \gam_{\rho_t}(\bftheta_t) & \approx \bfg_{t,3} - \bfg_{t,2}, \quad \text{where} \\
+            \tilde{\bftheta}_{t,2} & = \bftheta_t + \rho_t \cdot \frac{\bfg_{t,1} - \bfg_{t,0}}{\|\bfg_{t,1} - \bfg_{t,0}\|}, \quad \bfg_{t,2} = \nabla \errortrain(\tilde{\bftheta}_{t,2}), \\
+            \tilde{\bftheta}_{t,3} & = \tilde{\bftheta}_{t,2} + \rho_t \cdot \frac{\bfg_{t,2}}{\|\bfg_{t,2}\|}, \quad \bfg_{t,3} = \nabla \errortrain(\tilde{\bftheta}_{t,3}).
+        \end{aligned}
+    \end{equation}
+    Here
+    \begin{equation}
+        \bfg_{t,0} = \nabla \errortrain (\bftheta_t), \quad
+        \bfg_{t,1} = \nabla \errortrain(\tilde{\bftheta}_{t,1}) \quad \text{where} \quad \tilde{\bftheta}_{t, 1} = \bftheta_t + \rho_t \cdot \frac{\bfg_{t,0}}{\|\bfg_{t,0}\|}.
+    \end{equation}
+\end{claim}
+\begin{proof} [Derivation of Claim \ref{claim:gradient}]
+    \cite{Zhang2023GradientNA} propose to approximate the gradient $\nabla \gam_{\rho_t}(\bftheta_t)$ through the following procedure
+    \begin{equation*}
+        \nabla \gam_{\rho_t}(\bftheta_t) \approx \rho_t \cdot \nabla \left\|\nabla \errortrain(\bftheta^{\text{adv}}_t)\right\|, \bftheta^{\text{adv}}_t = \bftheta_t + \rho_t \cdot \frac{\nabla \left\|\nabla \errortrain(\bftheta_t)\right\|}{\left\|\nabla \|\nabla \errortrain(\bftheta_t)\|\right\|}.
+    \end{equation*}
+    In addition, $\nabla \|\nabla \errortrain(\bftheta)\|$ is given by the following equation.
+    \begin{equation} \label{eq:gam-original}
+        \nabla \|\nabla \errortrain(\bftheta)\| = \frac{\nabla^2 \errortrain(\bftheta) \cdot \nabla \errortrain(\bftheta)}{\left\|\errortrain(\bftheta)\right\|}.
+    \end{equation}
+    However, optimizing the above equations requires the Hessian vector product operation, which is not computation efficient. As a result, inspired by \cite{singh2020woodfisher,zhao2022penalizing},
+    one can approximate $\nabla\|\nabla \errortrain(\bftheta)\|$ with first-order gradient as follows.
+    \begin{equation} \label{eq:hessian-approx}
+        \forall \bftheta \in \caltheta, \quad \nabla\left\|\nabla \errortrain(\bftheta)\right\| \approx \frac{\nabla \errortrain\left(\bftheta + \rho_t \cdot \frac{\nabla \errortrain(\bftheta)}{\|\nabla \errortrain(\bftheta)\|}\right) - \nabla \errortrain(\bftheta)}{\rho_t}.
+    \end{equation}
+    Applying Equation \eqref{eq:hessian-approx} to the $\bftheta^{\text{adv}}$ term in Equation \eqref{eq:gam-original}, we have
+    \begin{equation}
+        \bftheta^{\text{adv}} \approx \bftheta_t + \rho_t \cdot \frac{\nabla \errortrain\left(\bftheta_t + \rho_t \cdot \frac{\nabla \errortrain(\bftheta_t)}{\|\nabla \errortrain(\bftheta_t)\|}\right) - \nabla \errortrain(\bftheta_t)}{\left\|\nabla \errortrain\left(\bftheta_t + \rho_t \cdot \frac{\nabla \errortrain(\bftheta_t)}{\|\nabla \errortrain(\bftheta_t)\|}\right) - \nabla \errortrain(\bftheta_t)\right\|} = \bftheta_t + \rho_t \cdot \frac{\bfg_{t,1} - \bfg_{t,0}}{\left\|\bfg_{t,1} - \bfg_{t,0}\right\|}.
+    \end{equation}
+    We let $\tilde{\bftheta}_{t,2} \triangleq \bftheta^{\text{adv}}$. Now applying Equation \eqref{eq:hessian-approx} to the calculation of $\nabla \|\nabla \errortrain(\tilde{\bftheta}_{t,2})\|$, we can get that
+    \begin{equation}
+        \begin{aligned}
+            \nabla \gam_{\rho}(\bftheta_t) \approx \rho_t \cdot \nabla \|\nabla \errortrain(\tilde{\bftheta}_{t,2})\| & \approx \rho_t \cdot \frac{\nabla \errortrain\left(\tilde{\bftheta}_{t,2}  + \rho_t \cdot \frac{\nabla \errortrain(\tilde{\bftheta}_{t,2} )}{\|\nabla \errortrain(\tilde{\bftheta}_{t,2} )\|}\right) - \nabla \errortrain(\tilde{\bftheta}_{t,2})}{\rho_t} \\
+            & = \bfg_{t,3} - \bfg_{t,2},
+        \end{aligned}
+    \end{equation}
+    where
+    \begin{equation}
+        \bfg_{t,2} = \nabla \errortrain(\tilde{\bftheta}_{t,2}),\quad \bfg_{t,3} = \nabla \errortrain(\tilde{\bftheta}_{t,3}), \quad \text{and} \quad \tilde{\bftheta}_{t,3} = \tilde{\bftheta}_{t,2}  + \rho_t \cdot \frac{\nabla \errortrain(\tilde{\bftheta}_{t,2} )}{\|\nabla \errortrain(\tilde{\bftheta}_{t,2} )\|} = \tilde{\bftheta}_{t,2}  + \rho_t \cdot \frac{\bfg_{t,2}}{\|\bfg_{t,2}\|}.
+    \end{equation}
+    Now the claim follows.
+\end{proof}
+
+\subsection{Proof of Proposition 3.1}
+\begin{proof}
+    Following the proof of Theorem 1 in \cite{foret2021sharpness}, we can obtain that, by fixing $\sigma = \rho / (\sqrt{d} + \sqrt{\log n})$, we have
+    \begin{equation} \label{eq:proof-generalization-main-0}
+        \bbE_{\epsilon_i \sim N(0, \sigma^2)}\left[\calE_{\train}(\bftheta+\bfepsilon)\right] \leq \bbE_{\epsilon_i \sim N(0, \sigma^2)}\left[\errortrain(\bftheta+\bfepsilon)\right]+\sqrt{\frac{\frac{1}{4} d \log \left(1+\frac{\|\bftheta\|_2^2}{d \sigma^2}\right)+\frac{1}{4}+\log \frac{n}{\delta}+2 \log (6 n+3 d)}{n-1}}.
+    \end{equation}
+    Since $\epsilon_i \sim N(0, \sigma^2)$, $\|\bfepsilon\|^2/\sigma^2$ has a chi-square distribution. Therefore, according to Lemma 1 in \cite{laurent2000adaptive}, we have that for any $t > 0$,
+    \begin{equation}
+        P\left(\|\bfepsilon\|^2/\sigma^2 - d \geq 2 \sqrt{ dt}+2 t\right) \leq \exp (-t).
+    \end{equation}
+    By fixing $t = \frac{1}{2}\log n$, we can get that with probability at least $1 - 1 / \sqrt{n}$,
+    \begin{equation}
+      \|\bfepsilon\|^2 \le \sigma^2\left(d + \sqrt{2d \log n} + \log n\right) \le \sigma^2\left(\sqrt{d} + \sqrt{\log n}\right)^2 = \rho^2.
+    \end{equation}
+    As a result,
+    \begin{equation} \label{eq:proof-generalization-main-1}
+        \begin{aligned}
+            & \, \bbE_{\epsilon_i \sim N(0, \sigma^2)}\left[\errortrain(\bftheta+\bfepsilon)\right] \\
+            \le & \, \bbE_{\epsilon_i \sim N(0, \sigma^2)}\left[\errortrain(\bftheta+\bfepsilon) \mid \|\bfepsilon\| \le \rho\right] + \bbE_{\epsilon_i \sim N(0, \sigma^2)}\left[\errortrain(\bftheta+\bfepsilon) \mid \|\bfepsilon\| > \rho\right] \\
+            \le & \, \bbE_{\epsilon_i \sim N(0, \sigma^2)}\left[\errortrain(\bftheta+\bfepsilon) \mid \|\bfepsilon\| \le \rho\right] + \frac{M}{\sqrt{n}}. \\
+        \end{aligned}
+    \end{equation}
+    On the one hand, based on the proof of Proposition 4.3 in \cite{Zhang2023GradientNA}, according to the mean value theorem and Cauchy–Schwarz inequality, for any $\bfepsilon$ such that $\|\bfepsilon\| < \rho$, there exists a constant $0 \le c \le 1$, such that
+    \begin{equation} \label{eq:proof-generalization-gam}
+        \errortrain(\bftheta + \bfepsilon) = \errortrain(\bftheta) + \left(\nabla \errortrain(\bftheta + c \bfepsilon)\right)^\top\bfepsilon \le \errortrain(\bftheta) + \left\|\nabla \errortrain(\bftheta + c \bfepsilon)\right\|\cdot\|\bfepsilon\| \le \errortrain(\bftheta) + \gam_{\rho}(\bftheta).
+    \end{equation}
+    On the other hand, for any $\bfepsilon$ such that $\|\bfepsilon\| < \rho$, we have
+    \begin{equation} \label{eq:proof-generalization-sam}
+        \errortrain(\bftheta + \bfepsilon) \le \errortrain(\bftheta) + \sam_{\rho}(\bftheta).
+    \end{equation}
+    Combining Equations \eqref{eq:proof-generalization-gam} and \eqref{eq:proof-generalization-sam}, we have for any $\bfepsilon$ such that $\|\bfepsilon\| < \rho$ and $0 \le \alpha \le 1$
+    \begin{equation} \label{eq:proof-generalization-main-2}
+        \errortrain(\bftheta + \epsilon) \le \errortrain(\bftheta) + \alpha \sam_{\rho}(\bftheta) + (1 - \alpha) \gam_{\rho}(\bftheta) = \errortrain(\bftheta) + \fad_{\rho, \alpha}(\bftheta).
+    \end{equation}
+    Combining Equations \eqref{eq:proof-generalization-main-0}, \eqref{eq:proof-generalization-main-1}, and \eqref{eq:proof-generalization-main-2}, we have
+    \begin{equation} \label{eq:proof-generalization-final-1}
+        \bbE_{\epsilon_i \sim N(0, \sigma^2)}\left[\calE_{\train}(\bftheta+\bfepsilon)\right] \leq \errortrain(\bftheta) + \fad_{\rho, \alpha}(\bftheta) + \frac{M}{\sqrt{n}} + \sqrt{\frac{\frac{1}{4} d \log \left(1+\frac{\|\bftheta\|_2^2}{d \sigma^2}\right)+\frac{1}{4}+\log \frac{n}{\delta}+2 \log (6 n+3 d)}{n-1}}.
+    \end{equation}
+    Finally, since we consider the covariate shift scenario, based on Theorem 4.2 in \cite{zhang2022nico++}, we have
+    \begin{equation} \label{eq:proof-generalization-final-2}
+        \forall \bftheta \in \caltheta, \quad \error_{\test}(\bftheta) \le \error_{\train}(\bftheta) +  \sup_{\bftheta_1, \bftheta_2 \in \caltheta}\left|\calL_{\train}(\bftheta_1, \bftheta_2) - \calL_{\test}(\bftheta_1, \bftheta_2)\right|.
+    \end{equation}
+    Now the claim follows by combining Equations \eqref{eq:proof-generalization-final-1} and \eqref{eq:proof-generalization-final-2}.
+\end{proof}
+
+\subsection{Proof of Theorem 3.2}
+We need the following proposition first.
+
+\begin{proposition} \label{prop:convergence-g}
+    Suppose the assumptions in Theorem 3.2 hold (with parameters $\gamma, G, M, \eta_0, \rho_0$), then withe learning rate $\eta_t = \eta_0 / \sqrt{t}$ and perturbation radius $\rho_t = \rho_0 / \sqrt{t}$, we have
+    \begin{equation}
+        \sum_{t=1}^T \bbE\left[\left\|\bfg_{t,0}\right\|^2\right] \le \frac{C_1' + C_2' \log T}{\sqrt{T}}
+    \end{equation}
+    for some constants $C_1'$ and $C_2'$ that only depend on $\gamma, G, M, \eta_0, \rho_0, \alpha, \beta$.
+\end{proposition}
+
+\begin{proof}
+    Since $\errortrain(\bftheta)$ is $\gamma$-Lipschitz smooth, we have
+    \begin{equation}
+        \begin{aligned}
+            \errortrain(\bftheta_{t+1}) & \le \errortrain(\bftheta_t) + \left(\nabla \errortrain(\bftheta_t)\right)^{\top} (\bftheta_{t+1} - \bftheta_t) + \frac{\gamma}{2}\left\|\bftheta_t - \bftheta_{t+1}\right\|^2 \\
+            & = \errortrain(\bftheta_t) - \eta_t \left(\nabla \errortrain(\bftheta_t)\right)^{\top} \left(\bfg_{t,0} + \beta(\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1})\right) + \frac{\gamma\eta_t^2}{2}\left\|\bfg_{t,0} + \beta(\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1})\right\|^2.
+        \end{aligned}
+    \end{equation}
+    Now we take the expectation of the above equation conditioned on the events till round $t$. By the assumption, we have $\bbE[\bfg_{t,0}] = \nabla \errortrain(\bftheta_t)$, $\bbE[\bfh_{t,0}] = \bbE[\nabla \errortrain(\tilde{\bftheta}_{t,1})] - \nabla \errortrain(\bftheta_t)$, and $\bbE[\bfh_{t,1}] = \bbE[\nabla \errortrain(\tilde{\bftheta}_{t,3})] - \bbE[\nabla \errortrain(\tilde{\bftheta}_{t,2})]$ we can get that
+    \begin{equation} \label{eq:proof-gradient-1}
+        \begin{aligned}
+            & \, \bbE\left[\errortrain(\bftheta_{t+1})\right] - \errortrain(\bftheta_t) \\
+            \le & \,  - \eta_t \left\|\nabla \errortrain(\bftheta_t)\right\|^2 - \eta_t\beta \left(\nabla \errortrain(\bftheta_t)\right)^{\top} \left(\alpha\left(\bbE\left[\nabla \errortrain(\tilde{\bftheta}_{t,1})\right] - \nabla \errortrain(\bftheta_t)\right) + (1-\alpha)\left(\bbE[\nabla \errortrain(\tilde{\bftheta}_{t,3})] - \bbE[\nabla \errortrain(\tilde{\bftheta}_{t,2})]\right)\right) \\
+            & \, + \frac{\gamma\eta_t^2}{2}\left\|\bfg_{t,0} + \beta(\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1})\right\|^2.
+        \end{aligned}
+    \end{equation}
+    On the one hand, by the Cauchy–Schwarz inequality, the triangle equality of $\|\cdot\|$, and the $\gamma_1$-Lipschitz assumption on $\errortrain(\bftheta)$, we have
+    \begin{equation} \label{eq:proof-gradient-2}
+        \begin{aligned}
+            & - \eta_t\beta\left(\nabla \errortrain(\bftheta_t)\right)^{\top}\left(\alpha\left(\bbE\left[\nabla \errortrain(\tilde{\bftheta}_{t,1})\right] - \nabla \errortrain(\bftheta_t)\right) + (1-\alpha)\left(\bbE[\nabla \errortrain(\tilde{\bftheta}_{t,3})] - \bbE[\nabla \errortrain(\tilde{\bftheta}_{t,2})]\right)\right) \\
+            \le & \, \eta_t \beta \left\|\nabla \errortrain(\bftheta_t)\right\|\left\|\alpha\left(\bbE\left[\nabla\errortrain(\tilde{\bftheta}_{t,1})\right] - \nabla\errortrain(\bftheta_t)\right) + (1-\alpha)\left(\bbE[\nabla\errortrain(\tilde{\bftheta}_{t,3})] - \bbE[\nabla\errortrain(\tilde{\bftheta}_{t,2})]\right)\right\| \\
+            \le & \, \eta_t \beta G\left(\alpha \left\|\bbE\left[\nabla\errortrain(\tilde{\bftheta}_{t,1}) - \nabla\errortrain(\bftheta_t)\right]\right\| + (1-\alpha)\left\|\bbE[\nabla\errortrain(\tilde{\bftheta}_{t,3}) - \nabla\errortrain(\tilde{\bftheta}_{t,2})]\right\|\right) \\
+            \le & \, \eta_t \beta G\left(\alpha \bbE\left[\left\|\nabla\errortrain(\tilde{\bftheta}_{t,1}) - \nabla\errortrain(\bftheta_t)\right\|\right] + (1-\alpha)\bbE\left[\left\|\nabla\errortrain(\tilde{\bftheta}_{t,3}) - \nabla\errortrain(\tilde{\bftheta}_{t,2})\right\|\right]\right) \\
+            \le & \, \eta_t \beta G\gamma\left(\alpha \bbE\left[\left\|\tilde{\bftheta}_{t,1} - \bftheta_t\right\|\right] + (1 - \alpha)\bbE\left[\left\|\tilde{\bftheta}_{t,3} - \tilde{\bftheta}_{t,2}\right\|\right]\right) \le \eta_t \rho_t \beta G\gamma.
+        \end{aligned}
+    \end{equation}
+    On the other hand, since $\|\bfg_{t,0}\|, \|\bfg_{t,1}\|, \|\bfg_{t,2}\|, \|\bfg_{t,3}\| \le G$, we have $\|\bfh_{t,0}\|, \|\bfh_{t,1}\| \le 2G$. As a result,
+    \begin{equation} \label{eq:proof-gradient-3}
+        \begin{aligned}
+            & \, \frac{\gamma\eta_t^2}{2}\left\|\bfg_{t,0} + \beta(\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1})\right\|^2 \\
+            \le & \, \gamma\eta_t^2\left\|\bfg_{t,0}\right\|^2 + \gamma\beta^2 \left\|\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1}\right\|^2 \\
+            \le & \, \gamma\eta_t^2 \left\|\bfg_{t,0}\right\|^2 + 2\gamma\beta^2\left(\alpha^2\|\bfh_{t,0}\|^2 + (1-\alpha)^2\|\bfh_{t,1}\|^2\right) \\
+            \le & \, \gamma\eta_t^2G^2(1 + 8\beta^2(\alpha^2 + (1- \alpha)^2)).
+        \end{aligned}
+    \end{equation}
+    Combining Equations \eqref{eq:proof-gradient-1}, \eqref{eq:proof-gradient-2}, and \eqref{eq:proof-gradient-3}, we can get that
+    \begin{equation}
+        \eta_t \left\|\bfg_{t,0}\right\|^2 = \eta_t \left\|\nabla \errortrain(\bftheta_t)\right\|^2 \le -\bbE\left[\errortrain(\bftheta_{t+1})\right] + \errortrain(\bftheta_t) + \eta_t\rho_t Z_1 + \eta_t^2 Z_2 
+    \end{equation}
+    for some constants $Z_1$ and $Z_2$ that depend on $\gamma, G, \alpha, \beta$ only. Now perform telescope sum, take the expectations at each step, and let $\eta_t = \eta_0 / \sqrt{t}$ and $\rho_t = \rho_0 / \sqrt{t}$, we can get that
+    \begin{equation}
+        \begin{aligned}
+            \frac{\eta_0}{\sqrt{T}}\sum_{t=1}^T \left\|\bfg_{t,0}\right\|^2 & \le \eta_t\sum_{t=1}^T \left\|\bfg_{t,0}\right\|^2 \\
+            & \le \errortrain\left(\bftheta_1\right) - \bbE\left[\errortrain(\bftheta_{T+1})\right] + Z_1\sum_{t=1}^T \rho_t\eta_t + Z_2 \sum_{t=1}^T \eta_t^2 \\
+            & \le \, 2M + Z_1\eta_0\rho_0 \sum_{t=1}^T \frac{1}{t} + Z_2 \eta_0^2\sum_{t=1}^T \frac{1}{t} \\
+            & \le \, Z_3 + Z_4 \log T,
+        \end{aligned}
+    \end{equation}
+    for some constants $Z_3$ and $Z_4$ that only depend on $\gamma, G, M, \eta_0, \rho_0, \alpha, \beta$. Now the claim follows.
+\end{proof}
+
+Now we can prove Theorem 3.2 with Proposition \ref{prop:convergence-g}.
+
+\begin{proof}[Proof of Theorem 3.2]
+    We first observe that
+    \begin{equation} \label{eq:proof-theorem-convergence-1}
+        \|\bfDelta_t\|^2 = \left\|\bfg_{t,0}+\beta(\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1})\right\|^2 \le 2 \|\bfg_{t,0}\|^2 + 2 \beta^2\left\|\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1}\right\|^2.
+    \end{equation}
+    Now we bound the two terms in the right-hand side of the above equation, respectively. The bound on $\sum_{t=1}^T \|\bfg_{t,0}\|^2$ can be obtained from Proposition \ref{prop:convergence-g}. For the second term, at each round $t$, take the expectation conditioned on events till round $t$, we have 
+    \begin{equation}
+        \begin{aligned}
+            & \, \bbE\left[\left\|\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1}\right\|^2\right] \\
+            \le & \, 2\alpha^2\bbE\left[\left\|\bfh_{t,0}\right\|^2\right] + 2(1-\alpha)^2\bbE\left[\left\|\bfh_{t,1}\right\|^2\right] \\
+            \le & \, 2\alpha^2\bbE\left[\left\|\nabla \errortrain(\tilde{\bftheta}_{t,1}) - \nabla \errortrain(\bftheta_t))\right\|^2\right] + 2(1-\alpha)^2\bbE\left[\left\|\nabla \errortrain(\tilde{\bftheta}_{t,3})-\nabla \errortrain(\tilde{\bftheta}_{t,2})\right\|^2\right] \\
+            \le & \, 2\alpha^2\gamma^2\bbE\left[\left\|\tilde{\bftheta}_{t,1} - \bftheta_t\right\|^2\right] + 2(1-\alpha)^2\gamma^2\bbE\left[\left\|\tilde{\bftheta}_{t,3}-\tilde{\bftheta}_{t,2}\right\|^2\right] \\
+            \le & \, 2\rho_t^2\gamma^2(\alpha^2 + (1-\alpha)^2).
+        \end{aligned}
+    \end{equation}
+    As a result, when $\rho_t = \rho_0 / \sqrt{t}$,
+    we have
+    \begin{equation} \label{eq:proof-theorem-convergence-2}
+        \sum_{t=1}^T \bbE\left[\left\|\alpha \bfh_{t,0} + (1-\alpha)\bfh_{t,1}\right\|^2\right] \le \sum_{t=1}^T 2\rho_t^2\gamma^2(\alpha^2 + (1-\alpha)^2) = 2\rho_0^2\gamma^2(\alpha^2 + (1-\alpha)^2)\sum_{t=1}^T \frac{1}{t} \le Z_1 + Z_2 \log T
+    \end{equation}
+    for some constants $Z_1$ and $Z_2$ that only depend on $\gamma, \rho_0, \alpha$.
+
+    Now Theorem 3.2 follows by combining Equations \eqref{eq:proof-theorem-convergence-1} and \eqref{eq:proof-theorem-convergence-2} and Proposition \ref{prop:convergence-g}.
+\end{proof}

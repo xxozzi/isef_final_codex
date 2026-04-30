@@ -1,0 +1,1 @@
+[Errno 13] Permission denied: 'C:\\Users\\jayden\\Desktop\\RESEARCH\\isef_final_codex\\claude_workspace\\papers\\cda_rewrite_v1\\literature\\model_soups\\source\\figures\\avg_fig_small.pdf'

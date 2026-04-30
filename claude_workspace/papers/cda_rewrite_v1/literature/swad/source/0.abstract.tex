@@ -1,0 +1,17 @@
+\begin{abstract}
+\vspace{-.5em}
+Domain generalization (DG) methods aim to achieve generalizability to an unseen target domain by using only training data from the source domains.
+Although a variety of DG methods have been proposed, a recent study shows that under a fair evaluation protocol, called DomainBed, the simple empirical risk minimization (ERM) approach works comparable to or even outperforms previous methods.
+Unfortunately, simply solving ERM on a complex, non-convex loss function can easily lead to sub-optimal generalizability by seeking sharp minima.
+In this paper, we theoretically show that finding flat minima results in a smaller domain generalization gap.
+% In this paper, we find theoretical relationship between flat minima and domain generalization gap.
+We also propose a simple yet effective method, named Stochastic Weight Averaging Densely (SWAD), to find flat minima.
+SWAD finds flatter minima and suffers less from overfitting than does the vanilla SWA by a dense and overfit-aware stochastic weight sampling strategy.
+% By seeking flat minima, 
+SWAD shows state-of-the-art performances on five DG benchmarks, namely \data{PACS}, \data{VLCS}, \data{OfficeHome}, \data{TerraIncognita}, and \data{DomainNet}, with consistent and large margins of +1.6\% averagely on out-of-domain accuracy.
+We also compare SWAD with conventional generalization methods, such as data augmentation and consistency regularization methods, to verify that the remarkable performance improvements are originated from by seeking flat minima, not from better in-domain generalizability.
+Last but not least, SWAD is readily adaptable to existing DG methods without modification; the combination of SWAD and an existing DG method further improves DG performances.
+Source code is available at \url{https://github.com/khanrc/swad}.
+
+
+\end{abstract}

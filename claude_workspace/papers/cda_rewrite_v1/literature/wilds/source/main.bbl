@@ -1,0 +1,3138 @@
+\begin{thebibliography}{435}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Abelson et~al.(2014)Abelson, Varshney, and Sun]{abelson2014poor}
+B.~Abelson, K.~R. Varshney, and J.~Sun.
+\newblock Targeting direct cash transfers to the extremely poor.
+\newblock In \emph{International Conference on Knowledge Discovery and Data
+  Mining (KDD)}, 2014.
+
+\bibitem[Adragna et~al.(2020)Adragna, Creager, Madras, and
+  Zemel]{adragna2020fairness}
+R.~Adragna, E.~Creager, D.~Madras, and R.~Zemel.
+\newblock Fairness and robustness in invariant learning: A case study in
+  toxicity classification.
+\newblock \emph{arXiv preprint arXiv:2011.06485}, 2020.
+
+\bibitem[Agrawal et~al.(2018)Agrawal, Batra, Parikh, and
+  Kembhavi]{agrawal2018don}
+Aishwarya Agrawal, Dhruv Batra, Devi Parikh, and Aniruddha Kembhavi.
+\newblock Don't just assume; look and answer: Overcoming priors for visual
+  question answering.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pages
+  4971--4980, 2018.
+
+\bibitem[Ahadi et~al.(2015)Ahadi, Lister, Haapala, and
+  Vihavainen]{ahadi2015exploring}
+A.~Ahadi, R.~Lister, H.~Haapala, and A.~Vihavainen.
+\newblock Exploring machine learning methods to automatically identify students
+  in need of assistance.
+\newblock In \emph{Proceedings of the Eleventh Annual International Conference
+  on International Computing Education Research}, pages 121--130, 2015.
+
+\bibitem[Ahumada et~al.(2020)Ahumada, Fegraus, Birch, Flores, Kays, O’Brien,
+  Palmer, Schuttler, Zhao, Jetz, Kinnaird, Kulkarni, Lyet, Thau, Duong, Oliver,
+  and Dancer]{ahumada2020wildlife}
+Jorge~A Ahumada, Eric Fegraus, Tanya Birch, Nicole Flores, Roland Kays,
+  Timothy~G O’Brien, Jonathan Palmer, Stephanie Schuttler, Jennifer~Y Zhao,
+  Walter Jetz, Margaret Kinnaird, Sayali Kulkarni, Arnaud Lyet, David Thau,
+  Michelle Duong, Ruth Oliver, and Anthony Dancer.
+\newblock Wildlife insights: A platform to maximize the potential of camera
+  trap and other passive sensor wildlife data for the planet.
+\newblock \emph{Environmental Conservation}, 47\penalty0 (1):\penalty0 1--6,
+  2020.
+
+\bibitem[Aich et~al.(2018)Aich, Josuttes, Ovsyannikov, Strueby, Ahmed, Duddu,
+  Pozniak, Shirtliffe, and Stavness]{aich2018deepwheat}
+Shubhra Aich, Anique Josuttes, Ilya Ovsyannikov, Keegan Strueby, Imran Ahmed,
+  Hema~Sudhakar Duddu, Curtis Pozniak, Steve Shirtliffe, and Ian Stavness.
+\newblock Deepwheat: Estimating phenotypic traits from crop images with deep
+  learning.
+\newblock In \emph{2018 IEEE Winter Conference on Applications of Computer
+  Vision (WACV)}, pages 323--332. IEEE, 2018.
+
+\bibitem[AlBadawy et~al.(2018)AlBadawy, Saha, and
+  Mazurowski]{albadawy2018tumor}
+E.~AlBadawy, A.~Saha, and M.~Mazurowski.
+\newblock Deep learning for segmentation of brain tumors: Impact of
+  cross-institutional training and testing.
+\newblock \emph{Med Phys.}, 45, 2018.
+
+\bibitem[Alexandari et~al.(2020)Alexandari, Kundaje, and
+  Shrikumar]{alexandari2020maximum}
+A.~Alexandari, A.~Kundaje, and A.~Shrikumar.
+\newblock Maximum likelihood with bias-corrected calibration is hard-to-beat at
+  label shift adaptation.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pages
+  222--232, 2020.
+
+\bibitem[Alipanahi et~al.(2015)Alipanahi, Delong, Weirauch, and
+  Frey]{deepbind15}
+Babak Alipanahi, Andrew Delong, Matthew~T Weirauch, and Brendan~J Frey.
+\newblock Predicting the sequence specificities of dna-and rna-binding proteins
+  by deep learning.
+\newblock \emph{Nature biotechnology}, 33\penalty0 (8):\penalty0 831, 2015.
+
+\bibitem[Allamanis and Brockschmidt(2017)]{allamanis2017smartpaste}
+Miltiadis Allamanis and Marc Brockschmidt.
+\newblock Smartpaste: Learning to adapt source code.
+\newblock \emph{arXiv preprint arXiv:1705.07867}, 2017.
+
+\bibitem[Allamanis et~al.(2015)Allamanis, Barr, Bird, and
+  Sutton]{allamanis2015suggesting}
+Miltiadis Allamanis, Earl~T Barr, Christian Bird, and Charles Sutton.
+\newblock Suggesting accurate method and class names.
+\newblock In \emph{Proceedings of the 2015 10th Joint Meeting on Foundations of
+  Software Engineering}, pages 38--49, 2015.
+
+\bibitem[Allevato et~al.(2017)Allevato, Bolotin, Grossman, Mane-Padros, Sladek,
+  and Martinez]{allevato2017sequence}
+Michael Allevato, Eugene Bolotin, Mark Grossman, Daniel Mane-Padros, Frances~M
+  Sladek, and Ernest Martinez.
+\newblock Sequence-specific dna binding by myc/max to low-affinity non-e-box
+  motifs.
+\newblock \emph{PloS one}, 12\penalty0 (7):\penalty0 e0180147, 2017.
+
+\bibitem[Amorim et~al.(2018)Amorim, Can{\c{c}}ado, and
+  Veloso]{amorim2018automated}
+E.~Amorim, M.~Can{\c{c}}ado, and A.~Veloso.
+\newblock Automated essay scoring in the presence of biased ratings.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, pages
+  229--237, 2018.
+
+\bibitem[Ando et~al.(2017)Ando, McLean, and Berndl]{ando2017improving}
+D~Michael Ando, Cory~Y McLean, and Marc Berndl.
+\newblock Improving phenotypic measurements in high-content imaging screens.
+\newblock \emph{BioRxiv}, page 161422, 2017.
+
+\bibitem[Ardila et~al.(2020)Ardila, Branson, Davis, Kohler, Meyer, Henretty,
+  Morais, Saunders, Tyers, and Weber]{ardila2020common}
+R.~Ardila, M.~Branson, K.~Davis, M.~Kohler, J.~Meyer, M.~Henretty, R.~Morais,
+  L.~Saunders, F.~Tyers, and G.~Weber.
+\newblock Common voice: A massively-multilingual speech corpus.
+\newblock In \emph{Language Resources and Evaluation Conference (LREC)}, pages
+  4218--4222, 2020.
+
+\bibitem[Arjovsky et~al.(2019)Arjovsky, Bottou, Gulrajani, and
+  Lopez-Paz]{arjovsky2019invariant}
+M.~Arjovsky, L.~Bottou, I.~Gulrajani, and D.~Lopez-Paz.
+\newblock Invariant risk minimization.
+\newblock \emph{arXiv preprint arXiv:1907.02893}, 2019.
+
+\bibitem[Asuncion and Newman(2007)]{asuncion2007uci}
+Arthur Asuncion and David Newman.
+\newblock {UCI Machine Learning Repository}, 2007.
+
+\bibitem[Attene-Ramos et~al.(2013)Attene-Ramos, Miller, Huang, Michael, Itkin,
+  Kavlock, Austin, Shinn, Simeonov, Tice, et~al.]{attene2013tox21}
+M.~S. Attene-Ramos, N.~Miller, R.~Huang, S.~Michael, M.~Itkin, R.~J. Kavlock,
+  C.~P. Austin, P.~Shinn, A.~Simeonov, R.~R. Tice, et~al.
+\newblock The tox21 robotic platform for the assessment of environmental
+  chemicals--from vision to reality.
+\newblock \emph{Drug Discovery Today}, 18\penalty0 (15):\penalty0 716--723,
+  2013.
+
+\bibitem[Atwood et~al.(2020)Atwood, Halpern, Baljekar, Breck, Sculley,
+  Ostyakov, Nikolenko, Ivanov, Solovyev, Wang, et~al.]{atwood2020inclusive}
+J.~Atwood, Y.~Halpern, P.~Baljekar, E.~Breck, D.~Sculley, P.~Ostyakov, S.~I.
+  Nikolenko, I.~Ivanov, R.~Solovyev, W.~Wang, et~al.
+\newblock The {Inclusive Images} competition.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 155--186, 2020.
+
+\bibitem[Avsec et~al.(2021{\natexlab{a}})Avsec, Agarwal, Visentin, Ledsam,
+  Grabska-Barwinska, Taylor, Assael, Jumper, Kohli, and Kelley]{enformer21}
+Ziga Avsec, Vikram Agarwal, Daniel Visentin, Joseph~R Ledsam, Agnieszka
+  Grabska-Barwinska, Kyle~R Taylor, Yannis Assael, John Jumper, Pushmeet Kohli,
+  and David~R Kelley.
+\newblock Effective gene expression prediction from sequence by integrating
+  long-range interactions.
+\newblock \emph{bioRxiv}, 2021{\natexlab{a}}.
+
+\bibitem[Avsec et~al.(2021{\natexlab{b}})Avsec, Weilert, Shrikumar, Krueger,
+  Alexandari, Dalal, Fropf, McAnany, Gagneur, and Kundaje]{avsec2021base}
+{\v{Z}}iga Avsec, Melanie Weilert, Avanti Shrikumar, Sabrina Krueger, Amr
+  Alexandari, Khyati Dalal, Robin Fropf, Charles McAnany, Julien Gagneur, and
+  Anshul Kundaje.
+\newblock Base-resolution models of transcription-factor binding reveal soft
+  motif syntax.
+\newblock \emph{Nature Genetics}, pages 1--13, 2021{\natexlab{b}}.
+
+\bibitem[Ayalew et~al.(2020)Ayalew, Ubbens, and
+  Stavness]{ayalew2020unsupervised}
+Tewodros~W Ayalew, Jordan~R Ubbens, and Ian Stavness.
+\newblock Unsupervised domain adaptation for plant organ counting.
+\newblock In \emph{European Conference on Computer Vision}, pages 330--346.
+  Springer, 2020.
+
+\bibitem[Azizzadenesheli et~al.(2019)Azizzadenesheli, Liu, Yang, and
+  Anandkumar]{azizzadenesheli2019reglabel}
+K.~Azizzadenesheli, A.~Liu, F.~Yang, and A.~Anandkumar.
+\newblock Regularized learning for domain adaptation under label shifts.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019.
+
+\bibitem[Badgeley et~al.(2019)Badgeley, Zech, Oakden-Rayner, Glicksberg, Liu,
+  Gale, McConnell, Percha, Snyder, and Dudley]{badgeley2019deep}
+M.~A. Badgeley, J.~R. Zech, L.~Oakden-Rayner, B.~S. Glicksberg, M.~Liu,
+  W.~Gale, M.~V. McConnell, B.~Percha, T.~M. Snyder, and J.~T. Dudley.
+\newblock Deep learning predicts hip fracture using confounding patient and
+  healthcare variables.
+\newblock \emph{npj Digital Medicine}, 2, 2019.
+
+\bibitem[Balaji et~al.(2018)Balaji, Sankaranarayanan, and
+  Chellappa]{balaji2018metareg}
+Yogesh Balaji, Swami Sankaranarayanan, and Rama Chellappa.
+\newblock Metareg: Towards domain generalization using meta-regularization.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 998--1008, 2018.
+
+\bibitem[Balsubramani et~al.(2017)Balsubramani, Boley, Costello, Heiser, Jeske,
+  Kueffner, Lee, Powers, and Kundaje]{EDneurips17}
+Akshay Balsubramani, Nathan Boley, James~C. Costello, Laura~M. Heiser, Tim
+  Jeske, Robert Kueffner, Jin~Wook Lee, Rani~K. Powers, and Anshul Kundaje.
+\newblock The encode-dream challenge to predict genome-wide binding of
+  regulatory proteins to dna.
+\newblock \emph{Neural Information Processing Systems (Workshop on Machine
+  Learning Challenges as a Research Tool)}, 2017.
+
+\bibitem[Balsubramani et~al.(2020)Balsubramani, Boley, Lee, Powers, Hoff, Yu,
+  Jeske, Friend, Norman, Stolovitzky, Kueffner, Heiser, Costello, and
+  Kundaje]{EDsynapse}
+Akshay Balsubramani, Nathan Boley, Jin~Wook Lee, Rani~K. Powers, Bruce Hoff,
+  Thomas Yu, Tim Jeske, Stephen Friend, Thea Norman, Gustavo Stolovitzky,
+  Robert Kueffner, Laura~M. Heiser, James~C. Costello, and Anshul Kundaje.
+\newblock Encode-dream in vivo transcription factor binding site prediction
+  challenge.
+\newblock Synapse:
+  \url{https://www.synapse.org/#!Synapse:syn6131484/wiki/402026}, 2020.
+\newblock Accessed: 2020-10-23. doi:10.7303/syn6131484.
+
+\bibitem[Bandi et~al.(2018)Bandi, Geessink, Manson, Dijk, Balkenhol, Hermsen,
+  Bejnordi, Lee, Paeng, Zhong, et~al.]{bandi2018detection}
+P.~Bandi, O.~Geessink, Q.~Manson, M.~V. Dijk, M.~Balkenhol, M.~Hermsen, B.~E.
+  Bejnordi, B.~Lee, K.~Paeng, A.~Zhong, et~al.
+\newblock From detection of individual metastases to classification of lymph
+  node status at the patient level: the {CAMELYON17} challenge.
+\newblock \emph{IEEE Transactions on Medical Imaging}, 38\penalty0
+  (2):\penalty0 550--560, 2018.
+
+\bibitem[Barbu et~al.(2019)Barbu, Mayo, Alverio, Luo, Wang, Gutfreund,
+  Tenenbaum, and Katz]{barbu2019objectnet}
+A.~Barbu, D.~Mayo, J.~Alverio, W.~Luo, C.~Wang, D.~Gutfreund, J.~Tenenbaum, and
+  B.~Katz.
+\newblock Objectnet: A large-scale bias-controlled dataset for pushing the
+  limits of object recognition models.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 9453--9463, 2019.
+
+\bibitem[Bartlett and Wegkamp(2008)]{bartlett2008classification}
+P.~L. Bartlett and M.~H. Wegkamp.
+\newblock Classification with a reject option using a hinge loss.
+\newblock \emph{Journal of Machine Learning Research (JMLR)}, 9\penalty0
+  (0):\penalty0 1823--1840, 2008.
+
+\bibitem[Baumann et~al.(2019)Baumann, K{\"o}hn, and Hennig]{baumann2019spoken}
+T.~Baumann, A.~K{\"o}hn, and F.~Hennig.
+\newblock The {Spoken {W}ikipedia Corpus} collection: Harvesting, alignment and
+  an application to hyperlistening.
+\newblock \emph{Language Resources and Evaluation}, 53\penalty0 (2):\penalty0
+  303--329, 2019.
+
+\bibitem[BBC(2020)]{bbc2020gcse}
+BBC.
+\newblock A-levels and {GCSEs}: How did the exam algorithm work?
+\newblock \emph{The British Broadcasting Corporation}, 2020.
+\newblock URL \url{https://www.bbc.com/news/explainers-53807730}.
+
+\bibitem[Beck et~al.(2011)Beck, Sangoi, Leung, Marinelli, Nielsen, Vijver,
+  West, Rijn, and Koller]{beck2011systematic}
+A.~H. Beck, A.~R. Sangoi, S.~Leung, R.~J. Marinelli, T.~O. Nielsen, M.~J. V.~D.
+  Vijver, R.~B. West, M.~V.~D. Rijn, and D.~Koller.
+\newblock Systematic analysis of breast cancer morphology uncovers stromal
+  features associated with survival.
+\newblock \emph{Science}, 3\penalty0 (108), 2011.
+
+\bibitem[Becke(2014)]{becke2014perspective}
+Axel~D Becke.
+\newblock Perspective: Fifty years of density-functional theory in chemical
+  physics.
+\newblock \emph{The Journal of Chemical Physics}, 140\penalty0 (18):\penalty0
+  18A301, 2014.
+
+\bibitem[Beede et~al.(2020)Beede, Baylor, Hersch, Iurchenko, Wilcox,
+  Ruamviboonsuk, and Vardoulakis]{beede2020human}
+E.~Beede, E.~Baylor, F.~Hersch, A.~Iurchenko, L.~Wilcox, P.~Ruamviboonsuk, and
+  L.~M. Vardoulakis.
+\newblock A human-centered evaluation of a deep learning system deployed in
+  clinics for the detection of diabetic retinopathy.
+\newblock In \emph{Conference on Human Factors in Computing Systems (CHI)},
+  pages 1--12, 2020.
+
+\bibitem[Beery et~al.(2018)Beery, Horn, and Perona]{beery2018recognition}
+S.~Beery, G.~V. Horn, and P.~Perona.
+\newblock Recognition in terra incognita.
+\newblock In \emph{European Conference on Computer Vision (ECCV)}, pages
+  456--473, 2018.
+
+\bibitem[Beery et~al.(2020{\natexlab{a}})Beery, Cole, and
+  Gjoka]{beery2020iwildcam}
+S.~Beery, E.~Cole, and A.~Gjoka.
+\newblock The {iWildCam} 2020 competition dataset.
+\newblock \emph{arXiv preprint arXiv:2004.10340}, 2020{\natexlab{a}}.
+
+\bibitem[Beery et~al.(2019)Beery, Morris, and Yang]{beery2019efficient}
+Sara Beery, Dan Morris, and Siyu Yang.
+\newblock Efficient pipeline for camera trap image review.
+\newblock \emph{arXiv preprint arXiv:1907.06772}, 2019.
+
+\bibitem[Beery et~al.(2020{\natexlab{b}})Beery, Wu, Rathod, Votel, and
+  Huang]{beery2020context}
+Sara Beery, Guanhang Wu, Vivek Rathod, Ronny Votel, and Jonathan Huang.
+\newblock Context r-cnn: Long term temporal context for per-camera object
+  detection.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 13075--13085, 2020{\natexlab{b}}.
+
+\bibitem[Bejnordi et~al.(2017)Bejnordi, Veta, Diest, Ginneken, Karssemeijer,
+  Litjens, Laak, Hermsen, Manson, Balkenhol, et~al.]{bejnordi2017diagnostic}
+B.~E. Bejnordi, M.~Veta, P.~J.~V. Diest, B.~V. Ginneken, N.~Karssemeijer,
+  G.~Litjens, J.~A. V.~D. Laak, M.~Hermsen, Q.~F. Manson, M.~Balkenhol, et~al.
+\newblock Diagnostic assessment of deep learning algorithms for detection of
+  lymph node metastases in women with breast cancer.
+\newblock \emph{JAMA}, 318\penalty0 (22):\penalty0 2199--2210, 2017.
+
+\bibitem[Bellamy et~al.(2020)Bellamy, Celi, and Beam]{bellamy2020evaluating}
+D.~Bellamy, L.~Celi, and A.~L. Beam.
+\newblock Evaluating progress on machine learning for longitudinal electronic
+  healthcare data.
+\newblock \emph{arXiv preprint arXiv:2010.01149}, 2020.
+
+\bibitem[Bellemare et~al.(2020)Bellemare, Candido, Castro, Gong, Machado,
+  Moitra, Ponda, and Wang]{bellemare2020autonomous}
+M.~G. Bellemare, S.~Candido, P.~S. Castro, J.~Gong, M.~C. Machado, S.~Moitra,
+  S.~S. Ponda, and Z.~Wang.
+\newblock Autonomous navigation of stratospheric balloons using reinforcement
+  learning.
+\newblock \emph{Nature}, 588, 2020.
+
+\bibitem[Ben-David et~al.(2006)Ben-David, Blitzer, Crammer, and
+  Pereira]{bendavid2006analysis}
+S.~Ben-David, J.~Blitzer, K.~Crammer, and F.~Pereira.
+\newblock Analysis of representations for domain adaptation.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 137--144, 2006.
+
+\bibitem[BenTaieb and Hamarneh(2017)]{bentaieb2017adversarial}
+A.~BenTaieb and G.~Hamarneh.
+\newblock Adversarial stain transfer for histopathology image analysis.
+\newblock \emph{IEEE Transactions on Medical Imaging}, 37\penalty0
+  (3):\penalty0 792--802, 2017.
+
+\bibitem[Berman et~al.(2018)Berman, de~la Rosa, and Accone]{berman2018ethical}
+Gabrielle Berman, Sara de~la Rosa, and Tanya Accone.
+\newblock Ethical considerations when using geospatial technologies for
+  evidence generation.
+\newblock \emph{Innocenti Discussion Paper, UNICEF Office of Research}, 2018.
+
+\bibitem[Beyene et~al.(2015)Beyene, Welemariam, Persson, and
+  Lavesson]{beyene2015improved}
+A.~A. Beyene, T.~Welemariam, M.~Persson, and N.~Lavesson.
+\newblock Improved concept drift handling in surgery prediction and other
+  applications.
+\newblock \emph{Knowledge and Information Systems}, 44\penalty0 (1):\penalty0
+  177--196, 2015.
+
+\bibitem[Blanchard et~al.(2011)Blanchard, Lee, and
+  Scott]{blanchard2011generalizing}
+G.~Blanchard, G.~Lee, and C.~Scott.
+\newblock Generalizing from several related classification tasks to a new
+  unlabeled sample.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 2178--2186, 2011.
+
+\bibitem[Blitzer et~al.(2007)Blitzer, Dredze, and
+  Pereira]{blitzer2007biographies}
+J.~Blitzer, M.~Dredze, and F.~Pereira.
+\newblock Biographies, bollywood, boom-boxes and blenders: Domain adaptation
+  for sentiment classification.
+\newblock In \emph{Proceedings of the 45th Annual Meeting of the Association of
+  Computational Linguistics}, pages 440--447, 2007.
+
+\bibitem[Blodgett and O'Connor(2017)]{blodgett2017racial}
+S.~L. Blodgett and B.~O'Connor.
+\newblock Racial disparity in natural language processing: A case study of
+  social media {A}frican-{A}merican {E}nglish.
+\newblock \emph{arXiv preprint arXiv:1707.00061}, 2017.
+
+\bibitem[Blodgett et~al.(2016)Blodgett, Green, and O'Connor]{blodgett2016}
+S.~L. Blodgett, L.~Green, and B.~O'Connor.
+\newblock Demographic dialectal variation in social media: A case study of
+  {A}frican-{A}merican {E}nglish.
+\newblock In \emph{Empirical Methods in Natural Language Processing (EMNLP)},
+  pages 1119--1130, 2016.
+
+\bibitem[Blumenstock et~al.(2015)Blumenstock, Cadamuro, and
+  On]{blumenstock2015poverty}
+J.~Blumenstock, G.~Cadamuro, and R.~On.
+\newblock Predicting poverty and wealth from mobile phone metadata.
+\newblock \emph{Science}, 350, 2015.
+
+\bibitem[Bohacek et~al.(1996)Bohacek, McMartin, and Guida]{bohacek1996art}
+R.~S. Bohacek, C.~McMartin, and W.~C. Guida.
+\newblock The art and practice of structure-based drug design: a molecular
+  modeling perspective.
+\newblock \emph{Medicinal Research Reviews}, 16\penalty0 (1):\penalty0 3--50,
+  1996.
+
+\bibitem[Bolstad et~al.(2003)Bolstad, Irizarry, {\AA}strand, and
+  Speed]{bolstad2003comparison}
+Benjamin~M Bolstad, Rafael~A Irizarry, Magnus {\AA}strand, and Terence~P.
+  Speed.
+\newblock A comparison of normalization methods for high density
+  oligonucleotide array data based on variance and bias.
+\newblock \emph{Bioinformatics}, 19\penalty0 (2):\penalty0 185--193, 2003.
+
+\bibitem[Borkan et~al.(2019{\natexlab{a}})Borkan, Dixon, Li, Sorensen, Thain,
+  and Vasserman]{borkan2019limitations}
+D.~Borkan, L.~Dixon, J.~Li, J.~Sorensen, N.~Thain, and L.~Vasserman.
+\newblock Limitations of pinned {AUC} for measuring unintended bias.
+\newblock \emph{arXiv preprint arXiv:1903.02088}, 2019{\natexlab{a}}.
+
+\bibitem[Borkan et~al.(2019{\natexlab{b}})Borkan, Dixon, Sorensen, Thain, and
+  Vasserman]{borkan2019nuanced}
+D.~Borkan, L.~Dixon, J.~Sorensen, N.~Thain, and L.~Vasserman.
+\newblock Nuanced metrics for measuring unintended bias with real data for text
+  classification.
+\newblock In \emph{WWW}, pages 491--500, 2019{\natexlab{b}}.
+
+\bibitem[Bottou et~al.(2013)Bottou, Peters, {Qui\~nonero-Candela}, Charles,
+  Chickering, Portugaly, Ray, Simard, and Snelson]{bottou2013counterfactual}
+L.~Bottou, J.~Peters, J.~{Qui\~nonero-Candela}, D.~X. Charles, D.~M.
+  Chickering, E.~Portugaly, D.~Ray, P.~Simard, and E.~Snelson.
+\newblock Counterfactual reasoning and learning systems: The example of
+  computational advertising.
+\newblock \emph{Journal of Machine Learning Research (JMLR)}, 14:\penalty0
+  3207--3260, 2013.
+
+\bibitem[Boutros et~al.(2015)Boutros, Heigwer, and
+  Laufer]{boutros2015microscopy}
+Michael Boutros, Florian Heigwer, and Christina Laufer.
+\newblock Microscopy-based high-content screening.
+\newblock \emph{Cell}, 163\penalty0 (6):\penalty0 1314--1325, 2015.
+
+\bibitem[Boyle et~al.(2008)Boyle, Davis, Shulha, Meltzer, Margulies, Weng,
+  Furey, and Crawford]{boyle2008high}
+Alan~P Boyle, Sean Davis, Hennady~P Shulha, Paul Meltzer, Elliott~H Margulies,
+  Zhiping Weng, Terrence~S Furey, and Gregory~E Crawford.
+\newblock High-resolution mapping and characterization of open chromatin across
+  the genome.
+\newblock \emph{Cell}, 132\penalty0 (2):\penalty0 311--322, 2008.
+
+\bibitem[Bray et~al.(2016)Bray, Singh, Han, Davis, Borgeson, Hartland,
+  Kost-Alimova, Gustafsdottir, Gibson, and Carpenter]{bray2016cell}
+Mark-Anthony Bray, Shantanu Singh, Han Han, Chadwick~T Davis, Blake Borgeson,
+  Cathy Hartland, Maria Kost-Alimova, Sigrun~M Gustafsdottir, Christopher~C
+  Gibson, and Anne~E Carpenter.
+\newblock Cell painting, a high-content image-based assay for morphological
+  profiling using multiplexed fluorescent dyes.
+\newblock \emph{Nature protocols}, 11\penalty0 (9):\penalty0 1757, 2016.
+
+\bibitem[Broach et~al.(1996)Broach, Thorner, et~al.]{broach1996high}
+James~R Broach, Jeremy Thorner, et~al.
+\newblock High-throughput screening for drug discovery.
+\newblock \emph{Nature}, 384\penalty0 (6604):\penalty0 14--16, 1996.
+
+\bibitem[Broussard(2020)]{broussard2020grades}
+M.~Broussard.
+\newblock When algorithms give real students imaginary grades.
+\newblock \emph{The New York Times}, 2020.
+\newblock URL
+  \url{https://www.nytimes.com/2020/09/08/opinion/international-baccalaureate-algorithm-grades.html}.
+
+\bibitem[Bruch et~al.(2009)Bruch, Monperrus, and Mezini]{bruch2009learning}
+Marcel Bruch, Martin Monperrus, and Mira Mezini.
+\newblock Learning from examples to improve code completion systems.
+\newblock In \emph{European software engineering conference and the ACM SIGSOFT
+  symposium on the foundations of software engineering}, 2009.
+
+\bibitem[Bruzzone and Marconcini(2009)]{bruzzone2009domain}
+L.~Bruzzone and M.~Marconcini.
+\newblock Domain adaptation problems: A {DASVM} classification technique and a
+  circular validation strategy.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}, 32\penalty0 (5):\penalty0 770--787, 2009.
+
+\bibitem[Buenrostro et~al.(2013)Buenrostro, Giresi, Zaba, Chang, and
+  Greenleaf]{ATAC13}
+Jason~D Buenrostro, Paul~G Giresi, Lisa~C Zaba, Howard~Y Chang, and William~J
+  Greenleaf.
+\newblock Transposition of native chromatin for fast and sensitive epigenomic
+  profiling of open chromatin, dna-binding proteins and nucleosome position.
+\newblock \emph{Nature methods}, 10\penalty0 (12):\penalty0 1213, 2013.
+
+\bibitem[Bug et~al.(2017)Bug, Schneider, Grote, Oswald, Feuerhake, Sch{\"u}ler,
+  and Merhof]{bug2017context}
+D.~Bug, S.~Schneider, A.~Grote, E.~Oswald, F.~Feuerhake, J.~Sch{\"u}ler, and
+  D.~Merhof.
+\newblock Context-based normalization of histological stains using deep
+  convolutional features.
+\newblock \emph{Deep Learning in Medical Image Analysis and Multimodal Learning
+  for Clinical Decision Support}, pages 135--142, 2017.
+
+\bibitem[Bunel et~al.(2018)Bunel, Hausknecht, Devlin, Singh, and
+  Kohli]{bunel2018leveraging}
+Rudy Bunel, Matthew Hausknecht, Jacob Devlin, Rishabh Singh, and Pushmeet
+  Kohli.
+\newblock Leveraging grammar and reinforcement learning for neural program
+  synthesis.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2018.
+
+\bibitem[Buolamwini and Gebru(2018)]{buolamwini2018gender}
+J.~Buolamwini and T.~Gebru.
+\newblock Gender shades: Intersectional accuracy disparities in commercial
+  gender classification.
+\newblock In \emph{Conference on Fairness, Accountability and Transparency},
+  pages 77--91, 2018.
+
+\bibitem[Burke et~al.(2016)Burke, Heft-Neal, and Bendavid]{burke2016mortality}
+M.~Burke, S.~Heft-Neal, and E.~Bendavid.
+\newblock Sources of variation in under-5 mortality across {sub-Saharan
+  {Africa}}: a spatial analysis.
+\newblock \emph{Lancet Global Health}, 4, 2016.
+
+\bibitem[Byrd and Lipton(2019)]{byrd2019effect}
+J.~Byrd and Z.~Lipton.
+\newblock What is the effect of importance weighting in deep learning?
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pages
+  872--881, 2019.
+
+\bibitem[Caicedo et~al.(2017)Caicedo, Cooper, Heigwer, Warchal, Qiu, Molnar,
+  Vasilevich, Barry, Bansal, Kraus, et~al.]{caicedo2017data}
+Juan~C Caicedo, Sam Cooper, Florian Heigwer, Scott Warchal, Peng Qiu, Csaba
+  Molnar, Aliaksei~S Vasilevich, Joseph~D Barry, Harmanjit~Singh Bansal, Oren
+  Kraus, et~al.
+\newblock Data-analysis strategies for image-based cell profiling.
+\newblock \emph{Nature methods}, 14\penalty0 (9):\penalty0 849--863, 2017.
+
+\bibitem[Caicedo et~al.(2018)Caicedo, McQuin, Goodman, Singh, and
+  Carpenter]{caicedo2018weakly}
+Juan~C Caicedo, Claire McQuin, Allen Goodman, Shantanu Singh, and Anne~E
+  Carpenter.
+\newblock Weakly supervised learning of single-cell feature embeddings.
+\newblock In \emph{Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 9309--9318, 2018.
+
+\bibitem[Caldas et~al.(2018)Caldas, Wu, Li, Kone{\v{c}}n{\`y}, McMahan, Smith,
+  and Talwalkar]{caldas2018leaf}
+S.~Caldas, P.~Wu, T.~Li, J.~Kone{\v{c}}n{\`y}, H.~B. McMahan, V.~Smith, and
+  A.~Talwalkar.
+\newblock Leaf: A benchmark for federated settings.
+\newblock \emph{arXiv preprint arXiv:1812.01097}, 2018.
+
+\bibitem[Campanella et~al.(2019)Campanella, Hanna, Geneslaw, Miraflor, Silva,
+  Busam, Brogi, Reuter, Klimstra, and Fuchs]{campanella2019clinical}
+G.~Campanella, M.~G. Hanna, L.~Geneslaw, A.~Miraflor, V.~W.~K. Silva, K.~J.
+  Busam, E.~Brogi, V.~E. Reuter, D.~S. Klimstra, and T.~J. Fuchs.
+\newblock Clinical-grade computational pathology using weakly supervised deep
+  learning on whole slide images.
+\newblock \emph{Nature Medicine}, 25\penalty0 (8):\penalty0 1301--1309, 2019.
+
+\bibitem[Cao et~al.(2020)Cao, Chen, Lu, Arechiga, Gaidon, and
+  Ma]{cao2020heteroskedastic}
+K.~Cao, Y.~Chen, J.~Lu, N.~Arechiga, A.~Gaidon, and T.~Ma.
+\newblock Heteroskedastic and imbalanced deep learning with adaptive
+  regularization.
+\newblock \emph{arXiv preprint arXiv:2006.15766}, 2020.
+
+\bibitem[Cao et~al.(2019)Cao, Wei, Gaidon, Arechiga, and Ma]{cao2019learning}
+Kaidi Cao, Colin Wei, Adrien Gaidon, Nikos Arechiga, and Tengyu Ma.
+\newblock Learning imbalanced datasets with label-distribution-aware margin
+  loss.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2019.
+
+\bibitem[Carlucci et~al.(2019)Carlucci, D'Innocente, Bucci, Caputo, and
+  Tommasi]{carlucci2019domain}
+Fabio~M Carlucci, Antonio D'Innocente, Silvia Bucci, Barbara Caputo, and
+  Tatiana Tommasi.
+\newblock Domain generalization by solving jigsaw puzzles.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pages
+  2229--2238, 2019.
+
+\bibitem[Chanussot et~al.(2020)Chanussot, Das, Goyal, Lavril, Shuaibi, Riviere,
+  Tran, Heras-Domingo, Ho, Hu, Palizhati, Sriram, Wood, Yoon, Parikh, Zitnick,
+  and Ulissi]{chanussot2020open}
+L.~Chanussot, A.~Das, S.~Goyal, T.~Lavril, M.~Shuaibi, M.~Riviere, K.~Tran,
+  J.~Heras-Domingo, C.~Ho, W.~Hu, A.~Palizhati, A.~Sriram, B.~Wood, J.~Yoon,
+  D.~Parikh, C.~L. Zitnick, and Z.~Ulissi.
+\newblock The {Open Catalyst} 2020 (oc20) dataset and community challenges.
+\newblock \emph{arXiv preprint arXiv:2010.09990}, 2020.
+
+\bibitem[Chen et~al.(2019{\natexlab{a}})Chen, Szolovits, and
+  Ghassemi]{chen2019can}
+I.~Y. Chen, P.~Szolovits, and M.~Ghassemi.
+\newblock Can {AI} help reduce disparities in general medical and mental health
+  care?
+\newblock \emph{AMA Journal of Ethics}, 21\penalty0 (2):\penalty0 167--179,
+  2019{\natexlab{a}}.
+
+\bibitem[Chen et~al.(2020)Chen, Pierson, Rose, Joshi, Ferryman, and
+  Ghassemi]{chen2020ethical}
+I.~Y. Chen, E.~Pierson, S.~Rose, S.~Joshi, K.~Ferryman, and M.~Ghassemi.
+\newblock Ethical machine learning in health care.
+\newblock \emph{arXiv preprint arXiv:2009.10576}, 2020.
+
+\bibitem[Chen et~al.(2018)Chen, Johansson, and Sontag]{chen2018my}
+Irene Chen, Fredrik~D Johansson, and David Sontag.
+\newblock Why is my classifier discriminatory?
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 3539--3550, 2018.
+
+\bibitem[Chen et~al.(2019{\natexlab{b}})Chen, Wu, Ratner, Weng, and
+  R{\'e}]{chen2019slice}
+V.~Chen, S.~Wu, A.~J. Ratner, J.~Weng, and C.~R{\'e}.
+\newblock Slice-based learning: A programming model for residual learning in
+  critical data slices.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 9397--9407, 2019{\natexlab{b}}.
+
+\bibitem[Ching et~al.(2018)Ching, Himmelstein, Beaulieu-Jones, Kalinin, Do,
+  Way, Ferrero, Agapow, Zietz, Hoffman, et~al.]{ching2018opportunities}
+T.~Ching, D.~S. Himmelstein, B.~K. Beaulieu-Jones, A.~A. Kalinin, B.~T. Do,
+  G.~P. Way, E.~Ferrero, P.~Agapow, M.~Zietz, M.~M. Hoffman, et~al.
+\newblock Opportunities and obstacles for deep learning in biology and
+  medicine.
+\newblock \emph{Journal of The Royal Society Interface}, 15\penalty0 (141),
+  2018.
+
+\bibitem[Christie et~al.(2018)Christie, Fendley, Wilson, and
+  Mukherjee]{christie2018fmow}
+G.~Christie, N.~Fendley, J.~Wilson, and R.~Mukherjee.
+\newblock Functional map of the world.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, 2018.
+
+\bibitem[Chung et~al.(2018)Chung, Nagrani, and Zisserman]{chung2018voxceleb2}
+J.~S. Chung, A.~Nagrani, and A.~Zisserman.
+\newblock Voxceleb2: Deep speaker recognition.
+\newblock \emph{Proc. Interspeech}, pages 1086--1090, 2018.
+
+\bibitem[Clark et~al.(2020)Clark, Choi, Collins, Garrette, Kwiatkowski,
+  Nikolaev, and Palomaki]{clark2020tydi}
+J.~H. Clark, E.~Choi, M.~Collins, D.~Garrette, T.~Kwiatkowski, V.~Nikolaev, and
+  J.~Palomaki.
+\newblock Tydi qa: A benchmark for information-seeking question answering in
+  typologically diverse languages.
+\newblock \emph{arXiv preprint arXiv:2003.05002}, 2020.
+
+\bibitem[Codella et~al.(2019)Codella, Rotemberg, Tschandl, Celebi, Dusza,
+  Gutman, Helba, Kalloo, Liopyris, Marchetti, et~al.]{codella2019skin}
+N.~Codella, V.~Rotemberg, P.~Tschandl, M.~E. Celebi, S.~Dusza, D.~Gutman,
+  B.~Helba, A.~Kalloo, K.~Liopyris, M.~Marchetti, et~al.
+\newblock Skin lesion analysis toward melanoma detection 2018: A challenge
+  hosted by the international skin imaging collaboration ({ISIC}).
+\newblock \emph{arXiv preprint arXiv:1902.03368}, 2019.
+
+\bibitem[Conneau and Lample(2019)]{conneau2019cross}
+A.~Conneau and G.~Lample.
+\newblock Cross-lingual language model pretraining.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 7059--7069, 2019.
+
+\bibitem[Conneau et~al.(2018)Conneau, Rinott, Lample, Williams, Bowman,
+  Schwenk, and Stoyanov]{conneau2018xnli}
+A.~Conneau, R.~Rinott, G.~Lample, A.~Williams, S.~Bowman, H.~Schwenk, and
+  V.~Stoyanov.
+\newblock Xnli: Evaluating cross-lingual sentence representations.
+\newblock In \emph{Empirical Methods in Natural Language Processing (EMNLP)},
+  pages 2475--2485, 2018.
+
+\bibitem[Consortium et~al.(2012)]{encode2012integrated}
+E.~P. Consortium et~al.
+\newblock An integrated encyclopedia of {DNA} elements in the human genome.
+\newblock \emph{Nature}, 489\penalty0 (7414):\penalty0 57--74, 2012.
+
+\bibitem[Consortium et~al.(2020)]{gtex2020gtex}
+G.~Consortium et~al.
+\newblock The {GTEx Consortium} atlas of genetic regulatory effects across
+  human tissues.
+\newblock \emph{Science}, 369\penalty0 (6509):\penalty0 1318--1330, 2020.
+
+\bibitem[Consortium(2019)]{hubmap2019human}
+HuBMAP Consortium.
+\newblock The human body at cellular resolution: the nih human biomolecular
+  atlas program.
+\newblock \emph{Nature}, 574\penalty0 (7777):\penalty0 187, 2019.
+
+\bibitem[Corbett-Davies and Goel(2018)]{davies_measure_2018}
+Sam Corbett-Davies and Sharad Goel.
+\newblock The measure and mismeasure of fairness: A critical review of fair
+  machine learning.
+\newblock \emph{arXiv preprint arXiv:1808.00023}, 2018.
+
+\bibitem[Corbett-Davies et~al.(2016)Corbett-Davies, Pierson, Feller, and
+  Goel]{corbett-davies_computer_2016}
+Sam Corbett-Davies, Emma Pierson, Avi Feller, and Sharad Goel.
+\newblock A computer program used for bail and sentencing decisions was labeled
+  biased against blacks. {It}’s actually not that clear.
+\newblock \emph{Washington Post}, 2016.
+\newblock ISSN 0190-8286.
+\newblock URL
+  \url{https://www.washingtonpost.com/news/monkey-cage/wp/2016/10/17/can-an-algorithm-be-racist-our-analysis-is-more-cautious-than-propublicas/}.
+
+\bibitem[Corbett-Davies et~al.(2017)Corbett-Davies, Pierson, Feller, Goel, and
+  Huq]{corbett_davies_algorithmic_2017}
+Sam Corbett-Davies, Emma Pierson, Avi Feller, Sharad Goel, and Aziz Huq.
+\newblock Algorithmic decision making and the cost of fairness.
+\newblock In \emph{Proceedings of the 23rd {ACM} {SIGKDD} International
+  Conference on Knowledge Discovery and Data Mining}, pages 797--806, 2017.
+
+\bibitem[Cordella et~al.(1995)Cordella, Stefano, Tortorella, and
+  Vento]{cordella1995method}
+L.~P. Cordella, C.~D. Stefano, F.~Tortorella, and M.~Vento.
+\newblock A method for improving classification reliability of multilayer
+  perceptrons.
+\newblock \emph{IEEE Transactions on Neural Networks}, 6\penalty0 (5):\penalty0
+  1140--1147, 1995.
+
+\bibitem[Courtiol et~al.(2019)Courtiol, Maussion, Moarii, Pronier, Pilcer,
+  Sefta, Manceron, Toldo, Zaslavskiy, Stang, et~al.]{courtiol2019deep}
+P.~Courtiol, C.~Maussion, M.~Moarii, E.~Pronier, S.~Pilcer, M.~Sefta,
+  P.~Manceron, S.~Toldo, M.~Zaslavskiy, N.~L. Stang, et~al.
+\newblock Deep learning-based classification of mesothelioma improves
+  prediction of patient outcome.
+\newblock \emph{Nature Medicine}, 25\penalty0 (10):\penalty0 1519--1525, 2019.
+
+\bibitem[Croce et~al.(2020)Croce, Andriushchenko, Sehwag, Flammarion, Chiang,
+  Mittal, and Hein]{croce2020robustbench}
+F.~Croce, M.~Andriushchenko, V.~Sehwag, N.~Flammarion, M.~Chiang, P.~Mittal,
+  and M.~Hein.
+\newblock Robustbench: a standardized adversarial robustness benchmark.
+\newblock \emph{arXiv preprint arXiv:2010.09670}, 2020.
+
+\bibitem[Crunchant et~al.(2020)Crunchant, Borchers, K{\"u}hl, and
+  Piel]{crunchant2020listening}
+Anne-Sophie Crunchant, David Borchers, Hjalmar K{\"u}hl, and Alex Piel.
+\newblock Listening and watching: Do camera traps or acoustic sensors more
+  efficiently detect wild chimpanzees in an open habitat?
+\newblock \emph{Methods in Ecology and Evolution}, 11\penalty0 (4):\penalty0
+  542--552, 2020.
+
+\bibitem[Cuccarese et~al.(2020)Cuccarese, Earnshaw, Heiser, Fogelson, Davis,
+  McLean, Gordon, Skelly, Weathersby, Rodic, et~al.]{cuccarese2020functional}
+M.~F. Cuccarese, B.~A. Earnshaw, K.~Heiser, B.~Fogelson, C.~T. Davis, P.~F.
+  McLean, H.~B. Gordon, K.~Skelly, F.~L. Weathersby, V.~Rodic, et~al.
+\newblock Functional immune mapping with deep-learning enabled phenomics
+  applied to immunomodulatory and {COVID-19} drug discovery.
+\newblock \emph{bioRxiv}, 2020.
+
+\bibitem[Cui et~al.(2019)Cui, Jia, Lin, Song, and Belongie]{cui2019class}
+Y.~Cui, M.~Jia, T.~Lin, Y.~Song, and S.~Belongie.
+\newblock Class-balanced loss based on effective number of samples.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pages
+  9268--9277, 2019.
+
+\bibitem[Dai and Van~Gool(2018)]{dai18itsc}
+D.~Dai and L.~Van~Gool.
+\newblock Dark model adaptation: Semantic image segmentation from daytime to
+  nighttime.
+\newblock In \emph{International Conference on Intelligent Transportation
+  Systems (ITSC)}, 2018.
+
+\bibitem[D'Amour et~al.(2020{\natexlab{a}})D'Amour, Heller, Moldovan, Adlam,
+  Alipanahi, Beutel, Chen, Deaton, Eisenstein, Hoffman,
+  et~al.]{damour2020underspecification}
+A.~D'Amour, K.~Heller, D.~Moldovan, B.~Adlam, B.~Alipanahi, A.~Beutel, C.~Chen,
+  J.~Deaton, J.~Eisenstein, M.~D. Hoffman, et~al.
+\newblock Underspecification presents challenges for credibility in modern
+  machine learning.
+\newblock \emph{arXiv preprint arXiv:2011.03395}, 2020{\natexlab{a}}.
+
+\bibitem[D'Amour et~al.(2020{\natexlab{b}})D'Amour, Srinivasan, Atwood,
+  Baljekar, Sculley, and Halpern]{damour2020fairness}
+A.~D'Amour, H.~Srinivasan, J.~Atwood, P.~Baljekar, D.~Sculley, and Y.~Halpern.
+\newblock Fairness is not static: deeper understanding of long term fairness
+  via simulation studies.
+\newblock In \emph{Proceedings of the 2020 Conference on Fairness,
+  Accountability, and Transparency}, pages 525--534, 2020{\natexlab{b}}.
+
+\bibitem[David et~al.(2020)David, Madec, Sadeghi-Tehran, Aasen, Zheng, Liu,
+  Kirchgessner, Ishikawa, Nagasawa, Badhon, Pozniak, de~Solan, Hund, Chapman,
+  Baret, Stavness, and Guo]{david2020global}
+Etienne David, Simon Madec, Pouria Sadeghi-Tehran, Helge Aasen, Bangyou Zheng,
+  Shouyang Liu, Norbert Kirchgessner, Goro Ishikawa, Koichi Nagasawa,
+  Minhajul~A Badhon, Curtis Pozniak, Benoit de~Solan, Andreas Hund, Scott~C.
+  Chapman, Frederic Baret, Ian Stavness, and Wei Guo.
+\newblock Global wheat head detection (gwhd) dataset: a large and diverse
+  dataset of high-resolution rgb-labelled images to develop and benchmark wheat
+  head detection methods.
+\newblock \emph{Plant Phenomics}, 2020, 2020.
+
+\bibitem[David et~al.(2021)David, Serouart, Smith, Madec, Velumani, Liu, Wang,
+  Espinosa, Shafiee, Tahir, Tsujimoto, Nasuda, Zheng, Kichgessner, Aasen, Hund,
+  Sadhegi-Tehran, Nagasawa, Ishikawa, Dandrifosse, Carlier, Mercatoris, Kuroki,
+  Wang, Ishii, Badhon, Pozniak, LeBauer, Lilimo, Poland, Chapman, de~Solan,
+  Baret, Stavness, and Guo]{david2021global}
+Etienne David, Mario Serouart, Daniel Smith, Simon Madec, Kaaviya Velumani,
+  Shouyang Liu, Xu~Wang, Francisco~Pinto Espinosa, Shahameh Shafiee, Izzat
+  S.~A. Tahir, Hisashi Tsujimoto, Shuhei Nasuda, Bangyou Zheng, Norbert
+  Kichgessner, Helge Aasen, Andreas Hund, Pouria Sadhegi-Tehran, Koichi
+  Nagasawa, Goro Ishikawa, Sebastien Dandrifosse, Alexis Carlier, Benoit
+  Mercatoris, Ken Kuroki, Haozhou Wang, Masanori Ishii, Minhajul~A. Badhon,
+  Curtis Pozniak, David~Shaner LeBauer, Morten Lilimo, Jesse Poland, Scott
+  Chapman, Benoit de~Solan, Frederic Baret, Ian Stavness, and Wei Guo.
+\newblock Global wheat head dataset 2021: an update to improve the benchmarking
+  wheat head localization with more diversity, 2021.
+
+\bibitem[Davis et~al.(2017)Davis, Lasko, Chen, Siew, and
+  Matheny]{davis2017calibration}
+S.~E. Davis, T.~A. Lasko, G.~Chen, E.~D. Siew, and M.~E. Matheny.
+\newblock Calibration drift in regression and machine learning models for acute
+  kidney injury.
+\newblock \emph{Journal of the American Medical Informatics Association},
+  24\penalty0 (6):\penalty0 1052--1061, 2017.
+
+\bibitem[DeGrave et~al.(2020)DeGrave, Janizek, and Lee]{degrave2020ai}
+A.~J. DeGrave, J.~D. Janizek, and S.~Lee.
+\newblock {AI} for radiographic {COVID-19} detection selects shortcuts over
+  signal.
+\newblock \emph{medRxiv}, 2020.
+
+\bibitem[Deplancke et~al.(2016)Deplancke, Alpern, and
+  Gardeux]{deplancke16TFbindingreview}
+Bart Deplancke, Daniel Alpern, and Vincent Gardeux.
+\newblock The genetics of transcription factor dna binding variation.
+\newblock \emph{Cell}, 166\penalty0 (3):\penalty0 538--554, 2016.
+
+\bibitem[Desmarais and Baker(2012)]{desmarais2012review}
+M.~C. Desmarais and R.~Baker.
+\newblock A review of recent advances in learner and skill modeling in
+  intelligent learning environments.
+\newblock \emph{User Modeling and User-Adapted Interaction}, 22\penalty0
+  (1):\penalty0 9--38, 2012.
+
+\bibitem[DigitalGlobe and Works(2016)]{digitalglobe2016spacenet}
+N.~DigitalGlobe and C.~Works.
+\newblock Spacenet.
+\newblock \url{https://aws.amazon.com/publicdatasets/spacenet/}, 2016.
+
+\bibitem[Dill and MacCallum(2012)]{dill2012protein}
+K.~A. Dill and J.~L. MacCallum.
+\newblock The protein-folding problem, 50 years on.
+\newblock \emph{Science}, 338\penalty0 (6110):\penalty0 1042--1046, 2012.
+
+\bibitem[Dixon et~al.(2018)Dixon, Li, Sorensen, Thain, and
+  Vasserman]{dixon2018measuring}
+L.~Dixon, J.~Li, J.~Sorensen, N.~Thain, and L.~Vasserman.
+\newblock Measuring and mitigating unintended bias in text classification.
+\newblock In \emph{Association for the Advancement of Artificial Intelligence
+  (AAAI)}, pages 67--73, 2018.
+
+\bibitem[Djolonga et~al.(2020)Djolonga, Yung, Tschannen, Romijnders, Beyer,
+  Kolesnikov, Puigcerver, Minderer, D'Amour, Moldovan,
+  et~al.]{djolonga2020robustness}
+J.~Djolonga, J.~Yung, M.~Tschannen, R.~Romijnders, L.~Beyer, A.~Kolesnikov,
+  J.~Puigcerver, M.~Minderer, A.~D'Amour, D.~Moldovan, et~al.
+\newblock On robustness and transferability of convolutional neural networks.
+\newblock \emph{arXiv preprint arXiv:2007.08558}, 2020.
+
+\bibitem[Dodge and Karam(2017)]{dodge2017study}
+Samuel Dodge and Lina Karam.
+\newblock A study and comparison of human and deep learning recognition
+  performance under visual distortions.
+\newblock In \emph{26th International Conference on Computer Communication and
+  Networks (ICCCN)}, pages 1--7. IEEE, 2017.
+
+\bibitem[Dou et~al.(2019)Dou, Castro, Kamnitsas, and Glocker]{dou19neurips}
+Q.~Dou, D.~Castro, K.~Kamnitsas, and B.~Glocker.
+\newblock Domain generalization via model-agnostic learning of semantic
+  features.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2019.
+
+\bibitem[Dreccer et~al.(2019)Dreccer, Molero, Rivera-Amado, John-Bejai, and
+  Wilson]{dreccer2019yielding}
+M~Fernanda Dreccer, Gemma Molero, Carolina Rivera-Amado, Carus John-Bejai, and
+  Zoe Wilson.
+\newblock Yielding to the image: how phenotyping reproductive growth can assist
+  crop improvement and production.
+\newblock \emph{Plant science}, 282:\penalty0 73--82, 2019.
+
+\bibitem[Dressel and Farid(2018)]{dressel2018accuracy}
+Julia Dressel and Hany Farid.
+\newblock The accuracy, fairness, and limits of predicting recidivism.
+\newblock \emph{Science Advances}, 4\penalty0 (1), 2018.
+
+\bibitem[Duchi and Namkoong(2021)]{duchi2021learning}
+John Duchi and Hongseok Namkoong.
+\newblock Learning models with uniform performance via distributionally robust
+  optimization.
+\newblock \emph{Annals of Statistics}, 2021.
+
+\bibitem[Duchi et~al.(2020)Duchi, Hashimoto, and
+  Namkoong]{duchi2019distributionally}
+John Duchi, Tatsunori Hashimoto, and Hongseok Namkoong.
+\newblock Distributionally robust losses for latent covariate mixtures.
+\newblock \emph{arXiv preprint arXiv:2007.13982}, 2020.
+
+\bibitem[Dwork et~al.(2012)Dwork, Hardt, Pitassi, Reingold, and
+  Zemel]{dwork2012}
+C.~Dwork, M.~Hardt, T.~Pitassi, O.~Reingold, and R.~Zemel.
+\newblock Fairness through awareness.
+\newblock In \emph{Innovations in Theoretical Computer Science (ITCS)}, pages
+  214--226, 2012.
+
+\bibitem[Echeverri and Perrimon(2006)]{echeverri2006high}
+Christophe~J Echeverri and Norbert Perrimon.
+\newblock High-throughput rnai screening in cultured cells: a user's guide.
+\newblock \emph{Nature Reviews Genetics}, 7\penalty0 (5):\penalty0 373, 2006.
+
+\bibitem[Elvidge et~al.(2009)Elvidge, Sutton, Ghosh, Tuttle, Baugh, Bhaduri,
+  and Bright]{elvidge2009poverty}
+C.~D. Elvidge, P.~C. Sutton, T.~Ghosh, B.~T. Tuttle, K.~E. Baugh, B.~Bhaduri,
+  and E.~Bright.
+\newblock A global poverty map derived from satellite data.
+\newblock \emph{Computers and Geosciences}, 35, 2009.
+
+\bibitem[Eraslan et~al.(2019)Eraslan, Avsec, Gagneur, and
+  Theis]{eraslan2019deep}
+G.~Eraslan, {\v{Z}}iga Avsec, J.~Gagneur, and F.~J. Theis.
+\newblock Deep learning: new computational modelling techniques for genomics.
+\newblock \emph{Nature Reviews Genetics}, 20\penalty0 (7):\penalty0 389--403,
+  2019.
+
+\bibitem[Espey et~al.(2015)Espey, Swanson, Badiee, Chistensen, Fischer, Levy,
+  Yetman, de~Sherbinin, Chen, Qiu, Greenwell, Klein, , Jutting, Jerven,
+  Cameron, Rivera, Arias, , Mills, and Motivans]{epsey2015development}
+J.~Espey, E.~Swanson, S.~Badiee, Z.~Chistensen, A.~Fischer, M.~Levy, G.~Yetman,
+  A.~de~Sherbinin, R.~Chen, Y.~Qiu, G.~Greenwell, T.~Klein, , J.~Jutting,
+  M.~Jerven, G.~Cameron, A.~M.~A. Rivera, V.~C. Arias, , S.~L. Mills, and
+  A.~Motivans.
+\newblock Data for development: A needs assessment for {SDG} monitoring and
+  statistical capacity development.
+\newblock \emph{Sustainable Development Solutions Network}, 2015.
+
+\bibitem[Esteva et~al.(2017)Esteva, Kuprel, Novoa, Ko, Swetter, Blau, and
+  Thrun]{esteva2017dermatologist}
+A.~Esteva, B.~Kuprel, R.~A. Novoa, J.~Ko, S.~M. Swetter, H.~M. Blau, and
+  S.~Thrun.
+\newblock Dermatologist-level classification of skin cancer with deep neural
+  networks.
+\newblock \emph{Nature}, 542\penalty0 (7639):\penalty0 115--118, 2017.
+
+\bibitem[et~al(2019)]{openai19}
+OpenAI et~al.
+\newblock Solving {R}ubik's cube with a robot hand.
+\newblock \emph{arXiv preprint arXiv:1910.07113}, 2019.
+
+\bibitem[Fan et~al.(2018)Fan, Lu, Gong, Xie, and Goodman]{fan2018automatic}
+Zhun Fan, Jiewei Lu, Maoguo Gong, Honghui Xie, and Erik~D Goodman.
+\newblock Automatic tobacco plant detection in uav images via deep neural
+  networks.
+\newblock \emph{IEEE Journal of Selected Topics in Applied Earth Observations
+  and Remote Sensing}, 11\penalty0 (3):\penalty0 876--887, 2018.
+
+\bibitem[Fang et~al.(2013)Fang, Xu, and Rockmore]{fang2013unbiased}
+C.~Fang, Y.~Xu, and D.~N. Rockmore.
+\newblock Unbiased metric learning: On the utilization of multiple datasets and
+  web images for softening bias.
+\newblock In \emph{International Conference on Computer Vision (ICCV)}, pages
+  1657--1664, 2013.
+
+\bibitem[Feng et~al.(2019)Feng, Sondhi, Perry, and Simon]{feng2019selective}
+J.~Feng, A.~Sondhi, J.~Perry, and N.~Simon.
+\newblock Selective prediction-set models with coverage guarantees.
+\newblock \emph{arXiv preprint arXiv:1906.05473}, 2019.
+
+\bibitem[Filmer and Scott(2011)]{filmer2011asset}
+D.~Filmer and K.~Scott.
+\newblock Assessing asset indices.
+\newblock \emph{Demography}, 49, 2011.
+
+\bibitem[Finlayson et~al.(2021)Finlayson, Subbaswamy, Singh, Bowers, Kupke,
+  Zittrain, Kohane, and Saria]{finlayson2021clinician}
+Samuel~G. Finlayson, Adarsh Subbaswamy, Karandeep Singh, John Bowers, Annabel
+  Kupke, Jonathan Zittrain, Isaac~S. Kohane, and Suchi Saria.
+\newblock The clinician and dataset shift in artificial intelligence.
+\newblock \emph{New England Journal of Medicine}, 385\penalty0 (3):\penalty0
+  283--286, 2021.
+
+\bibitem[Franks et~al.(2015)Franks, Tu, Devanbu, and
+  Hellendoorn]{franks2015cacheca}
+Christine Franks, Zhaopeng Tu, Premkumar Devanbu, and Vincent Hellendoorn.
+\newblock Cacheca: A cache language model based code suggestion tool.
+\newblock In \emph{International Conference on Software Engineering (ICSE)},
+  2015.
+
+\bibitem[Fuentes et~al.(2017)Fuentes, Yoon, Kim, and Park]{fuentes2017robust}
+Alvaro Fuentes, Sook Yoon, Sang~Cheol Kim, and Dong~Sun Park.
+\newblock A robust deep-learning-based detector for real-time tomato plant
+  diseases and pests recognition.
+\newblock \emph{Sensors}, 17\penalty0 (9):\penalty0 2022, 2017.
+
+\bibitem[Futoma et~al.(2020)Futoma, Simons, Panch, Doshi-Velez, and
+  Celi]{futoma2020myth}
+J.~Futoma, M.~Simons, T.~Panch, F.~Doshi-Velez, and L.~A. Celi.
+\newblock The myth of generalisability in clinical research and machine
+  learning in health care.
+\newblock \emph{The Lancet Digital Health}, 2\penalty0 (9):\penalty0
+  e489--e492, 2020.
+
+\bibitem[Gal and Ghahramani(2016)]{gal2016dropout}
+Y.~Gal and Z.~Ghahramani.
+\newblock Dropout as a {Bayesian} approximation: Representing model uncertainty
+  in deep learning.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2016.
+
+\bibitem[Ganin and Lempitsky(2015)]{ganin2015domain}
+Y.~Ganin and V.~Lempitsky.
+\newblock Unsupervised domain adaptation by backpropagation.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pages
+  1180--1189, 2015.
+
+\bibitem[Ganin et~al.(2016)Ganin, Ustinova, Ajakan, Germain, Larochelle,
+  Laviolette, March, and Lempitsky]{ganin2016domain}
+Y.~Ganin, E.~Ustinova, H.~Ajakan, P.~Germain, H.~Larochelle, F.~Laviolette,
+  M.~March, and V.~Lempitsky.
+\newblock Domain-adversarial training of neural networks.
+\newblock \emph{Journal of Machine Learning Research (JMLR)}, 17, 2016.
+
+\bibitem[Garg et~al.(2020)Garg, Wu, Balakrishnan, and Lipton]{garg2020unified}
+S.~Garg, Y.~Wu, S.~Balakrishnan, and Z.~C. Lipton.
+\newblock A unified view of label shift estimation.
+\newblock \emph{arXiv preprint arXiv:2003.07554}, 2020.
+
+\bibitem[Geifman and El-Yaniv(2017)]{geifman2017selective}
+Y.~Geifman and R.~El-Yaniv.
+\newblock Selective classification for deep neural networks.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2017.
+
+\bibitem[Geifman and El-Yaniv(2019)]{geifman2019selectivenet}
+Y.~Geifman and R.~El-Yaniv.
+\newblock Selectivenet: A deep neural network with an integrated reject option.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2019.
+
+\bibitem[Geifman et~al.(2018)Geifman, Uziel, and El-Yaniv]{geifman2018bias}
+Y.~Geifman, G.~Uziel, and R.~El-Yaniv.
+\newblock Bias-reduced uncertainty estimation for deep neural classifiers.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2018.
+
+\bibitem[Geirhos et~al.(2018{\natexlab{a}})Geirhos, Rubisch, Michaelis, Bethge,
+  Wichmann, and Brendel]{geirhos2018imagenet}
+R.~Geirhos, P.~Rubisch, C.~Michaelis, M.~Bethge, F.~A. Wichmann, and
+  W.~Brendel.
+\newblock Imagenet-trained cnns are biased towards texture; increasing shape
+  bias improves accuracy and robustness.
+\newblock \emph{arXiv preprint arXiv:1811.12231}, 2018{\natexlab{a}}.
+
+\bibitem[Geirhos et~al.(2018{\natexlab{b}})Geirhos, Temme, Rauber, Sch{\"u}tt,
+  Bethge, and Wichmann]{geirhos2018generalisation}
+R.~Geirhos, C.~R. Temme, J.~Rauber, H.~H. Sch{\"u}tt, M.~Bethge, and F.~A.
+  Wichmann.
+\newblock Generalisation in humans and deep neural networks.
+\newblock \emph{Advances in Neural Information Processing Systems},
+  31:\penalty0 7538--7550, 2018{\natexlab{b}}.
+
+\bibitem[Geirhos et~al.(2020)Geirhos, Jacobsen, Michaelis, Zemel, Brendel,
+  Bethge, and Wichmann]{geirhos2020shortcut}
+R.~Geirhos, J.~Jacobsen, C.~Michaelis, R.~Zemel, W.~Brendel, M.~Bethge, and
+  F.~A. Wichmann.
+\newblock Shortcut learning in deep neural networks.
+\newblock \emph{arXiv preprint arXiv:2004.07780}, 2020.
+
+\bibitem[Gelman et~al.(2007)Gelman, Fagan, and Kiss]{gelman_analysis_2007}
+Andrew Gelman, Jeffrey Fagan, and Alex Kiss.
+\newblock An {Analysis} of the {New} {York} {City} {Police} {Department}'s
+  “{Stop}-and-{Frisk}” {Policy} in the {Context} of {Claims} of {Racial}
+  {Bias}.
+\newblock \emph{Journal of the American Statistical Association}, 102\penalty0
+  (479):\penalty0 813--823, Sep 2007.
+\newblock ISSN 0162-1459.
+\newblock \doi{10.1198/016214506000001040}.
+\newblock URL
+  \url{https://amstat.tandfonline.com/doi/abs/10.1198/016214506000001040}.
+\newblock Publisher: Taylor \& Francis.
+
+\bibitem[Geva et~al.(2019)Geva, Goldberg, and Berant]{geva2019annotator}
+M.~Geva, Y.~Goldberg, and J.~Berant.
+\newblock Are we modeling the task or the annotator? an investigation of
+  annotator bias in natural language understanding datasets.
+\newblock In \emph{Empirical Methods in Natural Language Processing (EMNLP)},
+  2019.
+
+\bibitem[Gilmer et~al.(2017)Gilmer, Schoenholz, Riley, Vinyals, and
+  Dahl]{gilmer2017neural}
+Justin Gilmer, Samuel~S Schoenholz, Patrick~F Riley, Oriol Vinyals, and
+  George~E Dahl.
+\newblock Neural message passing for quantum chemistry.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pages
+  1273--1272, 2017.
+
+\bibitem[Godinez et~al.(2018)Godinez, Hossain, and
+  Zhang]{godinez2018unsupervised}
+William~J Godinez, Imtiaz Hossain, and Xian Zhang.
+\newblock Unsupervised phenotypic analysis of cellular images with multi-scale
+  convolutional neural networks.
+\newblock \emph{BioRxiv}, page 361410, 2018.
+
+\bibitem[Goel et~al.(2020)Goel, Gu, Li, and R{\'e}]{goel2020model}
+K.~Goel, A.~Gu, Y.~Li, and C.~R{\'e}.
+\newblock Model patching: Closing the subgroup performance gap with data
+  augmentation.
+\newblock \emph{arXiv preprint arXiv:2008.06775}, 2020.
+
+\bibitem[Goel et~al.(2016)Goel, Rao, and Shroff]{goel_precinct_2016}
+Sharad Goel, Justin~M. Rao, and Ravi Shroff.
+\newblock Precinct or prejudice? {Understanding} racial disparities in {New}
+  {York} {City}’s stop-and-frisk policy.
+\newblock \emph{The Annals of Applied Statistics}, 10\penalty0 (1):\penalty0
+  365--394, March 2016.
+\newblock ISSN 1932-6157.
+\newblock \doi{10.1214/15-AOAS897}.
+\newblock URL \url{http://projecteuclid.org/euclid.aoas/1458909920}.
+
+\bibitem[Gogoll et~al.(2020)Gogoll, Lottes, Weyler, Petrinic, and
+  Stachniss]{gogoll2020unsupervised}
+Dario Gogoll, Philipp Lottes, Jan Weyler, Nik Petrinic, and Cyrill Stachniss.
+\newblock Unsupervised domain adaptation for transferring plant classification
+  systems to new field environments, crops, and robots.
+\newblock In \emph{2020 IEEE/RSJ International Conference on Intelligent Robots
+  and Systems (IROS)}, pages 2636--2642. IEEE, 2020.
+
+\bibitem[Goh et~al.(2017)Goh, Wang, and Wong]{goh2017batch}
+Wilson Wen~Bin Goh, Wei Wang, and Limsoon Wong.
+\newblock Why batch effects matter in omics data, and how to avoid them.
+\newblock \emph{Trends in biotechnology}, 35\penalty0 (6):\penalty0 498--507,
+  2017.
+
+\bibitem[Goodfellow et~al.(2015)Goodfellow, Shlens, and
+  Szegedy]{goodfellow2015explaining}
+I.~J. Goodfellow, J.~Shlens, and C.~Szegedy.
+\newblock Explaining and harnessing adversarial examples.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2015.
+
+\bibitem[Graetz et~al.(2018)Graetz, Friedman, Osgood-Zimmerman, Burstein,
+  Biehl, Shields, Mosser, Casey, Deshpande, Earl, Reiner, Ray, Fullman, Levine,
+  Stubbs, Mayala, Longbottom, Browne, Bhatt, Weiss, Gething, Mokdad, Lim,
+  Murray, Gakidou, and Hay]{graetz2018education}
+N.~Graetz, J.~Friedman, A.~Osgood-Zimmerman, R.~Burstein, M.~H. Biehl,
+  C.~Shields, J.~F. Mosser, D.~C. Casey, A.~Deshpande, L.~Earl, R.~C. Reiner,
+  S.~E. Ray, N.~Fullman, A.~J. Levine, R.~W. Stubbs, B.~K. Mayala,
+  J.~Longbottom, A.~J. Browne, S.~Bhatt, D.~J. Weiss, P.~W. Gething, A.~H.
+  Mokdad, S.~S. Lim, C.~J.~L. Murray, E.~Gakidou, and S.~I. Hay.
+\newblock Mapping local variation in educational attainment across {Africa}.
+\newblock \emph{Nature}, 555, 2018.
+
+\bibitem[Grandori et~al.(2000)Grandori, Cowley, James, and
+  Eisenman]{grandori2000myc}
+Carla Grandori, Shaun~M Cowley, Leonard~P James, and Robert~N Eisenman.
+\newblock The myc/max/mad network and the transcriptional control of cell
+  behavior.
+\newblock \emph{Annual review of cell and developmental biology}, 16\penalty0
+  (1):\penalty0 653--699, 2000.
+
+\bibitem[Grooten et~al.(2020)Grooten, Peterson, and
+  Almond]{grooten_peterson_almond}
+M~Grooten, T~Peterson, and R.E.A Almond.
+\newblock \emph{{Living Planet Report} 2020 - Bending the curve of biodiversity
+  loss}.
+\newblock WWF, Gland, Switzerland, 2020.
+
+\bibitem[Gu et~al.(2017)Gu, Holly, Lillicrap, and Levine]{gu17icra}
+S.~Gu, E.~Holly, T.~Lillicrap, and S.~Levine.
+\newblock Deep reinforcement learning for robotic manipulation with
+  asynchronous off-policy updates.
+\newblock In \emph{International Conference on Robotics and Automation (ICRA)},
+  2017.
+
+\bibitem[Gulrajani and Lopez-Paz(2020)]{gulrajani2020search}
+I.~Gulrajani and D.~Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock \emph{arXiv preprint arXiv:2007.01434}, 2020.
+
+\bibitem[Guo et~al.(2018)Guo, Shah, and Barzilay]{guo2018multi}
+Jiang Guo, Darsh~J Shah, and Regina Barzilay.
+\newblock Multi-source domain adaptation with mixture of experts.
+\newblock \emph{arXiv preprint arXiv:1809.02256}, 2018.
+
+\bibitem[Gupta et~al.(2018)Gupta, Murali, Gandhi, and Pinto]{gupta18nips}
+A.~Gupta, A.~Murali, D.~Gandhi, and L.~Pinto.
+\newblock Robot learning in homes: Improving generalization and reducing
+  dataset bias.
+\newblock In \emph{Advances in Neural Information Processing Systems (NIPS)},
+  2018.
+
+\bibitem[Gurcan et~al.(2009)Gurcan, Boucheron, Can, Madabhushi, Rajpoot, and
+  Yener]{gurcan2009histopathological}
+M.~N. Gurcan, L.~E. Boucheron, A.~Can, A.~Madabhushi, N.~M. Rajpoot, and
+  B.~Yener.
+\newblock Histopathological image analysis: A review.
+\newblock \emph{IEEE reviews in biomedical engineering}, 2:\penalty0 147--171,
+  2009.
+
+\bibitem[Han and Tsvetkov(2020)]{han2020fortifying}
+X.~Han and Y.~Tsvetkov.
+\newblock Fortifying toxic speech detectors against veiled toxicity.
+\newblock \emph{arXiv preprint arXiv:2010.03154}, 2020.
+
+\bibitem[Hand(2006)]{hand2006classifier}
+David~J Hand.
+\newblock Classifier technology and the illusion of progress.
+\newblock \emph{Statistical science}, pages 1--14, 2006.
+
+\bibitem[Hansen et~al.(2013)Hansen, Potapov, Moore, Hancher, Turubanova,
+  Tyukavina, Thau, Stehman, Goetz, Loveland, Kommareddy, Egorov, Chini,
+  Justice, and Townshend]{hansen2013forest}
+M.~C. Hansen, P.~V. Potapov, R.~Moore, M.~Hancher, S.~A. Turubanova,
+  A.~Tyukavina, D.~Thau, S.~V. Stehman, S.~J. Goetz, T.~R. Loveland,
+  A.~Kommareddy, A.~Egorov, L.~Chini, C.~O. Justice, and J.~R.~G. Townshend.
+\newblock High-resolution global maps of 21st-century forest cover change.
+\newblock \emph{Science}, 342, 2013.
+
+\bibitem[Harrill et~al.(2019)Harrill, Shah, Setzer, Haggard, Auerbach, Judson,
+  and Thomas]{harrill2019tox}
+Joshua Harrill, Imran Shah, R.~Woodrow Setzer, Derik Haggard, Scott Auerbach,
+  Richard Judson, and Russell~S. Thomas.
+\newblock Considerations for strategic use of high-throughput transcriptomics
+  chemical screening data in regulatory decisions.
+\newblock \emph{Current Opinion in Toxicology}, 15:\penalty0 64--75, 2019.
+\newblock ISSN 2468-2020.
+\newblock \doi{https://doi.org/10.1016/j.cotox.2019.05.004}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/S2468202019300129}.
+\newblock Risk Assessment in Toxicology.
+
+\bibitem[Hashimoto et~al.(2018)Hashimoto, Srivastava, Namkoong, and
+  Liang]{hashimoto2018repeated}
+T.~B. Hashimoto, M.~Srivastava, H.~Namkoong, and P.~Liang.
+\newblock Fairness without demographics in repeated loss minimization.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[He et~al.(2016)He, Zhang, Ren, and Sun]{he2016resnet}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, 2016.
+
+\bibitem[He et~al.(2020)He, Shen, and Cui]{he2020towards}
+Y.~He, Z.~Shen, and P.~Cui.
+\newblock Towards non-{IID} image classification: A dataset and baselines.
+\newblock \emph{Pattern Recognition}, 110, 2020.
+
+\bibitem[Heinze-Deml and Meinshausen(2017)]{heinze2017conditional}
+Christina Heinze-Deml and Nicolai Meinshausen.
+\newblock Conditional variance penalties and domain shift robustness.
+\newblock \emph{arXiv preprint arXiv:1710.11469}, 2017.
+
+\bibitem[Hellendoorn et~al.(2019)Hellendoorn, Proksch, Gall, and
+  Bacchelli]{hellendoorn2019code}
+Vincent~J Hellendoorn, Sebastian Proksch, Harald~C Gall, and Alberto Bacchelli.
+\newblock When code completion fails: A case study on real-world completions.
+\newblock In \emph{2019 IEEE/ACM 41st International Conference on Software
+  Engineering (ICSE)}, pages 960--970. IEEE, 2019.
+
+\bibitem[Henderson et~al.(2012)Henderson, Lee, Seewaldt, and
+  Shen]{henderson2012influence}
+B.~E. Henderson, N.~H. Lee, V.~Seewaldt, and H.~Shen.
+\newblock The influence of race and ethnicity on the biology of cancer.
+\newblock \emph{Nature Reviews Cancer}, 12\penalty0 (9):\penalty0 648--653,
+  2012.
+
+\bibitem[Hendrycks and Dietterich(2019)]{hendrycks2019benchmarking}
+D.~Hendrycks and T.~Dietterich.
+\newblock Benchmarking neural network robustness to common corruptions and
+  perturbations.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019.
+
+\bibitem[Hendrycks and Gimpel(2017)]{hendrycks2017baseline}
+D.~Hendrycks and K.~Gimpel.
+\newblock A baseline for detecting misclassified and out-of-distribution
+  examples in neural networks.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2017.
+
+\bibitem[Hendrycks et~al.(2020{\natexlab{a}})Hendrycks, Basart, Mazeika,
+  Mostajabi, Steinhardt, and Song]{dan2020scaling}
+D.~Hendrycks, S.~Basart, M.~Mazeika, M.~Mostajabi, J.~Steinhardt, and D.~Song.
+\newblock Scaling out-of-distribution detection for real-world settings.
+\newblock \emph{arXiv preprint arXiv:1911.11132}, 2020{\natexlab{a}}.
+
+\bibitem[Hendrycks et~al.(2020{\natexlab{b}})Hendrycks, Basart, Mu, Kadavath,
+  Wang, Dorundo, Desai, Zhu, Parajuli, Guo, Song, Steinhardt, and
+  Gilmer]{hendrycks2020many}
+D.~Hendrycks, S.~Basart, N.~Mu, S.~Kadavath, F.~Wang, E.~Dorundo, R.~Desai,
+  T.~Zhu, S.~Parajuli, M.~Guo, D.~Song, J.~Steinhardt, and J.~Gilmer.
+\newblock The many faces of robustness: A critical analysis of
+  out-of-distribution generalization.
+\newblock \emph{arXiv preprint arXiv:2006.16241}, 2020{\natexlab{b}}.
+
+\bibitem[Hendrycks et~al.(2020{\natexlab{c}})Hendrycks, Liu, Wallace, Dziedzic,
+  Krishnan, and Song]{hendrycks2020pretrained}
+Dan Hendrycks, Xiaoyuan Liu, Eric Wallace, Adam Dziedzic, Rishabh Krishnan, and
+  Dawn Song.
+\newblock Pretrained transformers improve out-of-distribution robustness.
+\newblock \emph{arXiv preprint arXiv:2004.06100}, 2020{\natexlab{c}}.
+
+\bibitem[Ho et~al.(2014)Ho, Jung, Liu, Alver, Lee, Ikegami, Sohn, Minoda,
+  Tolstorukov, Appert, et~al.]{ho2014comparative}
+J.~W. Ho, Y.~L. Jung, T.~Liu, B.~H. Alver, S.~Lee, K.~Ikegami, K.~Sohn,
+  A.~Minoda, M.~Y. Tolstorukov, A.~Appert, et~al.
+\newblock Comparative analysis of metazoan chromatin organization.
+\newblock \emph{Nature}, 512\penalty0 (7515):\penalty0 449--452, 2014.
+
+\bibitem[Hoffman et~al.(2018)Hoffman, Tzeng, Park, Zhu, Isola, Saenko, Efros,
+  and Darrell]{hoffman2018cycada}
+J.~Hoffman, E.~Tzeng, T.~Park, J.~Zhu, P.~Isola, K.~Saenko, A.~A. Efros, and
+  T.~Darrell.
+\newblock Cycada: Cycle consistent adversarial domain adaptation.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[Hovy and Spruit(2016)]{hovy2016social}
+D.~Hovy and S.~L. Spruit.
+\newblock The social impact of natural language processing.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, pages
+  591--598, 2016.
+
+\bibitem[Hu et~al.(2020{\natexlab{a}})Hu, Ruder, Siddhant, Neubig, Firat, and
+  Johnson]{hu2020xtreme}
+J.~Hu, S.~Ruder, A.~Siddhant, G.~Neubig, O.~Firat, and M.~Johnson.
+\newblock Xtreme: A massively multilingual multi-task benchmark for evaluating
+  cross-lingual generalization.
+\newblock \emph{arXiv preprint arXiv:2003.11080}, 2020{\natexlab{a}}.
+
+\bibitem[Hu et~al.(2018)Hu, Niu, Sato, and Sugiyama]{hu2018does}
+W.~Hu, G.~Niu, I.~Sato, and M.~Sugiyama.
+\newblock Does distributionally robust supervised learning give robust
+  classifiers?
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[Hu et~al.(2020{\natexlab{b}})Hu, Fey, Zitnik, Dong, Ren, Liu, Catasta,
+  and Leskovec]{hu2020open}
+W.~Hu, M.~Fey, M.~Zitnik, Y.~Dong, H.~Ren, B.~Liu, M.~Catasta, and J.~Leskovec.
+\newblock Open graph benchmark: Datasets for machine learning on graphs.
+\newblock \emph{arXiv preprint arXiv:2005.00687}, 2020{\natexlab{b}}.
+
+\bibitem[Huang et~al.(2017)Huang, Liu, Maaten, and
+  Weinberger]{huang2017densely}
+G.~Huang, Z.~Liu, L.~V.~D. Maaten, and K.~Q. Weinberger.
+\newblock Densely connected convolutional networks.
+\newblock In \emph{Proceedings of the IEEE conference on Computer Vision and
+  Pattern Recognition}, pages 4700--4708, 2017.
+
+\bibitem[Hughes et~al.(2011)Hughes, Rees, Kalindjian, and
+  Philpott]{hughes2011principles}
+James~P Hughes, Stephen Rees, S~Barrett Kalindjian, and Karen~L Philpott.
+\newblock Principles of early drug discovery.
+\newblock \emph{British journal of pharmacology}, 162\penalty0 (6):\penalty0
+  1239--1249, 2011.
+
+\bibitem[Husain et~al.(2019)Husain, Wu, Gazit, Allamanis, and
+  Brockschmidt]{husain2019codesearchnet}
+Hamel Husain, Ho-Hsiang Wu, Tiferet Gazit, Miltiadis Allamanis, and Marc
+  Brockschmidt.
+\newblock Codesearchnet challenge: Evaluating the state of semantic code
+  search.
+\newblock \emph{arXiv preprint arXiv:1909.09436}, 2019.
+
+\bibitem[Jaganathan et~al.(2019)Jaganathan, Panagiotopoulou, McRae, Darbandi,
+  Knowles, Li, Kosmicki, Arbelaez, Cui, Schwartz,
+  et~al.]{jaganathan2019predicting}
+K.~Jaganathan, S.~K. Panagiotopoulou, J.~F. McRae, S.~F. Darbandi, D.~Knowles,
+  Y.~I. Li, J.~A. Kosmicki, J.~Arbelaez, W.~Cui, G.~B. Schwartz, et~al.
+\newblock Predicting splicing from primary sequence with deep learning.
+\newblock \emph{Cell}, 176\penalty0 (3):\penalty0 535--548, 2019.
+
+\bibitem[Jean et~al.(2016)Jean, Burke, Xie, Davis, Lobell, and
+  Ermon]{jean2016combining}
+N.~Jean, M.~Burke, M.~Xie, W.~M. Davis, D.~B. Lobell, and S.~Ermon.
+\newblock Combining satellite imagery and machine learning to predict poverty.
+\newblock \emph{Science}, 353, 2016.
+
+\bibitem[Jean et~al.(2018)Jean, Xie, and Ermon]{jean2018ssdkl}
+N.~Jean, S.~M. Xie, and S.~Ermon.
+\newblock Semi-supervised deep kernel learning: Regression with unlabeled data
+  by minimizing predictive variance.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2018.
+
+\bibitem[Jin et~al.(2020)Jin, Barzilay, and Jaakkola]{jin2020domain}
+W.~Jin, R.~Barzilay, and T.~Jaakkola.
+\newblock Enforcing predictive invariance across structured biomedical domains.
+\newblock \emph{arXiv preprint arXiv:2006.03908}, 2020.
+
+\bibitem[Johnson et~al.(2016)Johnson, Pollard, Shen, Li-Wei, Feng, Ghassemi,
+  Moody, Szolovits, Celi, and Mark]{johnson2016mimic}
+Alistair~EW Johnson, Tom~J Pollard, Lu~Shen, H~Lehman Li-Wei, Mengling Feng,
+  Mohammad Ghassemi, Benjamin Moody, Peter Szolovits, Leo~Anthony Celi, and
+  Roger~G Mark.
+\newblock Mimic-iii, a freely accessible critical care database.
+\newblock \emph{Scientific Data}, 3\penalty0 (1):\penalty0 1--9, 2016.
+
+\bibitem[Johnson et~al.(2017)Johnson, Hariharan, van~der Maaten, Fei-Fei,
+  Zitnick, and Girshick]{johnson2017clevr}
+J.~Johnson, B.~Hariharan, L.~van~der Maaten, L.~Fei-Fei, C.~L. Zitnick, and
+  R.~Girshick.
+\newblock Clevr: A diagnostic dataset for compositional language and elementary
+  visual reasoning.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, 2017.
+
+\bibitem[Jones et~al.(2021)Jones, Sagawa, Koh, Kumar, and
+  Liang]{jones2021selective}
+Erik Jones, Shiori Sagawa, Pang~Wei Koh, Ananya Kumar, and Percy Liang.
+\newblock Selective classification can magnify disparities across groups.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2021.
+
+\bibitem[Jumper et~al.(2020)Jumper, Evans, Pritzel, Green, Figurnov,
+  Tunyasuvunakool, Ronneberger, Bates, Žídek, Bridgland, Meyer, Kohl,
+  Potapenko, Ballard, Cowie, Romera-Paredes, Nikolov, Jain, Adler, Back,
+  Petersen, Reiman, Steinegger, Pacholska, Silver, Vinyals, Senior,
+  Kavukcuoglu, Kohli, and Hassabis]{jumper2020alphafold}
+J.~Jumper, R.~Evans, A.~Pritzel, T.~Green, M.~Figurnov, K.~Tunyasuvunakool,
+  O.~Ronneberger, R.~Bates, A.~Žídek, A.~Bridgland, C.~Meyer, S.~A~A Kohl,
+  A.~Potapenko, A.~J Ballard, A.~Cowie, B.~Romera-Paredes, S.~Nikolov, R.~Jain,
+  J.~Adler, T.~Back, S.~Petersen, D.~Reiman, M.~Steinegger, M.~Pacholska,
+  D.~Silver, O.~Vinyals, A.~W Senior, K.~Kavukcuoglu, P.~Kohli, and
+  D.~Hassabis.
+\newblock High accuracy protein structure prediction using deep learning.
+\newblock \emph{Fourteenth Critical Assessment of Techniques for Protein
+  Structure Prediction}, 2020.
+
+\bibitem[Jung et~al.(2020)Jung, Goel, Skeem, et~al.]{jung2020limits}
+Jongbin Jung, Sharad Goel, Jennifer Skeem, et~al.
+\newblock The limits of human predictions of recidivism.
+\newblock \emph{Science Advances}, 6\penalty0 (7), 2020.
+
+\bibitem[Jørgensen et~al.(2015)Jørgensen, Hovy, and Søgaard]{jorgensen2015}
+A.~K. Jørgensen, D.~Hovy, and A.~Søgaard.
+\newblock Challenges of studying and processing dialects in social media.
+\newblock In \emph{ACL Workshop on Noisy User-generated Text}, pages 9--18,
+  2015.
+
+\bibitem[Kahn et~al.(2020)Kahn, Abbeel, and Levine]{kahn20}
+G.~Kahn, P.~Abbeel, and S.~Levine.
+\newblock {BADGR}: An autonomous self-supervised learning-based navigation
+  system.
+\newblock \emph{arXiv preprint arXiv:2002.05700}, 2020.
+
+\bibitem[Kallus and Zhou(2018)]{kallus_residual_2018}
+Nathan Kallus and Angela Zhou.
+\newblock Residual {Unfairness} in {Fair} {Machine} {Learning} from
+  {Prejudiced} {Data}.
+\newblock \emph{arXiv:1806.02887 [cs, stat]}, June 2018.
+\newblock URL \url{http://arxiv.org/abs/1806.02887}.
+\newblock arXiv: 1806.02887.
+
+\bibitem[Kamath et~al.(2020)Kamath, Jia, and Liang]{kamath2020squads}
+A.~Kamath, R.~Jia, and P.~Liang.
+\newblock Selective question answering under domain shift.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, 2020.
+
+\bibitem[Katona et~al.(2018)Katona, Painter, Patatoukas, and
+  Zeng]{katona2018parking}
+Z.~Katona, M.~Painter, P.~N. Patatoukas, and J.~Zeng.
+\newblock On the capital market consequences of alternative data: Evidence from
+  outer space.
+\newblock \emph{Miami Behavioral Finance Conference}, 2018.
+
+\bibitem[Kaushik et~al.(2019)Kaushik, Hovy, and Lipton]{kaushik2019learning}
+D.~Kaushik, E.~Hovy, and Z.~Lipton.
+\newblock Learning the difference that makes a difference with
+  counterfactually-augmented data.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019.
+
+\bibitem[Kearns et~al.(2018)Kearns, Neel, Roth, and Wu]{kearns2018preventing}
+M.~Kearns, S.~Neel, A.~Roth, and Z.~S. Wu.
+\newblock Preventing fairness gerrymandering: Auditing and learning for
+  subgroup fairness.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pages
+  2564--2572, 2018.
+
+\bibitem[Keilwagen et~al.(2019)Keilwagen, Posch, and
+  Grau]{keilwagen2019accurate}
+J.~Keilwagen, S.~Posch, and J.~Grau.
+\newblock Accurate prediction of cell type-specific transcription factor
+  binding.
+\newblock \emph{Genome Biology}, 20\penalty0 (1), 2019.
+
+\bibitem[Kelley et~al.(2016)Kelley, Snoek, and Rinn]{kelley2016basset}
+D.~R. Kelley, J.~Snoek, and J.~L. Rinn.
+\newblock Basset: learning the regulatory code of the accessible genome with
+  deep convolutional neural networks.
+\newblock \emph{Genome Research}, 26\penalty0 (7):\penalty0 990--999, 2016.
+
+\bibitem[Kim et~al.(2016{\natexlab{a}})Kim, Xie, Jean, and
+  Ermon]{kim2016multiresolution}
+J.~H. Kim, M.~Xie, N.~Jean, and S.~Ermon.
+\newblock Incorporating spatial context and fine-grained detail from satellite
+  imagery to predict poverty.
+\newblock \emph{Stanford University}, 2016{\natexlab{a}}.
+
+\bibitem[Kim and Linzen(2020)]{kim2020cogs}
+N.~Kim and T.~Linzen.
+\newblock Cogs: A compositional generalization challenge based on semantic
+  interpretation.
+\newblock \emph{arXiv preprint arXiv:2010.05465}, 2020.
+
+\bibitem[Kim et~al.(2016{\natexlab{b}})Kim, Thiessen, Bolton, Chen, Fu,
+  Gindulyte, Han, He, He, Shoemaker, Wang, Yu, Zhang, and
+  Bryant]{kim2016pubchem}
+S.~Kim, P.~A. Thiessen, E.~E. Bolton, J.~Chen, G.~Fu, A.~Gindulyte, L.~Han,
+  J.~He, S.~He, B.~A. Shoemaker, J.~Wang, B.~Yu, J.~Zhang, and S.~H. Bryant.
+\newblock Pubchem substance and compound databases.
+\newblock \emph{Nucleic Acids Research}, 44\penalty0 (D1):\penalty0
+  D1202--D1213, 2016{\natexlab{b}}.
+
+\bibitem[Kingma and Ba(2015)]{kingma2014adam}
+D.~P. Kingma and J.~Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2015.
+
+\bibitem[Koenecke et~al.(2020)Koenecke, Nam, Lake, Nudell, Quartey, Mengesha,
+  Toups, Rickford, Jurafsky, and Goel]{koenecke2020racial}
+A.~Koenecke, A.~Nam, E.~Lake, J.~Nudell, M.~Quartey, Z.~Mengesha, C.~Toups,
+  J.~R. Rickford, D.~Jurafsky, and S.~Goel.
+\newblock Racial disparities in automated speech recognition.
+\newblock \emph{Science}, 117\penalty0 (14):\penalty0 7684--7689, 2020.
+
+\bibitem[Koh et~al.(2020)Koh, Nguyen, Tang, Mussmann, Pierson, Kim, and
+  Liang]{koh2020bottleneck}
+P.~W. Koh, T.~Nguyen, Y.~S. Tang, S.~Mussmann, E.~Pierson, B.~Kim, and
+  P.~Liang.
+\newblock Concept bottleneck models.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2020.
+
+\bibitem[Kompa et~al.(2020)Kompa, Snoek, and Beam]{kompa2020empirical}
+B.~Kompa, J.~Snoek, and A.~Beam.
+\newblock Empirical frequentist coverage of deep learning uncertainty
+  quantification procedures.
+\newblock \emph{arXiv preprint arXiv:2010.03039}, 2020.
+
+\bibitem[Komura and Ishikawa(2018)]{komura2018machine}
+D.~Komura and S.~Ishikawa.
+\newblock Machine learning methods for histopathological image analysis.
+\newblock \emph{Computational and Structural Biotechnology Journal},
+  16:\penalty0 34--42, 2018.
+
+\bibitem[Kulal et~al.(2019)Kulal, Pasupat, Chandra, Lee, Padon, Aiken, and
+  Liang]{kulal2019spoc}
+Sumith Kulal, Panupong Pasupat, Kartik Chandra, Mina Lee, Oded Padon, Alex
+  Aiken, and Percy~S Liang.
+\newblock Spoc: Search-based pseudocode to code.
+\newblock In \emph{Advances in Neural Information Processing Systems}, pages
+  11906--11917, 2019.
+
+\bibitem[Kulkarni et~al.(2015)Kulkarni, Koh, Huy, Chia, Papadopoulos, Cheng,
+  Koller, and Klemmer]{kulkarni2015peer}
+C.~Kulkarni, P.~W. Koh, H.~Huy, D.~Chia, K.~Papadopoulos, J.~Cheng, D.~Koller,
+  and S.~R. Klemmer.
+\newblock Peer and self assessment in massive online classes.
+\newblock \emph{Design Thinking Research}, pages 131--168, 2015.
+
+\bibitem[Kulkarni et~al.(2014)Kulkarni, Socher, Bernstein, and
+  Klemmer]{kulkarni2014scaling}
+C.~E. Kulkarni, R.~Socher, M.~S. Bernstein, and S.~R. Klemmer.
+\newblock Scaling short-answer grading by combining peer assessment with
+  algorithmic scoring.
+\newblock In \emph{Proceedings of the first ACM conference on Learning@Scale
+  conference}, pages 99--108, 2014.
+
+\bibitem[Kumar et~al.(2020)Kumar, Ma, and Liang]{kumar2020gradual}
+A.~Kumar, T.~Ma, and P.~Liang.
+\newblock Understanding self-training for gradual domain adaptation.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2020.
+
+\bibitem[Kundaje et~al.(2015)Kundaje, Meuleman, Ernst, Bilenky, Yen,
+  Heravi-Moussavi, Kheradpour, Zhang, Wang, Ziller,
+  et~al.]{kundaje2015integrative}
+A.~Kundaje, W.~Meuleman, J.~Ernst, M.~Bilenky, A.~Yen, A.~Heravi-Moussavi,
+  P.~Kheradpour, Z.~Zhang, J.~Wang, M.~J. Ziller, et~al.
+\newblock Integrative analysis of 111 reference human epigenomes.
+\newblock \emph{Nature}, 518\penalty0 (7539):\penalty0 317--330, 2015.
+
+\bibitem[Kuznichov et~al.(2019)Kuznichov, Zvirin, Honen, and
+  Kimmel]{kuznichov2019data}
+Dmitry Kuznichov, Alon Zvirin, Yaron Honen, and Ron Kimmel.
+\newblock Data augmentation for leaf segmentation and counting tasks in rosette
+  plants.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition Workshops}, pages 0--0, 2019.
+
+\bibitem[Lake and Baroni(2018)]{lake2018generalization}
+B.~Lake and M.~Baroni.
+\newblock Generalization without systematicity: On the compositional skills of
+  sequence-to-sequence recurrent networks.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[Lakshminarayanan et~al.(2017)Lakshminarayanan, Pritzel, and
+  Blundell]{lakshminarayanan2017simple}
+B.~Lakshminarayanan, A.~Pritzel, and C.~Blundell.
+\newblock Simple and scalable predictive uncertainty estimation using deep
+  ensembles.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2017.
+
+\bibitem[Landrum et~al.(2006)]{landrum2006rdkit}
+Greg Landrum et~al.
+\newblock Rdkit: Open-source cheminformatics, 2006.
+
+\bibitem[Landt et~al.(2012)Landt, Marinov, Kundaje, Kheradpour, Pauli,
+  Batzoglou, Bernstein, Bickel, Brown, Cayting, et~al.]{EncodeChipseq12}
+Stephen~G Landt, Georgi~K Marinov, Anshul Kundaje, Pouya Kheradpour, Florencia
+  Pauli, Serafim Batzoglou, Bradley~E Bernstein, Peter Bickel, James~B Brown,
+  Philip Cayting, et~al.
+\newblock Chip-seq guidelines and practices of the encode and modencode
+  consortia.
+\newblock \emph{Genome research}, 22\penalty0 (9):\penalty0 1813--1831, 2012.
+
+\bibitem[Larrazabal et~al.(2020)Larrazabal, Nieto, Peterson, Milone, and
+  Ferrante]{larrazabal2020gender}
+Agostina~J Larrazabal, Nicol{\'a}s Nieto, Victoria Peterson, Diego~H Milone,
+  and Enzo Ferrante.
+\newblock Gender imbalance in medical imaging datasets produces biased
+  classifiers for computer-aided diagnosis.
+\newblock \emph{Proceedings of the National Academy of Sciences}, 117\penalty0
+  (23):\penalty0 12592--12594, 2020.
+
+\bibitem[Larson et~al.(2016)Larson, Mattu, Kirchner, and Angwin]{larson2016we}
+Jeff Larson, Surya Mattu, Lauren Kirchner, and Julia Angwin.
+\newblock How we analyzed the compas recidivism algorithm.
+\newblock \emph{ProPublica}, 9\penalty0 (1), 2016.
+
+\bibitem[Latessa et~al.(2010)Latessa, Lemke, Makarios, and
+  Smith]{latessa_creation_2010}
+Edward~J. Latessa, Richard Lemke, Matthew Makarios, and Paula Smith.
+\newblock The {Creation} and {Validation} of the {Ohio} {Risk} {Assessment}
+  {System} ({ORAS}).
+\newblock \emph{Federal Probation}, 74:\penalty0 16, 2010.
+\newblock URL
+  \url{https://heinonline.org/HOL/Page?handle=hein.journals/fedpro74&id=16&div=&collection=}.
+
+\bibitem[Lau et~al.(2014)Lau, Li, and Liao]{lau2014social}
+R.~Y. Lau, C.~Li, and S.~S. Liao.
+\newblock Social analytics: Learning fuzzy product ontologies for
+  aspect-oriented sentiment analysis.
+\newblock \emph{Decision Support Systems}, 65:\penalty0 80--94, 2014.
+
+\bibitem[LeCun et~al.(1998)LeCun, Cortes, and Burges]{lecun1998mnist}
+Y.~LeCun, C.~Cortes, and C.~J. Burges.
+\newblock The {MNIST} database of handwritten digits.
+\newblock \emph{\url{http://yann.lecun.com/exdb/mnist/}}, 1998.
+
+\bibitem[Lee et~al.(2004)Lee, Shibata, Rao, Strahl, and Lieb]{lee2004evidence}
+Cheol-Koo Lee, Yoichiro Shibata, Bhargavi Rao, Brian~D Strahl, and Jason~D
+  Lieb.
+\newblock Evidence for nucleosome depletion at active regulatory regions
+  genome-wide.
+\newblock \emph{Nature genetics}, 36\penalty0 (8):\penalty0 900--905, 2004.
+
+\bibitem[Leek et~al.(2010)Leek, Scharpf, Bravo, Simcha, Langmead, Johnson,
+  Geman, Baggerly, and Irizarry]{leek2010tackling}
+J.~T. Leek, R.~B. Scharpf, H.~C. Bravo, D.~Simcha, B.~Langmead, W.~E. Johnson,
+  D.~Geman, K.~Baggerly, and R.~A. Irizarry.
+\newblock Tackling the widespread and critical impact of batch effects in
+  high-throughput data.
+\newblock \emph{Nature Reviews Genetics}, 11\penalty0 (10), 2010.
+
+\bibitem[Li et~al.(2017{\natexlab{a}})Li, Yang, Song, and
+  Hospedales]{li2017deeper}
+D.~Li, Y.~Yang, Y.~Song, and T.~M. Hospedales.
+\newblock Deeper, broader and artier domain generalization.
+\newblock In \emph{Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 5542--5550, 2017{\natexlab{a}}.
+
+\bibitem[Li et~al.(2018{\natexlab{a}})Li, Yang, Song, and
+  Hospedales]{li2018learning}
+Da~Li, Yongxin Yang, Yi-Zhe Song, and Timothy Hospedales.
+\newblock Learning to generalize: Meta-learning for domain generalization.
+\newblock In \emph{Association for the Advancement of Artificial Intelligence
+  (AAAI)}, 2018{\natexlab{a}}.
+
+\bibitem[Li and Guan(2019)]{li2019leopard}
+H.~Li and Y.~Guan.
+\newblock Leopard: fast decoding cell type-specific transcription factor
+  binding landscape at single-nucleotide resolution.
+\newblock \emph{bioRxiv}, 2019.
+
+\bibitem[Li et~al.(2019{\natexlab{a}})Li, Quang, and Guan]{li2019anchor}
+H.~Li, D.~Quang, and Y.~Guan.
+\newblock Anchor: trans-cell type prediction of transcription factor binding
+  sites.
+\newblock \emph{Genome Research}, 29\penalty0 (2):\penalty0 281--292,
+  2019{\natexlab{a}}.
+
+\bibitem[Li et~al.(2018{\natexlab{b}})Li, Pan, Wang, and Kot]{li2018domain}
+Haoliang Li, Sinno~Jialin Pan, Shiqi Wang, and Alex~C Kot.
+\newblock Domain generalization with adversarial feature learning.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pages
+  5400--5409, 2018{\natexlab{b}}.
+
+\bibitem[Li et~al.(2017{\natexlab{b}})Li, Miller, Chopra, Ranzato, and
+  Weston]{li2017dialogue}
+J.~Li, A.~H. Miller, S.~Chopra, M.~Ranzato, and J.~Weston.
+\newblock Dialogue learning with human-in-the-loop.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2017{\natexlab{b}}.
+
+\bibitem[Li et~al.(2019{\natexlab{b}})Li, Sanjabi, Beirami, and
+  Smith]{li2019fair}
+T.~Li, M.~Sanjabi, A.~Beirami, and V.~Smith.
+\newblock Fair resource allocation in federated learning.
+\newblock \emph{arXiv preprint arXiv:1905.10497}, 2019{\natexlab{b}}.
+
+\bibitem[Li et~al.(2017{\natexlab{c}})Li, Wang, Shi, Liu, and Hou]{li17iclrw}
+Y.~Li, N.~Wang, J.~Shi, J.~Liu, and X.~Hou.
+\newblock Revisiting batch normalization for practical domain adaptation.
+\newblock In \emph{International Conference on Learning Representations
+  Workshop (ICLRW)}, 2017{\natexlab{c}}.
+
+\bibitem[Li et~al.(2018{\natexlab{c}})Li, Tian, Gong, Liu, Liu, Zhang, and
+  Tao]{li2018deep}
+Ya~Li, Xinmei Tian, Mingming Gong, Yajing Liu, Tongliang Liu, Kun Zhang, and
+  Dacheng Tao.
+\newblock Deep domain generalization via conditional invariant adversarial
+  networks.
+\newblock In \emph{European Conference on Computer Vision (ECCV)}, pages
+  624--639, 2018{\natexlab{c}}.
+
+\bibitem[Liang et~al.(2018)Liang, Li, and Srikant]{liang2018enhancing}
+S.~Liang, Y.~Li, and R.~Srikant.
+\newblock Enhancing the reliability of out-of-distribution image detection in
+  neural networks.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2018.
+
+\bibitem[Libbrecht and Noble(2015)]{libbrecht2015machine}
+M.~W. Libbrecht and W.~S. Noble.
+\newblock Machine learning applications in genetics and genomics.
+\newblock \emph{Nature Reviews Genetics}, 16\penalty0 (6):\penalty0 321--332,
+  2015.
+
+\bibitem[Lipton et~al.(2018)Lipton, Wang, and Smola]{lipton18icml}
+Z.~Lipton, Y.~Wang, and A.~Smola.
+\newblock Detecting and correcting for label shift with black box predictors.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[Liu et~al.(2021{\natexlab{a}})Liu, Haghgoo, Chen, Raghunathan, Koh,
+  Sagawa, Liang, and Finn]{liu2021jtt}
+Evan Liu, Behzad Haghgoo, Annie Chen, Aditi Raghunathan, Pang~Wei Koh, Shiori
+  Sagawa, Percy Liang, and Chelsea Finn.
+\newblock Just train twice: Improving group robustness without training group
+  information.
+\newblock In \emph{International Conference on Machine Learning (ICML)},
+  2021{\natexlab{a}}.
+
+\bibitem[Liu et~al.(2018)Liu, Dean, Rolf, Simchowitz, and
+  Hardt]{liu2018delayed}
+L.~T. Liu, S.~Dean, E.~Rolf, M.~Simchowitz, and M.~Hardt.
+\newblock Delayed impact of fair machine learning.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[Liu et~al.(2021{\natexlab{b}})Liu, Lee, Jia, and Liang]{liu2021concur}
+Nelson~F. Liu, Tony Lee, Robin Jia, and Percy Liang.
+\newblock Can small and synthetic benchmarks drive modeling innovation? a
+  retrospective study of question answering modeling approaches.
+\newblock \emph{arXiv}, 2021{\natexlab{b}}.
+
+\bibitem[Liu et~al.(2017)Liu, Gadepalli, Norouzi, Dahl, Kohlberger, Boyko,
+  Venugopalan, Timofeev, Nelson, Corrado, et~al.]{liu2017detecting}
+Y.~Liu, K.~Gadepalli, M.~Norouzi, G.~E. Dahl, T.~Kohlberger, A.~Boyko,
+  S.~Venugopalan, A.~Timofeev, P.~Q. Nelson, G.~S. Corrado, et~al.
+\newblock Detecting cancer metastases on gigapixel pathology images.
+\newblock \emph{arXiv preprint arXiv:1703.02442}, 2017.
+
+\bibitem[Ljosa et~al.(2012)Ljosa, Sokolnicki, and
+  Carpenter]{ljosa2012annotated}
+Vebjorn Ljosa, Katherine~L Sokolnicki, and Anne~E Carpenter.
+\newblock Annotated high-throughput microscopy image sets for validation.
+\newblock \emph{Nature methods}, 9\penalty0 (7):\penalty0 637--637, 2012.
+
+\bibitem[Long et~al.(2015)Long, Cao, Wang, and Jordan]{long2015learning}
+M.~Long, Y.~Cao, J.~Wang, and M.~Jordan.
+\newblock Learning transferable features with deep adaptation networks.
+\newblock In \emph{International Conference on Machine Learning}, pages
+  97--105, 2015.
+
+\bibitem[Loshchilov and Hutter(2019)]{loshchilov2019decoupled}
+Ilya Loshchilov and Frank Hutter.
+\newblock Decoupled weight decay regularization.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019.
+
+\bibitem[Lu et~al.(2021)Lu, Guo, Ren, Huang, Svyatkovskiy, Blanco, Clement,
+  Drain, Jiang, Tang, Li, Zhou, Shou, Zhou, Tufano, Gong, Zhou, Duan,
+  Sundaresan, Deng, Fu, and Liu]{CodeXGLUE}
+Shuai Lu, Daya Guo, Shuo Ren, Junjie Huang, Alexey Svyatkovskiy, Ambrosio
+  Blanco, Colin Clement, Dawn Drain, Daxin Jiang, Duyu Tang, Ge~Li, Lidong
+  Zhou, Linjun Shou, Long Zhou, Michele Tufano, Ming Gong, Ming Zhou, Nan Duan,
+  Neel Sundaresan, Shao~Kun Deng, Shengyu Fu, and Shujie Liu.
+\newblock Codexglue: A machine learning benchmark dataset for code
+  understanding and generation.
+\newblock \emph{arXiv preprint arXiv:2102.04664}, 2021.
+
+\bibitem[Lum and Isaac(2016)]{lum_predict_2016}
+Kristian Lum and William Isaac.
+\newblock To predict and serve?
+\newblock \emph{Significance}, 13\penalty0 (5):\penalty0 14--19, 2016.
+
+\bibitem[{L}um and Shah(2019)]{lum_measures_2019}
+Kristian {L}um and Tarak Shah.
+\newblock {Measures of fairness for New York City's Supervised Release Risk
+  Assessment Tool}.
+\newblock \emph{Human Rights Data Analytics Group}, page~21, 2019.
+
+\bibitem[Lyu et~al.(2019)Lyu, Wang, Balius, Singh, Levit, Moroz, O’Meara,
+  Che, Algaa, Tolmachova, et~al.]{lyu2019ultra}
+J.~Lyu, S.~Wang, T.~E. Balius, I.~Singh, A.~Levit, Y.~S. Moroz, M.~J.
+  O’Meara, T.~Che, E.~Algaa, K.~Tolmachova, et~al.
+\newblock Ultra-large library docking for discovering new chemotypes.
+\newblock \emph{Nature}, 566\penalty0 (7743):\penalty0 224--229, 2019.
+
+\bibitem[Macarron et~al.(2011)Macarron, Banks, Bojanic, Burns, Cirovic,
+  Garyantes, Green, Hertzberg, Janzen, Paslay, et~al.]{macarron2011impact}
+Ricardo Macarron, Martyn~N Banks, Dejan Bojanic, David~J Burns, Dragan~A
+  Cirovic, Tina Garyantes, Darren~VS Green, Robert~P Hertzberg, William~P
+  Janzen, Jeff~W Paslay, et~al.
+\newblock Impact of high-throughput screening in biomedical research.
+\newblock \emph{Nature reviews Drug discovery}, 10\penalty0 (3):\penalty0 188,
+  2011.
+
+\bibitem[Macenko et~al.(2009)Macenko, Niethammer, Marron, Borland, Woosley,
+  Guan, Schmitt, and Thomas]{macenko2009method}
+M.~Macenko, M.~Niethammer, J.~S. Marron, D.~Borland, J.~T. Woosley, X.~Guan,
+  C.~Schmitt, and N.~E. Thomas.
+\newblock A method for normalizing histology slides for quantitative analysis.
+\newblock In \emph{2009 IEEE International Symposium on Biomedical Imaging:
+  From Nano to Macro}, pages 1107--1110, 2009.
+
+\bibitem[Madec et~al.(2019)Madec, Jin, Lu, De~Solan, Liu, Duyme, Heritier, and
+  Baret]{madec2019ear}
+Simon Madec, Xiuliang Jin, Hao Lu, Benoit De~Solan, Shouyang Liu, Florent
+  Duyme, Emmanuelle Heritier, and Frederic Baret.
+\newblock Ear density estimation from high resolution rgb imagery using deep
+  learning technique.
+\newblock \emph{Agricultural and forest meteorology}, 264:\penalty0 225--234,
+  2019.
+
+\bibitem[Malloy and Power(2017)]{malloy2017quantifying}
+Brian~A Malloy and James~F Power.
+\newblock Quantifying the transition from python 2 to 3: an empirical study of
+  python applications.
+\newblock In \emph{2017 ACM/IEEE International Symposium on Empirical Software
+  Engineering and Measurement (ESEM)}, pages 314--323. IEEE, 2017.
+
+\bibitem[Mansour et~al.(2009)Mansour, Mohri, and Rostamizadeh]{mansour2009dams}
+Yishay Mansour, Mehryar Mohri, and Afshin Rostamizadeh.
+\newblock Domain adaptation with multiple sources.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pages 1041--1048, 2009.
+
+\bibitem[Marcus et~al.(1993)Marcus, Marcinkiewicz, and
+  Santorini]{marcus93treebank}
+M.~P. Marcus, M.~A. Marcinkiewicz, and B.~Santorini.
+\newblock Building a large annotated corpus of {E}nglish: the {P}enn
+  {T}reebank.
+\newblock \emph{Computational Linguistics}, 19:\penalty0 313--330, 1993.
+
+\bibitem[McCloskey et~al.(2020)McCloskey, Sigel, Kearnes, Xue, Tian, Moccia,
+  Gikunju, Bazzaz, Chan, Clark, et~al.]{mccloskey2020machine}
+K.~McCloskey, E.~A. Sigel, S.~Kearnes, L.~Xue, X.~Tian, D.~Moccia, D.~Gikunju,
+  S.~Bazzaz, B.~Chan, M.~A. Clark, et~al.
+\newblock Machine learning on {DNA}-encoded libraries: A new paradigm for hit
+  finding.
+\newblock \emph{Journal of Medicinal Chemistry}, 2020.
+
+\bibitem[McCoy et~al.(2019{\natexlab{a}})McCoy, Min, and
+  Linzen]{mccoy2019berts}
+R.~T. McCoy, J.~Min, and T.~Linzen.
+\newblock Berts of a feather do not generalize together: Large variability in
+  generalization across models with similar test set performance.
+\newblock \emph{arXiv preprint arXiv:1911.02969}, 2019{\natexlab{a}}.
+
+\bibitem[McCoy et~al.(2019{\natexlab{b}})McCoy, Pavlick, and
+  Linzen]{mccoy2019right}
+R.~T. McCoy, E.~Pavlick, and T.~Linzen.
+\newblock Right for the wrong reasons: Diagnosing syntactic heuristics in
+  natural language inference.
+\newblock In \emph{Association for Computational Linguistics (ACL)},
+  2019{\natexlab{b}}.
+
+\bibitem[McKinney et~al.(2020)McKinney, Sieniek, Godbole, Godwin, Antropova,
+  Ashrafian, Back, Chesus, Corrado, Darzi, et~al.]{mckinney2020international}
+S.~M. McKinney, M.~Sieniek, V.~Godbole, J.~Godwin, N.~Antropova, H.~Ashrafian,
+  T.~Back, M.~Chesus, G.~C. Corrado, A.~Darzi, et~al.
+\newblock International evaluation of an {AI} system for breast cancer
+  screening.
+\newblock \emph{Nature}, 577\penalty0 (7788):\penalty0 89--94, 2020.
+
+\bibitem[Mehrabi et~al.(2019)Mehrabi, Morstatter, Saxena, Lerman, and
+  Galstyan]{mehrabi2019survey}
+Ninareh Mehrabi, Fred Morstatter, Nripsuta Saxena, Kristina Lerman, and Aram
+  Galstyan.
+\newblock A survey on bias and fairness in machine learning.
+\newblock \emph{arXiv preprint arXiv:1908.09635}, 2019.
+
+\bibitem[Meinshausen and B\"uhlmann(2015)]{meinshausen2015maximin}
+Nicolai Meinshausen and Peter B\"uhlmann.
+\newblock Maximin effects in inhomogeneous large-scale data.
+\newblock \emph{Annals of Statistics}, 43, 2015.
+
+\bibitem[Miller et~al.(2020)Miller, Krauth, Recht, and
+  Schmidt]{miller2020effect}
+J.~Miller, K.~Krauth, B.~Recht, and L.~Schmidt.
+\newblock The effect of natural distribution shift on question answering
+  models.
+\newblock \emph{arXiv preprint arXiv:2004.14444}, 2020.
+
+\bibitem[Miller et~al.(2021)Miller, Taori, Raghunathan, Sagawa, Koh, Shankar,
+  Liang, Carmon, and Schmidt]{miller2021line}
+John Miller, Rohan Taori, Aditi Raghunathan, Shiori Sagawa, Pang~Wei Koh,
+  Vaishaal Shankar, Percy Liang, Yair Carmon, and Ludwig Schmidt.
+\newblock Accuracy on the line: on the strong correlation between
+  out-of-distribution and in-distribution generalization.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2021.
+
+\bibitem[Minnoye et~al.(2021)Minnoye, Marinov, Krausgruber, Pan, Marand,
+  Secchia, Greenleaf, Furlong, Zhao, Schmitz, et~al.]{minnoye2021chromatin}
+Liesbeth Minnoye, Georgi~K Marinov, Thomas Krausgruber, Lixia Pan, Alexandre~P
+  Marand, Stefano Secchia, William~J Greenleaf, Eileen~EM Furlong, Keji Zhao,
+  Robert~J Schmitz, et~al.
+\newblock Chromatin accessibility profiling methods.
+\newblock \emph{Nature Reviews Methods Primers}, 1\penalty0 (1):\penalty0
+  1--24, 2021.
+
+\bibitem[Mirowski et~al.(2017)Mirowski, Pascanu, Viola, Soyer, Ballard, Banino,
+  Denil, Goroshin, Sifre, Kavukcuoglu, Kumaran, and Hadsell]{mirowski17iclr}
+P.~Mirowski, R.~Pascanu, F.~Viola, H.~Soyer, A.~Ballard, A.~Banino, M.~Denil,
+  R.~Goroshin, L.~Sifre, C.~Kavukcuoglu, D.~Kumaran, and R.~Hadsell.
+\newblock Learning to navigate in complex environments.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2017.
+
+\bibitem[Moore et~al.(2020)Moore, Purcaro, Pratt, Epstein, Shoresh, Adrian,
+  Kawli, Davis, Dobin, Kaul, et~al.]{moore2020expanded}
+J.~E. Moore, M.~J. Purcaro, H.~E. Pratt, C.~B. Epstein, N.~Shoresh, J.~Adrian,
+  T.~Kawli, C.~A. Davis, A.~Dobin, R.~Kaul, et~al.
+\newblock Expanded encyclopaedias of {DNA} elements in the human and mouse
+  genomes.
+\newblock \emph{Nature}, 583\penalty0 (7818):\penalty0 699--710, 2020.
+
+\bibitem[Moult et~al.(1995)Moult, Pedersen, Judson, and
+  Fidelis]{moult1995large}
+J.~Moult, J.~T Pedersen, R.~Judson, and K.~Fidelis.
+\newblock A large-scale experiment to assess protein structure prediction
+  methods.
+\newblock \emph{Proteins: Structure, Function, and Bioinformatics}, 23\penalty0
+  (3):\penalty0 ii--iv, 1995.
+
+\bibitem[Nam et~al.(2020)Nam, Cha, Ahn, Lee, and Shin]{nam2020learning}
+Junhyun Nam, Hyuntak Cha, Sungsoo Ahn, Jaeho Lee, and Jinwoo Shin.
+\newblock Learning from failure: Training debiased classifier from biased
+  classifier.
+\newblock \emph{arXiv preprint arXiv:2007.02561}, 2020.
+
+\bibitem[Nekoto et~al.(2020)Nekoto, Marivate, Matsila, Fasubaa, Kolawole,
+  Fagbohungbe, Akinola, Muhammad, Kabongo, Osei, Freshia, Niyongabo, Macharm,
+  Ogayo, Ahia, Meressa, Adeyemi, Mokgesi-Selinga, Okegbemi, Martinus, Tajudeen,
+  Degila, Ogueji, Siminyu, Kreutzer, Webster, Ali, Abbott, Orife, Ezeani,
+  Dangana, Kamper, Elsahar, Duru, Kioko, Murhabazi, van Biljon, Whitenack,
+  Onyefuluchi, Emezue, Dossou, Sibanda, Bassey, Olabiyi, Ramkilowan, Öktem,
+  Akinfaderin, and Bashir]{nekoto2020participatory}
+W.~Nekoto, V.~Marivate, T.~Matsila, T.~Fasubaa, T.~Kolawole, T.~Fagbohungbe,
+  S.~O. Akinola, S.~H. Muhammad, S.~Kabongo, S.~Osei, S.~Freshia, R.~A.
+  Niyongabo, R.~Macharm, P.~Ogayo, O.~Ahia, M.~Meressa, M.~Adeyemi,
+  M.~Mokgesi-Selinga, L.~Okegbemi, L.~J. Martinus, K.~Tajudeen, K.~Degila,
+  K.~Ogueji, K.~Siminyu, J.~Kreutzer, J.~Webster, J.~T. Ali, J.~Abbott,
+  I.~Orife, I.~Ezeani, I.~A. Dangana, H.~Kamper, H.~Elsahar, G.~Duru, G.~Kioko,
+  E.~Murhabazi, E.~van Biljon, D.~Whitenack, C.~Onyefuluchi, C.~Emezue,
+  B.~Dossou, B.~Sibanda, B.~I. Bassey, A.~Olabiyi, A.~Ramkilowan, A.~Öktem,
+  A.~Akinfaderin, and A.~Bashir.
+\newblock Participatory research for low-resourced machine translation: A case
+  study in {African} languages.
+\newblock In \emph{Findings of Empirical Methods in Natural Language Processing
+  (Findings of EMNLP)}, 2020.
+
+\bibitem[Nestor et~al.(2019)Nestor, McDermott, Boag, Berner, Naumann, Hughes,
+  Goldenberg, and Ghassemi]{nestor2019feature}
+B.~Nestor, M.~McDermott, W.~Boag, G.~Berner, T.~Naumann, M.~C. Hughes,
+  A.~Goldenberg, and M.~Ghassemi.
+\newblock Feature robustness in non-stationary health records: caveats to
+  deployable model performance in common clinical machine learning tasks.
+\newblock \emph{arXiv preprint arXiv:1908.00690}, 2019.
+
+\bibitem[Nguyen and Nguyen(2015)]{nguyen2015graph}
+Anh~Tuan Nguyen and Tien~N Nguyen.
+\newblock Graph-based statistical language model for code.
+\newblock In \emph{International Conference on Software Engineering (ICSE)},
+  2015.
+
+\bibitem[Ni et~al.(2019)Ni, Li, and McAuley]{ni2019justifying}
+J.~Ni, J.~Li, and J.~McAuley.
+\newblock Justifying recommendations using distantly-labeled reviews and
+  fine-grained aspects.
+\newblock In \emph{Empirical Methods in Natural Language Processing (EMNLP)},
+  pages 188--197, 2019.
+
+\bibitem[Nita and Notkin(2010)]{nita2010using}
+Marius Nita and David Notkin.
+\newblock Using twinning to adapt programs to alternative apis.
+\newblock In \emph{2010 ACM/IEEE 32nd International Conference on Software
+  Engineering}, volume~1, pages 205--214. IEEE, 2010.
+
+\bibitem[Noor et~al.(2008)Noor, Alegana, Gething, Tatem, and
+  Snow]{noor2008nighttime}
+A.~Noor, V.~Alegana, P.~Gething, A.~Tatem, and R.~Snow.
+\newblock Using remotely sensed night-time light as a proxy for poverty in
+  {Africa}.
+\newblock \emph{Population Health Metrics}, 6, 2008.
+
+\bibitem[Norouzzadeh et~al.(2019)Norouzzadeh, Morris, Beery, Joshi, Jojic, and
+  Clune]{norouzzadeh2019deep}
+Mohammad~Sadegh Norouzzadeh, Dan Morris, Sara Beery, Neel Joshi, Nebojsa Jojic,
+  and Jeff Clune.
+\newblock A deep active learning system for species identification and counting
+  in camera trap images.
+\newblock \emph{arXiv preprint arXiv:1910.09716}, 2019.
+
+\bibitem[Nygaard et~al.(2016)Nygaard, R{\o}dland, and
+  Hovig]{nygaard2016methods}
+Vegard Nygaard, Einar~Andreas R{\o}dland, and Eivind Hovig.
+\newblock Methods that remove batch effects while retaining group differences
+  may lead to exaggerated confidence in downstream analyses.
+\newblock \emph{Biostatistics}, 17\penalty0 (1):\penalty0 29--39, 2016.
+
+\bibitem[NYTimes(2016)]{nyt2016jigsaw}
+NYTimes.
+\newblock The {Times} is partnering with {Jigsaw} to expand comment
+  capabilities.
+\newblock \emph{The New York Times}, 2016.
+\newblock URL
+  \url{https://www.nytco.com/press/the-times-is-partnering-with-jigsaw-to-expand-comment-capabilities/}.
+
+\bibitem[Obermeyer et~al.(2019)Obermeyer, Powers, Vogeli, and
+  Mullainathan]{obermeyer2019dissecting}
+Z.~Obermeyer, B.~Powers, C.~Vogeli, and S.~Mullainathan.
+\newblock Dissecting racial bias in an algorithm used to manage the health of
+  populations.
+\newblock \emph{Science}, 366\penalty0 (6464):\penalty0 447--453, 2019.
+
+\bibitem[Oren et~al.(2019)Oren, Sagawa, Hashimoto, and Liang]{oren2019drolm}
+Y.~Oren, S.~Sagawa, T.~Hashimoto, and P.~Liang.
+\newblock Distributionally robust language modeling.
+\newblock In \emph{Empirical Methods in Natural Language Processing (EMNLP)},
+  2019.
+
+\bibitem[Osgood-Zimmerman et~al.(2018)Osgood-Zimmerman, Millear, Stubbs,
+  Shields, Pickering, Earl, Graetz, Kinyoki, Ray, Bhatt, Browne, Burstein,
+  Cameron, Casey, Deshpande, Fullman, Gething, Gibson, Henry, Herrero, Krause,
+  Letourneau, Levine, Liu, Longbottom, Mayala, Mosser, Noor, Pigott, Piwoz,
+  Rao, Rawat, Reiner, Smith, Weiss, Wiens, Mokdad, Lim, Murray, Kassebaum, and
+  Hay]{osgood2018mapping}
+A.~Osgood-Zimmerman, A.~I. Millear, R.~W. Stubbs, C.~Shields, B.~V. Pickering,
+  L.~Earl, N.~Graetz, D.~K. Kinyoki, S.~E. Ray, S.~Bhatt, A.~J. Browne,
+  R.~Burstein, E.~Cameron, D.~C. Casey, A.~Deshpande, N.~Fullman, P.~W.
+  Gething, H.~S. Gibson, N.~J. Henry, M.~Herrero, L.~K. Krause, I.~D.
+  Letourneau, A.~J. Levine, P.~Y. Liu, J.~Longbottom, B.~K. Mayala, J.~F.
+  Mosser, A.~M. Noor, D.~M. Pigott, E.~G. Piwoz, P.~Rao, R.~Rawat, R.~C.
+  Reiner, D.~L. Smith, D.~J. Weiss, K.~E. Wiens, A.~H. Mokdad, S.~S. Lim,
+  C.~J.~L. Murray, N.~J. Kassebaum, and S.~I. Hay.
+\newblock Mapping child growth failure in {Africa} between 2000 and 2015.
+\newblock \emph{Nature}, 555, 2018.
+
+\bibitem[Ovadia et~al.(2019)Ovadia, Fertig, Ren, Nado, Sculley, Nowozin,
+  Dillon, Lakshminarayanan, and Snoek]{ovadia2019uncertainty}
+Y.~Ovadia, E.~Fertig, J.~Ren, Z.~Nado, D.~Sculley, S.~Nowozin, J.~V. Dillon,
+  B.~Lakshminarayanan, and J.~Snoek.
+\newblock Can you trust your model's uncertainty? evaluating predictive
+  uncertainty under dataset shift.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2019.
+
+\bibitem[Panayotov et~al.(2015)Panayotov, Chen, Povey, and
+  Khudanpur]{panayotov2015librispeech}
+V.~Panayotov, G.~Chen, D.~Povey, and S.~Khudanpur.
+\newblock Librispeech: an {ASR} corpus based on public domain audio books.
+\newblock In \emph{International Conference on Acoustics, Speech, and Signal
+  Processing (ICASSP)}, pages 5206--5210, 2015.
+
+\bibitem[Parham et~al.(2017)Parham, Crall, Stewart, Berger-Wolf, and
+  Rubenstein]{parham2017animal}
+Jason Parham, Jonathan Crall, Charles Stewart, Tanya Berger-Wolf, and Daniel~I
+  Rubenstein.
+\newblock Animal population censusing at scale with citizen science and
+  photographic identification.
+\newblock In \emph{AAAI Spring Symposium-Technical Report}, 2017.
+
+\bibitem[Park et~al.(2018)Park, Shin, and Fung]{park2018reducing}
+J.~H. Park, J.~Shin, and P.~Fung.
+\newblock Reducing gender bias in abusive language detection.
+\newblock In \emph{Empirical Methods in Natural Language Processing (EMNLP)},
+  pages 2799--2804, 2018.
+
+\bibitem[Parker and Leek(2012)]{parker2012practical}
+Hilary~S Parker and Jeffrey~T Leek.
+\newblock The practical effect of batch on genomic prediction.
+\newblock \emph{Statistical applications in genetics and molecular biology},
+  11\penalty0 (3), 2012.
+
+\bibitem[Patro et~al.(2020)Patro, Biswas, Ganguly, Gummadi, and
+  Chakraborty]{patro2020fairrec}
+G.~K. Patro, A.~Biswas, N.~Ganguly, K.~P. Gummadi, and A.~Chakraborty.
+\newblock Fairrec: Two-sided fairness for personalized recommendations in
+  two-sided platforms.
+\newblock In \emph{Proceedings of The Web Conference 2020}, pages 1194--1204,
+  2020.
+
+\bibitem[Peng et~al.(2018)Peng, Usman, Kaushik, Wang, Hoffman, and
+  Saenko]{peng2018visda}
+X.~Peng, B.~Usman, N.~Kaushik, D.~Wang, J.~Hoffman, and K.~Saenko.
+\newblock {VisDA}: A synthetic-to-real benchmark for visual domain adaptation.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pages
+  2021--2026, 2018.
+
+\bibitem[Peng et~al.(2019)Peng, Bai, Xia, Huang, Saenko, and
+  Wang]{peng2019moment}
+X.~Peng, Q.~Bai, X.~Xia, Z.~Huang, K.~Saenko, and B.~Wang.
+\newblock Moment matching for multi-source domain adaptation.
+\newblock In \emph{International Conference on Computer Vision (ICCV)}, 2019.
+
+\bibitem[Peng et~al.(2020)Peng, Coumans, Zhang, Lee, Tan, and
+  Levine]{peng20rss}
+X.~Peng, E.~Coumans, T.~Zhang, T.~Lee, J.~Tan, and S.~Levine.
+\newblock Learning agile robotic locomotion skills by imitating animals.
+\newblock In \emph{Robotics: Science and Systems (RSS)}, 2020.
+
+\bibitem[Perelman(2014)]{perelman2014state}
+L.~Perelman.
+\newblock When ``the state of the art'' is counting words.
+\newblock \emph{Assessing Writing}, 21:\penalty0 104--111, 2014.
+
+\bibitem[Peters et~al.(2016)Peters, B\"uhlmann, and
+  Meinshausen]{peters2016causal}
+Jonas Peters, Peter B\"uhlmann, and Nicolai Meinshausen.
+\newblock Causal inference by using invariant prediction: identification and
+  confidence intervals.
+\newblock \emph{Journal of the Royal Statistical Society. Series B
+  (Methodological)}, 78, 2016.
+
+\bibitem[Phillips et~al.(2020)Phillips, Rajpurkar, Sabini, Krishnan, Zhou,
+  Pareek, Phu, Wang, Ng, and Lungren]{phillips2020chexphoto}
+N.~A. Phillips, P.~Rajpurkar, M.~Sabini, R.~Krishnan, S.~Zhou, A.~Pareek, N.~M.
+  Phu, C.~Wang, A.~Y. Ng, and M.~P. Lungren.
+\newblock Chexphoto: 10,000+ smartphone photos and synthetic photographic
+  transformations of chest x-rays for benchmarking deep learning robustness.
+\newblock \emph{arXiv preprint arXiv:2007.06199}, 2020.
+
+\bibitem[Piech et~al.(2013)Piech, Huang, Chen, Do, Ng, and
+  Koller]{piech2013tuned}
+C.~Piech, J.~Huang, Z.~Chen, C.~Do, A.~Ng, and D.~Koller.
+\newblock Tuned models of peer assessment in moocs.
+\newblock \emph{Educational Data Mining}, 2013.
+
+\bibitem[Pierson et~al.(2018)Pierson, Corbett-Davies, and
+  Goel]{pierson_fast_2018}
+Emma Pierson, Sam Corbett-Davies, and Sharad Goel.
+\newblock Fast {Threshold} {Tests} for {Detecting} {Discrimination}.
+\newblock \emph{arXiv:1702.08536 [cs, stat]}, March 2018.
+\newblock URL \url{http://arxiv.org/abs/1702.08536}.
+\newblock arXiv: 1702.08536.
+
+\bibitem[Pimentel et~al.(2014)Pimentel, Clifton, Clifton, and
+  Tarassenko]{pimentel2014review}
+M.~A. Pimentel, D.~A. Clifton, L.~Clifton, and L.~Tarassenko.
+\newblock A review of novelty detection.
+\newblock \emph{Signal Processing}, 99:\penalty0 215--249, 2014.
+
+\bibitem[Pipal et~al.(2012)Pipal, Notch, Hayes, and Adams]{pipal2012estimating}
+Kerrie~A Pipal, Jeremy~J Notch, Sean~A Hayes, and Peter~B Adams.
+\newblock Estimating escapement for a low-abundance steelhead population using
+  dual-frequency identification sonar (didson).
+\newblock \emph{North American Journal of Fisheries Management}, 32\penalty0
+  (5):\penalty0 880--893, 2012.
+
+\bibitem[Price and Cohen(2019)]{price2019privacy}
+W~Nicholson Price and I~Glenn Cohen.
+\newblock Privacy in the age of medical big data.
+\newblock \emph{Nature Medicine}, 25\penalty0 (1):\penalty0 37--43, 2019.
+
+\bibitem[Proksch et~al.(2015)Proksch, Lerch, and
+  Mezini]{proksch2015intelligent}
+Sebastian Proksch, Johannes Lerch, and Mira Mezini.
+\newblock Intelligent code completion with bayesian networks.
+\newblock \emph{ACM Transactions on Software Engineering and Methodology
+  (TOSEM)}, 2015.
+
+\bibitem[Proksch et~al.(2016)Proksch, Amann, Nadi, and
+  Mezini]{proksch2016evaluating}
+Sebastian Proksch, Sven Amann, Sarah Nadi, and Mira Mezini.
+\newblock Evaluating the evaluations of code recommender systems: A reality
+  check.
+\newblock In \emph{2016 31st IEEE/ACM International Conference on Automated
+  Software Engineering (ASE)}, 2016.
+
+\bibitem[Ptashne and Gann(1997)]{PG97}
+Mark Ptashne and Alexander Gann.
+\newblock Transcriptional activation by recruitment.
+\newblock \emph{Nature}, 386\penalty0 (6625):\penalty0 569, 1997.
+
+\bibitem[Quang and Xie(2019)]{quang2019factornet}
+D.~Quang and X.~Xie.
+\newblock Factornet: a deep learning framework for predicting cell type
+  specific transcription factor binding from nucleotide-resolution sequential
+  data.
+\newblock \emph{Methods}, 166:\penalty0 40--47, 2019.
+
+\bibitem[{Qui\~nonero-Candela} et~al.(2009){Qui\~nonero-Candela}, Sugiyama,
+  Schwaighofer, and Lawrence]{quinonero2009dataset}
+J.~{Qui\~nonero-Candela}, M.~Sugiyama, A.~Schwaighofer, and N.~D. Lawrence.
+\newblock \emph{Dataset shift in machine learning}.
+\newblock The MIT Press, 2009.
+
+\bibitem[Raychev et~al.(2014)Raychev, Vechev, and Yahav]{raychev2014code}
+Veselin Raychev, Martin Vechev, and Eran Yahav.
+\newblock Code completion with statistical language models.
+\newblock In \emph{Proceedings of the 35th ACM SIGPLAN Conference on
+  Programming Language Design and Implementation}, pages 419--428, 2014.
+
+\bibitem[Raychev et~al.(2016)Raychev, Bielik, and
+  Vechev]{raychev2016probabilistic}
+Veselin Raychev, Pavol Bielik, and Martin Vechev.
+\newblock Probabilistic model for code with decision trees.
+\newblock \emph{ACM SIGPLAN Notices}, 2016.
+
+\bibitem[R{\'e} et~al.(2019)R{\'e}, Niu, Gudipati, and
+  Srisuwananukorn]{re2019overton}
+C.~R{\'e}, F.~Niu, P.~Gudipati, and C.~Srisuwananukorn.
+\newblock Overton: A data system for monitoring and improving machine-learned
+  products.
+\newblock \emph{arXiv preprint arXiv:1909.05372}, 2019.
+
+\bibitem[Recht et~al.(2019)Recht, Roelofs, Schmidt, and
+  Shankar]{recht2019doimagenet}
+B.~Recht, R.~Roelofs, L.~Schmidt, and V.~Shankar.
+\newblock Do {ImageNet} classifiers generalize to {ImageNet}?
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2019.
+
+\bibitem[Regev et~al.(2017)Regev, Teichmann, Lander, Amit, Benoist, Birney,
+  Bodenmiller, Campbell, Carninci, Clatworthy, et~al.]{aviv2017human}
+Aviv Regev, Sarah~A Teichmann, Eric~S Lander, Ido Amit, Christophe Benoist,
+  Ewan Birney, Bernd Bodenmiller, Peter Campbell, Piero Carninci, Menna
+  Clatworthy, et~al.
+\newblock The human cell atlas.
+\newblock \emph{Elife}, 6:\penalty0 e27041, 2017.
+
+\bibitem[Reiner et~al.(2018)Reiner, Graetz, Casey, Troeger, Garcia, Mosser,
+  Deshpande, Swartz, Ray, Blacker, Rao, Osgood-Zimmerman, Burstein, Pigott,
+  Davis, Letourneau, Earl, Ross, Khalil, Farag, Brady, Kraemer, Smith, Bhatt,
+  Weiss, Gething, Kassebaum, Mokdad, Murray, and Hay]{reiner2018mortality}
+R.~C. Reiner, N.~Graetz, D.~C. Casey, C.~Troeger, G.~M. Garcia, J.~F. Mosser,
+  A.~Deshpande, S.~J. Swartz, S.~E. Ray, B.~F. Blacker, P.~C. Rao,
+  A.~Osgood-Zimmerman, R.~Burstein, D.~M. Pigott, I.~M. Davis, I.~D.
+  Letourneau, L.~Earl, J.~M. Ross, I.~A. Khalil, T.~H. Farag, O.~J. Brady,
+  M.~U. Kraemer, D.~L. Smith, S.~Bhatt, D.~J. Weiss, P.~W. Gething, N.~J.
+  Kassebaum, A.~H. Mokdad, C.~J. Murray, and S.~I. Hay.
+\newblock Variation in childhood diarrheal morbidity and mortality in {Africa},
+  2000–2015.
+\newblock \emph{New England Journal of Medicine}, 379, 2018.
+
+\bibitem[Reker(2020)]{reker2020practical}
+D.~Reker.
+\newblock Practical considerations for active machine learning in drug
+  discovery.
+\newblock \emph{Drug Discovery Today: Technologies}, 2020.
+
+\bibitem[Ren et~al.(2015)Ren, He, Girshick, and Sun]{ren2015faster}
+Shaoqing Ren, Kaiming He, Ross Girshick, and Jian Sun.
+\newblock Faster r-cnn: Towards real-time object detection with region proposal
+  networks.
+\newblock \emph{arXiv preprint arXiv:1506.01497}, 2015.
+
+\bibitem[Reynolds et~al.(2020)Reynolds, Chapman, Crespo-Herrera, Molero,
+  Mondal, Pequeno, Pinto, Pinera-Chavez, Poland, Rivera-Amado,
+  et~al.]{reynolds2020breeder}
+Matthew Reynolds, Scott Chapman, Leonardo Crespo-Herrera, Gemma Molero,
+  Suchismita Mondal, Diego~NL Pequeno, Francisco Pinto, Francisco~J
+  Pinera-Chavez, Jesse Poland, Carolina Rivera-Amado, et~al.
+\newblock Breeder friendly phenotyping.
+\newblock \emph{Plant Science}, page 110396, 2020.
+
+\bibitem[Ribeiro et~al.(2020)Ribeiro, Wu, Guestrin, and
+  Singh]{ribeiro2020beyond}
+M.~T. Ribeiro, T.~Wu, C.~Guestrin, and S.~Singh.
+\newblock Beyond accuracy: Behavioral testing of {NLP} models with
+  {C}heck{L}ist.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, pages
+  4902--4912, 2020.
+
+\bibitem[Richter et~al.(2016)Richter, Vineet, Roth, and
+  Koltun]{richter2016playing}
+S.~R. Richter, V.~Vineet, S.~Roth, and V.~Koltun.
+\newblock Playing for data: Ground truth from computer games.
+\newblock In \emph{European Conference on Computer Vision}, pages 102--118,
+  2016.
+
+\bibitem[Rigaki and Garcia(2018)]{rigaki2018bringing}
+M.~Rigaki and S.~Garcia.
+\newblock Bringing a {GAN} to a knife-fight: Adapting malware communication to
+  avoid detection.
+\newblock In \emph{2018 IEEE Security and Privacy Workshops (SPW)}, pages
+  70--75, 2018.
+
+\bibitem[Robbes and Lanza(2008)]{robbes2008program}
+Romain Robbes and Michele Lanza.
+\newblock How program history can improve code completion.
+\newblock In \emph{International Conference on Automated Software Engineering},
+  2008.
+
+\bibitem[Rohs et~al.(2009)Rohs, West, Sosinsky, Liu, Mann, and
+  Honig]{RohsShape09}
+Remo Rohs, Sean~M West, Alona Sosinsky, Peng Liu, Richard~S Mann, and Barry
+  Honig.
+\newblock The role of dna shape in protein-dna recognition.
+\newblock \emph{Nature}, 461\penalty0 (7268):\penalty0 1248, 2009.
+
+\bibitem[Rolf et~al.(2020)Rolf, Jordan, and Recht]{rolf2020post}
+E.~Rolf, M.~I. Jordan, and B.~Recht.
+\newblock Post-estimation smoothing: A simple baseline for learning with side
+  information.
+\newblock In \emph{Artificial Intelligence and Statistics (AISTATS)}, 2020.
+
+\bibitem[Ronneberger et~al.(2015)Ronneberger, Fischer, and
+  Brox]{ronneberger2015u}
+Olaf Ronneberger, Philipp Fischer, and Thomas Brox.
+\newblock U-net: Convolutional networks for biomedical image segmentation.
+\newblock In \emph{International Conference on Medical image computing and
+  computer-assisted intervention}, pages 234--241. Springer, 2015.
+
+\bibitem[Ros et~al.(2016)Ros, Sellart, Materzynska, Vazquez, and
+  Lopez]{ros2016synthia}
+G.~Ros, L.~Sellart, J.~Materzynska, D.~Vazquez, and A.~M. Lopez.
+\newblock The {SYNTHIA} dataset: A large collection of synthetic images for
+  semantic segmentation of urban scenes.
+\newblock In \emph{Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 3234--3243, 2016.
+
+\bibitem[Rosenfeld et~al.(2018)Rosenfeld, Zemel, and
+  Tsotsos]{rosenfeld2018elephant}
+Amir Rosenfeld, Richard Zemel, and John~K Tsotsos.
+\newblock The elephant in the room.
+\newblock \emph{arXiv preprint arXiv:1808.03305}, 2018.
+
+\bibitem[Sadeghi and Levine(2017)]{sadeghi17rss}
+F.~Sadeghi and S.~Levine.
+\newblock {CAD2RL}: Real single-image flight without a single real image.
+\newblock In \emph{Robotics: Science and Systems (RSS)}, 2017.
+
+\bibitem[Sadeghi-Tehran et~al.(2017)Sadeghi-Tehran, Virlet, Sabermanesh, and
+  Hawkesford]{sadeghi2017multi}
+Pouria Sadeghi-Tehran, Nicolas Virlet, Kasra Sabermanesh, and Malcolm~J
+  Hawkesford.
+\newblock Multi-feature machine learning model for automatic segmentation of
+  green fractional vegetation cover for high-throughput field phenotyping.
+\newblock \emph{Plant methods}, 13\penalty0 (1):\penalty0 1--16, 2017.
+
+\bibitem[Saenko et~al.(2010)Saenko, Kulis, Fritz, and
+  Darrell]{saenko2010adapting}
+K.~Saenko, B.~Kulis, M.~Fritz, and T.~Darrell.
+\newblock Adapting visual category models to new domains.
+\newblock In \emph{European Conference on Computer Vision}, pages 213--226,
+  2010.
+
+\bibitem[Saerens et~al.(2002)Saerens, Latinne, and
+  Decaestecker]{saerens2002adjusting}
+M.~Saerens, P.~Latinne, and C.~Decaestecker.
+\newblock Adjusting the outputs of a classifier to new a priori probabilities:
+  a simple procedure.
+\newblock \emph{Neural Computation}, 14\penalty0 (1):\penalty0 21--41, 2002.
+
+\bibitem[Sagawa et~al.(2020{\natexlab{a}})Sagawa, Koh, Hashimoto, and
+  Liang]{sagawa2020group}
+S.~Sagawa, P.~W. Koh, T.~B. Hashimoto, and P.~Liang.
+\newblock Distributionally robust neural networks for group shifts: On the
+  importance of regularization for worst-case generalization.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2020{\natexlab{a}}.
+
+\bibitem[Sagawa et~al.(2020{\natexlab{b}})Sagawa, Raghunathan, Koh, and
+  Liang]{sagawa2020overparameterization}
+S.~Sagawa, A.~Raghunathan, P.~W. Koh, and P.~Liang.
+\newblock An investigation of why overparameterization exacerbates spurious
+  correlations.
+\newblock In \emph{International Conference on Machine Learning (ICML)},
+  2020{\natexlab{b}}.
+
+\bibitem[Sahn and Stifel(2003)]{sahn2003asset}
+D.~E. Sahn and D.~Stifel.
+\newblock Exploring alternative measures of welfare in the absence of
+  expenditure data.
+\newblock \emph{The Review of Income and Wealth}, 49, 2003.
+
+\bibitem[Sanh et~al.(2019)Sanh, Debut, Chaumond, and Wolf]{sanh2019distilbert}
+Victor Sanh, Lysandre Debut, Julien Chaumond, and Thomas Wolf.
+\newblock Distilbert, a distilled version of bert: smaller, faster, cheaper and
+  lighter.
+\newblock \emph{arXiv preprint arXiv:1910.01108}, 2019.
+
+\bibitem[Santurkar et~al.(2020)Santurkar, Tsipras, and
+  Madry]{santurkar2020breeds}
+S.~Santurkar, D.~Tsipras, and A.~Madry.
+\newblock Breeds: Benchmarks for subpopulation shift.
+\newblock \emph{arXiv}, 2020.
+
+\bibitem[Sap et~al.(2019)Sap, Card, Gabriel, Choi, and Smith]{sap2019risk}
+M.~Sap, D.~Card, S.~Gabriel, Y.~Choi, and N.~A. Smith.
+\newblock The risk of racial bias in hate speech detection.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, 2019.
+
+\bibitem[Schneider and Zhuang(2020)]{schneider2020counting}
+Stefan Schneider and Alex Zhuang.
+\newblock Counting fish and dolphins in sonar images using deep learning.
+\newblock \emph{arXiv preprint arXiv:2007.12808}, 2020.
+
+\bibitem[Seyyed-Kalantari et~al.(2020)Seyyed-Kalantari, Liu, McDermott, and
+  Ghassemi]{seyyed2020chexclusion}
+L.~Seyyed-Kalantari, G.~Liu, M.~McDermott, and M.~Ghassemi.
+\newblock Chexclusion: Fairness gaps in deep chest {X-ray} classifiers.
+\newblock \emph{arXiv preprint arXiv:2003.00827}, 2020.
+
+\bibitem[Shakoor et~al.(2017)Shakoor, Lee, and Mockler]{shakoor2017high}
+Nadia Shakoor, Scott Lee, and Todd~C Mockler.
+\newblock High throughput phenotyping to accelerate crop breeding and
+  monitoring of diseases in the field.
+\newblock \emph{Current opinion in plant biology}, 38:\penalty0 184--192, 2017.
+
+\bibitem[Shankar et~al.(2017)Shankar, Halpern, Breck, Atwood, Wilson, and
+  Sculley]{shankar2017no}
+Shreya Shankar, Yoni Halpern, Eric Breck, James Atwood, Jimbo Wilson, and
+  D~Sculley.
+\newblock No classification without representation: Assessing geodiversity
+  issues in open data sets for the developing world.
+\newblock \emph{Advances in Neural Information Processing Systems (NeurIPS)
+  Workshop on Machine Learning for the Developing World}, 2017.
+
+\bibitem[Shankar et~al.(2019)Shankar, Dave, Roelofs, Ramanan, Recht, and
+  Schmidt]{shankar2019image}
+V.~Shankar, A.~Dave, R.~Roelofs, D.~Ramanan, B.~Recht, and L.~Schmidt.
+\newblock Do image classifiers generalize across time?
+\newblock \emph{arXiv preprint arXiv:1906.02168}, 2019.
+
+\bibitem[Shapiro et~al.(2014)Shapiro, Dentcheva, and
+  Ruszczy{\'n}ski]{shapiro2014lectures}
+Alexander Shapiro, Darinka Dentcheva, and Andrzej Ruszczy{\'n}ski.
+\newblock \emph{Lectures on stochastic programming: modeling and theory}.
+\newblock SIAM, 2014.
+
+\bibitem[Shen et~al.(2018)Shen, Qu, Zhang, and Yu]{shen2018WassersteinDG}
+J.~Shen, Y.~Qu, W.~Zhang, and Y.~Yu.
+\newblock Wasserstein distance guided representation learning for domain
+  adaptation.
+\newblock In \emph{Association for the Advancement of Artificial Intelligence
+  (AAAI)}, 2018.
+
+\bibitem[Shermis(2014)]{shermis2014state}
+M.~D. Shermis.
+\newblock State-of-the-art automated essay scoring: Competition, results, and
+  future directions from a united states demonstration.
+\newblock \emph{Assessing Writing}, 20:\penalty0 53--76, 2014.
+
+\bibitem[Shetty et~al.(2019)Shetty, Schiele, and Fritz]{shetty2019not}
+Rakshith Shetty, Bernt Schiele, and Mario Fritz.
+\newblock Not using the car to see the sidewalk--quantifying and controlling
+  the effects of context in classification and segmentation.
+\newblock In \emph{Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 8218--8226, 2019.
+
+\bibitem[Shi et~al.(2016)Shi, Thomasson, Murray, Pugh, Rooney, Shafian, Rajan,
+  Rouze, Morgan, Neely, Rana, Bagavathiannan, Henrickson, Bowden, Valasek,
+  Olsenholler, Bishop, Sheridan, Putman, Popescu, Burks, Cope, Ibrahim,
+  McCutchen, Baltensperger, Avant, Vidrine, and Yang]{shi2016uav}
+Yeyin Shi, J.~Alex Thomasson, Seth~C. Murray, N.~Ace Pugh, William~L. Rooney,
+  Sanaz Shafian, Nithya Rajan, Gregory Rouze, Cristine L.~S. Morgan, Haly~L.
+  Neely, Aman Rana, Muthu~V. Bagavathiannan, James Henrickson, Ezekiel Bowden,
+  John Valasek, Jeff Olsenholler, Michael~P. Bishop, Ryan Sheridan, Eric~B.
+  Putman, Sorin Popescu, Travis Burks, Dale Cope, Amir Ibrahim, Billy~F.
+  McCutchen, David~D. Baltensperger, Robert~V. Avant, Jr, Misty Vidrine, and
+  Chenghai Yang.
+\newblock Unmanned aerial vehicles for high-throughput phenotyping and
+  agronomic research.
+\newblock \emph{PLOS ONE}, 11\penalty0 (7):\penalty0 1--26, 07 2016.
+\newblock \doi{10.1371/journal.pone.0159781}.
+\newblock URL \url{https://doi.org/10.1371/journal.pone.0159781}.
+
+\bibitem[Shimodaira(2000)]{shimodaira2000improving}
+H.~Shimodaira.
+\newblock Improving predictive inference under covariate shift by weighting the
+  log-likelihood function.
+\newblock \emph{Journal of Statistical Planning and Inference}, 90:\penalty0
+  227--244, 2000.
+
+\bibitem[Shin et~al.(2019)Shin, Kant, Gupta, Bender, Trabucco, Singh, and
+  Song]{shin2019synthetic}
+Richard Shin, Neel Kant, Kavi Gupta, Christopher Bender, Brandon Trabucco,
+  Rishabh Singh, and Dawn Song.
+\newblock Synthetic datasets for neural program synthesis.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019.
+
+\bibitem[Shiu et~al.(2020)Shiu, Palmer, Roch, Fleishman, Liu, Nosal, Helble,
+  Cholewiak, Gillespie, and Klinck]{shiu2020deep}
+Yu~Shiu, KJ~Palmer, Marie~A Roch, Erica Fleishman, Xiaobai Liu, Eva-Marie
+  Nosal, Tyler Helble, Danielle Cholewiak, Douglas Gillespie, and Holger
+  Klinck.
+\newblock Deep neural networks for automated detection of marine mammal
+  species.
+\newblock \emph{Scientific Reports}, 10\penalty0 (1):\penalty0 1--12, 2020.
+
+\bibitem[Shoichet(2004)]{shoichet2004virtual}
+Brian~K Shoichet.
+\newblock Virtual screening of chemical libraries.
+\newblock \emph{Nature}, 432\penalty0 (7019):\penalty0 862--865, 2004.
+
+\bibitem[Slack et~al.(2019)Slack, Friedler, and Givental]{slack_fairness_2019}
+Dylan Slack, Sorelle Friedler, and Emile Givental.
+\newblock Fairness {Warnings} and {Fair}-{MAML}: {Learning} {Fairly} with
+  {Minimal} {Data}.
+\newblock \emph{arXiv:1908.09092 [cs, stat]}, December 2019.
+\newblock URL \url{http://arxiv.org/abs/1908.09092}.
+\newblock arXiv: 1908.09092.
+
+\bibitem[Sohoni et~al.(2020)Sohoni, Dunnmon, Angus, Gu, and
+  R{\'e}]{sohoni2020subclass}
+N.~Sohoni, J.~Dunnmon, G.~Angus, A.~Gu, and C.~R{\'e}.
+\newblock No subclass left behind: Fine-grained robustness in coarse-grained
+  classification problems.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2020.
+
+\bibitem[Soneson et~al.(2014)Soneson, Gerster, and Delorenzi]{soneson2014batch}
+Charlotte Soneson, Sarah Gerster, and Mauro Delorenzi.
+\newblock Batch effect confounding leads to strong bias in performance
+  estimates obtained by cross-validation.
+\newblock \emph{PloS one}, 9\penalty0 (6):\penalty0 e100335, 2014.
+
+\bibitem[Srivastava and Mahony(2020)]{srivastava2020sequence}
+D.~Srivastava and S.~Mahony.
+\newblock Sequence and chromatin determinants of transcription factor binding
+  and the establishment of cell type-specific binding patterns.
+\newblock \emph{Biochimica et Biophysica Acta (BBA)-Gene Regulatory
+  Mechanisms}, 1863\penalty0 (6), 2020.
+
+\bibitem[Srivastava et~al.(2020)Srivastava, Hashimoto, and
+  Liang]{srivastava_robustness_2020}
+Megha Srivastava, Tatsunori Hashimoto, and Percy Liang.
+\newblock Robustness to {Spurious} {Correlations} via {Human} {Annotations}.
+\newblock In \emph{International {Conference} on {Machine} {Learning}}, pages
+  9109--9119. PMLR, November 2020.
+\newblock URL \url{http://proceedings.mlr.press/v119/srivastava20a.html}.
+\newblock ISSN: 2640-3498.
+
+\bibitem[Sterling and Irwin(2015)]{sterling2015}
+Teague Sterling and John~J. Irwin.
+\newblock Zinc 15 – ligand discovery for everyone.
+\newblock \emph{Journal of Chemical Information and Modeling}, 55\penalty0
+  (11):\penalty0 2324--2337, 2015.
+\newblock \doi{10.1021/acs.jcim.5b00559}.
+\newblock PMID: 26479676.
+
+\bibitem[Stormo and Zhao(2010)]{StormoZ10}
+Gary~D Stormo and Yue Zhao.
+\newblock Determining the specificity of protein-dna interactions.
+\newblock \emph{Nature Reviews Genetics}, 11\penalty0 (11):\penalty0 751, 2010.
+
+\bibitem[Stowell et~al.(2019)Stowell, Wood, Pamu{\l}a, Stylianou, and
+  Glotin]{stowell2019automatic}
+Dan Stowell, Michael~D Wood, Hanna Pamu{\l}a, Yannis Stylianou, and Herv{\'e}
+  Glotin.
+\newblock Automatic acoustic detection of birds through deep learning: the
+  first bird audio detection challenge.
+\newblock \emph{Methods in Ecology and Evolution}, 10\penalty0 (3):\penalty0
+  368--380, 2019.
+
+\bibitem[Subbaswamy et~al.(2020)Subbaswamy, Adams, and
+  Saria]{subbaswamy2020evaluating}
+A.~Subbaswamy, R.~Adams, and S.~Saria.
+\newblock Evaluating model robustness to dataset shift.
+\newblock \emph{arXiv preprint arXiv:2010.15100}, 2020.
+
+\bibitem[Sun and Saenko(2016)]{sun2016deep}
+B.~Sun and K.~Saenko.
+\newblock Deep {CORAL}: Correlation alignment for deep domain adaptation.
+\newblock In \emph{European conference on computer vision}, pages 443--450,
+  2016.
+
+\bibitem[Sun et~al.(2016)Sun, Feng, and Saenko]{sun2016return}
+B.~Sun, J.~Feng, and K.~Saenko.
+\newblock Return of frustratingly easy domain adaptation.
+\newblock In \emph{Association for the Advancement of Artificial Intelligence
+  (AAAI)}, 2016.
+
+\bibitem[Sun et~al.(2020{\natexlab{a}})Sun, Kretzschmar, Dotiwalla, Chouard,
+  Patnaik, Tsui, Guo, Zhou, Chai, Caine, Vasudevan, Han, Ngiam, Zhao, Timofeev,
+  Ettinger, Krivokon, Gao, Joshi, Zhao, Cheng, Zhang, Shlens, Chen, and
+  Anguelov]{sun20cvpr}
+P.~Sun, H.~Kretzschmar, X.~Dotiwalla, A.~Chouard, V.~Patnaik, P.~Tsui, J.~Guo,
+  Y.~Zhou, Y.~Chai, B.~Caine, V.~Vasudevan, W.~Han, J.~Ngiam, H.~Zhao,
+  A.~Timofeev, S.~Ettinger, M.~Krivokon, A.~Gao, A.~Joshi, S.~Zhao, S.~Cheng,
+  Y.~Zhang, J.~Shlens, Z.~Chen, and D.~Anguelov.
+\newblock Scalability in perception for autonomous driving: {Waymo} open
+  dataset.
+\newblock In \emph{Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, 2020{\natexlab{a}}.
+
+\bibitem[Sun et~al.(2020{\natexlab{b}})Sun, Wang, Liu, Miller, Efros, and
+  Hardt]{sun2020test}
+Y.~Sun, X.~Wang, Z.~Liu, J.~Miller, A.~A. Efros, and M.~Hardt.
+\newblock Test-time training with self-supervision for generalization under
+  distribution shifts.
+\newblock In \emph{International Conference on Machine Learning (ICML)},
+  2020{\natexlab{b}}.
+
+\bibitem[Svyatkovskiy et~al.(2019)Svyatkovskiy, Zhao, Fu, and
+  Sundaresan]{svyatkovskiy2019pythia}
+Alexey Svyatkovskiy, Ying Zhao, Shengyu Fu, and Neel Sundaresan.
+\newblock Pythia: ai-assisted code completion system.
+\newblock In \emph{Proceedings of the 25th ACM SIGKDD International Conference
+  on Knowledge Discovery \& Data Mining}, pages 2727--2735, 2019.
+
+\bibitem[Swinney and Anthony(2011)]{swinney2011were}
+David~C Swinney and Jason Anthony.
+\newblock How were new medicines discovered?
+\newblock \emph{Nature reviews Drug discovery}, 10\penalty0 (7):\penalty0 507,
+  2011.
+
+\bibitem[Tabak et~al.(2020)Tabak, Fan, Yang, Hoyer, and
+  Davis]{tabak2020correcting}
+Gil Tabak, Minjie Fan, Samuel Yang, Stephan Hoyer, and Geoffrey Davis.
+\newblock Correcting nuisance variation using wasserstein distance.
+\newblock \emph{PeerJ}, 8:\penalty0 e8594, 2020.
+
+\bibitem[Tabak et~al.(2019)Tabak, Norouzzadeh, Wolfson, Sweeney, VerCauteren,
+  Snow, Halseth, Di~Salvo, Lewis, White, et~al.]{tabak2019machine}
+Michael~A Tabak, Mohammad~S Norouzzadeh, David~W Wolfson, Steven~J Sweeney,
+  Kurt~C VerCauteren, Nathan~P Snow, Joseph~M Halseth, Paul~A Di~Salvo, Jesse~S
+  Lewis, Michael~D White, et~al.
+\newblock Machine learning to classify animal species in camera trap images:
+  Applications in ecology.
+\newblock \emph{Methods in Ecology and Evolution}, 10\penalty0 (4):\penalty0
+  585--590, 2019.
+
+\bibitem[Taghipour and Ng(2016)]{taghipour2016neural}
+K.~Taghipour and H.~T. Ng.
+\newblock A neural approach to automated essay scoring.
+\newblock In \emph{Proceedings of the 2016 conference on empirical methods in
+  natural language processing}, pages 1882--1891, 2016.
+
+\bibitem[Taori et~al.(2020)Taori, Dave, Shankar, Carlini, Recht, and
+  Schmidt]{taori2020measuring}
+R.~Taori, A.~Dave, V.~Shankar, N.~Carlini, B.~Recht, and L.~Schmidt.
+\newblock Measuring robustness to natural distribution shifts in image
+  classification.
+\newblock \emph{arXiv preprint arXiv:2007.00644}, 2020.
+
+\bibitem[Tatman(2017)]{tatman2017}
+R.~Tatman.
+\newblock Gender and dialect bias in {Y}ou{T}ube's automatic captions.
+\newblock In \emph{Workshop on Ethics in Natural Langauge Processing},
+  volume~1, pages 53--59, 2017.
+
+\bibitem[Taylor et~al.(2019)Taylor, Earnshaw, Mabey, Victors, and
+  Yosinski]{taylor2019rxrx1}
+J.~Taylor, B.~Earnshaw, B.~Mabey, M.~Victors, and J.~Yosinski.
+\newblock Rxrx1: An image set for cellular morphological variation across many
+  experimental batches.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019.
+
+\bibitem[Taylor et~al.(2021)Taylor, Lukowski, and
+  Anderton]{taylor2021spatially}
+Michael~J Taylor, Jessica~K Lukowski, and Christopher~R Anderton.
+\newblock Spatially resolved mass spectrometry at the single cell: Recent
+  innovations in proteomics and metabolomics.
+\newblock \emph{Journal of the American Society for Mass Spectrometry},
+  32\penalty0 (4):\penalty0 872--894, 2021.
+
+\bibitem[Tellez et~al.(2018)Tellez, Balkenhol, Otte-H{\"o}ller, van~de Loo,
+  Vogels, Bult, Wauters, Vreuls, Mol, Karssemeijer, et~al.]{tellez2018whole}
+D.~Tellez, M.~Balkenhol, I.~Otte-H{\"o}ller, R.~van~de Loo, R.~Vogels, P.~Bult,
+  C.~Wauters, W.~Vreuls, S.~Mol, N.~Karssemeijer, et~al.
+\newblock Whole-slide mitosis detection in h\&e breast histology using phh3 as
+  a reference to train distilled stain-invariant convolutional networks.
+\newblock \emph{IEEE Transactions on Medical Imaging}, 37\penalty0
+  (9):\penalty0 2126--2136, 2018.
+
+\bibitem[Tellez et~al.(2019)Tellez, Litjens, B{\'a}ndi, Bulten, Bokhorst,
+  Ciompi, and van~der Laak]{tellez2019quantifying}
+D.~Tellez, G.~Litjens, P.~B{\'a}ndi, W.~Bulten, J.~Bokhorst, F.~Ciompi, and
+  J.~van~der Laak.
+\newblock Quantifying the effects of data augmentation and stain color
+  normalization in convolutional neural networks for computational pathology.
+\newblock \emph{Medical Image Analysis}, 58, 2019.
+
+\bibitem[Temel et~al.(2018)Temel, Lee, and AlRegib]{temel2018cure}
+Dogancan Temel, Jinsol Lee, and Ghassan AlRegib.
+\newblock Cure-or: Challenging unreal and real environments for object
+  recognition.
+\newblock In \emph{2018 17th IEEE International Conference on Machine Learning
+  and Applications (ICMLA)}, pages 137--144. IEEE, 2018.
+
+\bibitem[Thorp et~al.(2018)Thorp, Thompson, Harders, French, and
+  Ward]{thorp2018high}
+Kelly~R Thorp, Alison~L Thompson, Sara~J Harders, Andrew~N French, and
+  Richard~W Ward.
+\newblock High-throughput phenotyping of crop water use efficiency via
+  multispectral drone imagery and a daily soil water balance model.
+\newblock \emph{Remote Sensing}, 10\penalty0 (11):\penalty0 1682, 2018.
+
+\bibitem[Thurman et~al.(2012)Thurman, Rynes, Humbert, Vierstra, Maurano,
+  Haugen, Sheffield, Stergachis, Wang, Vernot, et~al.]{DNaseLandscape12}
+Robert~E Thurman, Eric Rynes, Richard Humbert, Jeff Vierstra, Matthew~T
+  Maurano, Eric Haugen, Nathan~C Sheffield, Andrew~B Stergachis, Hao Wang,
+  Benjamin Vernot, et~al.
+\newblock The accessible chromatin landscape of the human genome.
+\newblock \emph{Nature}, 489\penalty0 (7414):\penalty0 75, 2012.
+
+\bibitem[Tiecke et~al.(2017)Tiecke, Liu, Zhang, Gros, Li, Yetman, Kilic,
+  Murray, Blankespoor, Prydz, and Dang]{tiecke2017population}
+T.~G. Tiecke, X.~Liu, A.~Zhang, A.~Gros, N.~Li, G.~Yetman, T.~Kilic, S.~Murray,
+  B.~Blankespoor, E.~B. Prydz, and H.~H. Dang.
+\newblock Mapping the world population one building at a time.
+\newblock \emph{arXiv}, 2017.
+
+\bibitem[Tobin et~al.(2017)Tobin, Fong, Ray, Schneider, Zaremba, and
+  Abbeel]{tobin17iros}
+J.~Tobin, R.~Fong, A.~Ray, J.~Schneider, W.~Zaremba, and P.~Abbeel.
+\newblock Domain randomization for transferring deep neural networks from
+  simulation to the real world.
+\newblock In \emph{International Conference on Intelligent Robots and Systems
+  (IROS)}, 2017.
+
+\bibitem[Toda and Okura(2019)]{toda2019convolutional}
+Yosuke Toda and Fumio Okura.
+\newblock How convolutional neural networks diagnose plant disease.
+\newblock \emph{Plant Phenomics}, 2019, 2019.
+
+\bibitem[Torralba and Efros(2011)]{torralba2011unbiased}
+A.~Torralba and A.~A. Efros.
+\newblock Unbiased look at dataset bias.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pages
+  1521--1528, 2011.
+
+\bibitem[Tuschl(2001)]{tuschl2001rna}
+Thomas Tuschl.
+\newblock Rna interference and small interfering rnas.
+\newblock \emph{Chembiochem}, 2\penalty0 (4):\penalty0 239--245, 2001.
+
+\bibitem[Tzeng et~al.(2017)Tzeng, Hoffman, Saenko, and
+  Darrell]{tzeng2017domain}
+E.~Tzeng, J.~Hoffman, K.~Saenko, and T.~Darrell.
+\newblock Adversarial discriminative domain adaptation.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, 2017.
+
+\bibitem[Tzeng et~al.(2014)Tzeng, Hoffman, Zhang, Saenko, and
+  Darrell]{tzeng2014domain}
+Eric Tzeng, Judy Hoffman, Ning Zhang, Kate Saenko, and Trevor Darrell.
+\newblock Deep domain confusion: Maximizing for domain invariance.
+\newblock \emph{arXiv preprint arXiv:1412.3474}, 2014.
+
+\bibitem[Ubbens et~al.(2020)Ubbens, Ayalew, Shirtliffe, Josuttes, Pozniak, and
+  Stavness]{ubbens2020autocount}
+Jordan~R Ubbens, Tewodros~W Ayalew, Steve Shirtliffe, Anique Josuttes, Curtis
+  Pozniak, and Ian Stavness.
+\newblock Autocount: Unsupervised segmentation and counting of organs in field
+  images.
+\newblock In \emph{European Conference on Computer Vision}, pages 391--399.
+  Springer, 2020.
+
+\bibitem[Uzkent and Ermon(2020)]{uzkent2020zoom}
+B.~Uzkent and S.~Ermon.
+\newblock Learning when and where to zoom with deep reinforcement learning.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, 2020.
+
+\bibitem[Vasic et~al.(2019)Vasic, Kanade, Maniatis, Bieber, and
+  Singh]{vasic2019neural}
+Marko Vasic, Aditya Kanade, Petros Maniatis, David Bieber, and Rishabh Singh.
+\newblock Neural program repair by jointly learning to localize and repair.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019.
+
+\bibitem[Vatnehol et~al.(2018)Vatnehol, Pe{\~n}a, and
+  Handegard]{vatnehol2018method}
+Sindre Vatnehol, Hector Pe{\~n}a, and Nils~Olav Handegard.
+\newblock A method to automatically detect fish aggregations using horizontally
+  scanning sonar.
+\newblock \emph{ICES Journal of Marine Science}, 75\penalty0 (5):\penalty0
+  1803--1812, 2018.
+
+\bibitem[Veeling et~al.(2018)Veeling, Linmans, Winkens, Cohen, and
+  Welling]{veeling2018rotation}
+B.~S. Veeling, J.~Linmans, J.~Winkens, T.~Cohen, and M.~Welling.
+\newblock Rotation equivariant cnns for digital pathology.
+\newblock In \emph{International Conference on Medical Image Computing and
+  Computer-assisted Intervention}, pages 210--218, 2018.
+
+\bibitem[Venkateswara et~al.(2017)Venkateswara, Eusebio, Chakraborty, and
+  Panchanathan]{venkateswara2017deep}
+H.~Venkateswara, J.~Eusebio, S.~Chakraborty, and S.~Panchanathan.
+\newblock Deep hashing network for unsupervised domain adaptation.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pages
+  5018--5027, 2017.
+
+\bibitem[Veta et~al.(2016)Veta, Diest, Jiwa, Al-Janabi, and
+  Pluim]{veta2016mitosis}
+M.~Veta, P.~J.~V. Diest, M.~Jiwa, S.~Al-Janabi, and J.~P. Pluim.
+\newblock Mitosis counting in breast cancer: Object-level interobserver
+  agreement and comparison to an automatic method.
+\newblock \emph{PloS one}, 11\penalty0 (8), 2016.
+
+\bibitem[Veta et~al.(2019)Veta, Heng, Stathonikos, Bejnordi, Beca, Wollmann,
+  Rohr, Shah, Wang, Rousson, et~al.]{veta2019predicting}
+M.~Veta, Y.~J. Heng, N.~Stathonikos, B.~E. Bejnordi, F.~Beca, T.~Wollmann,
+  K.~Rohr, M.~A. Shah, D.~Wang, M.~Rousson, et~al.
+\newblock Predicting breast tumor proliferation from whole-slide images: the
+  tupac16 challenge.
+\newblock \emph{Medical image analysis}, 54:\penalty0 111--121, 2019.
+
+\bibitem[Volpi et~al.(2018)Volpi, Namkoong, Sener, Duchi, Murino, and
+  Savarese]{volpi2018generalizing}
+R.~Volpi, H.~Namkoong, O.~Sener, J.~Duchi, V.~Murino, and S.~Savarese.
+\newblock Generalizing to unseen domains via adversarial data augmentation.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2018.
+
+\bibitem[Wang et~al.(2019{\natexlab{a}})Wang, Pruksachatkun, Nangia, Singh,
+  Michael, Hill, Levy, and Bowman]{wang2019superglue}
+Alex Wang, Yada Pruksachatkun, Nikita Nangia, Amanpreet Singh, Julian Michael,
+  Felix Hill, Omer Levy, and Samuel~R. Bowman.
+\newblock {SuperGLUE}: A stickier benchmark for general-purpose language
+  understanding systems.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2019{\natexlab{a}}.
+
+\bibitem[Wang et~al.(2019{\natexlab{b}})Wang, Singh, Michael, Hill, Levy, and
+  Bowman]{wang2019glue}
+Alex Wang, Amapreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel~R
+  Bowman.
+\newblock {GLUE}: A multi-task benchmark and analysis platform for natural
+  language understanding.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2019{\natexlab{b}}.
+
+\bibitem[Wang et~al.(2020{\natexlab{a}})Wang, Shelhamer, Liu, Olshausen, and
+  Darrell]{wang20}
+D.~Wang, E.~Shelhamer, S.~Liu, B.~Olshausen, and T.~Darrell.
+\newblock Fully test-time adaptation by entropy minimization.
+\newblock \emph{arXiv preprint arXiv:2006.10726}, 2020{\natexlab{a}}.
+
+\bibitem[Wang et~al.(2019{\natexlab{c}})Wang, Ge, Lipton, and
+  Xing]{wang2019learning}
+H.~Wang, S.~Ge, Z.~Lipton, and E.~P. Xing.
+\newblock Learning robust global representations by penalizing local predictive
+  power.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2019{\natexlab{c}}.
+
+\bibitem[Wang et~al.(2017)Wang, Bai, Mattyus, Chu, Luo, Yang, Liang, Cheverie,
+  Fidler, and Urtasun]{wang2017torontocity}
+S.~Wang, M.~Bai, G.~Mattyus, H.~Chu, W.~Luo, B.~Yang, J.~Liang, J.~Cheverie,
+  S.~Fidler, and R.~Urtasun.
+\newblock Torontocity: Seeing the world with a million eyes.
+\newblock In \emph{International Conference on Computer Vision (ICCV)}, 2017.
+
+\bibitem[Wang et~al.(2020{\natexlab{b}})Wang, Chen, Xie, Azzari, and
+  Lobell]{wang2020weakly}
+S.~Wang, W.~Chen, S.~M. Xie, G.~Azzari, and D.~B. Lobell.
+\newblock Weakly supervised deep learning for segmentation of remote sensing
+  imagery.
+\newblock \emph{Remote Sensing}, 12, 2020{\natexlab{b}}.
+
+\bibitem[Ward and Moghadam(2020)]{ward2020scalable}
+Daniel Ward and Peyman Moghadam.
+\newblock Scalable learning for bridging the species gap in image-based plant
+  phenotyping.
+\newblock \emph{Computer Vision and Image Understanding}, 197:\penalty0 103009,
+  2020.
+
+\bibitem[Wearn and Glover-Kapfer(2017)]{wearn2017camera}
+OR~Wearn and P~Glover-Kapfer.
+\newblock Camera-trapping for conservation: a guide to best-practices.
+\newblock \emph{WWF conservation technology series}, 1\penalty0 (1):\penalty0
+  2019--04, 2017.
+
+\bibitem[Weinberger(2015)]{weinberger2015speech}
+S.~Weinberger.
+\newblock Speech accent archive.
+\newblock \emph{George Mason University}, 2015.
+
+\bibitem[Weinstein(2018)]{weinstein2018computer}
+Ben~G Weinstein.
+\newblock A computer vision for animal ecology.
+\newblock \emph{Journal of Animal Ecology}, 87\penalty0 (3):\penalty0 533--545,
+  2018.
+
+\bibitem[Weinstein et~al.(2013)Weinstein, Collisson, Mills, Shaw, Ozenberger,
+  Ellrott, Shmulevich, Sander, Stuart, Network, et~al.]{weinstein2013cancer}
+J.~N. Weinstein, E.~A. Collisson, G.~B. Mills, K.~R.~M. Shaw, B.~A. Ozenberger,
+  K.~Ellrott, I.~Shmulevich, C.~Sander, J.~M. Stuart, C.~G. A.~R. Network,
+  et~al.
+\newblock The cancer genome atlas pan-cancer analysis project.
+\newblock \emph{Nature genetics}, 45\penalty0 (10), 2013.
+
+\bibitem[West et~al.(2014)West, Paskov, Leskovec, and
+  Potts]{west2014exploiting}
+R.~West, H.~S. Paskov, J.~Leskovec, and C.~Potts.
+\newblock Exploiting social network structure for person-to-person sentiment
+  analysis.
+\newblock \emph{Transactions of the Association for Computational Linguistics
+  (TACL)}, 2:\penalty0 297--310, 2014.
+
+\bibitem[Widmer and Kubat(1996)]{widmer1996learning}
+G.~Widmer and M.~Kubat.
+\newblock Learning in the presence of concept drift and hidden contexts.
+\newblock \emph{Machine learning}, 23\penalty0 (1):\penalty0 69--101, 1996.
+
+\bibitem[Williams et~al.(2016)Williams, Kim, Rafferty, Maldonado, Gajos,
+  Lasecki, and Heffernan]{williams2016axis}
+J.~J. Williams, J.~Kim, A.~Rafferty, S.~Maldonado, K.~Z. Gajos, W.~S. Lasecki,
+  and N.~Heffernan.
+\newblock Axis: Generating explanations at scale with learnersourcing and
+  machine learning.
+\newblock In \emph{Proceedings of the Third (2016) ACM Conference on
+  Learning@Scale}, pages 379--388, 2016.
+
+\bibitem[Wilson et~al.(2019)Wilson, Hoffman, and
+  Morgenstern]{wilson2019predictive}
+Benjamin Wilson, Judy Hoffman, and Jamie Morgenstern.
+\newblock Predictive inequity in object detection.
+\newblock \emph{arXiv preprint arXiv:1902.11097}, 2019.
+
+\bibitem[Wolf et~al.(2019)Wolf, Debut, Sanh, Chaumond, Delangue, Moi, Cistac,
+  Rault, Louf, Funtowicz, and Brew]{wolf2019transformers}
+T.~Wolf, L.~Debut, V.~Sanh, J.~Chaumond, C.~Delangue, A.~Moi, P.~Cistac,
+  T.~Rault, R.~Louf, M.~Funtowicz, and J.~Brew.
+\newblock {HuggingFace}'s transformers: State-of-the-art natural language
+  processing.
+\newblock \emph{arXiv preprint arXiv:1910.03771}, 2019.
+
+\bibitem[Won et~al.(2010)Won, Ren, and Wang]{won2010genome}
+Kyoung-Jae Won, Bing Ren, and Wei Wang.
+\newblock Genome-wide prediction of transcription factor binding sites using an
+  integrated model.
+\newblock \emph{Genome biology}, 11\penalty0 (1):\penalty0 1--17, 2010.
+
+\bibitem[Wong et~al.(2020)Wong, Lam, Fong, Leung, Chin, Lo, Lui, Lee, Chiu,
+  Chung, et~al.]{wong2020frequency}
+Ho~Yuen~Frank Wong, Hiu Yin~Sonia Lam, Ambrose Ho-Tung Fong, Siu~Ting Leung,
+  Thomas Wing-Yan Chin, Christine Shing~Yen Lo, Macy Mei-Sze Lui, Jonan
+  Chun~Yin Lee, Keith Wan-Hang Chiu, Tom Chung, et~al.
+\newblock Frequency and distribution of chest radiographic findings in covid-19
+  positive patients.
+\newblock \emph{Radiology}, page 201160, 2020.
+
+\bibitem[Worrall et~al.(2017)Worrall, Garbin, Turmukhambetov, and
+  Brostow]{worrall2017harmonic}
+D.~E. Worrall, S.~J. Garbin, D.~Turmukhambetov, and G.~J. Brostow.
+\newblock Harmonic networks: Deep translation and rotation equivariance.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pages
+  5028--5037, 2017.
+
+\bibitem[Wu et~al.(2019{\natexlab{a}})Wu, Mosse, Goodman, and
+  Piech]{wu2019zero}
+M.~Wu, M.~Mosse, N.~Goodman, and C.~Piech.
+\newblock Zero shot learning for code education: Rubric sampling with deep
+  learning inference.
+\newblock In \emph{Association for the Advancement of Artificial Intelligence
+  (AAAI)}, volume~33, pages 782--790, 2019{\natexlab{a}}.
+
+\bibitem[Wu et~al.(2020)Wu, Davis, Domingue, Piech, and
+  Goodman]{wu2020variational}
+M.~Wu, R.~L. Davis, B.~W. Domingue, C.~Piech, and N.~Goodman.
+\newblock Variational item response theory: Fast, accurate, and expressive.
+\newblock \emph{International Conference on Educational Data Mining}, 2020.
+
+\bibitem[Wu et~al.(2019{\natexlab{b}})Wu, Winston, Kaushik, and
+  Lipton]{wu2019domain}
+Y.~Wu, E.~Winston, D.~Kaushik, and Z.~Lipton.
+\newblock Domain adaptation with asymmetrically-relaxed distribution alignment.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pages
+  6872--6881, 2019{\natexlab{b}}.
+
+\bibitem[Wu et~al.(2018)Wu, Ramsundar, Feinberg, Gomes, Geniesse, Pappu,
+  Leswing, and Pande]{wu2018moleculenet}
+Zhenqin Wu, Bharath Ramsundar, Evan~N Feinberg, Joseph Gomes, Caleb Geniesse,
+  Aneesh~S Pappu, Karl Leswing, and Vijay Pande.
+\newblock Moleculenet: a benchmark for molecular machine learning.
+\newblock \emph{Chemical Science}, 9\penalty0 (2):\penalty0 513--530, 2018.
+
+\bibitem[Wulfmeier et~al.(2018)Wulfmeier, Bewley, and Posner]{wulfmeier18icra}
+M.~Wulfmeier, A.~Bewley, and I.~Posner.
+\newblock Incremental adversarial domain adaptation for continually changing
+  environments.
+\newblock In \emph{International Conference on Robotics and Automation (ICRA)},
+  2018.
+
+\bibitem[Xiao et~al.(2020)Xiao, Engstrom, Ilyas, and Madry]{xiao2020noise}
+K.~Xiao, L.~Engstrom, A.~Ilyas, and A.~Madry.
+\newblock Noise or signal: The role of image backgrounds in object recognition.
+\newblock \emph{arXiv preprint arXiv:2006.09994}, 2020.
+
+\bibitem[Xie et~al.(2016)Xie, Jean, Burke, Lobell, and Ermon]{xie2016transfer}
+M.~Xie, N.~Jean, M.~Burke, D.~Lobell, and S.~Ermon.
+\newblock Transfer learning from deep features for remote sensing and poverty
+  mapping.
+\newblock In \emph{Association for the Advancement of Artificial Intelligence
+  (AAAI)}, 2016.
+
+\bibitem[Xie et~al.(2020)Xie, Kumar, Jones, Khani, Ma, and
+  Liang]{xie2020innout}
+S.~M. Xie, A.~Kumar, R.~Jones, F.~Khani, T.~Ma, and P.~Liang.
+\newblock {In-N-Out}: Pre-training and self-training using auxiliary
+  information for out-of-distribution robustness.
+\newblock \emph{arXiv}, 2020.
+
+\bibitem[Xiong et~al.(2019)Xiong, Cao, Lu, Madec, Liu, and
+  Shen]{xiong2019tasselnetv2}
+Haipeng Xiong, Zhiguo Cao, Hao Lu, Simon Madec, Liang Liu, and Chunhua Shen.
+\newblock Tasselnetv2: in-field counting of wheat spikes with context-augmented
+  local regression networks.
+\newblock \emph{Plant Methods}, 15\penalty0 (1):\penalty0 1--14, 2019.
+
+\bibitem[Xu et~al.(2018)Xu, Hu, Leskovec, and Jegelka]{xu2018powerful}
+K.~Xu, W.~Hu, J.~Leskovec, and S.~Jegelka.
+\newblock How powerful are graph neural networks?
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2018.
+
+\bibitem[Yang and Newsam(2010)]{yang2010landuse}
+Y.~Yang and S.~Newsam.
+\newblock Bag-of-visual-words and spatial extensions for land-use
+  classification.
+\newblock \emph{Geographic Information Systems}, 2010.
+
+\bibitem[Yang et~al.(2019)Yang, Caluwaerts, Iscen, Zhang, Tan, and
+  Sindhwani]{yang19corl}
+Y.~Yang, K.~Caluwaerts, A.~Iscen, T.~Zhang, J.~Tan, and V.~Sindhwani.
+\newblock Data efficient reinforcement learning for legged robots.
+\newblock In \emph{Conference on Robot Learning (CoRL)}, 2019.
+
+\bibitem[Yasunaga and Liang(2020)]{yasunaga2020graph}
+Michihiro Yasunaga and Percy Liang.
+\newblock Graph-based, self-supervised program repair from diagnostic feedback.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2020.
+
+\bibitem[Yeh et~al.(2020)Yeh, Perez, Driscoll, Azzari, Tang, Lobell, Ermon, and
+  Burke]{yeh2020poverty}
+C.~Yeh, A.~Perez, A.~Driscoll, G.~Azzari, Z.~Tang, D.~Lobell, S.~Ermon, and
+  M.~Burke.
+\newblock Using publicly available satellite imagery and deep learning to
+  understand economic well-being in {Africa}.
+\newblock \emph{Nature Communications}, 11, 2020.
+
+\bibitem[You et~al.(2017)You, Li, Low, Lobell, and Ermon]{you2017crop}
+J.~You, X.~Li, M.~Low, D.~Lobell, and S.~Ermon.
+\newblock Deep {gaussian} process for crop yield prediction based on remote
+  sensing data.
+\newblock In \emph{Association for the Advancement of Artificial Intelligence
+  (AAAI)}, 2017.
+
+\bibitem[Yu et~al.(2020)Yu, Chen, Wang, Xian, Chen, Liu, Madhavan, and
+  Darrell]{yu20cvpr}
+F.~Yu, H.~Chen, X.~Wang, W.~Xian, Y.~Chen, F.~Liu, V.~Madhavan, and T.~Darrell.
+\newblock {BDD100K}: A diverse driving dataset for heterogeneous multitask
+  learning.
+\newblock In \emph{Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, 2020.
+
+\bibitem[Yuval et~al.(2011)Yuval, Tao, Adam, Alessandro, Bo, and
+  Y]{netzer2011reading}
+N.~Yuval, W.~Tao, C.~Adam, B.~Alessandro, W.~Bo, and N.~A. Y.
+\newblock Reading digits in natural images with unsupervised feature learning.
+\newblock In \emph{NIPS Workshop on Deep Learning and Unsupervised Feature
+  Learning}, 2011.
+
+\bibitem[Zafar et~al.(2017)Zafar, Valera, Rodriguez, Gummadi, and
+  Weller]{zafar_parity_2017}
+Muhammad~Bilal Zafar, Isabel Valera, Manuel~Gomez Rodriguez, Krishna~P.
+  Gummadi, and Adrian Weller.
+\newblock From {Parity} to {Preference}-based {Notions} of {Fairness} in
+  {Classification}.
+\newblock \emph{arXiv:1707.00010 [cs, stat]}, Nov 2017.
+\newblock URL \url{http://arxiv.org/abs/1707.00010}.
+\newblock arXiv: 1707.00010.
+
+\bibitem[Zech et~al.(2018)Zech, Badgeley, Liu, Costa, Titano, and
+  Oermann]{zech2018radio}
+J.~R. Zech, M.~A. Badgeley, M.~Liu, A.~B. Costa, J.~J. Titano, and E.~K.
+  Oermann.
+\newblock Variable generalization performance of a deep learning model to
+  detect pneumonia in chest radiographs: A cross-sectional study.
+\newblock In \emph{PLOS Medicine}, 2018.
+
+\bibitem[Zhang et~al.(2013)Zhang, Sch{\"o}lkopf, Muandet, and
+  Wang]{zhang2013domain}
+K.~Zhang, B.~Sch{\"o}lkopf, K.~Muandet, and Z.~Wang.
+\newblock Domain adaptation under target and conditional shift.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pages
+  819--827, 2013.
+
+\bibitem[Zhang et~al.(2020)Zhang, Marklund, Dhawan, Gupta, Levine, and
+  Finn]{zhang2020adaptive}
+M.~Zhang, H.~Marklund, N.~Dhawan, A.~Gupta, S.~Levine, and C.~Finn.
+\newblock Adaptive risk minimization: A meta-learning approach for tackling
+  group shift.
+\newblock \emph{arXiv preprint arXiv:2007.02931}, 2020.
+
+\bibitem[Zhang et~al.(2019)Zhang, Baldridge, and He]{zhang2019paws}
+Y.~Zhang, J.~Baldridge, and L.~He.
+\newblock Paws: Paraphrase adversaries from word scrambling.
+\newblock In \emph{North American Association for Computational Linguistics
+  (NAACL)}, 2019.
+
+\bibitem[Zhao et~al.(2018)Zhao, Wang, Yatskar, Ordo{\~n}ez, and
+  Chang]{zhao2018gender}
+J.~Zhao, T.~Wang, M.~Yatskar, V.~Ordo{\~n}ez, and K.~Chang.
+\newblock Gender bias in coreference resolution: Evaluation and debiasing
+  methods.
+\newblock In \emph{North American Association for Computational Linguistics
+  (NAACL)}, 2018.
+
+\bibitem[Zhou and Troyanskaya(2015)]{zhou2015predicting}
+J.~Zhou and O.~G. Troyanskaya.
+\newblock Predicting effects of noncoding variants with deep learning--based
+  sequence model.
+\newblock \emph{Nature Methods}, 12\penalty0 (10):\penalty0 931--934, 2015.
+
+\bibitem[Zhou et~al.(2020)Zhou, Nie, Tan, and Bansal]{zhou2020curse}
+X.~Zhou, Y.~Nie, H.~Tan, and M.~Bansal.
+\newblock The curse of performance instability in analysis datasets:
+  Consequences, source, and suggestions.
+\newblock \emph{arXiv preprint arXiv:2004.13606}, 2020.
+
+\bibitem[Zhou et~al.(2014)Zhou, Zhu, Cai, Yuan, Li, Huang, and
+  Wei]{zhou2014high}
+Yuexin Zhou, Shiyou Zhu, Changzu Cai, Pengfei Yuan, Chunmei Li, Yanyi Huang,
+  and Wensheng Wei.
+\newblock High-throughput screening of a crispr/cas9 library for functional
+  genomics in human cells.
+\newblock \emph{Nature}, 509\penalty0 (7501):\penalty0 487, 2014.
+
+\bibitem[Zitnick et~al.(2020)Zitnick, Chanussot, Das, Goyal, Heras-Domingo, Ho,
+  Hu, Lavril, Palizhati, Riviere, Shuaibi, Sriram, Tran, Wood, Yoon, Parikh,
+  and Ulissi]{zitnick2020introduction}
+C.~L. Zitnick, L.~Chanussot, A.~Das, S.~Goyal, J.~Heras-Domingo, C.~Ho, W.~Hu,
+  T.~Lavril, A.~Palizhati, M.~Riviere, M.~Shuaibi, A.~Sriram, K.~Tran, B.~Wood,
+  J.~Yoon, D.~Parikh, and Z.~Ulissi.
+\newblock An introduction to electrocatalyst design using machine learning for
+  renewable energy storage.
+\newblock \emph{arXiv preprint arXiv:2010.09435}, 2020.
+
+\end{thebibliography}

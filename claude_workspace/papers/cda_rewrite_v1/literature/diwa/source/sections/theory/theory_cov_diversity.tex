@@ -1,0 +1,13 @@
+\subsubsection{Covariance and diversity}
+\label{subsec:expression_cov_div}
+The covariance term increases when the predictions of $\{f(\cdot, \theta_m)\}_{m=1}^M$ are correlated.
+In the worst case where all predictions are identical, covariance equals variance and WA is no longer beneficial.
+On the other hand, the lower the covariance, the greater the gain of WA over its members; this is derived by comparing
+\Cref{eq:b_v,eq:b_var_cov}, as detailed in \Cref{app:proof_wa_ind}.
+It motivates tackling covariance by encouraging members to make different predictions, thus to be functionally diverse.
+Diversity is a widely analyzed concept in the ensemble literature \cite{Lakshminarayanan2017}, for which numerous measures have been introduced \cite{kuncheva2003measures,aksela2003comparison,DBLP:journals/corr/abs-1905-00414}.
+\reb{In \Cref{sect:dwa}, we aim at decorrelating the learning procedures to increase members' diversity and reduce the covariance term}.
+
+% Deep ensembles \cite{Lakshminarayanan2017} usually seek zero covariance by members' independence, \reb{\eg via explicit adversarial regularization in \cite{rame2021dice}: we implicitly follow the same goal when s in \Cref{sect:dwa}}.
+% we follow this objective in \Cref{sect:dwa} by decorrelating the learning procedures.
+% For example, \cite{rame2021dice} explicitly sought zero covariance by member's independence in Deep ensembles \cite{Lakshminarayanan2017}.

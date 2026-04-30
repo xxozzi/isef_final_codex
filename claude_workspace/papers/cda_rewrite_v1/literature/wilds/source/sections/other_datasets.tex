@@ -1,0 +1,187 @@
+\section{Distribution shifts in other application areas}\label{sec:other_datasets}
+Beyond the datasets currently included in \Wilds,
+there are many other applications where it is critical for models to be robust to distribution shifts.
+In this section, we discuss some of these applications and the challenges of finding appropriate benchmark datasets in those areas.
+We also highlight examples of datasets with distribution shifts that we considered but did not include in \Wilds, because their distribution shifts did not lead to a significant performance drop.
+Constructing realistic benchmarks that reflect distribution shifts in these application areas is an important avenue of future work,
+and we would highly welcome community contributions of benchmark datasets in these areas.
+
+\subsection{Algorithmic fairness}\label{sec:fairness}
+Distribution shifts which degrade model performance on minority subpopulations are frequently discussed in the algorithmic fairness literature.
+Geographic inequities are one concern~\citep{shankar2017no,atwood2020inclusive}: e.g., publicly available image datasets overrepresent images from the US and Europe, degrading performance in the developing world~\citep{shankar2017no} and prompting the creation of more geographically diverse datasets~\citep{atwood2020inclusive}.
+Racial disparities are another concern: e.g., commercial gender classifiers are more likely to misclassify the gender of darker-skinned women, likely in part because training datasets overrepresent lighter-skinned subjects~\citep{buolamwini2018gender}, and pedestrian detection systems fare worse on darker-skinned pedestrians~\citep{wilson2019predictive}. As in \refsec{dataset_civilcomments}, NLP models can also show racial bias.
+
+Unfortunately, publicly available algorithmic fairness benchmarks~\citep{mehrabi2019survey}---e.g., the COMPAS recidivism dataset~\citep{larson2016we}---suffer from several limitations.
+First, the datasets are often quite small by the standards of modern ML: the COMPAS dataset has only a few thousand rows~\citep{larson2016we}.
+Second, they tend to have relatively few features,
+and disparities in subgroup performance are not always large \citep{larrazabal2020gender},
+limiting the benefit of more sophisticated approaches:
+on COMPAS, logistic regression performs comparably to a black-box commercial algorithm~\citep{jung2020limits,dressel2018accuracy}.
+Third, the datasets sometimes represent ``toy'' problems: e.g., the UCI Adult Income dataset~\citep{asuncion2007uci} is widely used as a fairness benchmark, but its task---classifying whether a person will have an income above \$50,000---does not represent a real-world application.
+Finally, because many of the domains in which algorithmic fairness is of most concern---e.g., criminal justice and healthcare---are high-stakes and disparities are politically sensitive, it can be difficult to make datasets publicly available.
+
+Creating algorithmic fairness benchmarks which do not suffer from these limitations represents a promising direction for future work. In particular, such datasets would ideally have: 1) information about a sensitive attribute like race or gender; 2) a prediction task which is of immediate real-world interest; 3) enough samples, a rich enough feature set, and large enough disparities in group performance that more sophisticated machine learning approaches would plausibly produce improvement over naive approaches.
+
+\paragraph{Dataset: New York stop-and-frisk.}
+Predictive policing is a prominent example of a real-world application where fairness considerations are paramount:
+algorithms are increasingly being used in contexts such as predicting crime hotspots~\citep{lum_predict_2016} or a defendant's risk of reoffending
+\citep{larson2016we, corbett-davies_computer_2016, corbett_davies_algorithmic_2017, lum_measures_2019}.
+There are numerous concerns about these applications~\citep{larson2016we, corbett-davies_computer_2016, corbett_davies_algorithmic_2017, lum_measures_2019},
+one of which is that these ML models might not generalize beyond the distributions that they were trained on \citep{davies_measure_2018, slack_fairness_2019}.
+These distribution shifts include shifts over locations---e.g., a criminal risk assessment trained on several hundred defendants in Ohio was eventually used throughout the United States~\citep{latessa_creation_2010}---and shifts over time, as sentencing and other criminal justice policies evolve~\citep{davies_measure_2018}.
+There are, of course, also subpopulation shift concerns around whether models are biased against particular demographic groups.
+
+We investigated these shifts using a dataset of pedestrian stops made by the New York City Police Department under its ``stop-and-frisk'' policy,
+where the task is to predict whether a pedestrian who was stopped on suspicion of weapon possession would in fact possess a weapon \citep{goel_precinct_2016}.
+This policy had a pronounced racial bias: Black people stopped by the police on suspicion of possessing a weapon were 5$\times$ less likely to actually possess one than their White counterparts \citep{goel_precinct_2016}.
+We emphasize that we oppose stop-and-frisk (and any ``improved'' ML-powered stop-and-frisk) since there is overwhelming evidence that the policy was racially discriminatory~\citep{gelman_analysis_2007,goel_precinct_2016, pierson_fast_2018} and such massive inequities require more than algorithmic fixes.
+Rather, we use the dataset as a realistic example of the phenomena that arise in real policing contexts, including 1) substantial heterogeneity across locations and racial groups and 2) distributions that arise in part because of biased policing practices.
+
+Overall, we found large performance disparities across race groups and locations. Interestingly, however, we also found that these disparities cannot be attributed to the distribution shift, as the disparities were not reduced when we trained models specifically on the race groups or locations that suffer the worst performance.
+Indeed, the groups that see the worst performance---Black and Hispanic pedestrians---comprise large \emph{majorities} of the dataset, making up  more than 90\% of the stops. This contrasts with the typical setting in algorithmic fairness where models perform worse on \emph{minority} groups in the training data.
+Our results suggest the disparities are due to the dataset being noisier for some race and location groups, potentially as a result of the biased policing practices underlying the dataset. We provide further details in \refapp{app_sqf}.
+
+\subsection{Medicine and healthcare}
+Substantial evidence indicates the potential for distribution shifts in medical settings \citep{finlayson2021clinician}. One concern is \emph{demographic} subpopulation shifts (e.g., across race, gender, or socioeconomic status), since historically-disadvantaged populations are underrepresented in many medical datasets~\citep{chen2020ethical}.
+Another concern is heterogeneity \emph{across hospitals}; this might include differences in imaging, as in \refsec{dataset_camelyon}, and other operational protocols such as lab tests \citep{damour2020underspecification, subbaswamy2020evaluating}.
+Finally, changes \emph{over time} can also produce distribution shifts: for example, \citet{nestor2019feature} showed that switching between two electronic health record (EHR) systems produced a drop in performance,
+and the COVID-19 epidemic has affected the distribution of chest radiographs~\citep{wong2020frequency}.
+
+Creating medical distribution shift benchmarks thus represents a promising direction for future work, if several challenges can be overcome. First, while there are large demographic disparities in healthcare outcomes (e.g., by race or socioeconomic status), many of them are not due to distribution shifts, but to disparities in non-algorithmic factors (e.g., access to care or prevalence of comorbidities~\citep{chen2020ethical}) or to algorithmic problems unrelated to distribution shift (e.g., choice of a biased outcome variable~\citep{obermeyer2019dissecting}).
+Indeed, several previous investigations have found relatively small disparities in algorithmic performance (as opposed to healthcare outcomes) across demographic groups~\citep{chen2019can, larrazabal2020gender}; \citet{seyyed2020chexclusion} finds larger disparities in true positive rates across demographic groups, but this might reflect the different underlying label distributions between groups.
+
+Second, many distribution shifts in medicine arise from concept drifts, in which the relationship between the input and the label changes, for example due to changes in clinical procedures and the definition of the label \citep{widmer1996learning,beyene2015improved,futoma2020myth}. It can be difficult to ensure that a potential benchmark has sufficient leverage for models to learn how to handle, e.g., an abrupt change in the way a particular clinical procedure is carried out.
+
+A last challenge is data availability, as stringent medical privacy laws often preclude data sharing~\citep{price2019privacy}. For example, EHR datasets are fundamental to medical decision-making, but there are few widely adopted EHR benchmarks---with the MIMIC database being a prominent exception~\citep{johnson2016mimic}---and relatively little progress in predictive performance has been made on them~\citep{bellamy2020evaluating}.
+
+\subsection{Genomics}\label{sec:genomics}
+Advances in high-throughput genomic and molecular profiling platforms have enabled systematic mapping of biochemical activity of genomes across diverse cellular contexts, populations, and species
+\citep{encode2012integrated,ho2014comparative,kundaje2015integrative,
+aviv2017human,hubmap2019human,moore2020expanded,gtex2020gtex}.
+These datasets have powered ML models that have been fairly successful at deciphering functional DNA sequence patterns and predicting the consequences of genetic perturbations in cell types in which the models are trained \citep{libbrecht2015machine,zhou2015predicting,kelley2016basset,ching2018opportunities,eraslan2019deep,jaganathan2019predicting,avsec2021base}.
+However, distribution shifts pose a significant obstacle to generalizing these predictions to new cell types.
+
+A concrete example is the prediction of genome-wide profiles of regulatory protein-DNA binding interactions across cell types and tissues \citep{srivastava2020sequence}.
+These regulatory maps are critical for understanding the fundamental mechanisms of dynamic gene regulation across healthy and diseased cell states, and predictive models are an essential complement to experimental approaches for comprehensively profiling these maps.
+
+Regulatory proteins bind regulatory DNA elements in a sequence-specific manner to orchestrate gene expression programs.
+These proteins often form different complexes with each other in different cell types.
+These cell-type-specific protein complexes can recognize distinct combinatorial sequence syntax and thereby bind to different genomic locations in different cell types, even if all of these cell types share the same genomic sequence.
+Hence, ML models that aim to predict protein-DNA binding landscapes across cell types typically integrate DNA sequence and additional context-specific input data modalities, which provide auxiliary information about the regulatory state of DNA in each cell type \citep{srivastava2020sequence}.
+The training cell-type specific sequence determinants of binding induce a distribution shift across cell types, which can in turn degrade model performance on new cell types \citep{EDneurips17, li2019anchor, li2019leopard, keilwagen2019accurate, quang2019factornet}.
+
+\paragraph{Dataset: Genome-wide protein-DNA binding profiles across different cell types. }
+We studied the above problem in the context of the ENCODE-DREAM in-vivo Transcription Factor Binding Site Prediction Challenge \citep{EDsynapse},
+which is an open community challenge introduced to systematically benchmark ML models for predicting genome-wide DNA binding maps of many regulatory proteins across cell types.
+
+For each regulatory protein, regions of the genome are associated with binary labels (bound/unbound).
+The task is to predict these binary binding labels as a function of underlying DNA sequence and chromatin accessibility signal (an experimental measure of cell type-specific regulatory state) in test cell types that are not represented in the training set.
+
+A systematic evaluation of the top-performing models in this challenge highlighted a significant gap in prediction performance across cell types, relative to cross-validation performance within training cell types \citep{li2019anchor, li2019leopard, keilwagen2019accurate, quang2019factornet}.
+This performance gap was attributed to distribution shifts across cell types, due to regulatory proteins forming cell-type-specific complexes that can recognize different combinatorial sequence syntax.
+Hence, the same DNA sequence can be associated with different binding labels for a protein across contexts.
+
+We investigated these distribution shifts in more detail for a restricted subset of the challenge's prediction tasks for two regulatory proteins, using a total of 14 genome-wide binding maps across different cell types.
+While we generally found a performance gap between in- and out-of-distribution settings, we did not include this dataset in the official benchmark for several reasons.
+For example, we were unable to learn a model that could generalize across all the cell types simultaneously, even in an in-distribution setting,
+which suggested that the model family and/or feature set might not be rich enough to fit the variation across different cell types.
+Another major complication was the significant variation in intrinsic difficulty across different splits, as measured by the performance of models we train in-distribution.
+Further work will be required to construct a rigorous benchmark for evaluating distribution shifts in the context of predicting regulatory binding maps.
+We discuss details in \refapp{app_encode}.
+
+\subsection{Natural language and speech processing}
+Subpopulation shifts are an issue in automated speech recognition (ASR) systems, which have been shown to have higher error rates for Black speakers than for White speakers~\citep{koenecke2020racial} and for speakers of some dialects \citep{tatman2017}.
+These disparities were demonstrated using commercial ASR systems, and therefore do not have any accompanying training datasets that are publicly available.
+There are many public speech datasets with speaker metadata that could potentially be used to construct a benchmark, e.g., LibriSpeech \citep{panayotov2015librispeech},
+the Speech Accent Archive \citep{weinberger2015speech},
+VoxCeleb2 \citep{chung2018voxceleb2},
+the Spoken Wikipedia Corpus \citep{baumann2019spoken},
+and Common Voice \citep{ardila2020common}.
+However, these datasets have their own challenges: some do not have a sufficiently diverse sample of speaker backgrounds and accents, and others focus on read speech (e.g., audiobooks) instead of more natural speech.
+
+In natural language processing (NLP), a current focus is on challenge datasets that are crafted to test particular aspects of models,
+e.g., HANS \citep{mccoy2019right}, PAWS \citep{zhang2019paws},
+and CheckList \citep{ribeiro2020beyond}.
+These challenge datasets are drawn from test distributions that are often (deliberately) quite different from the data distributions that models are typically trained on.
+Counterfactually-augmented datasets \citep{kaushik2019learning} are a related type of challenge dataset where the training data is modified to make spurious correlates independent of the target, which can result in more robust models.
+Others have studied train/test sets that are drawn from different sources, e.g., Wikipedia, Reddit, news articles, travel reviews, and so on \citep{oren2019drolm,miller2020effect,kamath2020squads}.
+
+Several synthetic datasets have also been designed to test compositional generalization, such as CLEVR \citep{johnson2017clevr}, SCAN \citep{lake2018generalization}, and COGS \citep{kim2020cogs}. The test sets in these datasets are chosen such that models need to generalize to novel combinations of parts of training examples, e.g., familiar primitives and grammatical roles \citep{kim2020cogs}.
+CLEVR is a visual question-answering (VQA) dataset; other examples of VQA datasets that are formulated as challenge datasets are the VQA-CP v1 and v2 datasets \citep{agrawal2018don}, which create subpopulation shifts by intentionally altering the distribution of answers per question type between the train and test splits.
+
+These NLP examples involve English-language models; other languages typically have fewer and smaller datasets available for training and benchmarking models.
+Multi-lingual models and benchmarks \citep{conneau2018xnli,conneau2019cross,hu2020xtreme,clark2020tydi} are another source of subpopulation shifts with corresponding disparities in performance:
+training sets might contain fewer examples in low-resource languages \citep{nekoto2020participatory},
+but we would still hope for high model performance on these minority groups.
+
+\paragraph{Datasets: Other distribution shifts in Amazon and Yelp reviews.}
+In addition to user shifts on the Amazon Reviews dataset \citep{ni2019justifying}, we also looked at category and time shifts on the same dataset, as well as user and time shifts on the Yelp Open Dataset\footnote{\url{https://www.yelp.com/dataset}}.
+However, for many of those shifts, we only found modest performance drops.
+We provide additional details on Amazon in \refapp{app_amazon_other} and on Yelp in \refapp{app_yelp}.
+
+\subsection{Education}
+ML models can help in educational settings in a variety of ways:
+e.g., assisting in grading \citep{piech2013tuned,shermis2014state,kulkarni2014scaling,taghipour2016neural},
+estimating student knowledge \citep{desmarais2012review,wu2020variational},
+identifying students who need help \citep{ahadi2015exploring},
+or automatically generating explanations \citep{williams2016axis,wu2019zero}.
+However, there are substantial distribution shifts in these settings as well.
+For example, automatic essay scoring has been found to be affected by rater bias \citep{amorim2018automated} and spurious correlations like essay length \citep{perelman2014state},
+leading to problems with subpopulation shift.
+Ideally, these systems would also generalize across different contexts, e.g., a model for scoring grammar should work well across multiple different essay prompts.
+Recent attempts at predicting grades algorithmically \citep{bbc2020gcse, broussard2020grades} have also been found to be biased against certain subpopulations.
+
+Unfortunately, there is a general lack of standardized education datasets, in part due to student privacy concerns and the proprietary nature of large-scale standardized tests.
+Datasets from massive open online courses are a potential source of large-scale data \citep{kulkarni2015peer}.
+In general, dataset construction for ML in education is an active area---e.g.,
+the NeurIPS 2020 workshop on Machine Learning for Education\footnote{\url{https://www.ml4ed.org/}}
+has a segment devoted to finding ``ImageNets for education''---and we hope to be able to include one in the future.
+
+
+\subsection{Robotics}\label{sec:robotics}
+Robot learning has emerged as a strong paradigm for automatically acquiring complex and skilled
+behaviors such as locomotion \citep{yang19corl,peng20rss}, navigation \citep{mirowski17iclr,kahn20},
+and manipulation \citep{gu17icra,openai19}. However, the advent of learning-based techniques for
+robotics has not convincingly addressed, and has perhaps even exasperated, problems stemming from
+distribution shift. These problems have manifested in many ways, including shifts induced by weather
+and lighting changes \citep{wulfmeier18icra}, location changes \citep{gupta18nips}, and the
+simulation-to-real-world gap \citep{sadeghi17rss,tobin17iros}.
+Dealing with these challenging
+scenarios is critical to deploying robots in the real world, especially in high-stakes
+decision-making scenarios.
+
+For example, to safely deploy autonomous driving vehicles, it is critical that these systems work
+reliably and robustly across the huge variety of conditions that exist in the real world, such as
+locations, lighting and weather conditions, and sensor intrinsics. This is a challenging
+requirement, as many of these conditions may be underrepresented, or not represented at all, by the
+available training data. Indeed, prior work has shown that naively trained models can suffer at
+segmenting nighttime driving scenes \citep{dai18itsc}, detecting relevant objects in new or
+challenging locations and settings \citep{yu20cvpr,sun20cvpr}, and, as discussed earlier, detecting
+pedestrians with darker skin tones \citep{wilson2019predictive}.
+
+Creating a benchmark for distribution shifts in robotics applications, such as autonomous driving,
+represents a promising direction for future work. Here, we briefly summarize our initial findings on
+distribution shifts in the BDD100K driving dataset \citep{yu20cvpr}, which is publicly available and
+widely used, including in some of the works listed above.
+
+\paragraph{Dataset: BDD100K.}
+We investigated the task of multi-label binary classification of the presence of each object
+category in each image. In general, we found no substantial performance drops across a wide range of
+different test scenarios, including user shifts, weather and time shifts, and location shifts. We
+provide additional details in \refsec{app_bdd}.
+
+Our findings contrast with previous findings that other tasks, such as object detection and
+segmentation, can suffer under the same types of shifts on the same dataset
+\citep{yu20cvpr,dai18itsc}. Currently, \Wilds consists of datasets involving classification and
+regression tasks. However, most tasks of interest in autonomous driving, and robotics in general,
+are difficult to formulate as classification or regression. For example, autonomous driving
+applications may require models for object detection or lane and scene segmentation. These tasks are
+often more challenging than classification tasks, and we speculate that they may suffer more
+severely from distribution shift.
+
+\subsection{Feedback loops}
+Finally, we have restricted our attention to settings where the data distribution is independent of the model. When the data distribution does depend on the model, distribution shifts can arise from feedback loops between the data and the model. Examples include recommendation systems and other consumer products \citep{bottou2013counterfactual,hashimoto2018repeated}; dialogue agents \citep{li2017dialogue};
+molecular compound optimization \citep{cuccarese2020functional,reker2020practical};
+decision systems \citep{liu2018delayed,damour2020fairness}; and adversarial settings like fraud or malware detection \citep{rigaki2018bringing}.
+While these adaptive settings are outside the scope of our benchmark,
+dealing with these types of distribution shifts is an important area of ongoing work.

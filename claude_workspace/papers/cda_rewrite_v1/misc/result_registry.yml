@@ -1,0 +1,161 @@
+# Stable IDs for planned CDA manuscript claims.
+# Validation must fail if a required row is missing from result_lineage.csv.
+
+artifact_roots:
+  raw_runs: artifacts/raw_runs
+  replays: artifacts/replays
+  diagnostics: artifacts/diagnostics
+  tables: artifacts/tables
+  figures: artifacts/figures
+
+global_requirements:
+  no_overwrite: true
+  immutable_final_artifacts: true
+  require_sha256: true
+  require_source_only_audit: true
+  forbid_manual_evidence:
+    - tex_tables
+    - hard_coded_python_arrays
+    - poster_figures
+    - prose_notes
+    - screenshots
+
+claims:
+  - claim_id: MAIN-PACS-ACC
+    table_or_figure: main_pacs_results
+    status: incomplete
+    description: PACS all-target accuracy for reproduced post-hoc methods.
+    required_datasets: [PACS]
+    required_target_domains: [art_painting, cartoon, photo, sketch]
+    required_seeds_min: 3
+    required_methods:
+      - ERM
+      - SWAD
+      - best_source_val_singleton
+      - late_window_uniform
+      - VSC_uniform
+      - CDA_Piv
+      - CDA_BD
+    required_metrics: [target_acc, source_val_acc]
+    generating_scripts:
+      - scripts/build_result_lineage.py
+      - scripts/validate_result_lineage.py
+      - scripts/aggregate_results.py
+      - scripts/generate_tables.py
+    expected_outputs:
+      - artifacts/tables/main_pacs_results.csv
+      - artifacts/tables/main_pacs_results.tex
+      - artifacts/tables/main_pacs_results.md
+    pass_fail_gates:
+      - all_rows_verified
+      - source_only_selection
+      - matched_checkpoint_bank_protocol
+      - uncertainty_convention_declared
+
+  - claim_id: MAIN-DOMAINBED-ACC
+    table_or_figure: main_domainbed_results
+    status: incomplete
+    description: Five-benchmark DomainBed-style results, allowed only after complete lineage.
+    required_datasets: [PACS, VLCS, OfficeHome, TerraIncognita, DomainNet]
+    required_target_domains: all_official_leave_one_domain_out_splits
+    required_seeds_min: 3
+    required_methods:
+      - ERM
+      - SWAD
+      - best_source_val_singleton
+      - late_window_uniform
+      - VSC_uniform
+      - CDA_Piv
+      - CDA_BD
+    required_metrics: [target_acc, source_val_acc]
+    generating_scripts:
+      - scripts/build_result_lineage.py
+      - scripts/validate_result_lineage.py
+      - scripts/aggregate_results.py
+      - scripts/generate_tables.py
+    expected_outputs:
+      - artifacts/tables/main_domainbed_results.csv
+      - artifacts/tables/main_domainbed_results.tex
+      - artifacts/tables/main_domainbed_results.md
+    pass_fail_gates:
+      - complete_all_dataset_target_seed_method_cells
+      - source_only_selection
+      - matched_protocol
+      - no_grand_average_if_any_cell_missing
+
+  - claim_id: ABLATION-SELECTOR-WEIGHT
+    table_or_figure: selector_weight_ablation
+    status: incomplete
+    description: Selector and weighting ablations.
+    required_datasets: [PACS]
+    required_target_domains: [art_painting, cartoon, photo, sketch]
+    required_seeds_min: 3
+    required_methods:
+      - best_source_val_singleton
+      - late_window_uniform
+      - VSC_uniform
+      - CDA_Piv
+      - CDA_BD
+      - CDA_no_entropy
+      - CDA_no_sensitivity
+    required_metrics: [target_acc, certificate_value, family_size, entropy]
+    generating_scripts:
+      - scripts/aggregate_results.py
+      - scripts/generate_tables.py
+    expected_outputs:
+      - artifacts/tables/selector_weight_ablation.csv
+      - artifacts/tables/selector_weight_ablation.tex
+      - artifacts/tables/selector_weight_ablation.md
+    pass_fail_gates:
+      - fixed_selector_and_fixed_weight_variants_present
+      - paired_split_deltas_present
+
+  - claim_id: DIAG-CERT-SCATTER
+    table_or_figure: certificate_vs_ood
+    status: incomplete
+    description: Certificate value versus OOD accuracy across checkpoints and soups.
+    required_datasets: [PACS]
+    required_target_domains: [art_painting, cartoon, photo, sketch]
+    required_metrics: [certificate_value, target_acc]
+    generating_scripts:
+      - scripts/generate_figures.py
+    expected_outputs:
+      - artifacts/figures/certificate_vs_ood.pdf
+      - artifacts/figures/certificate_vs_ood.png
+      - artifacts/figures/certificate_vs_ood.svg
+    pass_fail_gates:
+      - plotted_values_from_lineage_only
+      - no_hard_coded_arrays
+
+  - claim_id: DIAG-MERGEABILITY
+    table_or_figure: mergeability_residual
+    status: incomplete
+    description: Endpoint source-loss mixture versus deployed soup source-loss vector.
+    required_datasets: [PACS]
+    required_metrics: [endpoint_loss_vector, soup_loss_vector, mergeability_residual]
+    generating_scripts:
+      - scripts/generate_figures.py
+    expected_outputs:
+      - artifacts/figures/mergeability_residual.pdf
+      - artifacts/figures/mergeability_residual.png
+      - artifacts/figures/mergeability_residual.svg
+    pass_fail_gates:
+      - endpoint_and_soup_losses_same_split
+      - artifact_hashes_present
+
+  - claim_id: DIAG-SOURCE-MIXTURE-RESIDUAL
+    table_or_figure: source_mixture_residual
+    status: incomplete
+    description: Fitted \epsilon_app per target split.
+    required_datasets: [PACS]
+    required_target_domains: [art_painting, cartoon, photo, sketch]
+    required_metrics: [epsilon_app, target_acc]
+    generating_scripts:
+      - scripts/generate_figures.py
+    expected_outputs:
+      - artifacts/figures/source_mixture_residual.pdf
+      - artifacts/figures/source_mixture_residual.png
+      - artifacts/figures/source_mixture_residual.svg
+    pass_fail_gates:
+      - fitted_after_evaluation
+      - failure_case_identified

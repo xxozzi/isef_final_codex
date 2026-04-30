@@ -1,0 +1,99 @@
+\section{Setup}\label{sec:setup}
+
+Consider predicting labels $y \in \sY$ from input features $x \in \sX$.
+Given a model family $\Theta$,
+loss $\ell: \Theta \times (\sX \times \sY) \to \R_+$,
+and training data drawn from some distribution $P$,
+the standard goal is to find a model $\theta \in \Theta$ that minimizes the expected loss $\E_P[\ell(\theta; (x, y)]$ under the same distribution $P$.
+The standard training procedure for this goal is empirical risk minimization (ERM):
+\begin{align}\label{eqn:hterm}
+  \hterm \eqdef \argmin_{\theta \in \Theta} \ \E_{(x, y) \sim \hP}[\ell(\theta; (x, y))],
+\end{align}
+where $\hP$ is the empirical distribution over the training data.
+
+In distributionally robust optimization (DRO) \citep{bental2013robust, duchi2016}, we aim instead to minimize the worst-case expected loss over
+an uncertainty set of distributions $\sQ$:
+\begin{align}\label{eq:dro}
+  \underset{\theta \in \Theta}{\vphantom{\sup}\min} \Bigl\{ \sR(\theta) \eqdef \sup_{Q \in \sQ} \E_{(x, y) \sim Q}[\ell(\theta; (x, y))] \Bigr\}.
+\end{align}
+The uncertainty set $\sQ$ encodes the possible test distributions that we want our model to perform well on.
+Choosing a general family $\sQ$, such as a divergence ball around the training distribution,
+confers robustness to a wide set of distributional shifts,
+but can also lead to overly pessimistic models which optimize for implausible worst-case distributions
+\citep{duchi2019distributionally}.
+
+To construct a realistic set of possible test distributions without being overly conservative,
+we leverage prior knowledge of spurious correlations to define groups over the training data and then define the uncertainty set $\sQ$ in terms of these groups.
+Concretely, we adopt the \emph{group DRO} setting \citep{hu2018does,oren2019drolm} where the training distribution $P$ is assumed to be a mixture of $m$ groups $P_g$ indexed by $\sG = \{1, 2, \ldots, m\}$.\footnote{
+  In our main experiments, $m=4$ or $6$;
+  we also use $m=64$ in our supplemental experiments.
+}
+We define the uncertainty set $\sQ$ as any mixture of these groups,
+i.e., $\sQ := \{ \sum_{g=1}^m q_g P_g: q \in \Delta_m \}$,
+where $\Delta_m$ is the $(m-1)$-dimensional probability simplex;
+this choice of $\sQ$ allows us to learn models that are robust to group shifts.
+Because the optimum of a linear program is attained at a vertex,
+the worst-case risk~\eqref{eq:dro} is equivalent to a maximum over the expected loss of each group,
+\begin{align}
+\label{eqn:groupdroq}
+  \sR(\theta)
+  &= \underset{g \in \sG}{\max} \ \E_{(x, y) \sim P_g}[\ell(\theta; (x, y))].
+\end{align}
+We assume that we know which group each training point comes from---i.e., the training data comprises $(x, y, g)$ triplets---though we do not assume we observe $g$ at test time, so the model cannot use $g$ directly.
+Instead, we learn a \emph{group DRO} model minimizing the empirical worst-group risk $\hat\sR(\theta)$:
+\begin{align}\label{eqn:htdro}
+  \htdro \eqdef \underset{\theta \in \Theta}{\vphantom{\sup}\argmin} \Bigl\{\hat\sR(\theta) :=  \underset{g \in \sG}{\vphantom{\argmin}\max} \ \E_{(x, y) \sim \hP_g}[\ell(\theta; (x, y))] \Bigr\},
+\end{align}
+where each group $\hP_g$ is an empirical distribution over all training points $(x, y, g')$ with $g' = g$
+(or equivalently, a subset of training examples drawn from $P_g$).
+Group DRO learns models with good worst-group \emph{training} loss across groups.
+This need not imply good worst-group \emph{test} loss
+because of the worst-group \emph{generalization gap}
+$\delta \eqdef  \sR(\theta)  -\hat{\sR}(\theta)$.
+We will show that for overparameterized neural networks,
+$\delta$ is large unless we apply sufficient regularization.
+
+\subsection{Applications}
+In the rest of this paper,
+we study three applications that share a similar structure (\reffig{dataset}):
+each data point $(x, y)$ has
+some input attribute $a(x) \in \sA$ that is spuriously correlated with the label $y$,
+and we use this prior knowledge to form $m = |\sA| \times |\sY|$ groups,
+one for each value of $(a, y)$.
+We expect that models that learn the correlation between $a$ and $y$ in the training data
+would do poorly on groups for which the correlation does not hold
+and hence do worse on the worst-group loss $\sR(\theta)$.
+
+\paragraph{Object recognition with correlated backgrounds (Waterbirds dataset).}
+Object recognition models can spuriously rely on the image background instead of learning to recognize the actual object
+\citep{ribeiro2016lime}.
+We study this by constructing a new dataset, Waterbirds,
+which combines bird photographs from the Caltech-UCSD Birds-200-2011 (CUB) dataset \citep{wah2011cub}
+with image backgrounds from the Places dataset \citep{zhou2017places}.
+We label each bird as one of $\sY = \{\text{waterbird}, \text{landbird}\}$
+and place it on one of $\sA = \{\text{water background}, \text{land background}\}$,
+with waterbirds (landbirds) more frequently appearing against a water (land) background (\refapp{dataset_details}).
+There are $n=4795$ training examples and $56$ in the smallest group
+(waterbirds on land).
+
+\paragraph{Object recognition with correlated demographics (CelebA dataset).}
+Object recognition models (and other ML models more generally) can also learn spurious associations between the label and
+demographic information like gender and ethnicity \citep{buolamwini2018gender}.
+We examine this on the CelebA celebrity face dataset \citep{liu2015deep},
+using hair color ($\sY = \{\text{blond}, \text{dark}\}$) as the target
+and gender ($\sA = \{\text{male}, \text{female}\}$) as the spurious attribute.
+There are $n=162770$ training examples in the CelebA dataset, with $1387$ in the smallest group (blond-haired males).
+
+\paragraph{Natural language inference (MultiNLI dataset).}
+In natural language inference, the task is to determine if a given hypothesis is entailed by, neutral with, or contradicts a given premise.
+Prior work has shown that crowdsourced training datasets for this task
+have significant annotation artifacts,
+such as the spurious correlation between contradictions and the presence of the negation words \emph{nobody}, \emph{no}, \emph{never}, and \emph{nothing}
+\citep{gururangan2018annotation}.
+We divide the MultiNLI dataset \citep{williams2018broad}
+into $m=6$ groups, one for each pair of
+labels $\sY = \{\text{entailed}, \text{neutral}, \text{contradictory}\}$ and
+spurious attributes $\sA = \{\text{no negation}, \text{negation}\}$.
+There are $n=206175$ examples in our training set,
+with $1521$ examples in the smallest group (entailment with negations);
+see \refapp{dataset_details} for more details on dataset construction and the training/test split.

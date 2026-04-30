@@ -1,0 +1,24 @@
+\begin{table}[h]%
+    \caption{\textbf{Accuracy ($\%,\uparrow$) on ColoredMNIST}. WA does not improve performance under correlation shift. Random initialization of the classifier. Training-domain model selection.}%
+    \centering
+    \vspace{0.5em}
+    \adjustbox{width=0.8\textwidth}{
+        \begin{tabular}{lll|cccc}
+            \toprule
+                                                       & \textbf{Algorithm}               & \textbf{Weight selection} & \textbf{+90\%}             & \textbf{+80\%}             & \textbf{-90\%}             & \textbf{Avg}              \\
+            \midrule
+                                                       & ERM                              & N/A                       & 71.7 $\pm$ 0.1             & 72.9 $\pm$ 0.2             & 10.0 $\pm$ 0.1             & 51.5  $\pm$ 0.1           \\
+                                                       & Coral \cite{coral216aaai}        & N/A                       & 71.6 $\pm$ 0.3             & 73.1 $\pm$ 0.1             & 9.9 $\pm$ 0.1              & 51.5  $\pm$ 0.1           \\
+                                                       & IRM \cite{arjovsky2019invariant} & N/A                       & \textbf{72.5} $\pm$ 0.1    & \underline{73.3} $\pm$ 0.5 & 10.2 $\pm$ 0.3             & \textbf{52.0} $\pm$ 0.1   \\
+                                                       & Fishr \cite{rame_fishr_2021}     & N/A                       & \underline{72.3} $\pm$ 0.9 & \textbf{73.5} $\pm$ 0.2    & 10.1 $\pm$ 0.2             & \textbf{52.0}   $\pm$ 0.2 \\
+            \midrule
+            \multirow{6}{*}{\begin{turn}{90}Our runs\end{turn}} & ERM                              & N/A                       & 71.5 $\pm$ 0.4             & 73.3 $\pm$ 0.2             & \underline{10.3} $\pm$ 0.2 & 51.7 $\pm$ 0.2            \\
+                                                       & MA \cite{arpit2021ensemble}      & Uniform                   & 68.9 $\pm$ 0.0             & 71.8 $\pm$ 0.1             & 10.0 $\pm$ 0.1             & 50.3 $\pm$ 0.0            \\
+                                                       & ENS                              & Uniform: $M=20$           & 71.0 $\pm$ 0.2             & 72.9 $\pm$ 0.2             & 9.9 $\pm$ 0.0              & 51.3  $\pm$ 0.1           \\
+                                                       & DiWA                             & Restricted: $M \leq 20$   & 71.3 $\pm$ 0.2             & 72.9 $\pm$ 0.1             & 10.0 $\pm$ 0.1             & 51.4 $\pm$ 0.1            \\
+                                                       & DiWA                             & Uniform: $M=20$           & 69.1 $\pm$ 0.8             & 72.6 $\pm$ 0.4             & \textbf{10.6} $\pm$ 0.1    & 50.8 $\pm$ 0.4            \\
+                                                       & DiWA$^{\dagger}$                 & Uniform: $M=60$           & 69.3                       & 72.3                       & \underline{10.3}           & 50.6                      \\
+            \bottomrule
+        \end{tabular}}
+    \label{table:db_cmnist_training}%
+\end{table}

@@ -1,0 +1,830 @@
+\begin{thebibliography}{100}\itemsep=-1pt
+
+\bibitem{allen2018neon2}
+Zeyuan Allen-Zhu and Yuanzhi Li.
+\newblock Neon2: Finding local minima via first-order oracles.
+\newblock {\em Advances in Neural Information Processing Systems}, 31, 2018.
+
+\bibitem{arjovsky2019invariant}
+Martin Arjovsky, L{\'e}on Bottou, Ishaan Gulrajani, and David Lopez-Paz.
+\newblock Invariant risk minimization.
+\newblock {\em arXiv preprint arXiv:1907.02893}, 2019.
+
+\bibitem{Arjovsky19}
+Martin Arjovsky, Léon Bottou, Ishaan Gulrajani, and David Lopez-Paz.
+\newblock Invariant risk minimization, 2019.
+
+\bibitem{arpit2021ensemble}
+Devansh Arpit, Huan Wang, Yingbo Zhou, and Caiming Xiong.
+\newblock Ensemble of averages: Improving model selection and boosting
+  performance in domain generalization.
+\newblock {\em arXiv preprint arXiv:2110.10832}, 2021.
+
+\bibitem{avron2011randomized}
+Haim Avron and Sivan Toledo.
+\newblock Randomized algorithms for estimating the trace of an implicit
+  symmetric positive semi-definite matrix.
+\newblock {\em Journal of the ACM (JACM)}, 58(2):1--34, 2011.
+
+\bibitem{bai1996some}
+Zhaojun Bai, Gark Fahey, and Gene Golub.
+\newblock Some large-scale matrix computation problems.
+\newblock {\em Journal of Computational and Applied Mathematics},
+  74(1-2):71--89, 1996.
+
+\bibitem{NEURIPS2018_647bba34}
+Yogesh Balaji, Swami Sankaranarayanan, and Rama Chellappa.
+\newblock Metareg: Towards domain generalization using meta-regularization.
+\newblock In S. Bengio, H. Wallach, H. Larochelle, K. Grauman, N. Cesa-Bianchi,
+  and R. Garnett, editors, {\em Advances in Neural Information Processing
+  Systems}, volume~31. Curran Associates, Inc., 2018.
+
+\bibitem{barrett2020implicit}
+David~GT Barrett and Benoit Dherin.
+\newblock Implicit gradient regularization.
+\newblock {\em arXiv preprint arXiv:2009.11162}, 2020.
+
+\bibitem{beery2018recognition}
+Sara Beery, Grant Van~Horn, and Pietro Perona.
+\newblock Recognition in terra incognita.
+\newblock In {\em Proceedings of the European conference on computer vision
+  (ECCV)}, pages 456--473, 2018.
+
+\bibitem{ben2006analysis}
+Shai Ben-David, John Blitzer, Koby Crammer, and Fernando Pereira.
+\newblock Analysis of representations for domain adaptation.
+\newblock {\em Advances in neural information processing systems}, 19, 2006.
+
+\bibitem{BlanchardGilles17}
+Gilles Blanchard, Aniket~Anand Deshmukh, Urun Dogan, Gyemin Lee, and Clayton
+  Scott.
+\newblock Domain generalization by marginal transfer learning, 2017.
+
+\bibitem{carlucci2019domain}
+Fabio~M Carlucci, Antonio D'Innocente, Silvia Bucci, Barbara Caputo, and
+  Tatiana Tommasi.
+\newblock Domain generalization by solving jigsaw puzzles.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 2229--2238, 2019.
+
+\bibitem{cha2021swad}
+Junbum Cha, Sanghyuk Chun, Kyungjae Lee, Han-Cheol Cho, Seunghyun Park, Yunsung
+  Lee, and Sungrae Park.
+\newblock {SWAD}: Domain generalization by seeking flat minima.
+\newblock In A. Beygelzimer, Y. Dauphin, P. Liang, and J.~Wortman Vaughan,
+  editors, {\em Advances in Neural Information Processing Systems}, 2021.
+
+\bibitem{cha2022domain}
+Junbum Cha, Kyungjae Lee, Sungrae Park, and Sanghyuk Chun.
+\newblock Domain generalization by mutual-information regularization with
+  pre-trained models.
+\newblock In {\em Computer Vision--ECCV 2022: 17th European Conference, Tel
+  Aviv, Israel, October 23--27, 2022, Proceedings, Part XXIII}, pages 440--457.
+  Springer, 2022.
+
+\bibitem{Chattopadhyay20}
+Prithvijit Chattopadhyay, Yogesh Balaji, and Judy Hoffman.
+\newblock Learning to balance specificity and invariance for in and out of
+  domain generalization.
+\newblock In Andrea Vedaldi, Horst Bischof, Thomas Brox, and Jan-Michael Frahm,
+  editors, {\em Computer Vision -- ECCV 2020}, pages 301--318, Cham, 2020.
+  Springer International Publishing.
+
+\bibitem{chen2018closing}
+Jinghui Chen, Dongruo Zhou, Yiqi Tang, Ziyan Yang, Yuan Cao, and Quanquan Gu.
+\newblock Closing the generalization gap of adaptive gradient methods in
+  training deep neural networks.
+\newblock {\em arXiv preprint arXiv:1806.06763}, 2018.
+
+\bibitem{chen2021vision}
+Xiangning Chen, Cho-Jui Hsieh, and Boqing Gong.
+\newblock When vision transformers outperform resnets without pre-training or
+  strong data augmentations.
+\newblock {\em arXiv preprint arXiv:2106.01548}, 2021.
+
+\bibitem{chu2022dna}
+Xu Chu, Yujie Jin, Wenwu Zhu, Yasha Wang, Xin Wang, Shanghang Zhang, and Hong
+  Mei.
+\newblock Dna: Domain generalization with diversified neural averaging.
+\newblock In {\em International Conference on Machine Learning}, pages
+  4010--4034. PMLR, 2022.
+
+\bibitem{DBLP:conf/iclr/CohenKLKT21}
+Jeremy~M. Cohen, Simran Kaur, Yuanzhi Li, J.~Zico Kolter, and Ameet Talwalkar.
+\newblock Gradient descent on neural networks typically occurs at the edge of
+  stability.
+\newblock In {\em 9th International Conference on Learning Representations,
+  {ICLR} 2021, Virtual Event, Austria, May 3-7, 2021}. OpenReview.net, 2021.
+
+\bibitem{deng2009imagenet}
+Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei.
+\newblock Imagenet: A large-scale hierarchical image database.
+\newblock In {\em 2009 IEEE conference on computer vision and pattern
+  recognition}, pages 248--255. Ieee, 2009.
+
+\bibitem{dosovitskiy2020image}
+Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
+  Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg
+  Heigold, Sylvain Gelly, et~al.
+\newblock An image is worth 16x16 words: Transformers for image recognition at
+  scale.
+\newblock In {\em International Conference on Learning Representations}, 2020.
+
+\bibitem{dou2019domain}
+Qi Dou, Daniel Coelho~de Castro, Konstantinos Kamnitsas, and Ben Glocker.
+\newblock Domain generalization via model-agnostic learning of semantic
+  features.
+\newblock {\em Advances in Neural Information Processing Systems}, 32, 2019.
+
+\bibitem{NEURIPS2019_2974788b}
+Qi Dou, Daniel Coelho~de Castro, Konstantinos Kamnitsas, and Ben Glocker.
+\newblock Domain generalization via model-agnostic learning of semantic
+  features.
+\newblock In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle
+  Alch\'{e}-Buc, E. Fox, and R. Garnett, editors, {\em Advances in Neural
+  Information Processing Systems}, volume~32. Curran Associates, Inc., 2019.
+
+\bibitem{du2021efficient}
+Jiawei Du, Hanshu Yan, Jiashi Feng, Joey~Tianyi Zhou, Liangli Zhen, Rick
+  Siow~Mong Goh, and Vincent~YF Tan.
+\newblock Efficient sharpness-aware minimization for improved training of
+  neural networks.
+\newblock {\em arXiv preprint arXiv:2110.03141}, 2021.
+
+\bibitem{du2022sharpness}
+Jiawei Du, Daquan Zhou, Jiashi Feng, Vincent~YF Tan, and Joey~Tianyi Zhou.
+\newblock Sharpness-aware training for free.
+\newblock {\em arXiv preprint arXiv:2205.14083}, 2022.
+
+\bibitem{duchi2011adaptive}
+John Duchi, Elad Hazan, and Yoram Singer.
+\newblock Adaptive subgradient methods for online learning and stochastic
+  optimization.
+\newblock {\em Journal of machine learning research}, 12(7), 2011.
+
+\bibitem{fang2013unbiased}
+Chen Fang, Ye Xu, and Daniel~N Rockmore.
+\newblock Unbiased metric learning: On the utilization of multiple datasets and
+  web images for softening bias.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 1657--1664, 2013.
+
+\bibitem{foret2021sharpness}
+Pierre Foret, Ariel Kleiner, Hossein Mobahi, and Behnam Neyshabur.
+\newblock Sharpness-aware minimization for efficiently improving
+  generalization.
+\newblock In {\em International Conference on Learning Representations}, 2021.
+
+\bibitem{gan2020large}
+Zhe Gan, Yen-Chun Chen, Linjie Li, Chen Zhu, Yu Cheng, and Jingjing Liu.
+\newblock Large-scale adversarial training for vision-and-language
+  representation learning.
+\newblock In H. Larochelle, M. Ranzato, R. Hadsell, M.~F. Balcan, and H. Lin,
+  editors, {\em Advances in Neural Information Processing Systems}, volume~33,
+  pages 6616--6628. Curran Associates, Inc., 2020.
+
+\bibitem{GaninYaroslav15}
+Yaroslav Ganin, Evgeniya Ustinova, Hana Ajakan, Pascal Germain, Hugo
+  Larochelle, Fran{\c{c}}ois Laviolette, Mario Marchand, and Victor Lempitsky.
+\newblock Domain-adversarial training of neural networks.
+\newblock {\em The journal of machine learning research}, 17(1):2096--2030,
+  2016.
+
+\bibitem{ghifary2015domain}
+Muhammad Ghifary, W~Bastiaan Kleijn, Mengjie Zhang, and David Balduzzi.
+\newblock Domain generalization for object recognition with multi-task
+  autoencoders.
+\newblock In {\em Proceedings of the IEEE international conference on computer
+  vision}, pages 2551--2559, 2015.
+
+\bibitem{gulrajani2020search}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock In {\em International Conference on Learning Representations}, 2021.
+
+\bibitem{hardt2016train}
+Moritz Hardt, Ben Recht, and Yoram Singer.
+\newblock Train faster, generalize better: Stability of stochastic gradient
+  descent.
+\newblock In {\em International conference on machine learning}, pages
+  1225--1234. PMLR, 2016.
+
+\bibitem{he2016deep}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 770--778, 2016.
+
+\bibitem{hochreiter1994simplifying}
+Sepp Hochreiter and J{\"u}rgen Schmidhuber.
+\newblock Simplifying neural nets by discovering flat minima.
+\newblock {\em Advances in neural information processing systems}, 7, 1994.
+
+\bibitem{hu2020domain}
+Shoubo Hu, Kun Zhang, Zhitang Chen, and Laiwan Chan.
+\newblock Domain generalization via multidomain discriminant analysis.
+\newblock In {\em Uncertainty in Artificial Intelligence}, pages 292--302.
+  PMLR, 2020.
+
+\bibitem{huang2020self}
+Zeyi Huang, Haohan Wang, Eric~P Xing, and Dong Huang.
+\newblock Self-challenging improves cross-domain generalization.
+\newblock In {\em European Conference on Computer Vision}, pages 124--140.
+  Springer, 2020.
+
+\bibitem{Huangzeyi20}
+Zeyi Huang, Haohan Wang, Eric~P. Xing, and Dong Huang.
+\newblock Self-challenging improves cross-domain generalization.
+\newblock In Andrea Vedaldi, Horst Bischof, Thomas Brox, and Jan-Michael Frahm,
+  editors, {\em Computer Vision -- ECCV 2020}, pages 124--140, Cham, 2020.
+  Springer International Publishing.
+
+\bibitem{jastrzkebski2017three}
+Stanislaw Jastrzebski, Zachary Kenton, Devansh Arpit, Nicolas Ballas, Asja
+  Fischer, Yoshua Bengio, and Amos Storkey.
+\newblock Three factors influencing minima in sgd.
+\newblock {\em arXiv preprint arXiv:1711.04623}, 2017.
+
+\bibitem{DBLP:conf/iclr/JastrzebskiSFAT20}
+Stanislaw Jastrzebski, Maciej Szymczak, Stanislav Fort, Devansh Arpit, Jacek
+  Tabor, Kyunghyun Cho, and Krzysztof~J. Geras.
+\newblock The break-even point on optimization trajectories of deep neural
+  networks.
+\newblock In {\em 8th International Conference on Learning Representations,
+  {ICLR} 2020, Addis Ababa, Ethiopia, April 26-30, 2020}. OpenReview.net, 2020.
+
+\bibitem{jia2020information}
+Zhiwei Jia and Hao Su.
+\newblock Information-theoretic local minima characterization and
+  regularization.
+\newblock In {\em International Conference on Machine Learning}, pages
+  4773--4783. PMLR, 2020.
+
+\bibitem{kaur2022maximum}
+Simran Kaur, Jeremy Cohen, and Zachary~C Lipton.
+\newblock On the maximum hessian eigenvalue and generalization.
+\newblock {\em arXiv preprint arXiv:2206.10654}, 2022.
+
+\bibitem{keskar2016large}
+Nitish~Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy,
+  and Ping Tak~Peter Tang.
+\newblock On large-batch training for deep learning: Generalization gap and
+  sharp minima.
+\newblock {\em arXiv preprint arXiv:1609.04836}, 2016.
+
+\bibitem{DBLP:conf/iclr/KeskarMNST17}
+Nitish~Shirish Keskar, Dheevatsa Mudigere, Jorge Nocedal, Mikhail Smelyanskiy,
+  and Ping Tak~Peter Tang.
+\newblock On large-batch training for deep learning: Generalization gap and
+  sharp minima.
+\newblock In {\em International Conference on Learning Representations}, 2017.
+
+\bibitem{khosla2012undoing}
+Aditya Khosla, Tinghui Zhou, Tomasz Malisiewicz, Alexei~A Efros, and Antonio
+  Torralba.
+\newblock Undoing the damage of dataset bias.
+\newblock In {\em European Conference on Computer Vision}, pages 158--171.
+  Springer, 2012.
+
+\bibitem{kim2022fisher}
+Minyoung Kim, Da Li, Shell~X Hu, and Timothy Hospedales.
+\newblock Fisher sam: Information geometry and sharpness aware minimisation.
+\newblock In {\em International Conference on Machine Learning}, pages
+  11148--11161. PMLR, 2022.
+
+\bibitem{kim2022sharpness}
+Taero Kim, Sungjun Lim, and Kyungwoo Song.
+\newblock Sharpness-aware minimization for worst case optimization.
+\newblock {\em arXiv preprint arXiv:2210.13533}, 2022.
+
+\bibitem{kingma2014adam}
+Diederik~P Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock {\em arXiv preprint arXiv:1412.6980}, 2014.
+
+\bibitem{DBLP:journals/corr/KingmaB14}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: {A} method for stochastic optimization.
+\newblock In Yoshua Bengio and Yann LeCun, editors, {\em International
+  Conference on Learning Representations}, 2015.
+
+\bibitem{koh2021wilds}
+Pang~Wei Koh, Shiori Sagawa, Henrik Marklund, Sang~Michael Xie, Marvin Zhang,
+  Akshay Balsubramani, Weihua Hu, Michihiro Yasunaga, Richard~Lanas Phillips,
+  Irena Gao, et~al.
+\newblock Wilds: A benchmark of in-the-wild distribution shifts.
+\newblock In {\em International Conference on Machine Learning}, pages
+  5637--5664. PMLR, 2021.
+
+\bibitem{krizhevsky2009learning}
+Alex Krizhevsky, Geoffrey Hinton, et~al.
+\newblock Learning multiple layers of features from tiny images.
+\newblock {\em Citeseer}, 2009.
+
+\bibitem{KruegerDavid20}
+David Krueger, Ethan Caballero, Joern-Henrik Jacobsen, Amy Zhang, Jonathan
+  Binas, Dinghuai Zhang, Remi~Le Priol, and Aaron Courville.
+\newblock Out-of-distribution generalization via risk extrapolation (rex),
+  2020.
+
+\bibitem{kwon2021asam}
+Jungmin Kwon, Jeongseop Kim, Hyunseo Park, and In~Kwon Choi.
+\newblock Asam: Adaptive sharpness-aware minimization for scale-invariant
+  learning of deep neural networks.
+\newblock In {\em International Conference on Machine Learning}, pages
+  5905--5914. PMLR, 2021.
+
+\bibitem{laurent2000adaptive}
+Beatrice Laurent and Pascal Massart.
+\newblock Adaptive estimation of a quadratic functional by model selection.
+\newblock {\em Annals of Statistics}, pages 1302--1338, 2000.
+
+\bibitem{lewkowycz2020large}
+Aitor Lewkowycz, Yasaman Bahri, Ethan Dyer, Jascha Sohl-Dickstein, and Guy
+  Gur-Ari.
+\newblock The large learning rate phase of deep learning: the catapult
+  mechanism.
+\newblock {\em arXiv preprint arXiv:2003.02218}, 2020.
+
+\bibitem{li2017deeper}
+Da Li, Yongxin Yang, Yi-Zhe Song, and Timothy~M Hospedales.
+\newblock Deeper, broader and artier domain generalization.
+\newblock In {\em Proceedings of the IEEE international conference on computer
+  vision}, pages 5542--5550, 2017.
+
+\bibitem{LiDa17}
+Da Li, Yongxin Yang, Yi-Zhe Song, and Timothy~M. Hospedales.
+\newblock Learning to generalize: Meta-learning for domain generalization,
+  2017.
+
+\bibitem{li2018learning}
+Da Li, Yongxin Yang, Yi-Zhe Song, and Timothy~M Hospedales.
+\newblock Learning to generalize: Meta-learning for domain generalization.
+\newblock In {\em Thirty-Second AAAI Conference on Artificial Intelligence},
+  2018.
+
+\bibitem{li2019episodic}
+Da Li, Jianshu Zhang, Yongxin Yang, Cong Liu, Yi-Zhe Song, and Timothy~M
+  Hospedales.
+\newblock Episodic training for domain generalization.
+\newblock In {\em Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 1446--1455, 2019.
+
+\bibitem{li2018domain}
+Haoliang Li, Sinno~Jialin Pan, Shiqi Wang, and Alex~C Kot.
+\newblock Domain generalization with adversarial feature learning.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 5400--5409, 2018.
+
+\bibitem{LiHaoliang18}
+Haoliang Li, Sinno~Jialin Pan, Shiqi Wang, and Alex~C. Kot.
+\newblock Domain generalization with adversarial feature learning.
+\newblock In {\em 2018 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition}, pages 5400--5409, 2018.
+
+\bibitem{LiYa18}
+Ya Li, Mingming Gong, Xinmei Tian, Tongliang Liu, and Dacheng Tao.
+\newblock Domain generalization via conditional invariant representation, 2018.
+
+\bibitem{lisimple}
+Ziyue Li, Kan Ren, XINYANG JIANG, Yifei Shen, Haipeng Zhang, and Dongsheng Li.
+\newblock Simple: Specialized model-sample matching for domain generalization.
+\newblock In {\em The Eleventh International Conference on Learning
+  Representations}, 2023.
+
+\bibitem{DBLP:conf/iclr/LiuJHCLG020}
+Liyuan Liu, Haoming Jiang, Pengcheng He, Weizhu Chen, Xiaodong Liu, Jianfeng
+  Gao, and Jiawei Han.
+\newblock On the variance of the adaptive learning rate and beyond.
+\newblock In {\em 8th International Conference on Learning Representations,
+  {ICLR} 2020, Addis Ababa, Ethiopia, April 26-30, 2020}. OpenReview.net, 2020.
+
+\bibitem{liu2022towards}
+Yong Liu, Siqi Mai, Xiangning Chen, Cho-Jui Hsieh, and Yang You.
+\newblock Towards efficient and scalable sharpness-aware minimization.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 12360--12370, 2022.
+
+\bibitem{loshchilov2017decoupled}
+Ilya Loshchilov and Frank Hutter.
+\newblock Decoupled weight decay regularization.
+\newblock {\em arXiv preprint arXiv:1711.05101}, 2017.
+
+\bibitem{luo2019adaptive}
+Liangchen Luo, Yuanhao Xiong, Yan Liu, and Xu Sun.
+\newblock Adaptive gradient methods with dynamic bound of learning rate.
+\newblock {\em arXiv preprint arXiv:1902.09843}, 2019.
+
+\bibitem{mancini2018best}
+Massimiliano Mancini, Samuel~Rota Bulo, Barbara Caputo, and Elisa Ricci.
+\newblock Best sources forward: domain generalization through source-specific
+  nets.
+\newblock In {\em 2018 25th IEEE international conference on image processing
+  (ICIP)}, pages 1353--1357. IEEE, 2018.
+
+\bibitem{mancini2018robust}
+Massimiliano Mancini, Samuel~Rota Bulo, Barbara Caputo, and Elisa Ricci.
+\newblock Robust place categorization with deep domain generalization.
+\newblock {\em IEEE Robotics and Automation Letters}, 3(3):2093--2100, 2018.
+
+\bibitem{mansour2009domain}
+Yishay Mansour, Mehryar Mohri, and Afshin Rostamizadeh.
+\newblock Domain adaptation: Learning bounds and algorithms.
+\newblock {\em arXiv preprint arXiv:0902.3430}, 2009.
+
+\bibitem{mao2022context}
+Xiaofeng Mao, Yuefeng Chen, Xiaojun Jia, Rong Zhang, Hui Xue, and Zhao Li.
+\newblock Context-aware robust fine-tuning.
+\newblock {\em arXiv preprint arXiv:2211.16175}, 2022.
+
+\bibitem{mi2022make}
+Peng Mi, Li Shen, Tianhe Ren, Yiyi Zhou, Xiaoshuai Sun, Rongrong Ji, and
+  Dacheng Tao.
+\newblock Make sharpness-aware minimization stronger: A sparsified perturbation
+  approach.
+\newblock {\em arXiv preprint arXiv:2210.05177}, 2022.
+
+\bibitem{motiian2017unified}
+Saeid Motiian, Marco Piccirilli, Donald~A Adjeroh, and Gianfranco Doretto.
+\newblock Unified deep supervised domain adaptation and generalization.
+\newblock In {\em Proceedings of the IEEE international conference on computer
+  vision}, pages 5715--5725, 2017.
+
+\bibitem{muandet2013domain}
+Krikamol Muandet, David Balduzzi, and Bernhard Sch{\"o}lkopf.
+\newblock Domain generalization via invariant feature representation.
+\newblock In {\em ICML}, pages 10--18. PMLR, 2013.
+
+\bibitem{naganuma2022empirical}
+Hiroki Naganuma, Kartik Ahuja, Ioannis Mitliagkas, Shiro Takagi, Tetsuya
+  Motokawa, Rio Yokota, Kohta Ishikawa, and Ikuro Sato.
+\newblock Empirical study on optimizer selection for out-of-distribution
+  generalization.
+\newblock In {\em NeurIPS 2022 Workshop on Distribution Shifts: Connecting
+  Methods and Applications}, 2022.
+
+\bibitem{Nam2021ReducingDG}
+Hyeonseob Nam, Hyunjae Lee, Jongchan Park, Wonjun Yoon, and Donggeun Yoo.
+\newblock Reducing domain gap by reducing style bias.
+\newblock {\em 2021 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, pages 8686--8695, 2021.
+
+\bibitem{nesterov1983method}
+Yu~E Nesterov.
+\newblock A method for solving the convex programming problem with convergence
+  rate.
+\newblock In {\em Dokl. Akad. Nauk SSSR,}, volume 269, pages 543--547, 1983.
+
+\bibitem{AdaIN21}
+O. Nuriel, S. Benaim, and L. Wolf.
+\newblock Permuted adain: Reducing the bias towards global statistics in image
+  classification.
+\newblock In {\em 2021 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, pages 9477--9486, Los Alamitos, CA, USA, jun 2021. IEEE
+  Computer Society.
+
+\bibitem{peng2019moment}
+Xingchao Peng, Qinxun Bai, Xide Xia, Zijun Huang, Kate Saenko, and Bo Wang.
+\newblock Moment matching for multi-source domain adaptation.
+\newblock In {\em Proceedings of the IEEE/CVF international conference on
+  computer vision}, pages 1406--1415, 2019.
+
+\bibitem{petzka2021relative}
+Henning Petzka, Michael Kamp, Linara Adilova, Cristian Sminchisescu, and Mario
+  Boley.
+\newblock Relative flatness and generalization.
+\newblock {\em Advances in Neural Information Processing Systems},
+  34:18420--18432, 2021.
+
+\bibitem{piratla2020efficient}
+Vihari Piratla, Praneeth Netrapalli, and Sunita Sarawagi.
+\newblock Efficient domain generalization via common-specific low-rank
+  decomposition.
+\newblock In {\em International Conference on Machine Learning}, pages
+  7728--7738. PMLR, 2020.
+
+\bibitem{qiao2020learning}
+Fengchun Qiao, Long Zhao, and Xi Peng.
+\newblock Learning to learn single domain generalization.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 12556--12565, 2020.
+
+\bibitem{radford2021learning}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+  Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+  et~al.
+\newblock Learning transferable visual models from natural language
+  supervision.
+\newblock In {\em International conference on machine learning}, pages
+  8748--8763. PMLR, 2021.
+
+\bibitem{radosavovic2020designing}
+Ilija Radosavovic, Raj~Prateek Kosaraju, Ross Girshick, Kaiming He, and Piotr
+  Doll{\'a}r.
+\newblock Designing network design spaces.
+\newblock In {\em Proceedings of the IEEE/CVF conference on computer vision and
+  pattern recognition}, pages 10428--10436, 2020.
+
+\bibitem{rame2022recycling}
+Alexandre Ram{\'e}, Kartik Ahuja, Jianyu Zhang, Matthieu Cord, L{\'e}on Bottou,
+  and David Lopez-Paz.
+\newblock Recycling diverse models for out-of-distribution generalization.
+\newblock {\em arXiv preprint arXiv:2212.10445}, 2022.
+
+\bibitem{rame2022fishr}
+Alexandre Rame, Corentin Dancette, and Matthieu Cord.
+\newblock Fishr: Invariant gradient variances for out-of-distribution
+  generalization.
+\newblock In {\em International Conference on Machine Learning}, pages
+  18347--18377. PMLR, 2022.
+
+\bibitem{rame2022diverse}
+Alexandre Rame, Matthieu Kirchmeyer, Thibaud Rahier, Alain Rakotomamonjy,
+  Patrick Gallinari, and Matthieu Cord.
+\newblock Diverse weight averaging for out-of-distribution generalization.
+\newblock {\em arXiv preprint arXiv:2205.09739}, 2022.
+
+\bibitem{rangwani2022closer}
+Harsh Rangwani, Sumukh~K Aithal, Mayank Mishra, Arihant Jain, and
+  Venkatesh~Babu Radhakrishnan.
+\newblock A closer look at smoothness in domain adversarial training.
+\newblock In {\em International Conference on Machine Learning}, pages
+  18378--18399. PMLR, 2022.
+
+\bibitem{Sagawa20Distributionally}
+Shiori Sagawa*, Pang~Wei Koh*, Tatsunori~B. Hashimoto, and Percy Liang.
+\newblock Distributionally robust neural networks.
+\newblock In {\em International Conference on Learning Representations}, 2020.
+
+\bibitem{seo2019learning}
+Seonguk Seo, Yumin Suh, Dongwan Kim, Jongwoo Han, and Bohyung Han.
+\newblock Learning to optimize domain specific normalization for domain
+  generalization.
+\newblock {\em arXiv preprint arXiv:1907.04275}, 3(6):7, 2019.
+
+\bibitem{Seonguk20}
+Seonguk Seo, Yumin Suh, Dongwan Kim, Geeho Kim, Jongwoo Han, and Bohyung Han.
+\newblock Learning to optimize domain specific normalization for domain
+  generalization.
+\newblock In Andrea Vedaldi, Horst Bischof, Thomas Brox, and Jan-Michael Frahm,
+  editors, {\em Computer Vision -- ECCV 2020}, pages 68--83, Cham, 2020.
+  Springer International Publishing.
+
+\bibitem{shankar2018generalizing}
+Shiv Shankar, Vihari Piratla, Soumen Chakrabarti, Siddhartha Chaudhuri, Preethi
+  Jyothi, and Sunita Sarawagi.
+\newblock Generalizing across domains via cross-gradient training.
+\newblock {\em arXiv preprint arXiv:1804.10745}, 2018.
+
+\bibitem{shimodaira2000improving}
+Hidetoshi Shimodaira.
+\newblock Improving predictive inference under covariate shift by weighting the
+  log-likelihood function.
+\newblock {\em Journal of statistical planning and inference}, 90(2):227--244,
+  2000.
+
+\bibitem{singh2020woodfisher}
+Sidak~Pal Singh and Dan Alistarh.
+\newblock Woodfisher: Efficient second-order approximation for neural network
+  compression.
+\newblock {\em Advances in Neural Information Processing Systems},
+  33:18098--18109, 2020.
+
+\bibitem{DBLP:conf/iclr/SmithL18}
+Samuel~L. Smith and Quoc~V. Le.
+\newblock A bayesian perspective on generalization and stochastic gradient
+  descent.
+\newblock In {\em 6th International Conference on Learning Representations,
+  {ICLR} 2018, Vancouver, BC, Canada, April 30 - May 3, 2018, Conference Track
+  Proceedings}. OpenReview.net, 2018.
+
+\bibitem{CORAL16}
+Baochen Sun and Kate Saenko.
+\newblock Deep coral: Correlation alignment for deep domain adaptation.
+\newblock In Gang Hua and Herv{\'e} J{\'e}gou, editors, {\em Computer Vision --
+  ECCV 2016 Workshops}, pages 443--450, Cham, 2016. Springer International
+  Publishing.
+
+\bibitem{vapnik1999overview}
+Vladimir~N Vapnik.
+\newblock An overview of statistical learning theory.
+\newblock {\em IEEE transactions on neural networks}, 10(5):988--999, 1999.
+
+\bibitem{venkateswara2017deep}
+Hemanth Venkateswara, Jose Eusebio, Shayok Chakraborty, and Sethuraman
+  Panchanathan.
+\newblock Deep hashing network for unsupervised domain adaptation.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 5018--5027, 2017.
+
+\bibitem{volpi2018generalizing}
+Riccardo Volpi, Hongseok Namkoong, Ozan Sener, John~C Duchi, Vittorio Murino,
+  and Silvio Savarese.
+\newblock Generalizing to unseen domains via adversarial data augmentation.
+\newblock {\em Advances in neural information processing systems}, 31, 2018.
+
+\bibitem{wang2022generalizing}
+Jindong Wang, Cuiling Lan, Chang Liu, Yidong Ouyang, Tao Qin, Wang Lu, Yiqiang
+  Chen, Wenjun Zeng, and Philip Yu.
+\newblock Generalizing to unseen domains: A survey on domain generalization.
+\newblock {\em IEEE Transactions on Knowledge and Data Engineering}, 2022.
+
+\bibitem{Wang2020LearningFE}
+Shujun Wang, Lequan Yu, Caizi Li, Chi-Wing Fu, and Pheng-Ann Heng.
+\newblock Learning from extrinsic and intrinsic supervisions for domain
+  generalization.
+\newblock In {\em ECCV}, 2020.
+
+\bibitem{wang2022causal}
+Xinyi Wang, Michael Saxon, Jiachen Li, Hongyang Zhang, Kun Zhang, and
+  William~Yang Wang.
+\newblock Causal balancing for domain generalization.
+\newblock {\em arXiv preprint arXiv:2206.05263}, 2022.
+
+\bibitem{WangYufei20}
+Yufei Wang, Haoliang Li, and Alex~C. Kot.
+\newblock Heterogeneous domain generalization via domain mixup.
+\newblock In {\em ICASSP 2020 - 2020 IEEE International Conference on
+  Acoustics, Speech and Signal Processing (ICASSP)}, pages 3622--3626, 2020.
+
+\bibitem{wen2019empirical}
+Yeming Wen, Kevin Luk, Maxime Gazeau, Guodong Zhang, Harris Chan, and Jimmy Ba.
+\newblock An empirical study of large-batch stochastic gradient descent with
+  structured covariance noise.
+\newblock {\em arXiv preprint arXiv:1902.08234}, 2019.
+
+\bibitem{wilson2017marginal}
+Ashia~C Wilson, Rebecca Roelofs, Mitchell Stern, Nati Srebro, and Benjamin
+  Recht.
+\newblock The marginal value of adaptive gradient methods in machine learning.
+\newblock {\em Advances in neural information processing systems}, 30, 2017.
+
+\bibitem{wortsman2022model}
+Mitchell Wortsman, Gabriel Ilharco, Samir~Ya Gadre, Rebecca Roelofs, Raphael
+  Gontijo-Lopes, Ari~S Morcos, Hongseok Namkoong, Ali Farhadi, Yair Carmon,
+  Simon Kornblith, et~al.
+\newblock Model soups: averaging weights of multiple fine-tuned models improves
+  accuracy without increasing inference time.
+\newblock In {\em International Conference on Machine Learning}, pages
+  23965--23998. PMLR, 2022.
+
+\bibitem{xie2022power}
+Zeke Xie, Qian-Yuan Tang, Yunfeng Cai, Mingming Sun, and Ping Li.
+\newblock On the power-law spectrum in deep learning: A bridge to protein
+  science.
+\newblock {\em arXiv preprint arXiv:2201.13011}, 2022.
+
+\bibitem{xie2022adaptive}
+Zeke Xie, Xinrui Wang, Huishuai Zhang, Issei Sato, and Masashi Sugiyama.
+\newblock Adaptive inertia: Disentangling the effects of adaptive learning rate
+  and momentum.
+\newblock In {\em International Conference on Machine Learning}, pages
+  24430--24459. PMLR, 2022.
+
+\bibitem{XuMinghao19}
+Minghao Xu, Jian Zhang, Bingbing Ni, Teng Li, Chengjie Wang, Qi Tian, and
+  Wenjun Zhang.
+\newblock Adversarial domain adaptation with domain mixup, 2019.
+
+\bibitem{Xu2021AFF}
+Qinwei Xu, Ruipeng Zhang, Ya Zhang, Yanfeng Wang, and Qi Tian.
+\newblock A fourier-based framework for domain generalization.
+\newblock {\em 2021 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR)}, pages 14378--14387, 2021.
+
+\bibitem{xu2021stable}
+Renzhe Xu, Peng Cui, Zheyan Shen, Xingxuan Zhang, and Tong Zhang.
+\newblock Why stable learning works? a theory of covariate shift
+  generalization.
+\newblock {\em arXiv preprint arXiv:2111.02355}, 2021.
+
+\bibitem{xu2022theoretical}
+Renzhe Xu, Xingxuan Zhang, Zheyan Shen, Tong Zhang, and Peng Cui.
+\newblock A theoretical analysis on independence-driven importance weighting
+  for covariate-shift generalization.
+\newblock In {\em International Conference on Machine Learning}, pages
+  24803--24829. PMLR, 2022.
+
+\bibitem{xu2018first}
+Yi Xu, Rong Jin, and Tianbao Yang.
+\newblock First-order stochastic algorithms for escaping from saddle points in
+  almost linear time.
+\newblock {\em Advances in neural information processing systems}, 31, 2018.
+
+\bibitem{YanShen20}
+Shen Yan, Huan Song, Nanxiang Li, Lincan Zou, and Liu Ren.
+\newblock Improve unsupervised domain adaptation with mixup training, 2020.
+
+\bibitem{yao2020pyhessian}
+Zhewei Yao, Amir Gholami, Kurt Keutzer, and Michael~W Mahoney.
+\newblock Pyhessian: Neural networks through the lens of the hessian.
+\newblock In {\em 2020 IEEE international conference on big data (Big data)},
+  pages 581--590. IEEE, 2020.
+
+\bibitem{yao2018hessian}
+Zhewei Yao, Amir Gholami, Qi Lei, Kurt Keutzer, and Michael~W Mahoney.
+\newblock Hessian-based analysis of large batch training and robustness to
+  adversaries.
+\newblock {\em Advances in Neural Information Processing Systems}, 31, 2018.
+
+\bibitem{yao2021adahessian}
+Zhewei Yao, Amir Gholami, Sheng Shen, Mustafa Mustafa, Kurt Keutzer, and
+  Michael Mahoney.
+\newblock Adahessian: An adaptive second order optimizer for machine learning.
+\newblock In {\em proceedings of the AAAI conference on artificial
+  intelligence}, volume~35, pages 10665--10673, 2021.
+
+\bibitem{zaheer2018adaptive}
+Manzil Zaheer, Sashank Reddi, Devendra Sachan, Satyen Kale, and Sanjiv Kumar.
+\newblock Adaptive methods for nonconvex optimization.
+\newblock {\em Advances in neural information processing systems}, 31, 2018.
+
+\bibitem{zhang2022towards}
+Hanlin Zhang, Yi-Fan Zhang, Weiyang Liu, Adrian Weller, Bernhard Sch{\"o}lkopf,
+  and Eric~P Xing.
+\newblock Towards principled disentanglement for domain generalization.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 8024--8034, 2022.
+
+\bibitem{zhang2021adaptive}
+Marvin~Mengxin Zhang, Henrik Marklund, Nikita Dhawan, Abhishek Gupta, Sergey
+  Levine, and Chelsea Finn.
+\newblock Adaptive risk minimization: A meta-learning approach for tackling
+  group shift, 2021.
+
+\bibitem{zhang2021deep}
+Xingxuan Zhang, Peng Cui, Renzhe Xu, Linjun Zhou, Yue He, and Zheyan Shen.
+\newblock Deep stable learning for out-of-distribution generalization.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 5372--5382, 2021.
+
+\bibitem{Zhang2023GradientNA}
+Xingxuan Zhang, Renzhe Xu, Han Yu, Hao Zou, and Peng Cui.
+\newblock Gradient norm aware minimization seeks first-order flatness and
+  improves generalization.
+\newblock {\em arXiv preprint arXiv:2303.03108}, 2023.
+
+\bibitem{zhang2022nico++}
+Xingxuan Zhang, Linjun Zhou, Renzhe Xu, Peng Cui, Zheyan Shen, and Haoxin Liu.
+\newblock Nico++: Towards better benchmarking for domain generalization.
+\newblock {\em arXiv preprint arXiv:2204.08040}, 2022.
+
+\bibitem{zhang2023free}
+YiFan Zhang, Xue Wang, Jian Liang, Zhang Zhang, Liang Wang, Rong Jin, and
+  Tieniu Tan.
+\newblock Free lunch for domain adversarial training: Environment label
+  smoothing.
+\newblock {\em arXiv preprint arXiv:2302.00194}, 2023.
+
+\bibitem{NEURIPS2020_b98249b3}
+Shanshan Zhao, Mingming Gong, Tongliang Liu, Huan Fu, and Dacheng Tao.
+\newblock Domain generalization via entropy regularization.
+\newblock In H. Larochelle, M. Ranzato, R. Hadsell, M.F. Balcan, and H. Lin,
+  editors, {\em Advances in Neural Information Processing Systems}, volume~33,
+  pages 16096--16107. Curran Associates, Inc., 2020.
+
+\bibitem{zhao2022penalizing}
+Yang Zhao, Hao Zhang, and Xiuyuan Hu.
+\newblock Penalizing gradient norm for efficiently improving generalization in
+  deep learning.
+\newblock In {\em International Conference on Machine Learning}, pages
+  26982--26992. PMLR, 2022.
+
+\bibitem{zhong2022improving}
+Qihuang Zhong, Liang Ding, Li Shen, Peng Mi, Juhua Liu, Bo Du, and Dacheng Tao.
+\newblock Improving sharpness-aware minimization with fisher mask for better
+  generalization on language models.
+\newblock {\em arXiv preprint arXiv:2210.05497}, 2022.
+
+\bibitem{zhou2020deep}
+Kaiyang Zhou, Yongxin Yang, Timothy Hospedales, and Tao Xiang.
+\newblock Deep domain-adversarial image generation for domain generalisation.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, volume~34, pages 13025--13032, 2020.
+
+\bibitem{zhou2020learning}
+Kaiyang Zhou, Yongxin Yang, Timothy Hospedales, and Tao Xiang.
+\newblock Learning to generate novel domains for domain generalization.
+\newblock In {\em European Conference on Computer Vision}, pages 561--578.
+  Springer, 2020.
+
+\bibitem{zhou2021domain}
+Kaiyang Zhou, Yongxin Yang, Yu Qiao, and Tao Xiang.
+\newblock Domain generalization with mixstyle.
+\newblock In {\em International Conference on Learning Representations}, 2021.
+
+\bibitem{zhuang2022surrogate}
+Juntang Zhuang, Boqing Gong, Liangzhe Yuan, Yin Cui, Hartwig Adam, Nicha~C
+  Dvornek, James s Duncan, Ting Liu, et~al.
+\newblock Surrogate gap minimization improves sharpness-aware training.
+\newblock In {\em International Conference on Learning Representations}, 2022.
+
+\bibitem{zhuang2020adabelief}
+Juntang Zhuang, Tommy Tang, Yifan Ding, Sekhar~C Tatikonda, Nicha Dvornek,
+  Xenophon Papademetris, and James Duncan.
+\newblock Adabelief optimizer: Adapting stepsizes by the belief in observed
+  gradients.
+\newblock {\em Advances in neural information processing systems},
+  33:18795--18806, 2020.
+
+\end{thebibliography}

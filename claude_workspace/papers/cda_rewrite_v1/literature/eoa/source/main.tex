@@ -1,0 +1,516 @@
+\documentclass{article}
+
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2022
+
+
+% ready for submission
+% \usepackage{neurips_2022}
+
+\usepackage{wrapfig}
+
+% \usepackage{babel}
+% \usepackage[font=small,labelfont=bf]{caption}
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+% \usepackage[preprint]{neurips_2022}
+
+\PassOptionsToPackage{numbers, compress}{natbib}
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+\usepackage[final]{neurips_2022}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+% \usepackage[nonatbib]{neurips_2022}
+
+% \usepackage[a4paper, total={6in, 9.4in}]{geometry}
+% \usepackage{natbib}
+% \usepackage[numbers]{natbib}
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+
+\title{Ensemble of Averages: Improving Model Selection and Boosting Performance in Domain Generalization}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+\usepackage{listings}
+
+\usepackage{color, colortbl}
+\definecolor{Gray}{gray}{0.9}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{booktabs} % for professional tables
+
+
+\usepackage{hyperref}
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+
+% \usepackage{caption}
+% \usepackage{subcaption}
+\usepackage{hhline}
+\usepackage{url}
+\usepackage{multirow}
+% \usepackage[colorlinks=True]{hyperref}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{multirow}
+\usepackage{placeins}
+\usepackage{url}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{microtype}
+\usepackage{xspace}
+\usepackage{float}
+% \usepackage{subfigure}
+% \usepackage{subcaption}
+\usepackage{booktabs} % for professional tables
+
+% \usepackage{subfig}
+
+\usepackage{amssymb}
+\usepackage{amsmath,bm}
+\usepackage{enumitem}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}
+\newtheorem{notation}{Notation}
+\newtheorem{proposition}{Proposition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{property}{Property}
+\newtheorem{claim}{Claim}
+
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+
+\author{%
+  Devansh Arpit, Huan Wang, Yingbo Zhou, Caiming Xiong\\
+  Salesforce Research, USA\\
+  \texttt{devansharpit@gmail.com} \\
+}
+
+
+% keywords{ensemble, model averaging, simple moving average, domain generalization, model selection, bias-variance trade-off}
+
+
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+In Domain Generalization (DG) settings, models trained independently on a given set of training domains have notoriously chaotic performance on distribution shifted test domains, and stochasticity in optimization (e.g. seed) plays a big role. This makes deep learning models unreliable in real world settings. We first show that this chaotic behavior exists even along the training optimization trajectory of a single model, and propose a simple model averaging protocol that both significantly boosts domain generalization and diminishes the impact of stochasticity by improving the rank correlation between the in-domain validation accuracy and out-domain test accuracy, which is crucial for reliable early stopping. Taking advantage of our observation, we show that instead of ensembling unaveraged models (that is typical in practice), ensembling moving average models (EoA) from independent runs further boosts performance. We theoretically explain the boost in performance of ensembling and model averaging by adapting the well known Bias-Variance trade-off to the domain generalization setting. On the DomainBed benchmark, when using a pre-trained ResNet-50, this ensemble of averages achieves an average of $68.0\%$, beating vanilla ERM (w/o averaging/ensembling) by $\sim 4\%$, and when using a pre-trained RegNetY-16GF, achieves an average of $76.6\%$, beating vanilla ERM by $6\%$. Our code is available at \url{https://github.com/salesforce/ensemble-of-averages}.
+\end{abstract}
+
+\section{Introduction}
+
+Domain generalization (DG, \cite{blanchard2011generalizing}) aims at learning predictors that generalize well on data sampled from test distributions that are different from the training distribution. Currently, deep learning models have been shown to be poor at this form of generalization \cite{d2020underspecification}, and excel primarily in the IID setting \cite{zhou2021domain}.
+
+While a number of algorithms have been proposed to mitigate this problem (cf \cite{zhou2021domain} for a survey), \cite{gulrajani2020search} demonstrate that models trained using empirical risk minimization (ERM, \cite{vapnik1998statistical}) along with proper model selection (i.e. early stopping using validation set), using a subset of data from all the training domains, largely match or even outperform the performance of most existing domain generalization algorithms. This suggests that model selection plays an important role in domain generalization.
+Despite its importance, \textit{there has not been much investigation into the reliability of model selection}.
+As we demonstrate in Figure \ref{fig:instability}, the out-domain performance varies greatly along the optimization trajectory of a model during training, even though the in-domain performance does not. This instability therefore hurts the reliability of model selection, and can become a problem in realistic settings where test domain data is unavailable, because it causes the rank correlation between in-domain validation accuracy and out-domain test accuracy to be weak.
+
+In this paper, we first investigate a simple protocol for model averaging that both boosts DG within the ERM framework, and mitigates performance instability of deep models on out-domain data, specifically with respect to in-domain validation data. This makes model selection more reliable. Next, taking advantage of our observation, we show that ensembling moving average models further boosts performance, making it a better choice for practical scenarios. Note that we do not claim that model averaging or ensembling can fully solve the problem of DG. The observation that model averaging can boost domain generalization performance is not new, and was exposed by SWAD \cite{cha2021swad}, which inspired our work. Our contribution in this respect are as follows:
+
+\begin{figure}
+% \vspace{-2pt}
+    \centering
+        % \centering
+        \includegraphics[width=0.45\columnwidth]{figs/terra_no-ma-env-1_valid.pdf}
+        % \hfil
+        \includegraphics[width=0.45\columnwidth]{figs/terra_ma-env-1_valid.pdf}
+      \includegraphics[width=0.45\columnwidth]{figs/terra_no-ma-env-1_test.pdf}
+        % \hfil
+      \includegraphics[width=0.45\columnwidth]{figs/terra_ma-env-1_test.pdf}
+    \caption{Model averaging improves out-domain performance \textit{stability}. \textbf{Left}: In-domain validation accuracy and out-domain test accuracy during training of models using ERM. \textbf{Right}: Same as left, except validation and test predictions are made using a simple moving average of the model being optimized, along its optimization path. \textbf{Details}: The plots are for the TerraIncognita dataset with domain L38 used as the test domain, and others as training/validation data, and ResNet-50. Solid lines denote accuracy, dashed lines denote training loss, and dash-dot lines denote best accuracy achieved during training and all runs (for reference). Each color denotes a different run with a different random seed and training/validation split. \textbf{Gist}: Model averaging reduces out-domain performance instability, and makes the test curves correlate better with the validation curves, making model selection using in-domain validation set more reliable during optimization. We see a similar pattern when using ensemble of models, with and without model averaging, in Figure \ref{fig:instability_ensemble_terra_l38}.}
+    \label{fig:instability}
+\vspace{-11pt}
+\end{figure}
+
+1. \textbf{Hyperparameter-free}:In contrast to SWAD, which introduces three additional hyper-parameters for its model averaging algorithm that need tuning, we show that the simple strategy of maintaining a simple moving average (SMA) of the model parameters throughout the optimization trajectory, starting near initialization (Appendix Figure \ref{fig:mo_start_iter}), works just as well (when a pre-trained model is used as initialization). Although model averaging technically requires two hyper-parameters-- averaging frequency and starting iteration, through empirical analysis, we show that setting the frequency to 1 and setting the start iteration close to 0 works well on multiple datasets and architectures, making our proposal hyperparameter-free in practice.
+
+2. \textbf{Computationally efficient}:SWAD requires computing validation performance more frequently than is typically done (2x-6x on the DomainBed datasets), which is needed because it needs to find the start and end iteration between which model averaging is done. This increases compute requirements. This segment is selected based on the validation performance computed using the model being trained. Our proposal to instead use the SMA model to perform early stopping and inference, side-steps this need and does not require frequent validation performance check. We show that the root cause for this difference is that the model being trained has unstable performance on OOD data, while the SMA model has a more stable OOD performance (see Figure \ref{fig:instability} and Table \ref{tab:rank_correlation_single}). Thus this observation results in our hyperparameter-free and more efficient model averaging strategy.
+
+3.  \textbf{EoA}: Taking advantage of our efficient model averaging protocol (section \ref{sec_protocol}), we find that an ensemble of moving average models (EoA) outperforms a traditional ensemble of unaveraged models (Table \ref{tab:benchmark}). We also show ablation analysis that the rank correlation between in-domain validation performance and out-domain test performance is better for the ensemble of average models (Table \ref{tab:rank_correlation_ensemble_single}).
+
+4. \textbf{Theoretical explanation}: To explain why both model averaging and ensembling improve OOD performance under a unified theoretical framework, we adapt the well known Bias-Variance decomposition to the domain generalization setting, and argue that the expected OOD loss for individual models comprises of both the bias and the variance term, while the expected OOD loss for ensembles and averaged models comprises mainly of the bias term only, and is thus strictly lower (section \ref{sec_histogram_ablation}). Our explanation is in contrast with SWAD, which uses flat minima to explain the improved OOD generalization, which applies to model averaging, but is less straight forward for explaining the boost by ensembles.
+
+5. \textbf{Benchmarking}: For benchmarking, we experiment with three different pre-trained models as initializations for DG training, with increasing pre-training dataset size and model size. In these experiments we find that EoA provides a larger gain over the \textit{corresponding} ERM baseline with increasing dataset and model size. These gains range from $4\%-6\%$ (Table \ref{tab:benchmark}). Notice that this claim is different from existing work \cite{hendrycks2021many}, which states that the baseline ERM performance improves with larger pre-training data and model size.
+
+\section{Model Averaging}
+
+\subsection{Terminology}
+
+\textbf{Online Model}: For a given supervised learning objective function, let $f_{\theta}(.)$ denote the deep network being optimized using gradient based optimizer, where $\theta$ denotes the parameters of this model. We refer to $f_{\theta}$ as the \textit{online model}, or \textit{unaveraged model}. The output of $f_{\theta}(.)$ is a vector of $K$ logits corresponding to the $K$ classes in the supervised task.
+
+\textbf{Moving Average (MA) Model}: While the online model is being trained, we maintain a moving average of the online model's parameters. This process is sometime referred to as \textit{iterate averaging} in existing literature. The deep network whose parameters are set to be this moving average is referred to as the \textit{moving average model}, or more specifically \textit{simple moving average (SMA) model} because of its use in our work. We denote the parameters of this model by $\hat{\theta}.$ 
+
+\subsection{Model Averaging Protocol}
+\label{sec_protocol}
+
+We use a simple moving average (SMA) of the online model. Instead of calculating the moving average starting from initialization (as done in Polyak-Ruppert averaging), we instead start after a certain number of iterations $t_0$ during training (tail averaging), and maintain the moving average until the end of training. As we discuss in the next section, $t_0$ is chosen to be close, but not equal to the initialization when a pre-trained model is used as initialization. At any iteration $t$, we denote:
+\begin{equation}
+\label{eq_my_sma}
+    \hat{\theta}_t = \begin{cases}
+    \theta_{t},& \text{if } t\le t_0\\
+    \frac{t-t_0}{t-t_0 +1} \cdot \hat{\theta}_{t-1} + \frac{1}{t-t_0 +1} \cdot \theta_{t},              & \text{otherwise}
+\end{cases}
+\end{equation}
+where $\theta_t$ is the online model's state at iteration $t$. Note that effectively, $\hat{\theta}_t := \frac{1}{t-t_0+1}\cdot \sum_{t^\prime=t_0}^t {\theta}_{t^\prime}$. Further, at iteration $t$, if we need to calculate validation performance, we use $\hat{\theta}_t$ to do so, and not $\theta_{t}$. As we show in the next section, the benefit of doing so is that the rank correlation between in-domain validation accuracy and out-domain test accuracy is significantly better when predictions are made using $\hat{\theta}_t$. This makes model selection more reliable for domain generalization. Finally, for a given run, model selection selects $\hat{\theta}_{t^*}$ for making test set predictions, such that $\hat{\theta}_{t^*}$ achieves the best validation performance. We discuss some theoretical perspectives on why model averaging can help domain generalization in section \ref{sec_relatedw_ma_models}.
+
+\subsection{Ablation Analysis}
+\label{sec_ma_analysis}
+
+Here we perform four ablation studies: 1) impact of the start iteration $t_0$ used in our SMA protocol in Eq. \ref{eq_my_sma}; 2) the frequency of model averaging; 3) instability reduction of SMA model compared to the online mode along the optimization trajectory on out-domain data; 4) correlation between in-domain and out-domain accuracy across independently trained models. 
+
+Due to space limitation, we show experiments for 1,2 and 4 in Appendix section \ref{sec_ablation_sm}. In summary, we find that: 1) starting averaging close to initialization results in improved out-domain performance (Figure \ref{fig:mo_start_iter} in Appendix) when the parameters are initialized used a pre-trained model; 2) the frequency of SMA does not have a significant impact on performance, unless sampling is done at too large intervals (Figure \ref{fig:sma_freq} in Appendix); 4) the rank correlation is poor between validation and test accuracy of \textit{independently} trained models (Figure \ref{fig:cross_run_spearman} in Appendix). An implication of this is that it is difficult to discover the best model (for out-domain performance) from a pool of independently trained models, based only on their in-domain validation performance (echoing the findings of \cite{d2020underspecification}).
+
+\begin{table*}[t]
+% \vspace{-10pt}
+\caption{Spearman correlation (closer to 1 is better) between within-run in-domain validation accuracy and out-domain test accuracy on multiple datasets. Model averaging improves rank correlation for both individual models (left) and ensemble of averages (right).}
+% In most cases, using model averaging results in a significantly better rank correlation, which makes model selection more reliable.
+\begin{minipage}{.5\linewidth}
+      \caption{Individual Models}
+      \centering
+        \begin{tabular}{lll}
+        \hhline{===}
+        TerraIncognita    & w/o avg & w/ avg   \\ \hline
+        L100     & 0.21 $\pm$ 0.07   & \textbf{0.90 $\pm$ 0.05}   \\
+        L38 & 0.12 $\pm$ 0.13   & \textbf{0.83 $\pm$ 0.05}  \\
+        L43   & 0.30 $\pm$ 0.06   & \textbf{0.67 $\pm$ 0.18} \\
+        L46  & 0.03 $\pm$ 0.11   & \textbf{0.52 $\pm$ 0.14}  \\ 
+        \hline
+        \end{tabular}
+        \label{tab:rank_correlation_single}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+      \centering
+        \caption{Ensembles}
+        \begin{tabular}{lll}
+        \hhline{===}
+        TerraIncognita    & w/o avg & w/ avg   \\ \hline
+        L100     & 0.48   & \textbf{1}   \\
+        L38 & 0.17   & \textbf{0.95}  \\
+        L43   & \textbf{0.59}   & 0.38 \\
+        L46  & 0.08   & \textbf{0.61}  \\ 
+        \hline
+        \end{tabular}
+        \label{tab:rank_correlation_ensemble_single}
+    \end{minipage} 
+\end{table*}
+
+
+\subsubsection{Instability Reduction: Rank Correlation}
+\label{sec_rank_corr}
+
+% \textbf{Within-run rank correlation}: 
+We study the reliability of model selection for domain generalization when using online models vs moving average models, using rank correlation (see Appendix \ref{sec_rank_corr_intro} for definition). To do so, we train models on a dataset, both with and without model averaging, and compute Spearman correlation between the in-domain validation accuracy and out-domain test accuracy sampled at regular intervals during the training process. Since there are multiple runs where a given domain acts as the test domain, we calculate the mean and standard error of these values over these runs.
+
+The rank correlations are shown in Table \ref{tab:rank_correlation_single} (and Table \ref{tab:rank_correlation} in Appendix) for the PACS, VLCS, OfficeHome, TerraIncognita and DomainNet datasets. We find that in majority of the cases, using model averaging results in a significantly better rank correlation compared to using the online model. These experiments therefore suggest that the reliability of model selection is significantly higher within a run when using model averaging.
+
+
+
+\section{Ensemble of Averages (EoA)}
+\label{sec_eoa}
+
+\cite{gulrajani2020search} propose a rigorous framework for evaluation in the domain generalization setting which accounts for randomness due to seed and hyper-parameter values, and recommend reporting the average test accuracy over all the runs computed using a model selection criteria. However, in practice, it is desirable to have a single predictor that has a high accuracy. An ensemble combines predictions from multiple models, and is a well known approach for achieving this goal \cite{dietterich2000ensemble} by exploiting function diversity \cite{fort2019deep}. However, as we show, even ensembles suffer from instability in the domain generalization setting. Building on the observations of the previous section, we investigate the behavior of ensemble of moving average models and find that it mitigates this issue. We begin by describing the EoA protocol below.
+
+
+\textbf{EoA Protocol}: We perform experiments with ensemble of multiple independently trained models (i.e., with different hyper-parameters and seeds). When each of these models are moving average models from their corresponding runs, we refer to this ensemble in short as the \textit{ensemble of averages (EoA)}. Identical to how we make predictions for traditional ensembles (specifically the bagging method \cite{breiman1996bagging}), the class $\hat{y}$ predicted by an EoA for an input $\mathbf{x}$ is given by the formula:
+\begin{align}
+    \hat{y} = \arg \max_{k} Softmax(\frac{1}{E} \sum_{i=1}^E f(\mathbf{x}; {\hat{\theta}_i}))_k
+\end{align}
+where $E$ is the total number of models in the ensemble, $\hat{\theta_i}$ denotes the parameters of the $i^{th}$ moving average model, and the sub-script $(.)_{k}$ denotes the $k^{th}$ element of the vector argument. Finally, the state $\hat{\theta_i}$ of the $i^{th}$ moving average model used in the ensemble is selected from its corresponding run using its in-domain validation set performance (described in section \ref{sec_protocol}). We now investigate the behavior of EoA compared with ensembles of online models on domain generalization tasks.
+
+
+\begin{figure*}[t]
+% \vspace{-2pt}
+    \centering
+        \includegraphics[width=0.45\columnwidth]{figs/terra_ensemble_no-ma-env-1_.pdf}
+        % \hfil
+      \includegraphics[width=0.45\columnwidth]{figs/terra_ennsemble_ma-env-1_.pdf}
+    \caption{Ensemble of moving averages (EoA) (right) has better out-domain test performance \textit{stability} compared with ensemble of online models (left), w.r.t. in-domain validation accuracy. \textbf{Details}: The plots are for the TerraIncognita dataset with domain L38 used as the test domain, and others as training/validation domain, and ResNet-50. Each ensemble has 6 different models from independent runs with different random seeds, hyper-parameters, and training/validation split.}
+    \label{fig:instability_ensemble_terra_l38}
+\vspace{-11pt}
+\end{figure*}
+
+
+\subsection{Analysis}
+
+\textbf{Qualitative visualization}: For the purpose of contrasting the behavior of traditional ensembles vs ensemble of averages, we begin by qualitatively studying the stability of out-domain performance of these two ensembling techniques during the training process. To do so, we use the TerraIncognita dataset, and fix one of its domains as the test domain while using the others as training/validation data. We then train 6 different models independently for $5,000$ iterations with different seeds, hyper-parameters and training-validation splits identical to the \cite{gulrajani2020search} protocol. We also maintain moving average models corresponding to each of these 6 models. At every $300$ iterations, we form an ensemble of the 6 online models from their corresponding runs and compute the out-domain test accuracy. Since, each run has a different training-validation split, we calculate the mean validation accuracy of each of these online models at that iteration. We follow an identical procedure for the moving average models and plot these performances in Figure \ref{fig:instability_ensemble_terra_l38}. We find that the ensemble of averages has a better stability on out-domain test set compared to the ensemble of online models. 
+
+For clarity, note that this procedure for calculating test accuracy at regular intervals is different from what we proposed earlier for EoA for practical purposes. This experiment is only meant to highlight the fact that making predictions on out-domain data using an ensemble of online models suffers from instability along the optimization trajectory, while an ensemble of averages mitigates this issue. For plots on other domains of TerraIncognita, see Figure \ref{fig:instability_ensemble_terra_all} in the Appendix.
+
+
+
+
+
+\textbf{Rank correlation}: We now measure the rank correlation between in-domain validation accuracy and out-domain test accuracy for a quantitative evaluation. The details of the metric and motivations behind this experiment are same as those described in section \ref{sec_rank_corr}. Here we use the same experimental setup described in the qualitative analysis above. But in addition, we also conduct experiments on VLCS, OfficeHome and DomainNet datasets. The results are shown in Table \ref{tab:rank_correlation_ensemble_single} (and Table \ref{tab:rank_correlation_ensemble} in Appendix).  We find that in majority of the cases, using EoA results in a significantly better rank correlation compared to using the online model ensemble. These results show more concretely the fact that predictions by an ensemble of online models on out-domain data suffers from instability along the optimization trajectory, and EoA mitigates this problem.
+
+\subsection{Why does Ensembling and Model Averaging Improve Performance?}
+\label{sec_histogram_ablation}
+We explain the performance boost achieved by ensemble of averages (see next section) by adapting the Bias-Variance decomposition \cite{geman1992neural} to the domain generalization setting. For classification tasks with one-hot labels, the Bias-Variance decomposition is given as \cite{yang2020rethinking},
+\begin{align}
+\mathbb{E}_{\mathbf{x}, {y}} \mathbb{E}_{\mathcal{T}} [CE({y}, f(\mathbf{x}; \mathcal{T}))] &=
+    \underbrace{\mathbb{E}_{\mathbf{x}, {y}}[CE({y}, \bar{f}(\mathbf{x}))]}_{\text{Bias}^2} + \underbrace{\mathbb{E}_{\mathbf{x},\mathcal{T}}[KL(\bar{f}(\mathbf{x}), f(\mathbf{x}; \mathcal{T}))]}_{\text{Variance}}\nonumber
+\end{align}
+where $CE$ denotes the cross entropy loss, $KL$ denotes KL divergence, $\mathcal{T} = \{(\mathbf{x}^{in}_i, y^{in}_i)\}_{i=1}^N$ are $N$ IID samples drawn from the in-domain training distribution $\mathbb{P}^{in}$, $f(\mathbf{x}; \mathcal{T})$ denotes the prediction of the model $f$ on sample $\mathbf{x}$ such that the model is trained on the dataset $\mathcal{T}$, and $\bar{f}(\mathbf{x}) = \mathbb{E}_{\mathcal{T}}[f(\mathbf{x}; \mathcal{T})]$. Finally $(\mathbf{x}, y) \sim \mathbb{P}^{out}$ where $\mathbb{P}^{out}$ is the out-domain distribution. Notice how $\mathcal{T}$ and $(\mathbf{x}, y)$ come from different distributions. For instance, in PACS dataset, $\mathbb{P}^{in}$ could be the union of art, cartoon and photo domains, and $\mathbb{P}^{out}$ could be the sketch domain. 
+
+The L.H.S. of the above equation is the expected cross entropy loss on the out-domain distribution achieved by individual models, i.e., when we train an individual model on a particular instance of the training dataset $\mathcal{T}$, the expected out-domain test loss is denoted by L.H.S. Importantly, the Bias term on the R.H.S. denotes the expected cross entropy loss on the out-domain distribution achieved by the function $\bar{f}(.)$, which is essentially an \textit{ensemble}. Finally, the variance term captures how much the prediction of individual models differs in expectation from the ensemble prediction, which makes this term strictly greater than zero. 
+
+Therefore, the above decomposition tells us that the expected test domain error of an ensemble is strictly less than that of an individual model. This interpretation directly explains why a traditional ensemble of unaveraged models can be expected to perform better than individual unaveraged models. However, it is still not clear why EoA performs better that a traditional ensemble in practice. To establish this connection, we note that in practice, we typically train a small number of independent models to form a traditional ensemble due to computational constraints. Thus such ensembles do not behave identically to the expected ensemble $\bar{f}(.)$ described above. Model averaging on the other hand has been shown to approximate an ensemble \cite{izmailov2018averaging}. To see this, consider without any loss of generality that the ensemble contains models with parameters $\{\theta_1, \theta_2 \hdots \theta_T\}$, and denote $\hat{\theta}_T := \frac{1}{T}\cdot \sum_{t=1}^T {\theta}_t$. Then note that the second order Taylor's expansion around $\hat{\theta}_{T}$ of each model's $k^{th}$ dimension's prediction is given by, 
+\begin{align}
+\label{eq_taylor_expansion}
+    \frac{1}{T}\cdot \sum_{t=1}^{T} f({\theta_t})_k &\approx f(\hat{\theta}_{T})_k + \frac{1}{T}\cdot \sum_{t=1}^{T}  (\hat{\theta}_{T} - {\theta}_t)^T \frac{\partial f({\hat{\theta}_{T}})_k }{\partial \hat{\theta}_{T}}\nonumber+  0.5(\hat{\theta}_{T} - {\theta}_t)^T  \frac{\partial^2 f({\hat{\theta}_{T}})_k }{\partial \hat{\theta}_{T}^2} (\hat{\theta}_{T} - {\theta}_t)
+\end{align}
+
+\begin{figure*}[t]
+% \vspace{-2pt}
+    \centering
+        \includegraphics[width=0.45\columnwidth,trim={0cm 2cm 15cm 0},clip]{figs/ensemble_size_resnet50.pdf}
+        % \hfil
+      \includegraphics[width=0.45\columnwidth,trim={0cm 2cm 15cm 0},clip]{figs/ensemble_size_resnet50_improvement.pdf}
+      \vfill
+      \includegraphics[width=1\columnwidth,trim={1cm 0cm 0 7.5cm},clip]{figs/ensemble_size_resnext50.pdf}
+    \caption{\textbf{Left}: Effect of ensemble size (number of models in an ensemble) on out-domain performance (mean and standard error) for models with and without moving average (MA) parameters for ResNet-50 pre-trained on ImageNet. \textbf{Right}: Using the performance of ensemble of size 1 (shown in the left plot) as reference, right plot shows the percentage point improvement for ensembles of size $> 1$. The plots show that i) ensemble of averages (solid lines in left plot) are consistently better than ensemble of models without averaging (dashed lines in left plot); ii) ensemble of averages consistently improves performance over averaged models (ensemble of size 1 in right plot). }
+    \label{fig:ensemble_size}
+\vspace{-11pt}
+\end{figure*}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+% \begin{figure}[t]
+% \vspace{-2pt}
+    \centering
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0.25cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-0_terra.pdf}
+    \caption{The scale of terms-- moving average model's logit and the second order term in Eq. \ref{eq_taylor_expansion}. The latter concentrates around 0, suggesting our model averaging protocol approximates ensembles.}
+    \label{fig:ablation_dim1}
+% \vspace{-15pt}
+% \end{figure}
+\end{wrapfigure}
+Notice that $f(.)$ is the model output and therefore the first and second order terms are the derivatives of the model output and not the loss gradient and Hessian. The first order term is zero due to $\hat{\theta}_T := \frac{1}{T}\cdot \sum_{t=1}^T {\theta}_t$. A crucial difference of our analysis compared to \cite{izmailov2018averaging} is that they average model states that lie near different loss minima, while we perform tail averaging. Therefore, the term $(\hat{\theta}_{T} - {\theta}_t)$ may not behave similar to that in their case. To shed light on its behavior, we plot the histogram of the second order term and the moving average model's logit $f(\hat{\theta}_{T})_k$ in Eq. \ref{eq_taylor_expansion} for the first dimension ($k=1$) for test domain data in figure \ref{fig:ablation_dim1} (details and additional experiments provided in Appendix \ref{sec_ablation_details}). The histogram shows that the second order term concentrates near zeros while the logit values span a wider range, which implies that under the second order approximation, the model averaging protocol used in our work behaves like an ensemble. Finally, to study the impact of ensemble size on out-domain performance, we plot the test domain accuracy as a function of ensemble size in figure \ref{fig:ensemble_size}. The plots show that i. EoA outperforms traditional ensembles for all ensemble sizes (left); and ii. ensembles of larger size typically have better out-domain performance. See a discussion on functional diversity of ensembles vs model averaging in Appendix \ref{sec_discussion}.
+
+\begin{table*}[t]
+\small
+\vspace{-12pt}
+\centering
+\caption{Performance benchmarking on 5 datasets of the DomainBed benchmark using two different pre-trained models. SWAD and MIRO are the previous SOTA. \textbf{See Table \ref{tab:benchmark_full} in Appendix for comparison with more methods.} Note that ensembles do not have confidence interval because an ensemble uses all the models to make a prediction. Gray background shows our proposal. \textit{Our runs} implies we ran experiments, but we did not propose it. Experiments use the training-domain validation protocol from \cite{gulrajani2020search}.}
+\begin{tabular}{llllll|l}
+\hline
+{Algorithm}          & {PACS}           & {VLCS}           & {OfficeHome}     & {TerraIncognita} & {DomainNet}      & {Avg}. \\ \hhline{======|=}
+\multicolumn{7}{c}{{ResNet-50 (25M Parameters, Pre-trained on ImageNet)}}\\
+\hline
+ERM (our runs) & 84.4 $\pm$ 0.8 & 77.1 $\pm$ 0.5 & 66.6 $\pm$ 0.2 & 48.3 $\pm$ 0.2 & 43.6 $\pm$ 0.1 & 64.0 \\
+Ensemble (our runs) & 87.6             & 78.5           &       70.8         & 49.2           &          \textbf{47.7}      &   66.8   \\
+ERM \cite{gulrajani2020search} & 85.7 $\pm$ 0.5 & 77.4 $\pm$ 0.3 & 67.5 $\pm$ 0.5 & 47.2 $\pm$ 0.4 & 41.2 $\pm$ 0.2 & 63.8\\ 
+SWAD \cite{cha2021swad} & 88.1 $\pm$ 0.4 & \textbf{79.1 $\pm$ 0.4} & 70.6 $\pm$ 0.3 & 50.0 $\pm$ 0.4 & 46.5 $\pm$ 0.2 & 66.9\\
+MIRO \cite{cha2022domain} & 85.4 $\pm$ 0.4 & {79.0 $\pm$ 0.} & 70.5 $\pm$ 0.4 & 50.4 $\pm$ 1.1 & 44.3 $\pm$ 0.2 & 65.9\\
+\hline
+\rowcolor{Gray}
+SMA (ours)    & 87.5 $\pm$ 0.2 & 78.2 $\pm$ 0.2   & 70.6 $\pm$ 0.1   & 50.3 $\pm$ 0.5 & 46 $\pm$ 0.1 & 66.5 \\
+\rowcolor{Gray}
+EoA (ours) & \textbf{88.6}           & \textbf{79.1}           & \textbf{72.5}          & \textbf{52.3}           &        {47.4}        & \textbf{68.0}\\
+\hhline{======|=}
+\multicolumn{7}{c}{{ResNeXt-50 32x4d  \cite{yalniz2019billion} (25M Parameters, Pre-trained 1B Images)}}\\
+% semi-supervised pre-training on IG-1B targeted and ImageNet data,
+\hline
+ERM (our runs) & 88.9 $\pm$ 0.3 & 79.0 $\pm$ 0.1 & 70.9 $\pm$ 0.5 & 51.4 $\pm$ 1.2 & 48.1 $\pm$ 0.2 & 67.7 \\ %\hline
+Ensemble (our runs) & 91.2             & 80.3           &       77.8         & 53.5           &          52.8      &   71.1   \\
+ \hline
+ \rowcolor{Gray}
+SMA (ours)    & {92.7 $\pm$ 0.3} & {79.7 $\pm$ 0.3}   & {78.6 $\pm$ 0.1}   & {53.3 $\pm$ 0.1} & {53.5 $\pm$ 0.1} & {71.6} \\ 
+\rowcolor{Gray}
+EoA (ours) & \textbf{93.2}           & \textbf{80.4}           &  \textbf{80.2}  & \textbf{55.2}   &  \textbf{54.6}   & \textbf{72.7} \\
+\hhline{======|=}
+\multicolumn{7}{c}{{RegNetY-16GF \cite{singh2022revisiting} (81M Parameters, Pre-trained on 3.6B Images)}}\\
+\hline
+ERM (our runs) & 92 $\pm$ 0.4 & 78.6 $\pm$ 0.6 & 73.8 $\pm$ 0.5 & 55.6 $\pm$ 0.9 & 53.1 $\pm$ 0.2 & 70.6\\ 
+Ensemble (our runs) &     95.1        &     80.6       &        80.5       &      59.5     &     57.8       &   74.7\\
+ERM \cite{cha2022domain} & 89.6 $\pm$ 0.4 & 78.6 $\pm$ 0.3 & 71.9 $\pm$ 0.6 & 51.4 $\pm$ 1.8 & 48.5 $\pm$ 0.6 & 68.0 \\
+SWAD \cite{cha2022domain}& 94.7 $\pm$ 0.2 & 79.7 $\pm$ 0.2 & 80.0 $\pm$ 0.1 & 57.9 $\pm$ 0.7 & 53.6 $\pm$ 0.6 & 73.2 \\
+MIRO \cite{cha2022domain}& \textbf{97.4 $\pm$ 0.2} & 79.9 $\pm$ 0.6 & 80.4 $\pm$ 0.2 & 58.9 $\pm$ 1.3 & 53.8 $\pm$ 0.1 & 74.1\\
+ \hline
+ \rowcolor{Gray}
+SMA (ours)      & 95.5 $\pm$ 0.0 & {80.7 $\pm$ 0.1} & {82.0 $\pm$ 0.0} & {59.7 $\pm$ 0.0} & {60.0 $\pm$ 0.0} & {75.6}\\
+\rowcolor{Gray}
+EoA (ours) & {95.8}           & \textbf{81.1}           &  \textbf{83.9}  & \textbf{61.1}   &  \textbf{60.9}   & \textbf{76.6} \\
+\hline
+\end{tabular}
+\label{tab:benchmark}
+\vspace{-12pt}
+\end{table*}
+
+\section{Empirical Results}
+\subsection{DomainBed Benchmarking}
+\vspace{-5pt}
+\label{sec_benchmarking}
+
+We now benchmark our model averaging protocol (SMA) and ensemble of averages against online models (ERM, without MA) and ensemble of online models (ensembles). Note that all these models are trained using the ERM objective as before. We evaluate on PACS \cite{li2017deeper}, VLCS \cite{fang2013unbiased}, OfficeHome \cite{venkateswara2017deep}, TerraIncognita \cite{beery2018recognition} and DomainNet \cite{peng2019moment} datasets in DomainBed. The training-evaluation protocols are the same as described in section \ref{sec_ma_analysis} for moving average and online models, and in section \ref{sec_eoa} for ensembles. Full details can be found in section \ref{sec_training_protocol} in the Appendix.
+
+
+\textbf{Comparison with existing results using ResNet-50 pre-trained on ImageNet}: Here we compare existing methods with our runs. All methods use ResNet-50 (25M parameters) \cite{he2016deep} pre-trained on ImageNet as initialization. Comparing ERM \cite{gulrajani2020search} and ERM (our runs), we find that they perform similarly, especially considering we have used a smaller hyper-parameter space (further discussion in Appendix \ref{sec_discussion}). A comparison between SWAD and SMA shows that SWAD is slightly better (by $0.4\%$ on average). However, recall that our protocol retains the advantage of not tuning any hyper-parameters while SWAD has 3 additional ones that they tune separately in addition to the optimization hyper-parameters. Interestingly, traditional ensembles and SMA achieve similar performance ($66.8\%$ and $66.5\%$ respectively). Finally, EoA outperforms all the existing results: ERM by $4\%$ and SWAD (previous SOTA) by $1.1\%$. Importantly, note that while all non-ensemble models report the average test accuracy of multiple models following the protocol of \cite{gulrajani2020search}, EoA test accuracy is achieved by a single predictor that combines the output of multiple models.
+
+\textbf{Experiments with larger pre-training datasets and larger models}: In addition to ResNet-50 pre-trained on ImageNet, we now also experiment with ResNeXt-50 32x4d (25M parameters), that is pre-trained using semi-weakly supervised objective on Instagram 1B images and ImageNet labeled data \cite{yalniz2019billion}, and RegNetY-16GF (81M parameters) pre-trained using Instagram 3.6B images. Note that both ResNet-50 and ResNeXt-50 32x4d have similar number of parameters, while RegNetY-16GF has more than 3x the number of parameters. On the other hand, also notice that the three architectures are respectively pre-trained on an increasing size of datasets. The rationale behind this choice is that recent trends in deep learning has shown that models pre-trained on larger datasets and architectures achieve better downstream transfer performance \cite{dosovitskiy2020image,mahajan2018exploring,hendrycks2021many}. Therefore, we expect the latter models to improve the ERM baseline, and our goal is to investigate the out-domain performance gain by model averaging and EoA relative to the \textit{corresponding} ERM baseline with increasing pre-training dataset size and model size. 
+
+The experimental results are shown in Table \ref{tab:benchmark}. To investigate models with the same size, but one pre-trained on a larger dataset, we compare the results of ResNet-50 and ResNeXt-50 32x4d. On average across all five datasets, the gain of SMA over ERM (our runs) is $2.5\%$ for ResNet-50 and $3.9\%$ for ResNeXt-50 32x4d. The gain of EoA over ERM is larger: $4\%$ vs $5\%$ respectively. This suggests that pre-training the model on a larger dataset increases the gain of model averaging and EoA over the \textit{corresponding} ERM baseline, while the ERM performance itself improves.
+
+Next, to investigate the impact of both larger model size and larger pre-training dataset, we compare the results of ResNeXt-50 32x4d and RegNetY-16GF. On average across all five datasets, the gain of SMA over ERM (our runs) is $3.9\%$ for ResNeXt-50 32x4d and $5\%$ for RegNetY-16GF. The gain of EoA over ERM is again larger: $5\%$ vs $6\%$ respectively. This suggests that increasing both model size and pre-training dataset size allow model averaging and EoA to provide larger out-domain gains over the {corresponding} ERM baseline. Notice that these claims are different from existing work \cite{hendrycks2021many}, which states that the baseline ERM performance improves with larger pre-training data and model size.
+
+\begin{wraptable}{r}{0.5\textwidth}
+% \begin{table}[]
+\small
+\vspace{-20pt}
+\centering
+\caption{ SMA outperforms ERM without model averaging in the IID setting.}
+\begin{tabular}{|l|l|l|}
+\hline
+Algorithm & PACS             & OfficeHome       \\ \hline
+ERM (no averaging)      & 94.39 $\pm$ 0.46 & 77.09 $\pm$ 0.57 \\ \hline
+SMA (ours) & \textbf{96.77 $\pm$ 0.20} & \textbf{83.56 $\pm$ 0.21} \\ \hline
+\end{tabular}
+% \vspace{-15pt}
+\label{tab_iid}
+% \end{table}
+\end{wraptable}
+
+\subsection{In-domain Performance Improvement using Model Averaging}
+
+We study the in-domain test accuracy on PACS and OfficeHome datasets using ImageNet pre-trained ResNet-50 with and without our SMA protocol. In this experiment, we combine all the domains of PACS and split it into training/validation/test splits (0.8/0.1/0.1). We run 10 different runs with different seeds and randomly chosen splits for each dataset. The best model for each run is chosen using the validation set. The remaining optimization details are identical to those used in the previous section. The test accuracy mean and standard error using these best models are shown in Table \ref{tab_iid}. As expected, SMA outperforms models without averaging.
+
+
+\section{Related Work}
+\label{sec_related_work}
+
+\subsection{Model Averaging}
+\vspace{-7pt}
+\label{sec_relatedw_ma_models}
+
+\textbf{A theoretical perspective}: In our model averaging protocol, we compute a simple moving average of the model parameters starting early during training. This is known as \textit{tail-averaging} \cite{jain2018parallelizing}, which is slightly different from Polyak-Ruppert averaging \cite{polyak1992acceleration} in that the latter starts averaging from the very beginning of training. 
+In the context of least square regression in the IID setting, \cite{jain2018parallelizing} theoretically study the behavior of tail averaging and show that the excess risk of the moving average model is upper bounded by a bias and a variance term. This bias term depends on the initialization state of the parameter, but interestingly, it decays exponentially with $t_0$, where $t_0$ is the iteration at which model averaging is started. The variance term on the other hand depends on the covariance of the noise inherent in the data w.r.t. the optimal parameter, and is shown to decay at a faster rate when using model averaging, as opposed to a slower rate without averaging. This motivated them to propose \textit{tail-averaging}.
+ 
+Model averaging has also been shown to have a regularization effect \cite{neu2018iterate} similar to that of Tikhonov regularization \cite{tikhonov1943stability}. This regularization has been classically used in ill-posed optimization problems (typically least squared regression), which are \textit{under-specified}. This property provides an interesting connection between model averaging and the \textit{under-specification} problem discussed in \cite{d2020underspecification}, where the authors perform large scale experiments showing that the performance of multiple over-parameterized deep models, trained independently with different hyper-parameters and seeds, have a high variance on out-domain data, even though their in-domain performances are very close together. Based on this connection, a simple intuition why one can expect model averaging to help in domain generalization is its Tikhonov regularization effect. However, this intuition requires a more thorough investigation.
+
+\textbf{SWAD} \cite{cha2021swad}: SWAD propose flat minima as a means for improving domain generalization. Following the intuition of stochastic weight averaging (SWA, \cite{izmailov2018averaging}), they use model averaging to find flat minima. However, their proposal is different from sampling model states at regular intervals and towards the end of training (as done in SWA). SWAD selects contiguous model states along the optimization path for averaging, based on their validation loss. This is done to prevent including an under-performing state (determined using the in-domain validation set) in the moving average model. SWAD however adds additional hyper-parameters of its own: the validation loss threshold below which the the model states are selected, and patience parameters (number of iterations that determine the start and end of the averaging process). Note that this also requires computing validation loss more frequently during training. In this context, we show that instead of finding the start and end period for model averaging meticulously, we can simply start model averaging early during training and continue till the end. This difference arises from the fact that SWAD uses the online network to calculate validation performance while we use the SMA model in our protocol. This is explained further in section \ref{sec_protocol}. The benefit our observations provide over SWAD is that they allow us to take advantage of model averaging without the additional hyper-parameters and compute required by SWAD.
+
+\subsection{Domain Generalization}
+\label{sec_related_work_dg}
+\vspace{-8pt}
+Existing methods aimed at domain generalization can be broadly categorized into techniques that perform domain alignment, regularization, data augmentation, and meta-learning. Domain alignment is perhaps the most intuitive direction, in which methods aim to learn latent representations which have similar distributions across different domains \cite{sun2016deep,li2018domain,shi2021gradient,rame2021fishr}. There are different variants of this idea, such as minimizing some divergence metric between the latent representation of different domains (E.g. DANN \cite{ganin2016domain}), or less strictly, minimizing the difference between the latent statistics of different domains (E.g. DICA \cite{muandet2013domain}, CORAL \cite{sun2016deep}).
+In the meta learning category, source domains are typically split into 2 subsets to be used as the training and test domains in episodes to simulate the domain generalization setting \cite{li2018learning,li2019episodic}. Data augmentation is also a popular tool used for improving domain generalization. It ranges from introducing various types of augmentations to simulate unseen test domain conditions (E.g. style transfer \cite{yue2019domain, zhou2021semi}) to self-supervised learning involving matching the representations of an image with different augmentations (E.g. \cite{albuquerque2020improving,bucci2021self}). Finally, different ways of regularizing models (implicit and explicit) have also been developed with the goal of encouraging domain-invariant feature learning \cite{sagawa2019distributionally,xu2020adversarial,wang2020heterogeneous}. For instance, invariant risk minimization \cite{arjovsky2019invariant} propose a regularization such that the classifier is optimal in all the environments. Representation Self-Challenging \cite{huang2020self} propose to suppress the dominant features that get activated on the training data, which forces the network to use other features that correlate with labels. Risk extrapolation \cite{krueger2021out} propose a regularization that minimizes the variance between domain-wise loss, in the hope that it is representative of the variance including unseen test domains. See \cite{zhou2021domain} for a survey on DG methods. 
+
+Our investigation in this work is complementary to all these domain generalization methods. Additionally, one of our main focus is to also study and improve performance instability on out-domain data during training, which results in more reliable model selection. This aspect has not received much attention. 
+% For additional discussions see Appendix \ref{sec_discussion}.
+
+
+\section{Conclusion}
+\vspace{-5pt}
+We investigated a hyperparameter-free and efficient protocol for model averaging in the ERM framework, and showed that it provides a significant boost to out-domain performance compared to un-averaged models. Building on this observation, we showed that an ensemble of moving average models performs better compared to an ensemble of un-averaged models. Importantly, we showed that in both cases, model averaging significantly improves the rank correlation between in-domain validation accuracy and out-domain test accuracy, which is crucial for reliable model selection using in-domain validation data. We experimented with three pre-trained models with increasing pre-training dataset and model size, and found that EoA provides a proportionally larger gain compared to the corresponding ERM baseline, and lies in the range of $4\%-6\%$. Finally, we explain the performance boost of EoA by adapting the Bias-Variance trade-off perspective to the domain generalization setting. Further discussions along with limitations of our work are provided in Appendix \ref{sec_discussion}.
+
+
+\bibliography{ref}
+\bibliographystyle{plain}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Checklist}
+\begin{enumerate}
+
+
+\item For all authors...
+\begin{enumerate}
+  \item Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
+    \answerYes{}
+  \item Did you describe the limitations of your work?
+    \answerYes{In Appendix \ref{sec_discussion}, we have discussed various aspects including the limitations of our and existing methods in addressing domain generalization, functional diversity of ensembles vs model averaging strategy, and more.}
+  \item Did you discuss any potential negative societal impacts of your work?
+    \answerYes{See Appendix \ref{sec_broader_impact}.}
+  \item Have you read the ethics review guidelines and ensured that your paper conforms to them?
+    \answerYes{}
+\end{enumerate}
+
+
+\item If you are including theoretical results...
+\begin{enumerate}
+  \item Did you state the full set of assumptions of all theoretical results?
+    \answerYes{See section \ref{sec_histogram_ablation}.}
+        \item Did you include complete proofs of all theoretical results?
+    \answerNA{}
+\end{enumerate}
+
+
+\item If you ran experiments...
+\begin{enumerate}
+  \item Did you include the code, data, and instructions needed to reproduce the main experimental results (either in the supplemental material or as a URL)?
+    \answerYes{}
+  \item Did you specify all the training details (e.g., data splits, hyperparameters, how they were chosen)?
+    \answerYes{}
+        \item Did you report error bars (e.g., with respect to the random seed after running experiments multiple times)?
+    \answerYes{}
+        \item Did you include the total amount of compute and the type of resources used (e.g., type of GPUs, internal cluster, or cloud provider)?
+    \answerYes{}
+\end{enumerate}
+
+
+\item If you are using existing assets (e.g., code, data, models) or curating/releasing new assets...
+\begin{enumerate}
+  \item If your work uses existing assets, did you cite the creators?
+    \answerYes{}
+  \item Did you mention the license of the assets?
+    \answerNo{}
+  \item Did you include any new assets either in the supplemental material or as a URL?
+    \answerNA{}
+  \item Did you discuss whether and how consent was obtained from people whose data you're using/curating?
+    \answerNA{}
+  \item Did you discuss whether the data you are using/curating contains personally identifiable information or offensive content?
+    \answerNA{}
+\end{enumerate}
+
+
+\item If you used crowdsourcing or conducted research with human subjects...
+\begin{enumerate}
+  \item Did you include the full text of instructions given to participants and screenshots, if applicable?
+    \answerNA{}
+  \item Did you describe any potential participant risks, with links to Institutional Review Board (IRB) approvals, if applicable?
+    \answerNA{}
+  \item Did you include the estimated hourly wage paid to participants and the total amount spent on participant compensation?
+    \answerNA{}
+\end{enumerate}
+
+
+\end{enumerate}
+
+
+\newpage
+\input{appendix}
+
+\end{document}

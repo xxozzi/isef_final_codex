@@ -1,0 +1,414 @@
+
+% \section{Potential negative societal impacts} 
+\section{Potential Societal Impacts} 
+In this study, we theoretically and empirically demonstrate that domain generalization (DG) is achievable by seeking flat minima, and propose SWAD to find flat minima.
+With SWAD, researchers and developers can make a model robust to domain shift in a real deployment environment, without relying on a task-dependent prior, a modified objective function, or a specific model architecture.
+Accordingly, SWAD has potential positive impacts by developing machines less biased towards ethical aspects, as well as potential negative impacts, \eg, improving weapon or surveillance systems under unexpected environment changes.
+% Through SWAD, developers expect that the model deployed in the real environment can handle data whose distribution is different with the training distribution.
+% propose a widely applicable method, Stochastic Weight Averaging Densely (SWAD), to improve the generalizability for domain shifts. 
+% On the other hand, SWAD does not rely on a task-dependent prior, does not enforce a specific model architecture, and does not modify the objective function.
+% In addition, SWAD does not require any task-dependent prior, model architectural modification, and specified objectives. Such properties lead to its application without any judgments on its positive or negative impact.  
+% That is, it improves generalizability of any deep learning application without discriminating which application has a positive or negative impact.
+% It means that one can exploit SWAD to improve the performance of an application that has negative societal impacts, \eg, weapon or surveillance systems.
+
+
+\section{Implementation Details}
+
+\subsection{Hyperparameters of SWAD}
+
+% the running statistics of the batch normalization layers are not updated during training, and the examples in a single batch are sampled uniformly for each domain.
+The evaluation protocol by \citet{gulrajani2020domainbed} is computationally too expensive; it requires about 4,142 models for every DG algorithm.
+Hence, we reduce the search space of SWAD for computational efficiency; batch size and learning rate are set to 32 for each domain and 5e-5, respectively. We set dropout probability and weight decay to zero.
+% Instead, SWAD uses default value for parameters, namely batch size of 32, learning rate of 5e-5, no dropout, and no weight decay. 
+We only search $N_s, N_e$ and $r$. $N_s$ and $N_e$ are searched in \data{PACS} dataset, and the searched values are used for all experiments, while $r$ is searched in [1.2, 1.3] depending on dataset.
+% For $N_s$ and $N_e$, we find the best values in \data{PACS} dataset and fix them. Only $r$ is searched in [1.2, 1.3] depending on dataset. 
+As a result, we use $N_s=3$, $N_e=6$, and $r=1.2$ for \data{VLCS} and $r=1.3$ for the others.
+% We do not use any additional regularization, \eg, weight decay or dropout. Following~\citet{gulrajani2020domainbed}, 
+We initialize our model by ImageNet-pretrained ResNet-50 and batch normalization statistics are frozen during training.
+% ResNet-50 is initialized with the weights pretrained on ImageNet and the statistics of batch normalization layers are frozen. 
+The number of total iterations is $15,000$ for DomainNet and $5,000$ for others, which are sufficient numbers to be converged. 
+Finally, we slightly modify the evaluation frequency because it should be set to small enough to detect the moments that the model is optimized and overfitted. However, too small frequency brings large evaluation overhead, thus we compromise between exactness and efficiency: $50$ for \data{VLCS}, $500$ for \data{DomainNet}, and $100$ for others.
+
+\subsection{Hyperparameter search protocol for reproduced results}
+
+\begin{table}[h]
+\centering
+\caption{\small\textbf{Hyperparameter search space comparison.} U and list indicate Uniform distribution and random choice, respectively.}
+\label{table:hp_search_protocol}
+\begin{tabular}{llll} 
+\toprule
+\textbf{Parameter} & \textbf{Default value} & \textbf{DomainBed}            & \textbf{Ours}                  \\
+\midrule
+batch size         & 32                     & $2^\text{U(3,5.5)}$           & 32                             \\
+learning rate      & 5e-5                & $10^\text{U(-5,-3.5)}$        & [1e-5, 3e-5, 5e-5]  \\
+ResNet dropout     & 0                      & [0.0, 0.1, 0.5] & [0.0, 0.1, 0.5]  \\
+weight decay       & 0                      & $10^\text{U(-6,-2)}$          & [1e-4, 1e-6]                 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We evaluate recently proposed methods, SAM~\cite{foret2020sharpness} and Mixstyle~\cite{zhou2021mixstyle}, and compare them with previous results. For a fair comparison, we follow the hyperparameter (HP) search protocol proposed by~\citet{gulrajani2020domainbed}, with a modification to reduce computational resources.
+They searched HP by training a total of 58,000 models, corresponding to about 4,142 runs for each algorithm.
+It is too much computational burden to train 4,142 models whenever evaluate a new algorithm.
+% , causing environmental destruction by increasing CO2 emission.
+Therefore, we re-design the HP search protocol efficiently and effectively. In the HP search protocol of DomainBed~\cite{gulrajani2020domainbed}, training domains and algorithm-specific parameters are included in the HP search space, and HP is found for every data split independently by random search. Instead, we do not sample training domains, use HP found in the first data split to the other splits, search algorithm-specific HP independently, and conduct grid search on the more effectively designed HP space as shown in Table~\ref{table:hp_search_protocol}. Through the proposed protocol, we find HP for an algorithm under only 396 runs. Although the number of total runs is reduced to about 10\% ($4,142 \rightarrow 396$), the results of reproduced ERM is improved 0.9pp in average ($63.3\% \rightarrow 64.2\%$). It demonstrates both the effectiveness and the efficiency of our search protocol.
+
+\subsection{Algorithm-specific hyperparameters}
+
+We search the algorithm-specific hyperparameters independently in \data{PACS} dataset, based on the values suggested from each paper. For Mixstyle~\cite{zhou2021mixstyle}, we insert Mixstyle block with domain label after the 1st, 2nd, and 3rd residual blocks with $\alpha=0.1$ and $p=0.5$. We train SAM~\cite{foret2020sharpness} with $\rho=0.05$, and VAT~\cite{miyato2018vat} with $\epsilon=1.0$ and $\alpha=1.0$. In $\Pi$-model~\cite{LaineA17iclr_pi_model}, $w_{max}=1$ is chosen among various $w_{max}$ values such as 1, 10, 100, and 300.
+%Note that they used $w_{max}$ from 100 to 300, but the large value degrades the performance in our experiments. 
+We use EMA~\cite{polyak1992ema} with $decay=0.99$, Mixup~\cite{zhang2018mixup} with $\alpha=0.2$, and CutMix~\cite{yun2019cutmix} with $\alpha=1.0$ and $p=0.5$.
+
+% \begin{itemize}
+%     \item Mixstyle
+%     \item SAM
+%     \item VAT
+%     \item $\Pi$-model
+%     \item EMA
+%     \item Mixup
+%     \item CutMix (beta 1.0, cutmix_prob 0.5)
+% \end{itemize}
+
+
+
+\subsection{Pseudo code}
+\newcommand{\BREAK}{\textbf{break}}
+\begin{algorithm}[h]
+    % \SetAlgoNoLine
+    \DontPrintSemicolon
+    
+    \caption{Stochastic Weight Averaging Densely}
+    \label{alg:swa}
+
+    \KwIn{initial weight $\theta_0$, constant learning rate $\alpha$, tolerance rate $r$, optimum patience $N_s$, overfit patience $N_e$, total number of iterations $T$, training loss $\mathcal E_\text{train}^{(i)}$, validation loss $\mathcal E_\text{val}^{(i)}$}
+    \KwOut{averaged weight $\theta^{\text{SWAD}}$ from $t_s$ to $t_e$}
+    
+    $t_s \leftarrow 0$ \tcp*{start iteration for averaging}
+    $t_e \leftarrow T$ \tcp*{end iteration for averaging}
+    $l \leftarrow \text{None}$ \tcp*{loss threshold}
+    \For{$i \gets 1$ \KwTo $T$}{
+        $\theta_i \leftarrow \theta_{i-1} - \alpha \nabla \mathcal{E}_\text{train}^{(i-1)}$  \\
+        \If{ $l = $ \textup{None}}{
+            \If{$\mathcal{E}_\text{val}^{(i-N_s+1)} = \min_{0 \leq i' < N_s} \mathcal{E}_\text{val}^{(i-i')}$ }{
+                $t_s \leftarrow i-N_s+1$ \\
+                $l \leftarrow \frac{r}{N_s}\sum_{i'=0}^{N_s-1}\mathcal{E}_\text{val}^{(i-i')}$
+            }
+        }
+        \ElseIf{$l < \min_{0\leq i'< N_e} \mathcal{E}_\text{val}^{(i-i')}$}{
+            $t_e \leftarrow i-N_e$ \\
+            \BREAK
+        }
+    }
+    $\theta^{\text{SWAD}} \leftarrow \frac{1}{t_e - t_s + 1}\sum^{t_e}_{i'=t_s} \theta^{i'}$
+%   \STATE $\theta^{\text{SWAD}} \leftarrow \text{average}(\theta_{t_s:t_e})$
+\end{algorithm}
+
+\subsection{Loss surface visualization}
+
+Following~\citet{garipov2018fge}, we choose three model weights $\theta_1, \theta_2, \theta_3$ and define two dimensional weight plane from the weights:
+
+\begin{align}
+u=\theta_2 - \theta_1, \qquad v=\frac{(\theta_3 - \theta_1)- \langle \theta_3 - \theta_1, \theta_2 - \theta_1 \rangle}{\|\theta_2 - \theta_1 \|^2 \cdot (\theta_2 - \theta_1)},
+\end{align}
+
+% \begin{align}
+% u&=\theta_2 - \theta_1, \\
+% v&=\frac{(\theta_3 - \theta_1)- \langle \theta_3 - \theta_1, \theta_2 - \theta_1 \rangle}{\|\theta_2 - \theta_1 \|^2 \cdot (\theta_2 - \theta_1)},
+% \end{align}
+
+where $\hat u=u/\|u\|$ and $\hat v=v/\|v\|$ are orthonormal bases of the weight plane. Then, we build Cartesian grid near the weights on the plane. For each grid point, we calculate the weight corresponding to the point and compute loss from the weight.
+The results are visualized as a contour plot, as shown in Figure 4 in the main text.
+
+\subsection{ImageNet robustness experiments}
+
+We investigate the extensibility of SWAD via three robustness benchmarks (Section 4.4 in the main text), namely ImageNet-C~\cite{hendrycks2018benchmarking_robustness_imagenet_c}, ImageNet-R~\cite{hendrycks2020many_face_of_robustness}, and background challenge (BGC)~\cite{xiao2020background_challenge_bgc}. ImageNet-C measures the robustness against common corruptions such as Gaussian noise, blur, or weather changes. We follow \citet{hendrycks2018benchmarking_robustness_imagenet_c} for measuring mean corruption error (mCE). The lower ImageNet-C implies that the model is robust against corruption noises.
+BGC evaluates the robustness against background manipulations as well as the adversarial robustness. The BGC dataset has two groups, foreground and background. BGC manipulates images by combining the foregrounds and backgrounds, and measures whether the model predicts a consistent prediction with any manipulated image.
+ImageNet-R tests the robustness against different domains. ImageNet-R collects very different domain images of ImageNet, such as art, cartoons, deviantart, graffiti, embroidery, graphics, origami, paintings, patterns, plastic objects, plush objects, sculptures, sketches, tattoos, toys, and video game renditions. Showing better performances in ImageNet-R leads to the same conclusion as other domain generalization benchmarks.
+
+% As shown in the Table 6 in the main text, our method consistently improves both in-domain and out-of-domain robustness. Compared to the ERM baseline, SWAD improves performances by 0.5pp for in-domain ImageNet validation, 1.9 mCE for ImageNet-C, 2.1pp for ImageNet-R, and 3.1pp for BGC. Compared to SWA, our method shows subtle improvement in the in-domain ImageNet validation set (0.1pp), but it shows significant improvements on the other out-of-domain benchmarks; 0.9 mCE for ImageNet-C, 1.3pp for ImageNet-R, and 0.9pp for BGC. These results are consistent with the results of this study.
+
+% These additional results support that our method is robustly and widely applicable to large-scale applications, such as ImageNet. Furthermore, since SWAD can be easily combined with other methods, the performance can be improved with task-specific methods like CORAL + SWAD.
+
+\paragraph{Experiment details.}
+We use ResNet-50 architecture and mostly follow standard training recipes. We use SGD optimizer with momentum of 0.9, base learning rate of 0.1 with linear scaling rule \cite{goyal2017training_imagenet_1hour} and polynomial decay, 5 epochs gradual warmup, batch size of 2048, and total epochs of 90. For SWA, the learning rate is decayed to 1/20 until $80\%$ of training (72 epochs), and the cyclic learning rate with 3 epochs cycle length is used for the left $20\%$ of training. SWAD follows the same learning rate decay until $80\%$ of training, but averages every weight from every iteration after $80\%$ of training with constant learning rate.
+
+
+\section{Proof of Theorems}
+\subsection{Technical Lemmas}
+
+Consider an instance loss function $\ell(y_{1}, y_{2})$
+such that $\ell:\mathcal{Y}\times\mathcal{Y} \rightarrow [0,1]$ and $\ell(y_{1},y_{2})=0$ if and only if $y_{1}=y_{2}$.
+Then, we can define a functional error as $\mathcal{E}_{\mathcal{P}}(f(\cdot;\theta),h):=\mathbb{E}_{\mathcal{P}}[\ell(f(x;\theta),h(x))]$.
+Note that if we set $h$ as a true label function which generates the label of inputs, $y=h(x)$,
+then, it becomes a population loss $\mathcal{E}_{\mathcal{P}}(\theta)=\mathcal{E}_{\mathcal{P}}(f(\cdot;\theta),h)$.
+Given two distributions, $\mathcal{P}$ and $\mathcal{Q}$, the following lemma shows that the difference between the error with $\mathcal{P}$ and the error with $\mathcal{Q}$ is bounded by the divergence between $\mathcal{P}$ and $\mathcal{Q}$.
+\begin{lemma}\label{lem:bnd_dist}
+$\left|\mathcal{E}_{\mathcal{P}}(h_{1},h_{2}) - \mathcal{E}_{\mathcal{Q}}(h_{1},h_{2})\right| \leq \frac{1}{2}\mathbf{Div}(\mathcal{P},\mathcal{Q})$
+\end{lemma}
+\begin{proof}
+We employ the same technique in \citet{zhao2018multi_domain_adapt} for our loss function $\ell$.
+From the Fubini's theorem, we have,
+\begin{align}
+    \mathbb{E}_{x\sim\mathcal{P}}[\ell(h_{1}(x),h_{2}(x))] = \int_{0}^{\infty} \mathbb{P}_{\mathcal{P}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) dt
+\end{align}
+By using this fact, 
+% \begin{align}
+%     &\left|\mathbb{E}_{x\sim\mathcal{P}}[l(h_{1}(x),h_{2}(x))]- \mathbb{E}_{x\sim\mathcal{Q}}[l(h_{1}(x),h_{2}(x))]\right|\\
+%     &= \left|\int_{\mathcal{X}} l(h_{1}(x),h_{2}(x))\left[d\mathcal{P}(x) - d\mathcal{Q}(x)\right]\right|\\
+%     &\leq \int_{0}^{\infty} \left|\mathbb{P}_{\mathcal{P}}\left(l(h_{1}(x),h_{2}(x)) > t\right) -  \mathbb{P}_{\mathcal{Q}}\left(l(h_{1}(x),h_{2}(x)) > t\right) \right|dt\\
+%     &\leq M\sup_{t\in[0,M]} \left|\mathbb{P}_{\mathcal{P}}\left(l(h_{1}(x),h_{2}(x)) > t\right) -  \mathbb{P}_{\mathcal{Q}}\left(l(h_{1}(x),h_{2}(x)) > t\right) \right|\\
+%     &\leq M\sup_{h_{1},h_{2}}\sup_{t\in[0,M]} \left|\mathbb{P}_{\mathcal{P}}\left(l(h_{1}(x),h_{2}(x)) > t\right) -  \mathbb{P}_{\mathcal{Q}}\left(l(h_{1}(x),h_{2}(x)) > t\right) \right|\\
+%     &\leq M\sup_{\bar{h}\in\bar{\mathcal{H}}}\left|\mathbb{P}_{\mathcal{P}}\left(\bar{h}(x)=1\right) -  \mathbb{P}_{\mathcal{Q}}\left(\bar{h}(x)=1\right) \right|\\
+%     &\leq M\sup_{A}\left|\mathbb{P}_{\mathcal{P}}\left(A\right) -  \mathbb{P}_{\mathcal{Q}}\left(A\right) \right|
+% \end{align}
+\begin{align}
+    &\left|\mathbb{E}_{x\sim\mathcal{P}}[\ell(h_{1}(x),h_{2}(x))]- \mathbb{E}_{x\sim\mathcal{Q}}[\ell(h_{1}(x),h_{2}(x))]\right|\\
+    &= \left|\int_{0}^{\infty} \mathbb{P}_{\mathcal{P}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) dt - \int_{0}^{\infty} \mathbb{P}_{\mathcal{Q}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) dt\right|\\
+    &\leq \int_{0}^{\infty} \left|\mathbb{P}_{\mathcal{P}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) -  \mathbb{P}_{\mathcal{Q}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) \right|dt\\
+    &\leq M\sup_{t\in[0,M]} \left|\mathbb{P}_{\mathcal{P}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) -  \mathbb{P}_{\mathcal{Q}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) \right|\\
+    &\leq M\sup_{h_{1},h_{2}}\sup_{t\in[0,M]} \left|\mathbb{P}_{\mathcal{P}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) -  \mathbb{P}_{\mathcal{Q}}\left(\ell(h_{1}(x),h_{2}(x)) > t\right) \right|\\
+    &\leq M\sup_{\bar{h}\in\bar{\mathcal{H}}}\left|\mathbb{P}_{\mathcal{P}}\left(\bar{h}(x)=1\right) -  \mathbb{P}_{\mathcal{Q}}\left(\bar{h}(x)=1\right) \right|\\
+    &\leq M\sup_{A}\left|\mathbb{P}_{\mathcal{P}}\left(A\right) -  \mathbb{P}_{\mathcal{Q}}\left(A\right) \right|
+\end{align}
+where $\bar{\mathcal{H}}:=\left\{\mathbb{I}[\ell(h(x),h'(x))>t]\middle|h,h'\in\mathcal{H}, t \in [0,M]\right\}$.
+\end{proof}
+
+\begin{lemma}\label{lem:gen_bnd_rrm}
+Consider a distribution $\mathcal{S}$ on input space and global label function $f:\mathcal{X}\rightarrow\mathcal{Y}$.
+Let $\left\{\Theta_{k}\subset\mathbb{R}^{d}, k=1,\cdots,N\right\}$ be a finite cover of a parameter space $\Theta$ which consists of closed balls with radius $\gamma/2$ where $N:=\left\lceil\left(diam(\Theta)/\gamma\right)^{d}\right\rceil$.
+Let $\theta_{k}\in\arg\max_{\Theta_{k}\cap\Theta}\mathcal{E}_{\mathcal{S}}(\theta)$ be a local maximum in the $k$-th ball.
+Let a VC dimension of $\Theta_{k}$ be $v_{k}$. Then, for any $\theta\in\Theta$,
+the following bound holds with probability at least $1-\delta$.
+\begin{align}
+    \mathcal{E}_{S}(\theta) - \hat{\mathcal{E}}_{S}^{\gamma}(\theta) \leq \max_{k}\sqrt{\frac{\left(v_{k}\left[\ln\left(n/v_{k}\right)+1\right]+\ln\left(N/\delta\right)\right)}{2n}}
+\end{align}
+where $\hat{\mathcal{E}}_{S}^{\gamma}(\theta_{k})$ is an empirical robust risk with $n$ samples.
+\end{lemma}
+\begin{proof}
+We first show that the following inequality holds for the local maximum of $N$ covers,
+\begin{align}
+    \mathbb{P}\left(\max_{k}\left[\mathcal{E}_{S}(\theta_{k})-\hat{\mathcal{E}}_{S}(\theta_{k})\right] > \epsilon\right)
+    &\leq \sum_{k=1}^{N}\mathbb{P}\left(\mathcal{E}_{S}(\theta_{k})-\hat{\mathcal{E}}_{S}(\theta_{k}) > \epsilon\right)\\
+    &\leq \sum_{k=1}^{N}\mathbb{P}\left(\sup_{\theta\in\Theta_{k}}\left[\mathcal{E}_{S}(\theta)-\hat{\mathcal{E}}_{S}(\theta)\right] > \epsilon\right)\\
+    &\leq\sum_{k=1}^{N}\left(\frac{en}{v_{k}}\right)^{v_{k}}e^{-2n\epsilon^{2}}.
+\end{align}
+Now, we introduce a confidence error bound $\epsilon_{k}:=\sqrt{\frac{\left(v_{k}\left[\ln\left(n/v_{k}\right)+1\right]+\ln\left(N/\delta\right)\right)}{2n}}$.
+Then, we set $\epsilon:=\max_{k}\epsilon_{k}$. Then, we get,
+\begin{align}
+    \mathbb{P}\left(\max_{k}\left[\mathcal{E}_{S}(\theta_{k})-\hat{\mathcal{L}}_{S}(\theta_{k})\right] > \epsilon\right)
+    &\leq\sum_{k=1}^{N}\left(\frac{en}{v_{k}}\right)^{v_{k}}e^{-2n\epsilon^{2}}\\
+    &\leq\sum_{k=1}^{N}\left(\frac{en}{v_{k}}\right)^{v_{k}}e^{-2n\epsilon_{k}^{2}}\\
+    &=\sum_{k=1}^{N}\frac{\delta}{N}=\delta,
+\end{align}
+since $\epsilon>\sqrt{\frac{\left(v_{k}\left[\ln\left(n/v_{k}\right)+1\right]+\ln\left(N/\delta\right)\right)}{2n}}$ for all $k$.
+Hence, the inequality holds with probability at least $1-\delta$.
+
+Based on this fact, let us consider the set of events such that $\max_{k}\left[\mathcal{E}_{S}(\theta_{k})-\hat{\mathcal{E}}_{S}(\theta_{k})\right] \leq \epsilon$.
+Then, for any $\theta$, there exists $k'$ such that $\theta\in\Theta_{k'}$.
+Then, we get
+\begin{align}
+    \mathcal{E}_{S}(\theta) - \hat{\mathcal{E}}_{S}^{\gamma}(\theta) &\leq \mathcal{E}_{S}(\theta) - \hat{\mathcal{E}}_{S}(\theta_{k'})\\
+    &\leq \mathcal{E}_{S}(\theta) - \mathcal{E}_{S}(\theta_{k'}) + \epsilon\\
+    &\leq \mathcal{E}_{S}(\theta_{k'}) - \mathcal{E}_{S}(\theta_{k'}) + \epsilon = \epsilon,
+\end{align}
+where the second inequality holds since $\mathcal{E}_{S}(\theta_{k'})-\hat{\mathcal{E}}_{S}(\theta_{k'})\leq\max_{k}\left[\mathcal{E}_{S}(\theta_{k})-\hat{\mathcal{E}}_{S}(\theta_{k})\right] \leq \epsilon$ and the final inequality holds since $\theta_{k'}$ is the local maximum in $\Theta_{k'}$.
+In this regards, we know that $\max_{k}\left[\mathcal{E}_{S}(\theta_{k})-\hat{\mathcal{E}}_{S}(\theta_{k})\right] \leq \epsilon$ implies $\mathcal{E}_{S}(\theta) - \hat{\mathcal{E}}_{S}^{\gamma}(\theta) \leq \epsilon$.
+Consequently, $\mathcal{E}_{S}(\theta) - \hat{\mathcal{E}}_{S}^{\gamma}(\theta) \leq \epsilon$ holds with probability at least $1-\delta$.
+\end{proof}
+
+\subsection{Proof of Theorem 1}
+% \begin{theorem}\label{thm:gen_bnd_dg}
+% Consider a set of $N$ covers $\{\Theta_{k}\}_{k=1}^{N}$ such that the parameter space $\Theta \subset \cup_{k}^{N} \Theta_{k}$ where $diam(\Theta):=\sup_{\theta,\theta'\in \Theta}\|\theta-\theta'\|_{2}$, $N:=\left\lceil\left(diam(\Theta)/\gamma\right)^{d}\right\rceil$ and $d$ is dimension of $\Theta$.
+% Let $v_{k}$ be a VC dimension of each $\Theta_{k}$.
+% Then, for any $\theta\in\Theta$, the following bound holds with probability at least $1-\delta$,
+% \begin{equation}
+% \label{eq:thm1_bound}
+% \mathcal{E}_{\mathcal{T}}(\theta) < \hat{\mathcal{E}}_{\mathcal{D}}^{\gamma}(\theta) +\frac{1}{2I}\sum_{i=1}^{I}\mathbf{Div}(\mathcal{D}_{i},\mathcal{T})+ \max_{k\in[1,N]} \sqrt{\frac{v_{k}\ln\left(m/v_{k}\right)+\ln(N/\delta)}{m}},
+% \end{equation}
+% where $m = nI$ is the number of the training samples and $\mathbf{Div}(\mathcal{D}_{i},\mathcal{T}):=2\sup_{A}|\mathbb{P}_{\mathcal{D}_{i}}(A)-\mathbb{P}_{\mathcal{T}}(A)|$ is a divergence between two distributions.
+% \end{theorem}
+\begin{proof}
+The proof consists of two parts.
+First, we show that the following inequality holds with high probability.
+$$
+\mathcal{E}_{\mathcal{T}}(\theta) \leq \hat{\mathcal{E}}_{\mathcal{S}}^{\gamma}(\theta) + \frac{1}{2}\mathbf{Div}\left(\mathcal{S},\mathcal{T}\right)+ \max_{k}\sqrt{\frac{\left(v_{k}\left[\ln\left(n/v_{k}\right)+1\right]+\ln\left(N/\delta\right)\right)}{2n}}.
+$$
+Then, secondly, we apply the inequality for multiple source domains.
+
+The first part can be proven by simply combining Lemma \ref{lem:bnd_dist} and Lemma \ref{lem:gen_bnd_rrm}.
+Then, we get,
+\begin{align}
+\mathcal{E}_{\mathcal{T}}(\theta) &\leq \mathcal{E}_{\mathcal{S}}(\theta) + \frac{1}{2}\mathbf{Div}\left(\mathcal{S},\mathcal{T}\right)\\
+&\leq \hat{\mathcal{E}}^{\gamma}_{S}(\theta) + \frac{1}{2}\mathbf{Div}\left(\mathcal{S},\mathcal{T}\right) + \max_{k}\sqrt{\frac{\left(v_{k}\left[\ln\left(n/v_{k}\right)+1\right]+\ln\left(N/\delta\right)\right)}{2n}}
+\end{align}
+where $\mathbf{Div}\left(\mathcal{S},\mathcal{T}\right)$ is a divergence between $\mathcal{S}$ and $\mathcal{T}$.
+
+For the second part, we set $\mathcal{D}:=\sum_{i=1}^{I}\mathcal{D}_{i}/I$ which is a mixture of source distributions.
+Then, by applying $\mathcal{D}$ to the first part, we obtain the following inequality,
+\begin{align}
+\mathcal{E}_{\mathcal{T}}(\theta) &\leq \hat{\mathcal{E}}^{\gamma}_{\mathcal{D}}(\theta) + \frac{1}{2}\mathbf{Div}\left(\mathcal{D},\mathcal{T}\right) + \max_{k}\sqrt{\frac{\left(v_{k}\left[\ln\left(In/v_{k}\right)+1\right]+\ln\left(N/\delta\right)\right)}{2In}}\\
+&\leq \hat{\mathcal{E}}^{\gamma}_{\mathcal{D}}(\theta) + \frac{1}{2I}\sum_{i=1}^{I}\mathbf{Div}\left(\mathcal{D}_{i},\mathcal{T}\right) + \max_{k}\sqrt{\frac{\left(v_{k}\left[\ln\left(In/v_{k}\right)+1\right]+\ln\left(N/\delta\right)\right)}{2In}} 
+\end{align}
+where the total number of training data set is $In$ and, for the second inequality, we use the fact that $\frac{1}{2}\mathbf{Div}\left(\mathcal{D},\mathcal{T}\right)\leq \frac{1}{2I}\sum_{i=1}^{I}\mathbf{Div}\left(\mathcal{D}_{i},\mathcal{T}\right)$, which has been proven in \cite{zhao2018multi_domain_adapt}.
+\end{proof}
+
+\subsection{Proof of Theorem 2}
+% \begin{theorem}\label{thm:gen_bnd_dg_final}
+% Let $\hat{\theta}^{\gamma}$ denote the optimal solution of the RRM, \ie, $\hat{\theta}^{\gamma}:=\arg\min_{\theta}\hat{\mathcal{E}}^{\gamma}_{\mathcal{D}}(\theta)$, and let $v$ be a VC dimension of the parameter space $\Theta$.
+% Then, the gap between the optimal test loss, $\min_{\theta'}\mathcal{E}_{\mathcal{T}}\left(\theta'\right)$, and the test loss of $\hat{\theta}^{\gamma}$, $\mathcal{E}_{\mathcal{T}}(\hat{\theta}^{\gamma})$, has the following bound with probability at least $1-\delta$.
+% \begin{align}
+% \begin{split}
+%     \mathcal{E}_{\mathcal{T}}(\hat{\theta}^{\gamma}) - \min_{\theta'}\mathcal{E}_{\mathcal{T}}&\left(\theta'\right) \quad \leq \quad \hat{\mathcal{E}}_{\mathcal{D}}^{\gamma}(\hat{\theta}^{\gamma}) - \min_{\theta''}\hat{\mathcal{E}}_{\mathcal{D}}(\theta'') + \frac{1}{I}\sum_{i=1}^{I}\mathbf{Div}(\mathcal{D}_{i},\mathcal{T})\\
+%     &+ \max_{k\in[1,N]} \sqrt{\frac{v_{k}\ln\left(m/v_{k}\right)+\ln\left(2N/\delta\right)}{m}} + \sqrt{\frac{v\ln\left(m/v\right) + \ln\left(2/\delta\right)}{m}}
+% \end{split}
+% \end{align}
+% \end{theorem}
+
+\begin{proof}
+First, let $\bar{\theta}\in\arg\max_{\theta\in\Theta}\mathcal{E}_{\mathcal{T}}(\theta)$. Then, from generalization error bound of $\mathcal{E}_{\mathcal{D}}(\bar{\theta})$, the following inequality holds with probability at most $\frac{\delta}{2}$,
+\begin{align}
+\hat{\mathcal{E}}_{\mathcal{D}}(\bar{\theta}) - \mathcal{E}_{\mathcal{D}}(\bar{\theta}) > \sqrt{\frac{v\ln\left(In/v\right) + \ln\left(2/\delta\right)}{In}},
+\end{align}
+where $v$ is a VC dimension of $\Theta$.
+Furthermore, from Theorem 1,
+ we have the following inequality with probability at most $\frac{\delta}{2}$,
+\begin{align}
+\mathcal{E}_{\mathcal{T}}(\hat{\theta}^{\gamma}) > \mathcal{E}_{\mathcal{D}}^{\gamma}(\hat{\theta}^{\gamma}) + \frac{1}{2}\mathbf{Div}(\mathcal{D},\mathcal{T}) + \max_{k\in[1,N]} \sqrt{\frac{v_{k}\ln\left(In/v_{k}\right)+\ln(2N/\delta)}{In}}.
+\end{align}
+
+Finally, let us consider the set of event such that $\hat{\mathcal{E}}_{\mathcal{D}}(\bar{\theta}) - \mathcal{E}_{\mathcal{D}}(\bar{\theta}) \leq \sqrt{\frac{v\ln\left(In/v\right) + \ln\left(2/\delta\right)}{In}}$ and $\mathcal{E}_{\mathcal{T}}(\hat{\theta}^{\gamma}) \leq \mathcal{E}_{\mathcal{D}}^{\gamma}(\hat{\theta}^{\gamma}) + \frac{1}{2}\mathbf{Div}(\mathcal{D},\mathcal{T}) + \max_{k\in[1,N]} \sqrt{\frac{v_{k}\ln\left(In/v_{k}\right)+\ln(2N/\delta)}{In}}$ whose probability is at least greater than $1-\delta$.
+Then, under this set of event, we have,
+\begin{align}
+    \min_{\theta'}\hat{\mathcal{E}}_{\mathcal{D}}(\theta') &\leq \hat{\mathcal{E}}_{\mathcal{D}}(\bar{\theta})\leq \mathcal{E}_{\mathcal{D}}(\bar{\theta}) +\sqrt{\frac{v\ln\left(In/v\right) + \ln\left(2/\delta\right)}{In}}\\
+    &\leq \mathcal{E}_{\mathcal{T}}(\bar{\theta})+ \frac{1}{2}\mathbf{Div}(\mathcal{D}, \mathcal{T}) +\sqrt{\frac{v\ln\left(In/v\right) + \ln\left(2/\delta\right)}{In}}\\
+    &\leq \min_{\theta'}\mathcal{E}_{\mathcal{T}}\left(\theta'\right) + \frac{1}{2}\mathbf{Div}(\mathcal{D}, \mathcal{T}) + \sqrt{\frac{v\ln\left(In/v\right) + \ln\left(2/\delta\right)}{In}}
+\end{align}
+Consequently, we have,
+\begin{align}
+% \begin{split}
+\mathcal{E}_{\mathcal{T}}(\hat{\theta}^{\gamma})& - \min_{\theta'}\mathcal{E}_{\mathcal{T}}\left(\theta'\right) \nonumber \\
+&\leq \mathcal{E}_{\mathcal{D}}^{\gamma}(\hat{\theta}^{\gamma}) - \min_{\theta'}\hat{\mathcal{E}}_{\mathcal{D}}\left(\theta'\right) + \mathbf{Div}(\mathcal{D}, \mathcal{T}) + \max_{k\in[1,N]} \sqrt{\frac{v_{k}\ln\left(In/v_{k}\right)+\ln(2N/\delta)}{In}} \nonumber \\
+&+ \sqrt{\frac{v\ln\left(In/v\right) + \ln\left(2/\delta\right)}{In}}\\
+&\leq \mathcal{E}_{\mathcal{D}}^{\gamma}(\hat{\theta}^{\gamma}) - \min_{\theta'}\hat{\mathcal{E}}_{\mathcal{D}}\left(\theta'\right) + \frac{1}{I}\sum_{i=1}^{I}\mathbf{Div}(\mathcal{D}_{i}, \mathcal{T}) + \max_{k\in[1,N]} \sqrt{\frac{v_{k}\ln\left(In/v_{k}\right)+\ln(2N/\delta)}{In}} \nonumber \\
+&+ \sqrt{\frac{v\ln\left(In/v\right) + \ln\left(2/\delta\right)}{In}}
+% \end{split}
+\end{align}
+\end{proof}
+
+
+% \section{Related Works}
+
+% The primary branch of domain generalization methods is domain-invariant feature learning~\cite{ganin2016dann,li2018mmd,sun2016coral,matsuura2020aaai_mixture_mld,muandet2013icml_DIFL}. Their fundamental intuition is the invariant feature between domains generalizes to unseen domains. Methods in this branch vary depending on how to align feature distributions between domains by explicitly minimizing divergences between the distributions. 
+% For example, domain-adversarial neural networks (DANN) \cite{ganin2016dann}, initially proposed for domain adaptation, achieve this goal via adversarial learning with discriminator.
+% Several studies introduce class-conditional domain-invariant feature learning to improve the robustness of the prediction invariance~\cite{li2018cdann,zhao2020er_entropy_regularization}. One drawback of domain-invariant feature learning is falling into spurious invariant correlation. Invariant causal prediction methods try to capture causal domain-invariant relations based on the causality framework~\cite{arjovsky2019irm,zhang2020arm,krueger2020vrex}. 
+% For instance, invariant risk minimization (IRM) \cite{arjovsky2019irm} distinguishes causal relations from spurious ones and trains a model to utilize the former features while avoiding the latter ones.
+
+% Another line of studies is meta-learning based methods~\cite{li2018mldg,balaji2018metareg,dou2019masf,li2019episodic_epi-fcr}. 
+% They simulate the domain shift during training via episodic batch split. For instance, Meta-Learning for Domain Generalization (MLDG)~\cite{li2018mldg} divides input batch into meta-train and meta-test batches, computes gradients of the meta-train batch, and regularizes them via the meta-test batch. Through this process, MLDG normalizes domain-specific gradients and makes a model more domain-invariant.
+
+% Data augmentation enlarges the support of the training distribution and it helps the unseen target domain to be covered by training distribution~\cite{nuriel2020padain,zhou2021mixstyle,nam2019sagnet,carlucci2019jigsaw_jigen,zhou2020l2a_ot,bai2020decaug}. Most of them utilize task-specific priors, for example, several methods attempt to learn shape-biased representation to alleviate a strong bias of convolutional neural networks (CNN) toward texture~\cite{geirhos2019cnn_biased_towards_texture}.
+% Besides, there are approaches to mix data points or gradients between domains~\cite{yan2020interdomain_mixup,xu2020interdomain_mixup_aaai,wang2020interdomain_mixup_icassp_dg,shankar2018crossgrad}. Training signals from mixed domains make a model robust to domain shift. On the other hand, several studies try to utilize domain-specific features~\cite{seo2020dson,chattopadhyay2020dmg}. They adopt domain-specific modules, \eg, normalization or mask, and utilize them in ensemble-way in test time.
+
+% Recently, DomainBed evaluates the numerous methods with a common evaluation protocol and finalizes that simple ERM provides better or comparable results without any additional treatment~\cite{gulrajani2020domainbed}.   
+% Motivated from the benchmark, this paper reveals the reason why ERM works well. The analysis shows that ERM finds a loss valley shared over multiple in-domains by learning domain-invariant features and by normalizing domain-specific gradients like meta-learning approaches. 
+
+% SWA is introduced to approximate fast geometric ensembling (FGE)~\cite{garipov2018fge} in a single model, by averaging weights from multiple local minima~\cite{izmailov2018swa}. They show that SWA finds flatter minima than SGD, which provide better generalization performance~\cite{AsymmeticValley}.
+% \jb{We employ SWA to capture a center of the loss valley over multiple in-domains and investigate how SWA contributes to domain generalization tasks, theoretically and empirically. It should be noted that this is the first attempt to analyze SWA on distributional shift caused by domain changes.}
+
+
+\section{Additional Experiments}
+
+\subsection{Comparison of flatness-aware solvers}
+
+\input{tables/flatness_methods}
+
+% Table~\ref{table:comparison_swa_swad} shows the improvements from dense and overfit-aware sampling strategies compared with the baseline method, SWA.
+
+Interestingly, the average performance ranking of flatness-aware solvers is the same as the results of the local flatness test (See Figure 3 in the main text). In both experiments, SWAD performs best, followed by SWAs, SAM, and ERM.
+It is another evidence of our claim that domain generalization is achievable by seeking flat minima.
+
+On the other hand, comparing SWAs and SWAD demonstrates the effectiveness of the proposed dense and overfit-aware sampling strategy.
+SWAD improves average performance up to 1.4pp, and surpasses both SWAs on every benchmark.
+
+% that proposed dense and overfit-aware sampling strategy remarkably improves domain generalization performance. Furthermore, this experiment also shows SWAD provides robustness to dataset splitting (different trials), as result in lower standard error than SWA.
+
+
+\section{Full Results}
+
+In this section, we show detailed results of Table 2 in the main text.
+$\dagger$ and $\ddagger$ indicate results from DomainBed's and our HP search protocols, respectively. Standard errors are reported from three trials, if available.
+% Note that $\ddagger$ results use augmentation for validation set following DomainBed~\cite{gulrajani2020domainbed}. 
+% SWAD results correpond to Table 2 in the main text, which only search HP for tolerance ratio in [1.2, 1.3] and use default HP for the others. 
+% SWAD$^\ddagger$ indicate the results from the proposed HP search protocol, where search space of lr is [3e-5, 5e-5], of dropout is [0.0, 0.1], of weight decay is [1e-4, 1e-6], and of tolerance ratio is [1.2, 1.3]. 
+
+
+\subsection{PACS}
+\input{tables/detailed_tables/pacs_detailed}
+
+\subsection{VLCS}
+\input{tables/detailed_tables/vlcs_detailed}
+
+\subsection{OfficeHome}
+\input{tables/detailed_tables/officehome_detailed}
+
+\subsection{TerraIncognita}
+\input{tables/detailed_tables/terrainc_detailed}
+
+\subsection{DomainNet}
+\input{tables/detailed_tables/domainnet_detailed}
+
+\section{Assets}
+
+In this section, we discuss about licenses, copyrights, and ethical issues of our assets, such as code and datasets. 
+
+\subsection{Code}
+
+Our work is built upon DomainBed~\cite{gulrajani2020domainbed}\footnote{\url{https://github.com/facebookresearch/DomainBed}}, which is released under the MIT license.
+
+\subsection{Datasets}
+
+While we use public datasets only, we track how the datasets were built to discuss licenses, copyrights, and potential ethical issues.
+For \data{DomainNet}~\cite{peng2019domainnet} and \data{OfficeHome}~\cite{venkateswara2017officehome}, we use the datasets for non-profit academic research only following their fair use notice. \data{TerraIncognita}~\cite{beery2018terraincognita} is a subset of Caltech Camera Traps (CCT) dataset, distributed under the Community Data License Agreement (CDLA) license.
+\data{PACS}~\cite{li2017pacs} and \data{VLCS}~\cite{fang2013vlcs} datasets have images collected from the web and we could not find any statements about licenses, copyrights, or whether consent was obtained.
+%Further, we could not find whether they get authorization of the assets or not, even though both datasets have person class.
+Considering that both datasets contain person class and images of people, there may be potential ethical issues.
+
+
+\section{Reproducibility}
+
+To provide details of our algorithm and guarantee reproducibility, we provide the source code\footnote{\url{https://github.com/khanrc/swad}} publicly. The code also specifies detailed environments, dependencies, how to download datasets, and instructions to reproduce the main results (Table 1 and 2 in the main text).
+
+\subsection{Infrastructures}
+
+Every experiment is conducted on a single NVIDIA Tesla P40 or V100, Python 3.8.6, PyTorch 1.7.0, Torchvision 0.8.1, and CUDA 9.2.
+
+\subsection{Runtime Analysis}
+
+The total runtime varies depending on datasets and the moment detected to overfit. It takes about 4 hours for \data{PACS} and \data{VLCS}, 8 hours for \data{OfficeHome}, 8.5 hours for \data{TerraIncognita}, and 56 hours for \data{DomainNet} on average, when using a single NVIDIA Tesla P40 GPU. Each experiment includes the leave-one-out cross-validations for all domains in each dataset.
+%That is, each experiment has the maximum number of iterations $T \times D$, where $T$ and $D$ indicates the number of iterations for each target domain and the number of domains, respectively.
+
+\subsection{Complexity Analysis}
+
+The only additional time overhead incurs from stochastic weights selection, which requires further evaluations.
+To analyze the overhead, let the forward time $t_f$, backward time $t_b$, training and validation split ratio $r=|X^{train}|/|X^{valid}|$, total in-domain samples $n$, and evaluation frequency $v$ that indicates how many evaluations are conducted for each epoch. For conciseness, we assume $t=t_f=t_b$ and do not consider early stopping.
+
+For one epoch, training time is $2tnr/(r+1)$, and evaluation time is $vtn/(r+1)$. The total runtime for one epoch is $tn(2r+v)/(r+1)$. Final overhead ratio is $(2r+v)/(2r+v_b)$ where $v_b$ is the evaluation frequency of a baseline. In our main experiments, we use $r=4$. Compared to the default parameters of DomainBed~\cite{gulrajani2020domainbed}, we use $v=2v_b$ for \data{DomainNet}, $v=6v_b$ for \data{VLCS}, and $v=3v_b$ for the others. Then, the total runtime of our algorithm takes from 1.07 (\data{PACS}) to 1.27 (\data{DomainNet)} times more than the ERM baseline. In practice, it can be improved by conducting approximated evaluations using sub-sampled validation set.
+%stochastic evaluation approximation via validation set sampling.
+
+
+In terms of memory complexity, our method does not require additional GPU memory. Instead, we leverage CPU memory to minimize training time overhead, which takes up to $\max (N, M)$ times more than the baseline.
+
+% \section{Additional Loss Surface Visualizations}
+
+% In this section, we provide loss surface visualizations for all target domains in all datasets. For each figure, the three points, namely circle, rectangle, and triangle, indicate model weights chosen at the end of the training phase with equal intervals. Each plane is defined by the three weights and losses upon the plane are visualized with contours. The first row of a figure shows training loss surfaces, and the second row shows the validation and test loss surfaces. The visualization results show that our observations are consistent independent from target domains or datasets.
+% % \jb{ToDo: explain about an outlier Figure 6.}
+
+% On the other hand, we observe a special case that the domain shift of an out-of-domain is not bounded to a shared loss valley of in-domains (See Figure~\ref{figure:add_loss_surface_VLCS_LabelMe}). The un-bounded condition leads SWA not to guarantee better performance than ERM. In the experiments on the \textit{LabelMe} case in \data{VLCS}, SWA shows 1.0pp of performance degradation compared to ERM. This un-bounded condition is a special case on domain generalization tasks because it is only observed once among 22 cases. We should note again that all the other cases except for \textit{LabelMe} in \data{VLCS} show their bounded conditions in their loss surface visualizations (See the other loss surfaces in this section) as well as that the SWA method on the cases provides consistently better solutions than ERM in our experiments (See Table 2, 3, 4, 5, and 6 in the main paper). 
+
+% % On the other hand, we observe an outlier in Figure~\ref{figure:add_loss_surface_VLCS_LabelMe}. There is a shared loss valley between training domains and the ERM solutions appear near the boundary of the wide flat region of optimal points, but the loss valley is not shown in the test domain, \textit{LabelMe}. 
+% % We judged this outlier as the case that a domain shift is not bound to in-domains. In our experiment, we found that SWA cannot provide a better solution than ERM when the domain shift is not bounded (See \textit{LabelMe} in Table 3). However, in all the other cases, out-of-domain shifts are observed as being bounded to in-domains (See the other loss surfaces in this section) and our method consistently shows better performances than ERM (See all the other cases in Table 2, 3, 4, 5, and 6).   
+% % That is, even in the outlier, only our third observation is not found.
+
+% % \input{figures/loss_space_more}
+% % \clearpage
+% \input{figures/additional_loss_spaces}

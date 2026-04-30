@@ -1,0 +1,297 @@
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}
+\contentsline {section}{\numberline {2}Existing ML benchmarks for distribution shifts}{6}{section.2}
+\contentsline {section}{\numberline {3}Problem settings}{7}{section.3}
+\contentsline {subsection}{\numberline {3.1}Domain generalization (Figure\nobreakspace {}\ref {fig:problems}-Top)}{7}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Subpopulation shift (Figure\nobreakspace {}\ref {fig:problems}-Bottom)}{7}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Hybrid settings}{8}{subsection.3.3}
+\setcounter {tocdepth}{3}
+\contentsline {section}{\numberline {4}\textsc {Wilds}\xspace datasets}{8}{section.4}
+\contentsline {subsection}{\numberline {4.1}Domain generalization datasets}{8}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}\textsc {iWildCam2020{}-wilds{}}\xspace : Species classification across different camera traps}{8}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}\textsc {Camelyon17{}-wilds{}}\xspace : Tumor identification across different hospitals}{8}{subsubsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.3}\textsc {RxRx1{}-wilds{}}\xspace : Genetic perturbation classification across experimental batches}{10}{subsubsection.4.1.3}
+\contentsline {subsubsection}{\numberline {4.1.4}\textsc {OGB-MolPCBA{}}\xspace : Molecular property prediction across different scaffolds}{11}{subsubsection.4.1.4}
+\contentsline {subsubsection}{\numberline {4.1.5}\textsc {GlobalWheat{}-wilds{}}\xspace : Wheat head detection across regions of the world}{11}{subsubsection.4.1.5}
+\contentsline {subsection}{\numberline {4.2}Subpopulation shift datasets}{13}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}\textsc {CivilComments{}-wilds{}}\xspace : Toxicity classification across demographic identities}{13}{subsubsection.4.2.1}
+\contentsline {subsection}{\numberline {4.3}Hybrid datasets}{13}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}\textsc {FMoW{}-wilds{}}\xspace : Land use classification across different regions and years}{13}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}\textsc {PovertyMap{}-wilds{}}\xspace : Poverty mapping across different countries}{14}{subsubsection.4.3.2}
+\contentsline {subsubsection}{\numberline {4.3.3}\textsc {Amazon{}-wilds{}}\xspace : Sentiment classification across different users}{15}{subsubsection.4.3.3}
+\contentsline {subsubsection}{\numberline {4.3.4}\textsc {Py150{}-wilds{}}\xspace : Code completion across different codebases}{16}{subsubsection.4.3.4}
+\setcounter {tocdepth}{1}
+\contentsline {section}{\numberline {5}Performance drops from distribution shifts}{17}{section.5}
+\contentsline {subsection}{\numberline {5.1}In-distribution performance should be measured on $P^\mathsf {test}$, not $P^\mathsf {train}$}{17}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Types of in-distribution settings}{18}{subsection.5.2}
+\contentsline {paragraph}{Test-to-test (train on $P^\mathsf {test}$, test on $P^\mathsf {test}$).}{18}{subsection.5.2}
+\contentsline {paragraph}{Mixed-to-test (train on a mixture of $P^\mathsf {train}$ and $P^\mathsf {test}$, test on $P^\mathsf {test}$).}{18}{subsection.5.2}
+\contentsline {paragraph}{Train-to-train (train on $P^\mathsf {train}$, evaluate on $P^\mathsf {train}$).}{18}{subsection.5.2}
+\contentsline {paragraph}{Average (report average instead of worst-case performance).}{19}{subsection.5.2}
+\contentsline {paragraph}{Random split (train and evaluate on an i.i.d.\nobreakspace {}split).}{19}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Model selection}{19}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Results}{19}{subsection.5.4}
+\contentsline {section}{\numberline {6}Baseline algorithms for distribution shifts}{19}{section.6}
+\contentsline {subsection}{\numberline {6.1}Domain generalization baselines}{21}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Subpopulation shift baselines}{21}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}Setup}{21}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Results}{22}{subsection.6.4}
+\contentsline {section}{\numberline {7}Empirical trends}{22}{section.7}
+\contentsline {subsection}{\numberline {7.1}Underspecification}{22}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Model selection with in-distribution versus out-of-distribution validation sets}{22}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}The compounding effects of multiple distribution shifts}{23}{subsection.7.3}
+\setcounter {tocdepth}{2}
+\contentsline {section}{\numberline {8}Distribution shifts in other application areas}{23}{section.8}
+\contentsline {subsection}{\numberline {8.1}Algorithmic fairness}{23}{subsection.8.1}
+\contentsline {paragraph}{Dataset: New York stop-and-frisk.}{24}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Medicine and healthcare}{24}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Genomics}{25}{subsection.8.3}
+\contentsline {paragraph}{Dataset: Genome-wide protein-DNA binding profiles across different cell types. }{26}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.4}Natural language and speech processing}{26}{subsection.8.4}
+\contentsline {paragraph}{Datasets: Other distribution shifts in Amazon and Yelp reviews.}{27}{subsection.8.4}
+\contentsline {subsection}{\numberline {8.5}Education}{27}{subsection.8.5}
+\contentsline {subsection}{\numberline {8.6}Robotics}{27}{subsection.8.6}
+\contentsline {paragraph}{Dataset: BDD100K.}{28}{subsection.8.6}
+\contentsline {subsection}{\numberline {8.7}Feedback loops}{28}{subsection.8.7}
+\contentsline {section}{\numberline {9}Guidelines for method developers}{28}{section.9}
+\contentsline {subsection}{\numberline {9.1}General-purpose and specialized training algorithms}{28}{subsection.9.1}
+\contentsline {subsection}{\numberline {9.2}Methods beyond training algorithms}{29}{subsection.9.2}
+\contentsline {subsection}{\numberline {9.3}Avoiding overfitting to the test distribution}{29}{subsection.9.3}
+\contentsline {subsection}{\numberline {9.4}Reporting both ID and OOD performance}{29}{subsection.9.4}
+\contentsline {subsection}{\numberline {9.5}Extensions to other problem settings}{29}{subsection.9.5}
+\setcounter {tocdepth}{1}
+\contentsline {section}{\numberline {10}Using the \textsc {Wilds}\xspace package}{29}{section.10}
+\contentsline {paragraph}{Datasets and data loading.}{30}{section.10}
+\contentsline {paragraph}{Domain information.}{30}{figure.caption.15}
+\contentsline {paragraph}{Evaluation.}{30}{figure.caption.16}
+\contentsline {section}{\numberline {A}Dataset realism}{61}{section.A}
+\contentsline {section}{\numberline {B}Prior work on ML benchmarks for distribution shifts}{62}{section.B}
+\contentsline {paragraph}{Distribution shifts from transformations.}{62}{section.B}
+\contentsline {paragraph}{Synthetic-to-real transfers.}{62}{section.B}
+\contentsline {paragraph}{Distribution shifts from constrained splits.}{63}{section.B}
+\contentsline {paragraph}{Distribution shifts across datasets.}{63}{section.B}
+\contentsline {section}{\numberline {C}Potential extensions to other problem settings}{63}{section.C}
+\contentsline {subsection}{\numberline {C.1}Problem settings in domain shifts}{63}{subsection.C.1}
+\contentsline {subsection}{\numberline {C.2}Unsupervised domain adaptation}{64}{subsection.C.2}
+\contentsline {subsection}{\numberline {C.3}Test-time adaptation}{65}{subsection.C.3}
+\contentsline {subsection}{\numberline {C.4}Selective prediction}{65}{subsection.C.4}
+\contentsline {section}{\numberline {D}Additional experimental details}{65}{section.D}
+\contentsline {subsection}{\numberline {D.1}Model hyperparameters}{65}{subsection.D.1}
+\contentsline {subsection}{\numberline {D.2}Replicates}{66}{subsection.D.2}
+\contentsline {subsection}{\numberline {D.3}Baseline algorithms}{66}{subsection.D.3}
+\setcounter {tocdepth}{2}
+\contentsline {section}{\numberline {E}Additional dataset details and results}{67}{section.E}
+\contentsline {subsection}{\numberline {E.1}\textsc {iWildCam2020{}-wilds{}}\xspace }{67}{subsection.E.1}
+\contentsline {subsubsection}{\numberline {E.1.1}Setup}{67}{subsubsection.E.1.1}
+\contentsline {paragraph}{Problem setting.}{67}{subsubsection.E.1.1}
+\contentsline {paragraph}{Data.}{67}{subsubsection.E.1.1}
+\contentsline {paragraph}{Evaluation.}{68}{figure.caption.22}
+\contentsline {paragraph}{Potential leverage.}{69}{figure.caption.22}
+\contentsline {subsubsection}{\numberline {E.1.2}Baseline results}{69}{subsubsection.E.1.2}
+\contentsline {paragraph}{Model.}{69}{figure.caption.23}
+\contentsline {paragraph}{ERM results and performance drops.}{69}{figure.caption.23}
+\contentsline {paragraph}{Additional baseline methods.}{70}{table.caption.24}
+\contentsline {paragraph}{Discussion.}{70}{table.caption.24}
+\contentsline {subsubsection}{\numberline {E.1.3}Broader context}{71}{subsubsection.E.1.3}
+\contentsline {subsubsection}{\numberline {E.1.4}Additional details}{71}{subsubsection.E.1.4}
+\contentsline {paragraph}{Data processing.}{71}{subsubsection.E.1.4}
+\contentsline {paragraph}{Modifications to the original dataset.}{71}{subsubsection.E.1.4}
+\contentsline {subsection}{\numberline {E.2}\textsc {Camelyon17{}-wilds{}}\xspace }{72}{subsection.E.2}
+\contentsline {subsubsection}{\numberline {E.2.1}Setup}{72}{subsubsection.E.2.1}
+\contentsline {paragraph}{Problem setting.}{72}{subsubsection.E.2.1}
+\contentsline {paragraph}{Data.}{72}{subsubsection.E.2.1}
+\contentsline {paragraph}{Evaluation.}{72}{Item.19}
+\contentsline {paragraph}{Potential leverage.}{73}{Item.19}
+\contentsline {subsubsection}{\numberline {E.2.2}Baseline results}{73}{subsubsection.E.2.2}
+\contentsline {paragraph}{Model.}{73}{table.caption.26}
+\contentsline {paragraph}{ERM results and performance drops.}{73}{table.caption.26}
+\contentsline {paragraph}{Additional baseline methods.}{74}{table.caption.26}
+\contentsline {paragraph}{Discussion.}{74}{figure.caption.27}
+\contentsline {subsubsection}{\numberline {E.2.3}Broader context}{75}{subsubsection.E.2.3}
+\contentsline {subsubsection}{\numberline {E.2.4}Additional details}{75}{subsubsection.E.2.4}
+\contentsline {paragraph}{Data processing.}{75}{subsubsection.E.2.4}
+\contentsline {paragraph}{Modifications to the original dataset.}{76}{subsubsection.E.2.4}
+\contentsline {paragraph}{Additional data sources.}{76}{subsubsection.E.2.4}
+\contentsline {subsection}{\numberline {E.3}\textsc {RxRx1{}-wilds{}}\xspace }{76}{subsection.E.3}
+\contentsline {subsubsection}{\numberline {E.3.1}Setup}{76}{subsubsection.E.3.1}
+\contentsline {paragraph}{Problem setting.}{76}{subsubsection.E.3.1}
+\contentsline {paragraph}{Data.}{77}{subsubsection.E.3.1}
+\contentsline {paragraph}{Evaluation.}{79}{Item.23}
+\contentsline {paragraph}{Potential leverage.}{79}{Item.23}
+\contentsline {subsubsection}{\numberline {E.3.2}Baseline results}{79}{subsubsection.E.3.2}
+\contentsline {paragraph}{Model.}{79}{subsubsection.E.3.2}
+\contentsline {paragraph}{ERM results and performance drops.}{79}{subsubsection.E.3.2}
+\contentsline {paragraph}{Additional baseline methods.}{80}{table.caption.32}
+\contentsline {paragraph}{Discussion.}{80}{table.caption.32}
+\contentsline {subsubsection}{\numberline {E.3.3}Broader context}{80}{subsubsection.E.3.3}
+\contentsline {subsubsection}{\numberline {E.3.4}Additional details}{81}{subsubsection.E.3.4}
+\contentsline {paragraph}{Data processing.}{81}{subsubsection.E.3.4}
+\contentsline {paragraph}{Modifications to the original dataset.}{81}{subsubsection.E.3.4}
+\contentsline {subsection}{\numberline {E.4}\textsc {OGB-MolPCBA{}}\xspace }{82}{subsection.E.4}
+\contentsline {subsubsection}{\numberline {E.4.1}Setup}{82}{subsubsection.E.4.1}
+\contentsline {paragraph}{Problem setting.}{82}{subsubsection.E.4.1}
+\contentsline {paragraph}{Data.}{82}{subsubsection.E.4.1}
+\contentsline {paragraph}{Evaluation.}{82}{figure.caption.33}
+\contentsline {paragraph}{Potential leverage.}{83}{figure.caption.33}
+\contentsline {subsubsection}{\numberline {E.4.2}Baseline results}{83}{subsubsection.E.4.2}
+\contentsline {paragraph}{Model.}{83}{subsubsection.E.4.2}
+\contentsline {paragraph}{ERM results and performance drops.}{83}{subsubsection.E.4.2}
+\contentsline {paragraph}{Additional baseline methods.}{84}{subsubsection.E.4.2}
+\contentsline {subsubsection}{\numberline {E.4.3}Broader context}{84}{subsubsection.E.4.3}
+\contentsline {subsubsection}{\numberline {E.4.4}Additional details}{85}{subsubsection.E.4.4}
+\contentsline {subsection}{\numberline {E.5}\textsc {GlobalWheat{}-wilds{}}\xspace }{85}{subsection.E.5}
+\contentsline {subsubsection}{\numberline {E.5.1}Setup}{85}{subsubsection.E.5.1}
+\contentsline {paragraph}{Problem setting.}{85}{subsubsection.E.5.1}
+\contentsline {paragraph}{Data.}{85}{subsubsection.E.5.1}
+\contentsline {paragraph}{Evaluation.}{87}{table.caption.36}
+\contentsline {paragraph}{Potential leverage.}{87}{table.caption.36}
+\contentsline {subsubsection}{\numberline {E.5.2}Baseline results}{87}{subsubsection.E.5.2}
+\contentsline {paragraph}{Model.}{87}{subsubsection.E.5.2}
+\contentsline {paragraph}{ERM results and performance drops.}{87}{table.caption.39}
+\contentsline {paragraph}{Additional baseline methods.}{89}{table.caption.39}
+\contentsline {paragraph}{Discussion.}{89}{table.caption.39}
+\contentsline {subsubsection}{\numberline {E.5.3}Broader context}{89}{subsubsection.E.5.3}
+\contentsline {subsubsection}{\numberline {E.5.4}Additional details}{90}{subsubsection.E.5.4}
+\contentsline {paragraph}{Modifications to the original dataset.}{90}{subsubsection.E.5.4}
+\contentsline {subsection}{\numberline {E.6}\textsc {CivilComments{}-wilds{}}\xspace }{90}{subsection.E.6}
+\contentsline {subsubsection}{\numberline {E.6.1}Setup}{90}{subsubsection.E.6.1}
+\contentsline {paragraph}{Problem setting.}{90}{subsubsection.E.6.1}
+\contentsline {paragraph}{Data.}{90}{subsubsection.E.6.1}
+\contentsline {paragraph}{Evaluation.}{90}{Item.39}
+\contentsline {paragraph}{Potential leverage.}{91}{Item.39}
+\contentsline {subsubsection}{\numberline {E.6.2}Baseline results}{91}{subsubsection.E.6.2}
+\contentsline {paragraph}{Model.}{91}{subsubsection.E.6.2}
+\contentsline {paragraph}{ERM results and performance drops.}{91}{subsubsection.E.6.2}
+\contentsline {paragraph}{Additional baseline methods.}{92}{table.caption.41}
+\contentsline {paragraph}{Discussion.}{93}{Item.41}
+\contentsline {subsubsection}{\numberline {E.6.3}Broader context}{93}{subsubsection.E.6.3}
+\contentsline {subsubsection}{\numberline {E.6.4}Additional details}{94}{subsubsection.E.6.4}
+\contentsline {paragraph}{Evaluation metrics.}{94}{subsubsection.E.6.4}
+\contentsline {paragraph}{Data processing.}{94}{subsubsection.E.6.4}
+\contentsline {paragraph}{Modifications to the original dataset.}{94}{table.caption.42}
+\contentsline {paragraph}{Additional baseline results.}{95}{table.caption.42}
+\contentsline {paragraph}{Additional data sources.}{95}{table.caption.42}
+\contentsline {subsection}{\numberline {E.7}\textsc {FMoW{}-wilds{}}\xspace }{96}{subsection.E.7}
+\contentsline {subsubsection}{\numberline {E.7.1}Setup}{96}{subsubsection.E.7.1}
+\contentsline {paragraph}{Problem setting.}{96}{subsubsection.E.7.1}
+\contentsline {paragraph}{Data.}{96}{subsubsection.E.7.1}
+\contentsline {paragraph}{Evaluation.}{96}{figure.caption.43}
+\contentsline {paragraph}{Potential leverage.}{98}{table.caption.46}
+\contentsline {subsubsection}{\numberline {E.7.2}Baseline results}{98}{subsubsection.E.7.2}
+\contentsline {paragraph}{Model.}{98}{subsubsection.E.7.2}
+\contentsline {paragraph}{ERM results and performance drops.}{99}{subsubsection.E.7.2}
+\contentsline {paragraph}{Additional baseline methods.}{99}{subsubsection.E.7.2}
+\contentsline {paragraph}{Discussion.}{99}{subsubsection.E.7.2}
+\contentsline {subsubsection}{\numberline {E.7.3}Broader context}{101}{subsubsection.E.7.3}
+\contentsline {subsubsection}{\numberline {E.7.4}Additional details}{101}{subsubsection.E.7.4}
+\contentsline {paragraph}{Data processing and modifications to the original dataset.}{101}{subsubsection.E.7.4}
+\contentsline {paragraph}{Additional challenges in high-resolution satellite datasets.}{101}{subsubsection.E.7.4}
+\contentsline {subsection}{\numberline {E.8}\textsc {PovertyMap{}-wilds{}}\xspace }{101}{subsection.E.8}
+\contentsline {subsubsection}{\numberline {E.8.1}Setup}{102}{subsubsection.E.8.1}
+\contentsline {paragraph}{Problem setting.}{102}{subsubsection.E.8.1}
+\contentsline {paragraph}{Data.}{102}{subsubsection.E.8.1}
+\contentsline {paragraph}{Evaluation.}{103}{figure.caption.48}
+\contentsline {paragraph}{Potential leverage.}{103}{figure.caption.48}
+\contentsline {subsubsection}{\numberline {E.8.2}Baseline results}{103}{subsubsection.E.8.2}
+\contentsline {paragraph}{Model.}{103}{subsubsection.E.8.2}
+\contentsline {paragraph}{ERM results and performance drops.}{104}{subsubsection.E.8.2}
+\contentsline {paragraph}{Additional baseline methods.}{105}{table.caption.51}
+\contentsline {paragraph}{Discussion.}{105}{table.caption.51}
+\contentsline {subsubsection}{\numberline {E.8.3}Broader context}{105}{subsubsection.E.8.3}
+\contentsline {subsubsection}{\numberline {E.8.4}Additional details}{106}{subsubsection.E.8.4}
+\contentsline {paragraph}{Data processing.}{106}{subsubsection.E.8.4}
+\contentsline {paragraph}{Additional results.}{106}{subsubsection.E.8.4}
+\contentsline {paragraph}{Modifications to the original dataset.}{106}{subsubsection.E.8.4}
+\contentsline {subsection}{\numberline {E.9}\textsc {Amazon{}-wilds{}}\xspace }{107}{subsection.E.9}
+\contentsline {subsubsection}{\numberline {E.9.1}Setup}{107}{subsubsection.E.9.1}
+\contentsline {paragraph}{Problem setting.}{107}{subsubsection.E.9.1}
+\contentsline {paragraph}{Data.}{107}{subsubsection.E.9.1}
+\contentsline {paragraph}{Evaluation.}{107}{Item.56}
+\contentsline {paragraph}{Potential leverage.}{107}{Item.56}
+\contentsline {subsubsection}{\numberline {E.9.2}Baseline results}{108}{subsubsection.E.9.2}
+\contentsline {paragraph}{Model.}{108}{figure.caption.53}
+\contentsline {paragraph}{ERM results and performance drops.}{108}{figure.caption.53}
+\contentsline {paragraph}{Additional baseline methods.}{109}{figure.caption.53}
+\contentsline {paragraph}{Discussion.}{109}{figure.caption.53}
+\contentsline {subsubsection}{\numberline {E.9.3}Broader context}{109}{subsubsection.E.9.3}
+\contentsline {subsubsection}{\numberline {E.9.4}Additional details}{110}{subsubsection.E.9.4}
+\contentsline {paragraph}{Data processing.}{110}{table.caption.54}
+\contentsline {paragraph}{Modifications to the original dataset.}{110}{table.caption.54}
+\contentsline {subsection}{\numberline {E.10}\textsc {Py150{}-wilds{}}\xspace }{110}{subsection.E.10}
+\contentsline {subsubsection}{\numberline {E.10.1}Setup}{110}{subsubsection.E.10.1}
+\contentsline {paragraph}{Problem setting.}{110}{subsubsection.E.10.1}
+\contentsline {paragraph}{Data.}{111}{subsubsection.E.10.1}
+\contentsline {paragraph}{Evaluation.}{111}{table.caption.55}
+\contentsline {paragraph}{Potential leverage.}{111}{table.caption.55}
+\contentsline {subsubsection}{\numberline {E.10.2}Baseline results}{111}{subsubsection.E.10.2}
+\contentsline {paragraph}{Model.}{111}{subsubsection.E.10.2}
+\contentsline {paragraph}{ERM results and performance drops.}{112}{subsubsection.E.10.2}
+\contentsline {paragraph}{Additional baseline methods.}{112}{subsubsection.E.10.2}
+\contentsline {subsubsection}{\numberline {E.10.3}Broader context}{112}{subsubsection.E.10.3}
+\contentsline {subsubsection}{\numberline {E.10.4}Additional details}{113}{subsubsection.E.10.4}
+\contentsline {paragraph}{Data split.}{113}{subsubsection.E.10.4}
+\contentsline {paragraph}{Modifications to the original dataset.}{113}{subsubsection.E.10.4}
+\contentsline {section}{\numberline {F}Datasets with distribution shifts that do not cause performance drops}{113}{section.F}
+\contentsline {subsection}{\numberline {F.1}SQF{}\xspace : Criminal possession of weapons across race and locations}{113}{subsection.F.1}
+\contentsline {subsubsection}{\numberline {F.1.1}Setup}{113}{subsubsection.F.1.1}
+\contentsline {paragraph}{Problem setting.}{113}{subsubsection.F.1.1}
+\contentsline {paragraph}{Data.}{113}{subsubsection.F.1.1}
+\contentsline {paragraph}{Evaluation.}{114}{Item.68}
+\contentsline {subsubsection}{\numberline {F.1.2}Baseline results}{114}{subsubsection.F.1.2}
+\contentsline {paragraph}{Model.}{114}{subsubsection.F.1.2}
+\contentsline {paragraph}{ERM results and performance drops.}{114}{subsubsection.F.1.2}
+\contentsline {paragraph}{Discussion.}{115}{table.caption.59}
+\contentsline {subsubsection}{\numberline {F.1.3}Additional details}{115}{subsubsection.F.1.3}
+\contentsline {paragraph}{Modifications to the original dataset.}{115}{subsubsection.F.1.3}
+\contentsline {subsection}{\numberline {F.2}ENCODE{}\xspace : Transcription factor binding across different cell types}{116}{subsection.F.2}
+\contentsline {subsubsection}{\numberline {F.2.1}Setup}{116}{subsubsection.F.2.1}
+\contentsline {paragraph}{Problem setting.}{116}{subsubsection.F.2.1}
+\contentsline {paragraph}{Data.}{117}{figure.caption.60}
+\contentsline {paragraph}{Evaluation.}{118}{table.caption.61}
+\contentsline {subsubsection}{\numberline {F.2.2}Baseline results}{118}{subsubsection.F.2.2}
+\contentsline {paragraph}{Model.}{118}{subsubsection.F.2.2}
+\contentsline {paragraph}{ERM results.}{119}{figure.caption.63}
+\contentsline {paragraph}{Discussion.}{121}{table.caption.67}
+\contentsline {subsubsection}{\numberline {F.2.3}Additional details}{123}{subsubsection.F.2.3}
+\contentsline {paragraph}{Additional dataset details.}{123}{subsubsection.F.2.3}
+\contentsline {paragraph}{Additional model details.}{123}{subsubsection.F.2.3}
+\contentsline {paragraph}{Additional data sources.}{123}{subsubsection.F.2.3}
+\contentsline {paragraph}{Data normalization. }{124}{subsubsection.F.2.3}
+\contentsline {paragraph}{Modifications to the original setup. }{124}{subsubsection.F.2.3}
+\contentsline {subsection}{\numberline {F.3}BDD100K{}\xspace : Object recognition in autonomous driving across locations}{124}{subsection.F.3}
+\contentsline {subsubsection}{\numberline {F.3.1}Setup}{124}{subsubsection.F.3.1}
+\contentsline {paragraph}{Task.}{124}{subsubsection.F.3.1}
+\contentsline {paragraph}{Data.}{124}{subsubsection.F.3.1}
+\contentsline {paragraph}{Evaluation.}{125}{subsubsection.F.3.1}
+\contentsline {subsubsection}{\numberline {F.3.2}Time of day shift}{125}{subsubsection.F.3.2}
+\contentsline {paragraph}{Distribution shift and evaluation.}{125}{subsubsection.F.3.2}
+\contentsline {paragraph}{ERM results.}{125}{subsubsection.F.3.2}
+\contentsline {subsubsection}{\numberline {F.3.3}Location shift}{126}{subsubsection.F.3.3}
+\contentsline {paragraph}{Distribution shift.}{126}{subsubsection.F.3.3}
+\contentsline {paragraph}{ERM results.}{126}{subsubsection.F.3.3}
+\contentsline {subsection}{\numberline {F.4}Amazon{}: Sentiment classification across different categories and time}{126}{subsection.F.4}
+\contentsline {subsubsection}{\numberline {F.4.1}Setup}{126}{subsubsection.F.4.1}
+\contentsline {paragraph}{Model.}{126}{subsubsection.F.4.1}
+\contentsline {subsubsection}{\numberline {F.4.2}Time shifts}{126}{subsubsection.F.4.2}
+\contentsline {paragraph}{Problem setting.}{126}{subsubsection.F.4.2}
+\contentsline {paragraph}{Data.}{126}{subsubsection.F.4.2}
+\contentsline {paragraph}{Evaluation.}{126}{Item.78}
+\contentsline {paragraph}{ERM results and performance drops.}{127}{Item.78}
+\contentsline {subsubsection}{\numberline {F.4.3}Category shifts}{127}{subsubsection.F.4.3}
+\contentsline {paragraph}{Problem setting.}{127}{subsubsection.F.4.3}
+\contentsline {paragraph}{Data.}{127}{subsubsection.F.4.3}
+\contentsline {paragraph}{Evaluation.}{128}{Item.83}
+\contentsline {paragraph}{ERM results.}{128}{table.caption.72}
+\contentsline {subsection}{\numberline {F.5}Yelp{}\xspace : Sentiment classification across different users and time}{129}{subsection.F.5}
+\contentsline {subsubsection}{\numberline {F.5.1}Setup}{129}{subsubsection.F.5.1}
+\contentsline {paragraph}{Model.}{129}{subsubsection.F.5.1}
+\contentsline {subsubsection}{\numberline {F.5.2}Time shifts}{129}{subsubsection.F.5.2}
+\contentsline {paragraph}{Problem setting.}{129}{subsubsection.F.5.2}
+\contentsline {paragraph}{Data.}{129}{subsubsection.F.5.2}
+\contentsline {paragraph}{Evaluation.}{129}{Item.86}
+\contentsline {paragraph}{ERM results and performance drops.}{129}{Item.86}
+\contentsline {subsubsection}{\numberline {F.5.3}User shift}{130}{subsubsection.F.5.3}
+\contentsline {paragraph}{Problem setting.}{130}{subsubsection.F.5.3}
+\contentsline {paragraph}{Data.}{130}{subsubsection.F.5.3}
+\contentsline {paragraph}{Evaluation.}{130}{Item.91}
+\contentsline {paragraph}{ERM results and performance drops.}{130}{Item.91}
+\setcounter {tocdepth}{1}

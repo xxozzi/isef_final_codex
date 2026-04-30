@@ -1,0 +1,62 @@
+Independent and identically distributed (i.i.d.) condition is the underlying assumption of machine learning experiments.
+However, this assumption may not hold in real-world scenarios, \ie, the training and the test data distribution may differ significantly by \emph{distribution shifts}.
+For example, a self-driving car should adapt to adverse weather or day-to-night shifts~\cite{dai2018dark, michaelis2019benchmarking}.
+Even in a simple image recognition scenario, systems rely on wrong cues for their prediction, \eg, geographic distribution~\cite{de2019does}, demographic statistics~\cite{yang2020towards}, texture~\cite{geirhos2019cnn_biased_towards_texture}, or backgrounds~\cite{beery2018recognition}.
+Consequently, a practical system should require generalizability to distribution shift, which is yet often failed by traditional approaches.
+
+Domain generalization (DG) aims to address \emph{domain shift} simulated by training and evaluating on different domains.
+DG tasks assume that both task labels and domain labels are accessible. For example, \data{PACS} dataset~\cite{li2017pacs} has seven task labels (\eg, ``dog'', ``horse'') and four domain labels (\eg, ``photo'', ``sketch'').
+Previous approaches explicitly reduced domain gaps in the latent space~\cite{muandet2013icml_DIFL,ganin2016dann,li2018cdann,bahng2019rebias,zhao2020er_entropy_regularization}, obtained well-transferable model parameters by the meta-learning framework~\cite{li2018mldg,dou2019masf,balaji2018metareg,zhang2020arm}, data augmentation~\cite{zhou2021mixstyle,shankar2018crossgrad,carlucci2019jigsaw_jigen}, or capturing causal relation~\cite{arjovsky2019irm,krueger2020vrex}.
+Despite numerous previous attempts for a decade, \citet{gulrajani2020domainbed} showed that a simple empirical risk minimization (ERM) approach works comparably or even outperforms the previous attempts on diverse DG benchmarks under a fair evaluation protocol, called ``DomainBed''.
+
+Unfortunately, although ERM showed surprising empirical success on DomainBed, simply minimizing the empirical loss on a complex and non-convex loss landscape is typically not sufficient to arrive at a good generalization~\cite{keskar2016largebatch,garipov2018fge,izmailov2018swa,foret2020sharpness}.
+%%%
+In particular, the connection between the generalization gap and the flatness of loss landscapes has been actively discussed under the i.i.d. condition~\cite{keskar2016largebatch,dziugaite2017computing,garipov2018fge,izmailov2018swa,jiang2019fantastic,foret2020sharpness}.
+\citet{izmailov2018swa} argued that seeking flat minima will lead to robustness against the loss landscape shift between training and test datasets, while a simple ERM converges to the boundary of a wide flat minimum and achieves insufficient generalization.
+In the DG scenario, because training and test loss landscapes differ more drastically due to the domain shift, we conjecture that the generalization gap between flat and sharp minima is larger than expected in the i.i.d. scenario.
+
+
+\input{tables/besttable}
+
+% --- Original ---
+% To show that flatter minima generalize better to unseen domains, we formulate a robust risk minimization (RRM) problem defined by the worst-case empirical risks within neighborhoods in parameter space~\cite{norton2019diametrical, foret2020sharpness}.
+% We theoretically show that the generalization gap of DG, \ie, the error on the target domain, is upper bounded by RRM, \ie, a flat optimal solution.
+% % We theoretically show that if we find a flat minimum by RRM, then the domain generalization gap, \ie, the error on the target domain, is upper bounded.
+% In practice, we approximate a flat minimum by a simple yet effective method, named Stochastic Weight Averaging Densely (SWAD).
+% Specifically, SWAD introduces a dense and overfit-aware stochastic weight sampling strategy for SWA~\cite{izmailov2018swa}.
+% First, 
+% % instead of gathering weights for every $K$ epochs, 
+% we suggest to sample weights \textbf{\textit{densely}}, \ie, for every iteration.
+% Also, we search the start and end iterations for averaging by considering the validation loss to \textbf{\textit{avoid overfitting}}.
+% We empirically show that SWAD finds flatter minima than the vanilla SWA does, results in better generalization to unseen domains.
+% %domain generalization.
+% Similarly, SWAD performs better than other generalization methods, such as data augmentation and consistency regularization methods, for out-of-domain generalization. In our extensive experiments on five DG benchmarks (\data{PACS}~\cite{li2017pacs}, \data{VLCS}~\cite{fang2013vlcs}, \data{OfficeHome}~\cite{venkateswara2017officehome}, \data{TerraIncognita}~\cite{beery2018terraincognita}, and \data{DomainNet}~\cite{peng2019domainnet}), SWAD achieves state-of-the-art performances with a large margin of 1.6pp on average compared to the previous best performers (See Table~\ref{table:best_table}).
+% Furthermore, since our SWAD does not change the objective function or the model architecture, SWAD can be combined with existing DG methods and improve the performances as shown in Table~\ref{table:swad_combination}.
+% --------------------
+
+
+
+To show that flatter minima generalize better to unseen domains, we formulate a robust risk minimization (RRM) problem defined by the worst-case empirical risks within neighborhoods in parameter space~\cite{norton2019diametrical, foret2020sharpness}.
+We theoretically show that the generalization gap of DG, \ie, the error on the target domain, is upper bounded by RRM, \ie, a flat optimal solution.
+Based on our theoretical observation, we modify stochastic weight averaging (SWA) \citep{izmailov2018swa}, one of the popular existing flatness-aware solvers, by introducing a dense and overfit-aware stochastic weight sampling strategy.
+% We propose Stochastic Weight Averaging Densely (SWAD), which is built upon stochastic weight averaging (SWA), one of the popular existing flatness-aware solvers.
+% Specifically, SWAD introduces a dense and overfit-aware stochastic weight sampling strategy for SWA.
+First, we suggest to sample weights \textbf{\textit{densely}}, \ie, for every iteration.
+Also, we search the start and end iterations for averaging by considering the validation loss to \textbf{\textit{avoid overfitting}}.
+We empirically show that the proposed Stochastic Weight Averaging Densely (SWAD) finds flatter minima than the vanilla SWA does, resulting in better generalization to unseen domains.
+
+% \textbf{Contribution. }
+\textbf{Contribution.}
+Our main contribution is introducing flatness into DG, and showing remarkably outperforming performances against existing DG methods. As shown in Table~\ref{table:best_table}, our SWAD improves the average DG performances by 3.6pp against the ERM baseline and 1.6pp against the existing best methods. Furthermore, by combining SWAD and previous SOTA \cite{sun2016coral}, we even achieve 0.4pp improvements against the vanilla SWAD results.
+We also empirically show that while popular in-domain generalization methods without considering flatness, \eg, Mixup~\cite{zhang2018mixup} or CutMix~\cite{yun2019cutmix}, are not effective to out-of-domain generalization (Table~\ref{table:generalization}), flatness-aware methods, \eg, SWA~\cite{izmailov2018swa} or SAM~\cite{foret2020sharpness}, are only effective methods to both in-domain and out-of-domain generalization.
+% In contrast, this paper shows the flatness is important concept for not only in-domain, but also out-of-domain generalization. 
+
+% \paragraph{Organization.}
+% \sh{We show theoretical relationship between flatness and DG in \S\ref{s_theoretical_analysis}. and propose SWAD to find flatter minima than existing flatness-aware solvers in Section \ref{s_method}.}
+
+% We provide theoretical justification of the needs for flatness in Section \ref{s_theoretical_analysis} and propose SWAD to find flatter minima than existing flatness-aware solvers in Section \ref{s_method}. 
+% %Even though flatness is considered as an important concept in in-domain generalization, 
+% Section 4 provides empirical evaluations, where SWAD remarkably outperform existing methods. In our extensive experiments on five DG benchmarks (\data{PACS}~\cite{li2017pacs}, \data{VLCS}~\cite{fang2013vlcs}, \data{OfficeHome}~\cite{venkateswara2017officehome}, \data{TerraIncognita}~\cite{beery2018terraincognita}, and \data{DomainNet}~\cite{peng2019domainnet}), SWAD achieves state-of-the-art performances with a large margin of 1.6pp on average compared to the previous best performers (See Table~\ref{table:best_table}). Furthermore, the combination with existing method even outperform our results.
+
+% Similarly, SWAD performs better than other generalization methods, such as data augmentation and consistency regularization methods, for out-of-domain generalization. In our extensive experiments on five DG benchmarks (\data{PACS}~\cite{li2017pacs}, \data{VLCS}~\cite{fang2013vlcs}, \data{OfficeHome}~\cite{venkateswara2017officehome}, \data{TerraIncognita}~\cite{beery2018terraincognita}, and \data{DomainNet}~\cite{peng2019domainnet}), SWAD achieves state-of-the-art performances with a large margin of 1.6pp on average compared to the previous best performers (See Table~\ref{table:best_table}).
+% Furthermore, since our SWAD does not change the objective function or the model architecture, SWAD can be combined with existing DG methods and improve the performances as shown in Table~\ref{table:swad_combination}.

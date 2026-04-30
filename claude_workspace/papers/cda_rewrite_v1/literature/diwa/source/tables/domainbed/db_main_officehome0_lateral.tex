@@ -1,0 +1,19 @@
+\begin{wraptable}[9]{hR!}{0.45\textwidth}%
+%   \vspace{1em}%
+  \caption{\textbf{Accuracy ($\%, \uparrow$) on OfficeHome} domain \enquote{Art} with various objectives.}%
+  \centering%
+  \adjustbox{width=1.0\linewidth}{%
+    \begin{tabular}{lcccc}%
+      \toprule
+      \textbf{Algorithm} & \textbf{No WA}               & \textbf{MA} & \textbf{DiWA}       & \textbf{DiWA$^{\dagger}$} \\
+      \midrule
+      ERM                & 62.9 $\pm$ 1.3             & \underline{65.0} $\pm$ 0.2           & 67.3 $\pm$ 0.2             & 67.7                             \\
+      Mixup              & \underline{63.1} $\pm$ 0.7 & \textbf{66.2} $\pm$ 0.3              & 67.8 $\pm$ 0.6             & 68.4                             \\
+      Coral              & \textbf{64.4} $\pm$ 0.4    & 64.4 $\pm$ 0.4                       & 67.7 $\pm$ 0.2             & 68.2                             \\
+      ERM/Mixup          & N/A                        & N/A                                  & 67.9 $\pm$ 0.7             & \underline{68.9}                 \\
+      ERM/Coral          & N/A                        & N/A                                  & \underline{68.1} $\pm$ 0.3 & 68.7                             \\
+      ERM/Mixup/Coral    & N/A                        & N/A                                  & \textbf{68.4} $\pm$ 0.4    & \textbf{69.1}                    \\
+      \bottomrule%
+    \end{tabular}}%
+  \label{table:db_home0_training}%
+\end{wraptable}%

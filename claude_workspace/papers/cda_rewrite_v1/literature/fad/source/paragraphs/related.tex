@@ -1,0 +1,28 @@
+\section{Related Works}
+\subsection{Optimizers}
+Some works \cite{xie2022adaptive,foret2021sharpness} have studied the connection between current optimization approaches, such as SGD \cite{nesterov1983method}, Adam \cite{DBLP:journals/corr/KingmaB14}, AdamW \cite{loshchilov2017decoupled} and others \cite{duchi2011adaptive,DBLP:conf/iclr/LiuJHCLG020} and in-distribution generalization. Some literature shows that Adam is more vulnerable to sharp minima than SGD \cite{wilson2017marginal}, which may result in worse generalization \cite{xie2022power, hardt2016train, hochreiter1994simplifying}. Some follow-ups \cite{luo2019adaptive,chen2018closing,xie2022adaptive,zaheer2018adaptive} propose generalizable optimizers to address this problem. 
+However, the generalization ability and convergence speed is often a trade-off \cite{DBLP:conf/iclr/KeskarMNST17,xie2022adaptive,DBLP:conf/iclr/LiuJHCLG020,zaheer2018adaptive,duchi2011adaptive}. 
+Different optimizers may favor different tasks and network architectures(e.g., SGD is often chosen for ResNet \cite{he2016deep} while AdamW \cite{loshchilov2017decoupled} for ViTs \cite{dosovitskiy2020image}). Selecting the right optimizer is critical for performance and convergence while the understanding of its relationship to model generalization remains nascent \cite{foret2021sharpness}. 
+\cite{naganuma2022empirical} finds that fine-tuned SGD outperforms Adam on OOD tasks. Yet all the previous works do not consider the effect of optimizers in current DG benchmarks and evaluation protocols. In this paper, we discuss the selection of the default optimizer in DG benchmarks.
+
+
+\subsection{Domain Generalization and Optimization}
+Domain generalization (DG) aims to improve the generalization ability to novel domains \cite{ghifary2015domain,khosla2012undoing,koh2021wilds}. 
+A common approach is to learn domain-invariant or causal features over multiple source domains \cite{dou2019domain,hu2020domain,li2018learning, li2018domain, motiian2017unified, piratla2020efficient, seo2019learning, zhang2021deep,xu2021stable,zhang2022towards,wang2022causal,zhang2023free}
+or aggregating domain-specific modules \cite{mancini2018best, mancini2018robust}. 
+Some works propose to enlarge the input space by augmentation of training data \cite{carlucci2019domain, volpi2018generalizing, qiao2020learning, shankar2018generalizing, zhou2020deep, zhou2020learning, Xu2021AFF}. 
+Exploit regularization with meta-learning \cite{dou2019domain, li2019episodic} and Invariant Risk Minimization (IRM) framework \cite{arjovsky2019invariant} are also proposed for DG.
+Recently, several works propose to ensemble model weights for better generalization \cite{cha2021swad,arpit2021ensemble,rame2022recycling, wortsman2022model,rame2022diverse,lisimple,chu2022dna} and achieve outstanding performance. 
+
+
+
+
+\subsection{Flatness of loss landscape}
+
+
+Recent works study the relationship between flatter minima lead and better generalization on in-distribution data \cite{DBLP:conf/iclr/KeskarMNST17,DBLP:conf/iclr/KeskarMNST17,zhuang2022surrogate,jia2020information,petzka2021relative}.
+\cite{kaur2022maximum} reviews the literature related to generalization and the sharpness of minima. It highlights the role of maximum Hessian eigenvalue in deciding the sharpness of minima \cite{DBLP:conf/iclr/KeskarMNST17, wen2019empirical}. 
+Some simple strategies are proposed to optimize maximum Hessian eigenvalue, such as choosing a large learning rate \cite{lewkowycz2020large, DBLP:conf/iclr/CohenKLKT21, DBLP:conf/iclr/JastrzebskiSFAT20} and smaller batch size \cite{DBLP:conf/iclr/SmithL18, lewkowycz2020large, jastrzkebski2017three}. 
+ 
+Sharpness-Aware Minimization (SAM) \cite{foret2021sharpness} and its variants \cite{zhuang2022surrogate, kwon2021asam, du2021efficient,liu2022towards, du2022sharpness,mi2022make,zhong2022improving,kim2022sharpness,kim2022fisher}, which are representative training algorithm to seek zeroth-order flatness, show outstanding performance on in-distribution generalization. 
+Most recently, several works discuss the relationship between generalization and gradient norm \cite{barrett2020implicit,zhao2022penalizing}. GAM\cite{Zhang2023GradientNA} proposes to optimize first-order flatness for better generalization. \cite{cha2021swad, rangwani2022closer} show that flatness minima also lead to superior OOD generalization. However, none of the previous works consider the optimization in DG nor provide theoretical assurance of their approach. 

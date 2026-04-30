@@ -1,0 +1,17 @@
+\begin{table}[h]%
+    \caption{\reb{\textbf{Accuracy ($\uparrow$) impact of including SAM} on domain \enquote{Art} from OfficeHome.}}
+    \centering
+    \adjustbox{width=0.7\textwidth}{
+        \reb{\begin{tabular}{llll}
+            \toprule
+            \textbf{Algorithm}          & \textbf{Weight selection} & ERM            & SAM \cite{foret2021} \\
+            \midrule
+            No DiWA                         & N/A                       & 62.9 $\pm$ 1.3 & 63.5 $\pm$ 0.5       \\
+            % MA \cite{arpit2021ensemble} & Uniform                   & 65.0 $\pm$ 0.2 & 65.5 $\pm$ 0.4       \\
+            DiWA                        & Restricted: $M \leq 20$   & 66.7 $\pm$ 0.1 & 65.4 $\pm$ 0.1       \\
+            DiWA                        & Uniform: $M = 20$         & 67.3 $\pm$ 0.3 & 66.7 $\pm$ 0.2       \\
+            DiWA$^{\dagger}$            & Uniform: $M = 60$         & \textbf{67.7}           & \textbf{67.4}                 \\
+            \bottomrule
+        \end{tabular}}}
+    \label{table:db_home0_sam}%
+\end{table}

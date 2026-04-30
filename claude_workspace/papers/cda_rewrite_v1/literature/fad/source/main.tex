@@ -1,0 +1,148 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{iccv}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{amsthm}
+\usepackage{algpseudocode, algorithm}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\usepackage[textsize=tiny]{todonotes}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{fact}{Fact}[section]
+\newtheorem{claim}{Claim}[section]
+\newtheorem{property}{Property}[section]
+\newtheorem{desideratum}{Desideratum}[section]
+\newtheorem*{remark}{Remark}
+
+
+\newcommand{\bftheta}{\boldsymbol{\theta}}
+\newcommand{\bfepsilon}{\boldsymbol{\epsilon}}
+\newcommand{\bfDelta}{\boldsymbol{\Delta}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bfg}{\boldsymbol{g}}
+\newcommand{\bfh}{\boldsymbol{h}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbE}{\mathbb{E}}
+\newcommand{\bbI}{\mathbb{I}}
+\newcommand{\caltheta}{\Theta}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\allloss}{\mathcal{L}_{\text{all}}}
+
+\newcommand{\gam}{R^{(1)}}
+\newcommand{\sam}{R^{(0)}}
+\newcommand{\fad}{R^{\text{FAD}}}
+\newcommand{\train}{{\text{tr}}}
+\newcommand{\test}{{\text{te}}}
+\newcommand{\error}{\mathcal{E}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\errortrain}{\hat{\error}_{\train}}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+\newcommand{\xrz}[1]{{\color{cyan} [Renzhe: #1]}}
+\newcommand{\zxx}[1]{{\color{red} [Xingxuan: #1]}}
+
+% Support for easy cross-referencing
+\usepackage[capitalize]{cleveref}
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+\crefname{table}{Tab.}{Tabs.}
+
+
+% \iccvfinalcopy % *** Uncomment this line for the final submission
+
+\def\iccvPaperID{2485} % *** Enter the ICCV Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ificcvfinal\pagestyle{empty}\fi
+% \ificcvfinal\pagestyle{final}\fi
+\iccvfinalcopy
+
+\makeatletter
+\def\maketag@@@#1{\hbox{\m@th\normalfont\normalsize#1}}
+\makeatother
+
+
+\begin{document}
+
+%%%%%%%%% TITLE - PLEASE UPDATE
+\title{Flatness-Aware Minimization for Domain Generalization}
+
+\author{Xingxuan Zhang, Renzhe Xu, Han Yu, Yancheng Dong, Pengfei Tian, Peng Cui*\\
+Department of Computer Science, Tsinghua University\\
+{\tt\small {xingxuanzhang@hotmail.com, cuip@tsinghua.edu.cn 
+}}}
+% {\tt\small {xingxuanzhang@hotmail.com, xrz199721@gmail.com 
+% }} \\
+% {\tt\small {yuh21@mails.tsinghua.edu.cn,
+% dongyc20@mails.tsinghua.edu.cn, e9tian@gmail.com, 
+% cuip@tsinghua.edu.cn}}}
+\maketitle
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+Domain generalization (DG) seeks to learn robust models that generalize well under unknown distribution shifts. 
+As a critical aspect of DG, 
+optimizer selection has not been explored in depth. 
+Currently, most DG methods follow the widely used benchmark, DomainBed, and utilize Adam as the default optimizer for all datasets. However, we reveal that Adam is not necessarily the optimal choice for the majority of current DG methods and datasets. Based on the perspective of loss landscape flatness, we propose a novel approach, Flatness-Aware Minimization for Domain Generalization (FAD), which can efficiently optimize both zeroth-order and first-order flatness simultaneously for DG. We provide theoretical analyses of the FAD's out-of-distribution (OOD) generalization error and convergence. Our experimental results demonstrate the superiority of FAD on various DG datasets. Additionally, we confirm that FAD is capable of discovering flatter optima in comparison to other zeroth-order and first-order flatness-aware optimization methods.
+
+
+\end{abstract}
+
+\blfootnote{*Corresponding author}
+
+%%%%%%%%% BODY TEXT
+\input{paragraphs/intro}
+\input{paragraphs/related}
+\input{paragraphs/method}
+\input{paragraphs/exp}
+\input{paragraphs/conclusion}
+%%%%%%%%% REFERENCES
+
+% \clearpage
+{\small
+\bibliographystyle{ieee_fullname}
+\bibliography{egbib}
+}
+
+\clearpage
+\onecolumn
+
+\appendix
+\input{paragraphs/appendix_proof}
+\input{paragraphs/appendix_exp}
+% \input{paragraphs/appendix_vis}
+% \clearpage
+% {\small
+% \bibliographystyle{ieee_fullname}
+% \bibliography{egbib}
+% }
+\end{document}

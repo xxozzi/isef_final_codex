@@ -1,0 +1,113 @@
+\section{Experimental details}\label{sec:expt_details}
+
+\subsection{Datasets}\label{sec:dataset_details}
+
+\paragraph{MultiNLI.}
+The standard MultiNLI train-test split allocates most examples (approximately $90\%$) to the training set,
+with another $5\%$ as a publicly-available development set and the last $5\%$ as a held-out test set
+that is only accessible through online competition leaderboards \citep{williams2018broad}.
+Because we are unable to assess model accuracy on each group through the online leaderboards, we create our own validation and test sets by combining the training set and development set and then randomly shuffling them into a $50-20-30$ train-val-test split.
+We chose to allocates more examples to the validation and test sets than the standard split to allow us to accurately estimate performance on rare groups in the validation and test sets.
+
+We use the provided gold labels as the target, removing examples with no consensus gold label
+(as is standard procedure). We annotate an example as having a negation word if any of the
+words \emph{nobody}, \emph{no}, \emph{never}, and \emph{nothing} appear in the hypothesis
+\citep{gururangan2018annotation}.
+
+\paragraph{Waterbirds.}
+The CUB dataset \citep{wah2011cub} contains photographs of birds annotated by species as well as and pixel-level segmentation masks of each bird.
+To construct the Waterbirds dataset, we label each bird as a \emph{waterbird}
+if it is a seabird (albatross, auklet, cormorant, frigatebird, fulmar, gull, jaeger, kittiwake, pelican, puffin, or tern) or waterfowl (gadwall, grebe, mallard, merganser, guillemot, or Pacific loon). Otherwise, we label it as a \emph{landbird}.
+
+To control the image background, we use the provided pixel-level segmentation masks
+to crop each bird out from its original background and onto a
+water background (categories: \emph{ocean} or \emph{natural lake}) or
+land background (categories: \emph{bamboo forest} or \emph{broadleaf forest})
+obtained from the Places dataset \citep{zhou2017places}.
+In the training set, we place $95\%$ of all waterbirds against a water background
+and the remaining $5\%$ against a land background.
+Similarly, $95\%$ of all landbirds are placed against a land background
+with the remaining $5\%$ against water.
+
+We refer to this combined CUB-Places dataset as the Waterbirds dataset
+to avoid confusion with the original fine-grained species classification task in the CUB dataset.
+
+We use the official train-test split of the CUB dataset,
+randomly choosing $20\%$ of the training data to serve as a validation set.
+For the validation and test sets, we allocate distribute landbirds and waterbirds equally to land and water backgrounds (i.e., there are the same number of landbirds on land vs. water backgrounds,
+and separately, the same number of waterbirds on land vs. water backgrounds).
+This allows us to more accurately measure the performance of the rare groups,
+and it is particularly important for the Waterbirds dataset because of its relatively small size;
+otherwise, the smaller groups (waterbirds on land and landbirds on water) would have too few samples to
+accurately estimate performance on.
+We note that we can only do this for the Waterbirds dataset because we control the generation process;
+for the other datasets, we cannot generate more samples from the rare groups.
+
+In a typical application, the validation set might be constructed by randomly dividing up the available training data. We emphasize that this is not the case here: the training set is skewed, whereas the validation set is more balanced. We followed this construction so that we could better compare ERM vs. reweighting vs. group DRO techniques using a stable set of hyperparameters. In practice, if the validation set were also skewed, we might expect hyperparameter tuning based on worst-group accuracy to be more challenging and noisy.
+
+Due to the above procedure,
+when reporting average test accuracy in our experiments,
+we calculate the average test accuracy over each group and then report a
+weighted average, with weights corresponding to the relative proportion of each group in the
+(skewed) training dataset.
+
+\paragraph{CelebA.}
+We use the official train-val-test split that accompanies the CelebA celebrity face dataset \citep{liu2015deep}. We use the \emph{Blond\_Hair} attribute as the target label and the \emph{Male}
+attribute as the spuriously-associated variable.
+
+\subsection{Models}\label{sec:model_details}
+
+\paragraph{ResNet50.}
+We use the Pytorch \texttt{torchvision} implementation of the ResNet50 model,
+starting from pretrained weights.
+
+We train the ResNet50 models using stochastic gradient descent with a momentum term of $0.9$
+and a batch size of $128$;
+the original paper used batch sizes of $128$ or $256$ depending on the dataset \citep{he2016resnet}.
+As in the original paper, we used batch normalization \citep{ioffe2015batch} and no dropout \citep{srivastava2014dropout}.
+For simplicity, we train all models without data augmentation.
+
+We use a fixed learning rate instead of the standard adaptive learning rate schedule to make our different model types easier to directly compare, since we expected the scheduler to interact differently with different model types
+(e.g., due to the different definition of loss).
+The interaction between batch norm and $\Ltwo$ penalties means that we had to adjust learning rates for each different $\Ltwo$ penalty strength (and each dataset).
+The learning rates below were chosen to be the highest learning rates that still resulted in stable optimization.
+
+For the standard training experiments in \refsec{experiments_unreg}, we use a $\Ltwo$ penalty of $\lambda = 0.0001$ (as in \citet{he2016resnet}) for both Waterbirds and CelebA,
+with a learning rate of $0.001$ for Waterbirds and $0.0001$ for CelebA.
+We train the CelebA models for $50$ epochs and the Waterbirds models for $300$ epochs.
+
+For the early stopping experiments in \refsec{experiments_complexity_control}, we train each ResNet50
+model for 1 epoch. For the strong $\Ltwo$ penalty experiments in that section, we use $\lambda = 1.0$ for Waterbirds and $\lambda = 0.1$ for CelebA, with both datasets using a learning rate of $0.00001$.
+These settings of $\lambda$ differ because we found that the lower value was sufficient for controlling overfitting on CelebA but not on Waterbirds.
+
+For the group adjustment experiments in \refsec{experiments_adjustments},
+we use the same settings of $\lambda = 1.0$ for Waterbirds and $\lambda = 0.1$ for CelebA, with both datasets using a learning rate of $0.00001$.
+For both datasets, we use the value of $C \in \{0, 1, 2, 3, 4, 5\}$ found in the benchmark grid search described below.
+
+For the benchmark in \refsec{resampling} (\reftab{benchmark}), we grid search over
+$\Ltwo$ penalties of $\lambda \in \{0.0001, 0.1, 1.0\}$ for Waterbirds and
+$\lambda \in \{0.0001, 0.01, 0.1\}$ for CelebA, using the corresponding learning rates for each $\lambda$ and dataset listed above.
+(Waterbirds and CelebA at $\lambda = 0.1$, which is not listed above, both use a learning rate of $0.0001$.)
+To avoid advantaging DRO by allowing it to try many more hyperparameters,
+we only test group adjustments (searching over $C \in \{0, 1, 2, 3, 4, 5\}$) on the $\Ltwo$ penalties used in \refsec{experiments_adjustments},
+i.e., $\lambda = 1.0$ for Waterbirds and $\lambda = 0.1$ for CelebA.
+All benchmark models were evaluated at the best early stopping epoch (as measured by robust validation accuracy).
+
+\paragraph{BERT.}
+We use the Hugging Face \texttt{pytorch-transformers} implementation of the BERT \texttt{bert-base-uncased} model,
+starting from pretrained weights \citep{devlin2019bert}.\footnote{\url{https://github.com/huggingface/pytorch-transformers}}
+We use the default tokenizer and model settings from that implementation,
+including a fixed linearly-decaying learning rate starting at $0.00002$, AdamW optimizer, dropout, and no $\Ltwo$ penalty ($\lambda = 0$),
+except that we use a batch size of $32$ (as in \citet{devlin2019bert})
+instead of $8$.
+We found that this slightly improved robust accuracy across all models and made the optimization less noisy, especially on the ERM model.
+
+For the standard training experiments in \refsec{experiments_unreg}, we train for $20$ epochs.
+
+For the $\Ltwo$ penalty experiments in \refsec{experiments_complexity_control}, we tried penalties of $\lambda \in \{0.01, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0\}$. However, these models had similar or worse robust accuracies compared to the default BERT model with no $\Ltwo$ penalty.
+
+For the early stopping experiments in \refsec{experiments_complexity_control}, we train
+for $3$ epochs, which is the suggested early-stopping time in \citet{devlin2019bert}.
+
+For the benchmark in \refsec{resampling} (\reftab{benchmark}), we similarly trained for $3$ epochs.
+All benchmark models were evaluated at the best early stopping epoch (as measured by robust validation accuracy).

@@ -1,0 +1,73 @@
+\section{Potential extensions to other problem settings}\label{sec:other_problems}
+In this paper, we have focused on two problem settings involving domain shifts: domain generalization and subpopulation shifts.
+Here, we discuss other problem settings within the framework of domain shifts that could also apply to \Wilds datasets.
+Using \Wilds to benchmark and develop algorithms for these settings is an important avenue for future work, and we welcome community contributions towards this effort.
+
+\subsection{Problem settings in domain shifts}
+Within the general framework of domain shifts, specific problem settings can differ along the following axes of variation:
+\begin{enumerate}
+  \item \textbf{Seen versus unseen test domains.}
+    Test domains may be seen during training time ($\Domtest\subseteq\Domtrain$), as in subpopulation shift, or unseen
+    ($\Domtrain \cap \Domtest = \emptyset$), as in domain generalization.
+    The domain generalization and subpopulation shift settings mainly differ on this factor.
+  \item \textbf{Train-time domain annotations.}
+    The domain identity $\dom$ may be observed for none, some, or all of the training examples.
+    Train-time domain annotations are straightforward to obtain in some settings, e.g., we should know which patients in the training sets came from which hospitals, but can be harder to obtain in some settings, e.g., we might only have demographic information on a subset of training users. In our domain generalization and subpopulation shift settings, $\dom$ is always observed at training time.
+  \item \textbf{Test-time domain annotations.}
+    The domain identity $\dom$ may be observed for none, some, or all of the test examples.
+    Test-time domain annotations allow models to be domain-specific, e.g., by treating domain identity as a feature if the train and test domains overlap.
+    For example, if the domains correspond to continents and the data to satellite images from a continent, we would presumably know what continent each image was taken from.
+    On the other hand, if the domains correspond to demographic information, this might be hard to obtain at test time (as well as training time, as mentioned above).
+    In domain generalization, $\dom$ may be observed at test time, but it is not helpful by itself as all of the test domains are unseen at training time. However, when combined with test-time unlabeled data, observing the domain $\dom$ at test time could help with adaptation.
+    In subpopulation shift, we typically assume that $\dom$ is unobserved at test time, though this need not always be true.
+  \item \textbf{Test-time unlabeled data}.
+    Varying amounts of unlabeled test data---samples of $x$ drawn from the test distribution $\Ptest$---may be available, from none to a small batch to a large pool. This affects the degree to which models can adapt to test distributions.
+    For example, if the domains correspond to locations and the data points to photos taken at those locations, we might assume access to some unlabeled photos taken at the test locations.
+\end{enumerate}
+
+Each combination of the above four factors corresponds to a specific problem setting with a different set of applicable methods.
+In the current version of the \Wilds benchmark, we focus on domain generalization and subpopulation shifts, which represent specific configurations of these factors.
+We briefly discuss a few other problem settings in the remainder of this section.
+
+\subsection{Unsupervised domain adaptation}
+In the presence of distribution shift, a potential source of leverage is observing unlabeled test points from the test distribution.
+In the unsupervised domain adaptation setting, we assume that at training time, we have access to a large amount of unlabeled data from each test distribution of interest, as well as the resources to train a separate model for each test distribution.
+For example, in a satellite imagery setting like \FMoW, it might be appropriate to assume that we have access to a large set of unlabeled recent satellite images from each continent and the wherewithal to train a separate model for each continent.
+
+Many of the methods for domain generalization discussed in \refsec{baselines} were originally methods for domain adaptation, since methods for both settings share the common goal of learning models that can transfer between domains. For example, methods that learn features that have similar distributions across domains are equally applicable to both settings
+\citep{bendavid2006analysis,long2015learning,sun2016return,
+ganin2016domain,tzeng2017domain,shen2018WassersteinDG,wu2019domain}.
+In fact, the CORAL algorithm that we use as a baseline in this work was originally developed for, and successfully applied in, unsupervised domain adaptation \citep{sun2016deep}.
+Other methods rely on knowing the test distribution and are thus specific to domain adaptation, e.g., learning to map data points from source to target domains \citep{hoffman2018cycada},
+or estimating the test label distribution from unlabeled test data \citep{saerens2002adjusting,zhang2013domain,lipton18icml,
+azizzadenesheli2019reglabel,alexandari2020maximum,garg2020unified}.
+
+
+\subsection{Test-time adaptation}
+A closely related setting to unsupervised domain adaptation is test-time adaptation, which also assumes the availability of unlabeled test data.
+For datasets where there are many potential test domains (e.g., in \iWildCam, we want a model that can ideally generalize to any camera trap), it might be infeasible to train a separate model for each test domain, as unsupervised domain adaptation would require.
+In the test-time adaptation setting, we assume that a model is allowed to adapt to a small amount of unlabeled test data in a way that is computationally much less intensive than typical domain adaptation methods.
+This is a difference of degree and not of kind, but it can have significant practical implications. For example, domain adaptation approaches typically require access to the training set and a large  unlabeled test set at the same time, whereas test-time adaptation methods typically only require the learned model (which can be much smaller than the original training set) as well as a smaller amount of unlabeled test data.
+
+A number of test-time adaptation methods have been recently proposed
+\citep{li17iclrw,sun2020test,wang20}.
+For example, adaptive risk minimization~(ARM) is a meta-learning approach that adapts models to each batch of test examples under the assumption that all data points in a batch come from the same domain \citep{zhang2020adaptive}.
+Many datasets in \Wilds are suitable for the test-time adaptation setting.
+For example, in \iWildCam, images from the same domain are highly similar, sharing the same location, background, and camera angle, and prior work has shown inferring these shared features can improve performance considerably \citep{beery2020context}.
+
+
+\subsection{Selective prediction}
+A different problem setting that is orthogonal to the settings described above is selective prediction.
+In the selective prediction setting, models are allowed to abstain on points where their confidence is below a certain threshold.
+This is appropriate when, for example, abstentions can be handled by backing off to human experts, such as pathologists for \Camelyon, content moderators for \CivilComments, wildlife experts for \iWildCam, etc.
+Many methods for selective prediction have been developed, from simply using softmax probabilities as a proxy for confidence \citep{cordella1995method,geifman2017selective},
+to methods involving ensembles of models \citep{gal2016dropout,lakshminarayanan2017simple,geifman2018bias}
+or jointly learning to abstain and classify \citep{bartlett2008classification, geifman2019selectivenet, feng2019selective}.
+
+Intuitively, even if a model is not robust to a distribution shift,
+it might at least be able to maintain high accuracies on some subset of points that are close to the training distribution, while abstaining on the other points.
+Indeed, prior work has shown that selective prediction can improve model accuracy under distribution shifts
+\citep{pimentel2014review, hendrycks2017baseline, liang2018enhancing,
+ovadia2019uncertainty, feng2019selective, kamath2020squads}.
+However, distribution shifts still pose a problem for selective prediction methods;
+for instance, it is difficult to maintain desired abstention rates under distribution shifts \citep{kompa2020empirical}, and confidence estimates have been found to drift over time (e.g.,  \citet{davis2017calibration}).

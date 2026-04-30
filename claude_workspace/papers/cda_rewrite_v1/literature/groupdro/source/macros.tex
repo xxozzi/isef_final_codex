@@ -1,0 +1,72 @@
+% Paper-specific macros
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\newcommand{\Ltwo}{\ell_2}
+\newcommand{\hP}{{\hat{P}}}
+\newcommand{\hterm}{{\hat\theta_{\text{ERM}}}}
+\newcommand{\htdro}{{\hat\theta_{\text{DRO}}}}
+\newcommand{\htadj}{{\hat\theta_{\text{adj}}}}
+\newcommand{\htq}{{\hat\theta_{q}}}
+\newcommand{\htQ}{{\hat\theta_{Q}}}
+\newcommand{\htw}{{\hat\theta_{w}}}
+
+\newcommand\gset{\sG}
+\newcommand\Pg{P_g}
+\newcommand\padv{q}
+\newcommand\ngroup{m}
+\newcommand\iter[1]{{^{(#1)}}}
+\newcommand\condprisk[1]{\E_{X,Y\sim\Pg}\left[\ell(#1; (X,Y)) \right]}
+\newcommand\gengap{\delta_{g}}
+\newcommand\hatgengap{\hat{\delta}_{g}}
+\newcommand{\xp}{x^\prime}
+\newcommand{\yp}{y^\prime}
+\newcommand{\gp}{g^\prime}
+
+\newcommand{\Btheta}{B_\Theta}
+\newcommand{\Bgrad}{B_\nabla}
+\newcommand{\Bloss}{B_\ell}
+
+\newcommand\todo[1]{}
+\newcommand\pw[1]{}
+\newcommand\shiori[1]{}
+\newcommand\pl[1]{}
+\newcommand\thc[1]{}
+%
+% \newcommand\todo[1]{\textcolor{red}{[TODO: #1]}}
+% \newcommand\pw[1]{\textcolor{blue}{[PW: #1]}}
+% \newcommand\pl[1]{\textcolor{red}{[PL: #1]}}
+% \newcommand\thc[1]{\textcolor{brown}{[TH: #1]}}
+% \newcommand\shiori[1]{\textcolor{teal}{[SS: #1]}}
+
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+
+\makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{%
+\newenvironment{rep#1}[1]{%
+ \def\rep@title{#2 \ref{##1}}%
+ \begin{rep@theorem}}%
+ {\end{rep@theorem}}}
+\makeatother
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{counterexample}{Counterexample}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{corollary}{Corollary}
+\newtheorem{assumption}{Assumption}
+\newreptheorem{lemma}{Lemma}
+\newreptheorem{proposition}{Proposition}
+\newreptheorem{theorem}{Theorem}
+\newreptheorem{defn}{Definition}
+\newreptheorem{conjecture}{Conjecture}
+\newreptheorem{corollary}{Corollary}
+\newreptheorem{assumption}{Assumption}
+
+\newenvironment{proofsketch}{%
+  \renewcommand{\proofname}{Proof sketch}\proof}{\endproof}
+\newtheorem*{remark}{Remark}

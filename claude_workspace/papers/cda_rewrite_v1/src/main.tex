@@ -1,0 +1,48 @@
+\documentclass{article}
+
+\PassOptionsToPackage{numbers,sort&compress}{natbib}
+\usepackage[preprint]{neurips}
+
+\input{packages}
+\input{macros}
+\input{theorems}
+
+\title{CDA: Source-Mixture-Aware Checkpoint Deployment for Domain Generalization}
+
+\author{
+Jayden Jeong\\
+Math, Science, and Technology Center\\
+Paul Laurence Dunbar High School\\
+Lexington, Kentucky, USA\\
+\texttt{jayden.w.jeong@gmail.com}
+\And
+Vijayan K. Asari\\
+Department of Electrical and Computer Engineering\\
+University of Dayton\\
+Dayton, Ohio, USA\\
+\texttt{vasari1@udayton.edu}
+}
+
+\begin{document}
+\maketitle
+
+\input{01_abstract}
+\input{02_introduction}
+\input{03_related_work}
+\input{04_problem_certificate}
+\input{05_method}
+\input{06_experiments}
+\input{07_analysis_ablations}
+\input{08_limitations}
+\input{09_conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+\input{appendix_proofs}
+\input{appendix_protocol}
+\input{appendix_additional_results}
+\input{appendix_hyperparameters}
+
+\end{document}

@@ -1,0 +1,18 @@
+\begin{table}[h]%
+  \caption{\textbf{Averaging different objectives on OfficeHome domain "Art"}.}%
+  \centering%
+  \adjustbox{width=0.7\textwidth}{%
+    \begin{tabular}{lcccc}%
+      \toprule
+      \textbf{Algorithm} & \textbf{SGD}               & \textbf{MA} \cite{arpit2021ensemble} & \textbf{DiWA Uniform} $M=20$       & \textbf{DiWA$^{\dagger}$ Uniform}: $M=60$ \\
+      \midrule
+      ERM                & 62.9 $\pm$ 1.3             & \underline{65.0} $\pm$ 0.2           & 67.3 $\pm$ 0.2             & 67.7                             \\
+      Mixup              & \underline{63.1} $\pm$ 0.7 & \textbf{66.2} $\pm$ 0.3              & 67.8 $\pm$ 0.6             & 68.4                             \\
+      Coral              & \textbf{64.4} $\pm$ 0.4    & 64.4 $\pm$ 0.4                       & 67.7 $\pm$ 0.2             & 68.2                             \\
+      ERM/Mixup          & N/A                        & N/A                                  & 67.9 $\pm$ 0.7             & \underline{68.9}                 \\
+      ERM/Coral          & N/A                        & N/A                                  & \underline{68.1} $\pm$ 0.3 & 68.7                             \\
+      ERM/Mixup/Coral    & N/A                        & N/A                                  & \textbf{68.4} $\pm$ 0.4    & \textbf{69.1}                    \\
+      \bottomrule
+    \end{tabular}}
+  \label{table:db_home0_training}%
+\end{table}

@@ -1,0 +1,25 @@
+\section{Existing ML benchmarks for distribution shifts}\label{sec:related}
+Distribution shifts have been a longstanding problem in the ML research community \citep{hand2006classifier,quinonero2009dataset}. Earlier work studied shifts in datasets for tasks including
+part-of-speech tagging \citep{marcus93treebank},
+sentiment analysis \citep{blitzer2007biographies},
+land cover classification \citep{bruzzone2009domain},
+object recognition \citep{saenko2010adapting},
+and flow cytometry \citep{blanchard2011generalizing}.
+However, these datasets are not as widely used today, in part because they tend to be much smaller than modern datasets.
+
+Instead, many recent papers have focused on object recognition datasets with shifts induced by synthetic transformations, such as
+ImageNet-C \citep{hendrycks2019benchmarking}, which corrupts images with noise;
+the Backgrounds Challenge \citep{xiao2020noise} and Waterbirds \citep{sagawa2020group}, which alter image backgrounds;
+or Colored MNIST \citep{arjovsky2019invariant}, which changes the colors of MNIST digits.
+It is also common to use data splits or combinations of disparate datasets to induce shifts, such as generalizing to photos solely from cartoons and other stylized images in PACS \citep{li2017deeper}; generalizing to objects at different scales solely from a single scale in DeepFashion Remixed \citep{hendrycks2020many}; or using training and test sets with disjoint subclasses in BREEDS \citep{santurkar2020breeds} and similar datasets \citep{hendrycks2019benchmarking}. While our treatment here is necessarily brief, we discuss other similar datasets in \refapp{app_related}.
+
+These existing benchmarks are useful and important testbeds for method development.
+As they typically target well-defined and isolated shifts,
+they facilitate clean analysis and controlled experimentation,
+e.g., studying the effect of backgrounds on image classification \citep{xiao2020noise}, or showing that training with added Gaussian blur improves performance on real-world blurry images \citep{hendrycks2020many}.
+Moreover, by studying how off-the-shelf models trained on standard datasets like ImageNet perform on different test datasets, we can better understand the robustness of these widely-used models
+\citep{geirhos2018generalisation, recht2019doimagenet, hendrycks2019benchmarking, taori2020measuring, djolonga2020robustness, hendrycks2020many}.
+
+However, as we discussed in the introduction, robustness to these synthetic shifts need not transfer to the kinds of shifts that arise in real-world deployments \citep{taori2020measuring,djolonga2020robustness,xie2020innout},
+and it is thus challenging to develop and evaluate methods for training models that are robust to real-world shifts on these datasets alone.
+With WILDS, we seek to complement existing benchmarks by curating datasets that reflect natural distribution shifts across a diverse set of data modalities and application.

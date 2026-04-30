@@ -1,0 +1,13 @@
+\section{Discussion}\label{sec:discussion}
+In this paper, we analyzed group DRO in overparameterized neural networks and highlighted the importance of regularization for worst-case group generalization.
+When strongly regularized,
+group DRO significantly improves worst-group accuracy at a small cost in average accuracy.
+
+As an application, we showed that group DRO can prevent models from learning pre-specified spurious correlations.
+Our supplemental experiments also suggest that group DRO models can maintain high worst-group accuracy even when groups are imperfectly specified (\refapp{supp_expt}).
+While handling shifts beyond pre-specified group shifts is important future work, existing work has identified many distributional shifts
+that can be expressed with pre-specified groups, e.g., batch effects in biology \citep{leek2010tackling}, or image artifacts \citep{oakden2019hidden} and patient demographics \citep{badgeley2019deep} in medicine.
+
+More generally, our observations
+call for a deeper analysis of average vs. worst-case generalization in the overparameterized regime.
+Such analysis may shed light on the failure modes of deep neural networks as well as provide additional tools (beyond strong $\Ltwo$ penalties or early stopping) to counter poor worst-case generalization while maintaining high average accuracy.

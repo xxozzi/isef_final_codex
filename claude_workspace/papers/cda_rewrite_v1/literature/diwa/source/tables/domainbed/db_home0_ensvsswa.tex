@@ -1,0 +1,24 @@
+\begin{table}[h]%
+    \caption{\textbf{DiWA's vs. ENS's accuracy ($\%, \uparrow$)} on domain \enquote{Art} from OfficeHome when varying initialization and hyperparameter ranges. Best on each setting is in \textbf{bold}.}
+    \centering
+    \adjustbox{width=1.0\textwidth}{
+        \centering
+        \begin{tabular}{ccc ccccc}
+            \toprule
+            \multicolumn{3}{c}{Configuration} & \multicolumn{2}{c}{\textbf{$M=20$}} && \multicolumn{2}{c}{\textbf{$M=60$}} \\
+            \cmidrule(lr){0-2} \cmidrule(lr){4-5} \cmidrule(lr){7-8} Shared classifier init && Mild hyperparameter ranges & DiWA & ENS && DiWA & ENS \\
+            \midrule
+              \cmark          && \cmark    & \textbf{67.3} $\pm$ 0.2  & 66.1 $\pm$ 0.1 & & \textbf{67.7}    &   66.5      \\
+            \xmark          && \cmark    & 65.0 $\pm$ 0.5  & \textbf{67.5} $\pm$ 0.3 & & 65.9     &  \textbf{68.5}      \\
+            \cmark          && \xmark    & 56.6 $\pm$ 0.9  & \textbf{64.3} $\pm$ 0.4 & & 59.5     &  \textbf{64.7}      \\   
+
+            % \midrule
+            % \multirow{3}{*}{ENS} & \xmark           & \xmark    & 66.1 $\pm$ 0.1  & 66.5            \\
+            %                                             & \cmark           & \xmark    & 67.5 $\pm$ 0.3  & \textbf{68.5}            \\
+            %                                             & \xmark          & \cmark     & 64.3 $\pm$ 0.4  & \textbf{64.7}            \\
+            \bottomrule
+        \end{tabular}}
+    \label{table:db_home0_ensvsswa}%
+\end{table}
+
+

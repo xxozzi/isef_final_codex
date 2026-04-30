@@ -1,0 +1,426 @@
+\begin{thebibliography}{64}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Arjovsky et~al.(2019)Arjovsky, Bottou, Gulrajani, and
+  Lopez-Paz]{arjovsky2019invariant}
+M.~Arjovsky, L.~Bottou, I.~Gulrajani, and D.~Lopez-Paz.
+\newblock Invariant risk minimization.
+\newblock \emph{arXiv preprint arXiv:1907.02893}, 2019.
+
+\bibitem[Badgeley et~al.(2019)Badgeley, Zech, Oakden-Rayner, Glicksberg, Liu,
+  Gale, McConnell, Percha, Snyder, and Dudley]{badgeley2019deep}
+M.~A. Badgeley, J.~R. Zech, L.~Oakden-Rayner, B.~S. Glicksberg, M.~Liu,
+  W.~Gale, M.~V. McConnell, B.~Percha, T.~M. Snyder, and J.~T. Dudley.
+\newblock Deep learning predicts hip fracture using confounding patient and
+  healthcare variables.
+\newblock \emph{npj Digital Medicine}, 2, 2019.
+
+\bibitem[Ben-David et~al.(2006)Ben-David, Blitzer, Crammer, and
+  Pereira]{bendavid2006analysis}
+S.~Ben-David, J.~Blitzer, K.~Crammer, and F.~Pereira.
+\newblock Analysis of representations for domain adaptation.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pp.\  137--144, 2006.
+
+\bibitem[Ben-Tal et~al.(2013)Ben-Tal, den Hertog, Waegenaere, Melenberg, and
+  Rennen]{bental2013robust}
+A.~Ben-Tal, D.~den Hertog, A.~D. Waegenaere, B.~Melenberg, and G.~Rennen.
+\newblock Robust solutions of optimization problems affected by uncertain
+  probabilities.
+\newblock \emph{Management Science}, 59:\penalty0 341--357, 2013.
+
+\bibitem[Bertsekas(2009)]{bertsekas2009convex}
+D.~P. Bertsekas.
+\newblock \emph{Convex Optimization Theory}.
+\newblock Athena Scientific Belmont, 2009.
+
+\bibitem[Bertsimas et~al.(2018)Bertsimas, Gupta, and Kallus]{bertsimas2018data}
+D.~Bertsimas, V.~Gupta, and N.~Kallus.
+\newblock Data-driven robust optimization.
+\newblock \emph{Mathematical Programming Series A}, 167, 2018.
+
+\bibitem[Blanchet \& Murthy(2019)Blanchet and Murthy]{blanchet2019quantifying}
+J.~Blanchet and K.~Murthy.
+\newblock Quantifying distributional model risk via optimal transport.
+\newblock \emph{Mathematics of Operations Research}, 44\penalty0 (2):\penalty0
+  565--600, 2019.
+
+\bibitem[Blodgett et~al.(2016)Blodgett, Green, and O'Connor]{blodgett2016}
+S.~L. Blodgett, L.~Green, and B.~O'Connor.
+\newblock Demographic dialectal variation in social media: A case study of
+  {A}frican-{A}merican {E}nglish.
+\newblock In \emph{Empirical Methods in Natural Language Processing (EMNLP)},
+  pp.\  1119--1130, 2016.
+
+\bibitem[Boyd \& Vandenberghe(2004)Boyd and Vandenberghe]{boyd2004convex}
+S.~Boyd and L.~Vandenberghe.
+\newblock \emph{Convex {Optimization}}.
+\newblock Cambridge University Press, 2004.
+
+\bibitem[Buda et~al.(2018)Buda, Maki, and Mazurowski]{buda2018systematic}
+M.~Buda, A.~Maki, and M.~A. Mazurowski.
+\newblock A systematic study of the class imbalance problem in convolutional
+  neural networks.
+\newblock \emph{Neural Networks}, 106:\penalty0 249--259, 2018.
+
+\bibitem[B\"uhlmann \& Meinshausen(2016)B\"uhlmann and
+  Meinshausen]{buhlmann2016magging}
+P.~B\"uhlmann and N.~Meinshausen.
+\newblock Magging: maximin aggregation for inhomogeneous large-scale data.
+\newblock In \emph{IEEE}, 2016.
+
+\bibitem[Buolamwini \& Gebru(2018)Buolamwini and Gebru]{buolamwini2018gender}
+J.~Buolamwini and T.~Gebru.
+\newblock Gender shades: Intersectional accuracy disparities in commercial
+  gender classification.
+\newblock In \emph{Conference on Fairness, Accountability and Transparency},
+  pp.\  77--91, 2018.
+
+\bibitem[Byrd \& Lipton(2019)Byrd and Lipton]{byrd2019effect}
+J.~Byrd and Z.~Lipton.
+\newblock What is the effect of importance weighting in deep learning?
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  872--881, 2019.
+
+\bibitem[Cao et~al.(2019)Cao, Wei, Gaidon, Arechiga, and Ma]{cao2019learning}
+K.~Cao, C.~Wei, A.~Gaidon, N.~Arechiga, and T.~Ma.
+\newblock Learning imbalanced datasets with label-distribution-aware margin
+  loss.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2019.
+
+\bibitem[Cui et~al.(2019)Cui, Jia, Lin, Song, and Belongie]{cui2019class}
+Y.~Cui, M.~Jia, T.~Lin, Y.~Song, and S.~Belongie.
+\newblock Class-balanced loss based on effective number of samples.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pp.\
+  9268--9277, 2019.
+
+\bibitem[Devlin et~al.(2019)Devlin, Chang, Lee, and Toutanova]{devlin2019bert}
+J.~Devlin, M.~Chang, K.~Lee, and K.~Toutanova.
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, pp.\
+  4171--4186, 2019.
+
+\bibitem[Duchi \& Namkoong(2018)Duchi and Namkoong]{duchi2018learning}
+J.~Duchi and H.~Namkoong.
+\newblock Learning models with uniform performance via distributionally robust
+  optimization.
+\newblock \emph{arXiv preprint arXiv:1810.08750}, 2018.
+
+\bibitem[Duchi et~al.(2016)Duchi, Glynn, and Namkoong]{duchi2016}
+J.~Duchi, P.~Glynn, and H.~Namkoong.
+\newblock Statistics of robust optimization: A generalized empirical likelihood
+  approach.
+\newblock \emph{arXiv}, 2016.
+
+\bibitem[Duchi et~al.(2019)Duchi, Hashimoto, and
+  Namkoong]{duchi2019distributionally}
+J.~Duchi, T.~Hashimoto, and H.~Namkoong.
+\newblock Distributionally robust losses against mixture covariate shifts.
+\newblock
+  \url{https://cs.stanford.edu/~thashim/assets/publications/condrisk.pdf},
+  2019.
+
+\bibitem[Dwork et~al.(2012)Dwork, Hardt, Pitassi, Reingold, and
+  Zemel]{dwork2012}
+C.~Dwork, M.~Hardt, T.~Pitassi, O.~Reingold, and R.~Zemel.
+\newblock Fairness through awareness.
+\newblock In \emph{Innovations in Theoretical Computer Science (ITCS)}, pp.\
+  214--226, 2012.
+
+\bibitem[Esfahani \& Kuhn(2018)Esfahani and Kuhn]{esfahani2018data}
+P.~M. Esfahani and D.~Kuhn.
+\newblock Data-driven distributionally robust optimization using the
+  wasserstein metric: Performance guarantees and tractable reformulations.
+\newblock \emph{Mathematical Programming}, 171\penalty0 (1):\penalty0 115--166,
+  2018.
+
+\bibitem[Ganin \& Lempitsky(2015)Ganin and Lempitsky]{ganin2015domain}
+Y.~Ganin and V.~Lempitsky.
+\newblock Unsupervised domain adaptation by backpropagation.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  1180--1189, 2015.
+
+\bibitem[Gururangan et~al.(2018)Gururangan, Swayamdipta, Levy, Schwartz,
+  Bowman, and Smith]{gururangan2018annotation}
+S.~Gururangan, S.~Swayamdipta, O.~Levy, R.~Schwartz, S.~Bowman, and N.~A.
+  Smith.
+\newblock Annotation artifacts in natural language inference data.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, pp.\
+  107--112, 2018.
+
+\bibitem[Hardt et~al.(2016{\natexlab{a}})Hardt, Price, and Srebo]{hardt2016}
+M.~Hardt, E.~Price, and N.~Srebo.
+\newblock Equality of opportunity in supervised learning.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pp.\  3315--3323, 2016{\natexlab{a}}.
+
+\bibitem[Hardt et~al.(2016{\natexlab{b}})Hardt, Recht, and
+  Singer]{hardt2016train}
+M.~Hardt, B.~Recht, and Y.~Singer.
+\newblock Train faster, generalize better: Stability of stochastic gradient
+  descent.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  1225--1234, 2016{\natexlab{b}}.
+
+\bibitem[Hashimoto et~al.(2018)Hashimoto, Srivastava, Namkoong, and
+  Liang]{hashimoto2018repeated}
+T.~B. Hashimoto, M.~Srivastava, H.~Namkoong, and P.~Liang.
+\newblock Fairness without demographics in repeated loss minimization.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[He et~al.(2016)He, Zhang, Ren, and Sun]{he2016resnet}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, 2016.
+
+\bibitem[Heinze-Deml \& Meinshausen(2017)Heinze-Deml and
+  Meinshausen]{heinze2017conditional}
+C.~Heinze-Deml and N.~Meinshausen.
+\newblock Conditional variance penalties and domain shift robustness.
+\newblock \emph{arXiv preprint arXiv:1710.11469}, 2017.
+
+\bibitem[Hoffer et~al.(2017)Hoffer, Hubara, and Soudry]{hoffer2017train}
+E.~Hoffer, I.~Hubara, and D.~Soudry.
+\newblock Train longer, generalize better: closing the generalization gap in
+  large batch training of neural networks.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, pp.\  1731--1741, 2017.
+
+\bibitem[Hovy \& Søgaard(2015)Hovy and Søgaard]{hovy2015}
+D.~Hovy and A.~Søgaard.
+\newblock Tagging performance correlates with age.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, pp.\
+  483--488, 2015.
+
+\bibitem[Hu et~al.(2018)Hu, Niu, Sato, and Sugiyama]{hu2018does}
+W.~Hu, G.~Niu, I.~Sato, and M.~Sugiyama.
+\newblock Does distributionally robust supervised learning give robust
+  classifiers?
+\newblock In \emph{International Conference on Machine Learning (ICML)}, 2018.
+
+\bibitem[Ioffe \& Szegedy(2015)Ioffe and Szegedy]{ioffe2015batch}
+S.~Ioffe and C.~Szegedy.
+\newblock Batch normalization: Accelerating deep network training by reducing
+  internal covariate shift.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  448--456, 2015.
+
+\bibitem[Jurgens et~al.(2017)Jurgens, Tsvetkov, and Jurafsky]{jurgens2017}
+D.~Jurgens, Y.~Tsvetkov, and D.~Jurafsky.
+\newblock Incorporating dialectal variability for socially equitable language
+  identification.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, pp.\
+  51--57, 2017.
+
+\bibitem[Kleinberg et~al.(2017)Kleinberg, Mullainathan, and
+  Raghavan]{kleinberg2017}
+J.~Kleinberg, S.~Mullainathan, and M.~Raghavan.
+\newblock Inherent trade-offs in the fair determination of risk scores.
+\newblock In \emph{Innovations in Theoretical Computer Science (ITCS)}, 2017.
+
+\bibitem[Lam \& Zhou(2015)Lam and Zhou]{lam2015quantifying}
+H.~Lam and E.~Zhou.
+\newblock Quantifying input uncertainty in stochastic optimization.
+\newblock In \emph{2015 Winter Simulation Conference}, 2015.
+
+\bibitem[Leek et~al.(2010)Leek, Scharpf, Bravo, Simcha, Langmead, Johnson,
+  Geman, Baggerly, and Irizarry]{leek2010tackling}
+J.~T. Leek, R.~B. Scharpf, H.~C. Bravo, D.~Simcha, B.~Langmead, W.~E. Johnson,
+  D.~Geman, K.~Baggerly, and R.~A. Irizarry.
+\newblock Tackling the widespread and critical impact of batch effects in
+  high-throughput data.
+\newblock \emph{Nature Reviews Genetics}, 11\penalty0 (10), 2010.
+
+\bibitem[Liu et~al.(2015)Liu, Luo, Wang, and Tang]{liu2015deep}
+Z.~Liu, P.~Luo, X.~Wang, and X.~Tang.
+\newblock Deep learning face attributes in the wild.
+\newblock In \emph{Proceedings of the IEEE International Conference on Computer
+  Vision}, pp.\  3730--3738, 2015.
+
+\bibitem[Maurer \& Pontil(2009)Maurer and Pontil]{maurer2009empirical}
+A.~Maurer and M.~Pontil.
+\newblock Empirical bernstein bounds and sample variance penalization.
+\newblock In \emph{Conference on Learning Theory (COLT)}, 2009.
+
+\bibitem[McCoy et~al.(2019)McCoy, Pavlick, and Linzen]{mccoy2019right}
+R.~T. McCoy, E.~Pavlick, and T.~Linzen.
+\newblock Right for the wrong reasons: Diagnosing syntactic heuristics in
+  natural language inference.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, 2019.
+
+\bibitem[Meinshausen \& B\"uhlmann(2015)Meinshausen and
+  B\"uhlmann]{meinshausen2015maximin}
+N.~Meinshausen and P.~B\"uhlmann.
+\newblock Maximin effects in inhomogeneous large-scale data.
+\newblock \emph{Annals of Statistics}, 43, 2015.
+
+\bibitem[Miyato et~al.(2018)Miyato, Maeda, Ishii, and
+  Koyama]{miyato2018virtual}
+T.~Miyato, S.~Maeda, S.~Ishii, and M.~Koyama.
+\newblock Virtual adversarial training: a regularization method for supervised
+  and semi-supervised learning.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}, 2018.
+
+\bibitem[Namkoong \& Duchi(2016)Namkoong and Duchi]{namkoong2016stochastic}
+H.~Namkoong and J.~Duchi.
+\newblock Stochastic gradient methods for distributionally robust optimization
+  with f-divergences.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2016.
+
+\bibitem[Namkoong \& Duchi(2017)Namkoong and Duchi]{namkoong2017variance}
+H.~Namkoong and J.~Duchi.
+\newblock Variance regularization with convex objectives.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2017.
+
+\bibitem[Nemirovski et~al.(2009)Nemirovski, Juditsky, Lan, and
+  Shapiro]{nemirovski2009robust}
+A.~Nemirovski, A.~Juditsky, G.~Lan, and A.~Shapiro.
+\newblock Robust stochastic approximation approach to stochastic programming.
+\newblock \emph{SIAM Journal on optimization}, 19\penalty0 (4):\penalty0
+  1574--1609, 2009.
+
+\bibitem[Oakden-Rayner et~al.(2019)Oakden-Rayner, Dunnmon, Carneiro, and
+  R{\'e}]{oakden2019hidden}
+L.~Oakden-Rayner, J.~Dunnmon, G.~Carneiro, and C.~R{\'e}.
+\newblock Hidden stratification causes clinically meaningful failures in
+  machine learning for medical imaging.
+\newblock \emph{arXiv preprint arXiv:1909.12475}, 2019.
+
+\bibitem[Oren et~al.(2019)Oren, Sagawa, Hashimoto, and Liang]{oren2019drolm}
+Y.~Oren, S.~Sagawa, T.~Hashimoto, and P.~Liang.
+\newblock Distributionally robust language modeling.
+\newblock In \emph{Empirical Methods in Natural Language Processing (EMNLP)},
+  2019.
+
+\bibitem[Peters et~al.(2016)Peters, B\"uhlmann, and
+  Meinshausen]{peters2016causal}
+J.~Peters, P.~B\"uhlmann, and N.~Meinshausen.
+\newblock Causal inference by using invariant prediction: identification and
+  confidence intervals.
+\newblock \emph{Journal of the Royal Statistical Society. Series B
+  (Methodological)}, 78, 2016.
+
+\bibitem[Radford et~al.(2019)Radford, Wu, Child, Luan, Amodei, and
+  Sutskever]{radford2019language}
+A.~Radford, J.~Wu, R.~Child, D.~Luan, D.~Amodei, and I.~Sutskever.
+\newblock Language models are unsupervised multitask learners.
+\newblock \emph{OpenAI Blog}, 1\penalty0 (8), 2019.
+
+\bibitem[Ribeiro et~al.(2016)Ribeiro, Singh, and Guestrin]{ribeiro2016lime}
+M.~T. Ribeiro, S.~Singh, and C.~Guestrin.
+\newblock "why should {I} trust you?": Explaining the predictions of any
+  classifier.
+\newblock In \emph{International Conference on Knowledge Discovery and Data
+  Mining (KDD)}, 2016.
+
+\bibitem[Rothenh\"ausler et~al.(2018)Rothenh\"ausler, B\"uhlmann, Meinshausen,
+  and Peters]{rothenhausler2018anchor}
+D.~Rothenh\"ausler, P.~B\"uhlmann, N.~Meinshausen, and J.~Peters.
+\newblock Anchor regression: heterogeneous data meets causality.
+\newblock \emph{arXiv preprint arXiv:1801.06229}, 2018.
+
+\bibitem[Shafieezadeh-Abadeh et~al.(2015)Shafieezadeh-Abadeh, Esfahani, and
+  Kuhn]{shafieezadeh2015distributionally}
+S.~Shafieezadeh-Abadeh, P.~M. Esfahani, and D.~Kuhn.
+\newblock Distributionally robust logistic regression.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2015.
+
+\bibitem[Shen et~al.(2016)Shen, Lin, and Huang]{shen2016relay}
+L.~Shen, Z.~Lin, and Q.~Huang.
+\newblock Relay backpropagation for effective learning of deep convolutional
+  neural networks.
+\newblock In \emph{European Conference on Computer Vision}, pp.\  467--482,
+  2016.
+
+\bibitem[Shimodaira(2000)]{shimodaira2000improving}
+H.~Shimodaira.
+\newblock Improving predictive inference under covariate shift by weighting the
+  log-likelihood function.
+\newblock \emph{Journal of Statistical Planning and Inference}, 90:\penalty0
+  227--244, 2000.
+
+\bibitem[Sinha et~al.(2018)Sinha, Namkoong, and Duchi]{sinha2018certifiable}
+A.~Sinha, H.~Namkoong, and J.~Duchi.
+\newblock Certifiable distributional robustness with principled adversarial
+  training.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2018.
+
+\bibitem[Srivastava et~al.(2014)Srivastava, Hinton, Krizhevsky, Sutskever, and
+  Salakhutdinov]{srivastava2014dropout}
+N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov.
+\newblock Dropout: A simple way to prevent neural networks from overfitting.
+\newblock \emph{Journal of Machine Learning Research (JMLR)}, 15\penalty0
+  (1):\penalty0 1929--1958, 2014.
+
+\bibitem[Szegedy et~al.(2016)Szegedy, Vanhoucke, Ioffe, Shlens, and
+  Wojna]{szegedy2016rethinking}
+C.~Szegedy, V.~Vanhoucke, S.~Ioffe, J.~Shlens, and Z.~Wojna.
+\newblock Rethinking the {I}nception architecture for computer vision.
+\newblock In \emph{Computer Vision and Pattern Recognition (CVPR)}, pp.\
+  2818--2826, 2016.
+
+\bibitem[Tatman(2017)]{tatman2017}
+R.~Tatman.
+\newblock Gender and dialect bias in youtube’s automatic captions.
+\newblock In \emph{Workshop on Ethics in Natural Langauge Processing},
+  volume~1, pp.\  53--59, 2017.
+
+\bibitem[Vapnik(1992)]{vapnik1992principles}
+V.~Vapnik.
+\newblock Principles of risk minimization for learning theory.
+\newblock In \emph{Advances in Neural Information Processing Systems}, pp.\
+  831--838, 1992.
+
+\bibitem[Wah et~al.(2011)Wah, Branson, Welinder, Perona, and
+  Belongie]{wah2011cub}
+C.~Wah, S.~Branson, P.~Welinder, P.~Perona, and S.~Belongie.
+\newblock The {Caltech}-{UCSD} {Birds}-200-2011 dataset.
+\newblock Technical report, California Institute of Technology, 2011.
+
+\bibitem[Wen et~al.(2014)Wen, Yu, and Greiner]{wen2014robust}
+J.~Wen, C.~Yu, and R.~Greiner.
+\newblock Robust learning under uncertain test distributions: Relating
+  covariate shift to model misspecification.
+\newblock In \emph{International Conference on Machine Learning (ICML)}, pp.\
+  631--639, 2014.
+
+\bibitem[Williams et~al.(2018)Williams, Nangia, and Bowman]{williams2018broad}
+A.~Williams, N.~Nangia, and S.~Bowman.
+\newblock A broad-coverage challenge corpus for sentence understanding through
+  inference.
+\newblock In \emph{Association for Computational Linguistics (ACL)}, pp.\
+  1112--1122, 2018.
+
+\bibitem[Yang et~al.(2019)Yang, Wang, and Heinze-Deml]{yang2019invariance}
+F.~Yang, Z.~Wang, and C.~Heinze-Deml.
+\newblock Invariance-inducing regularization using worst-case transformations
+  suffices to boost accuracy and spatial robustness.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 2019.
+
+\bibitem[Zhang et~al.(2017)Zhang, Bengio, Hardt, Recht, and
+  Vinyals]{zhang2017understanding}
+C.~Zhang, S.~Bengio, M.~Hardt, B.~Recht, and O.~Vinyals.
+\newblock Understanding deep learning requires rethinking generalization.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2017.
+
+\bibitem[Zhou et~al.(2017)Zhou, Lapedriza, Khosla, Oliva, and
+  Torralba]{zhou2017places}
+B.~Zhou, A.~Lapedriza, A.~Khosla, A.~Oliva, and A.~Torralba.
+\newblock Places: A 10 million image database for scene recognition.
+\newblock \emph{IEEE Transactions on Pattern Analysis and Machine
+  Intelligence}, 40\penalty0 (6):\penalty0 1452--1464, 2017.
+
+\end{thebibliography}

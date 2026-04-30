@@ -1,0 +1,30 @@
+\section{Dataset realism}\label{sec:app_realism}
+In this section, we discuss the framework we use to assess the realism of a benchmark dataset.
+Realism is subtle to pin down and highly contextual, and assessing realism often requires consulting with domain experts and practitioners. As a general framework, we can view a benchmark dataset as comprising the data, a task and associated evaluation metric, and a train/test split that potentially reflects a distribution shift.
+Each of these components can independently be more or less realistic:
+\begin{enumerate}
+  \item The \textbf{data}---which includes not just the inputs $x$ but also any associated metadata (e.g., the domain that each data point came from)--- is realistic if it accurately reflects what would plausibly be collected and available for a model to use in a real application.
+  The realism of data also depends on the application context; for example, using medical images captured with state-of-the-art equipment might be realistic for well-equipped hospitals, but not necessarily for clinics that use older generations of the technology, or vice versa.
+  Extreme examples of unrealistic data include the Gaussian distributions that are often used to cleanly illustrate the theoretical properties of various algorithms.
+  \item The \textbf{task and evaluation metric} is realistic if the task is relevant to a real application and if the metric measures how successful a model would be in that application.
+  Here and with the other components, realism lies on a spectrum.
+  For example, in a wildlife conservation application where the inputs are images from camera traps, the real task might be to estimate species populations \citep{parham2017animal}, i.e., the number of distinct individual animals of each species seen in the overall collection of images; a task that is less realistic but still relevant and useful for ecologists might be to classify what species of animal is seen in each image \citep{tabak2019machine}.
+  The choice of evaluation metric is also important. In the wildlife example, conservationists might care more about rare species than common species, so measuring average classification accuracy would be less realistic than a metric that prioritizes classifying the rare species correctly.
+  \item The \textbf{distribution shift (train/test split)} is realistic if it reflects training and test distributions that might arise in deployment for that dataset and task.
+  For example, if a medical algorithm is trained on data from a few hospitals and then expected to be deployed more widely, then it would be realistic to test it on hospitals that are not in the training set.
+  On the other hand, an example of a less realistic shift is to, for instance, train a pedestrian classifier entirely on daytime photos and then test it only on nighttime photos;
+  in practice, any reasonable dataset for pedestrian detection that is used in a real application would include both daytime and nighttime photos.
+\end{enumerate}
+Through the lens of this framework, existing ML benchmarks tend to focus on object recognition tasks with realistic data (e.g., photos) but not necessarily with realistic distribution shifts.
+With \Wilds, we seek to address this gap by selecting datasets that represent a wide variety of tasks (with realistic evaluation metrics and data) and that reflect realistic distribution shifts, i.e., train/test splits that are likely to arise in real-world deployments.
+
+To elaborate on the realism of the distribution shift, we associate each dataset in \Wilds with the distribution shift (i.e., problem setting) that we believe best reflects the real-world challenges in the corresponding application area.
+For example, domain generalization is a realistic setting for the \Camelyon dataset as medical models are typically trained on data collected from a handful of hospitals, but with the goal of general deployment across different hospitals.
+On the other hand, subpopulation shift is appropriate for the \CivilComments dataset, as the real-world challenge is that some demographic subpopulations (domains) are underrepresented, rather than completely unseen, in the training data.
+The appropriate problem setting depends on many dataset-specific factors, but some common considerations include:
+\begin{itemize}
+  \item \textbf{Domain type.} Certain types of domains are generally more appropriate for a particular setting. For example, if the domains represent time, as in \FMoW, then domain generalization is suitable as a common challenge is to generalize from past data to future data.
+  On the other hand, if the domains represent demographics and the goal is to improve performance on minority subpopulations, as in \CivilComments, then subpopulation shift is typically more appropriate.
+  \item \textbf{Data collection challenges.} When collecting data from a new domain is expensive, domain generalization is often appropriate, as we might want to train on data from a limited number of domains but still generalize to unseen domains. For example, it is difficult to collect patient data from multiple hospitals, as in \Camelyon, or survey data from new countries, as in \PovertyMap.
+  \item \textbf{Continuous addition of new domains.} A special case of the above is when new domains are continuously created. For example, in \Amazon, where domains correspond to users,  new users are constantly signing up for the platform; and in \iWildCam, where domains correspond to camera traps, new cameras are constantly being deployed. These are natural domain generalization settings.
+\end{itemize}

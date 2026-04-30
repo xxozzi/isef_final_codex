@@ -1,0 +1,358 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{ahn2019vid}
+Ahn, S., Hu, S.X., Damianou, A., Lawrence, N.D., Dai, Z.: Variational
+  information distillation for knowledge transfer. In: Computer Vision and
+  Pattern Recognition (2019)
+
+\bibitem{arjovsky2019irm}
+Arjovsky, M., Bottou, L., Gulrajani, I., Lopez-Paz, D.: Invariant risk
+  minimization. arXiv preprint arXiv:1907.02893  (2019)
+
+\bibitem{bahng2019rebias}
+Bahng, H., Chun, S., Yun, S., Choo, J., Oh, S.J.: Learning de-biased
+  representations with biased representations. In: International Conference on
+  Machine Learning (2020)
+
+\bibitem{bai2020decaug}
+Bai, H., Sun, R., Hong, L., Zhou, F., Ye, N., Ye, H.J., Chan, S.H.G., Li, Z.:
+  Decaug: Out-of-distribution generalization via decomposed feature
+  representation and semantic augmentation. AAAI Conference on Artificial
+  Intelligence  (2021)
+
+\bibitem{balaji2018metareg}
+Balaji, Y., Sankaranarayanan, S., Chellappa, R.: Metareg: Towards domain
+  generalization using meta-regularization. Neural Information Processing
+  Systems  (2018)
+
+\bibitem{bandi2018camelyon17}
+Bandi, P., Geessink, O., Manson, Q., Van~Dijk, M., Balkenhol, M., Hermsen, M.,
+  Bejnordi, B.E., Lee, B., Paeng, K., Zhong, A., et~al.: From detection of
+  individual metastases to classification of lymph node status at the patient
+  level: the camelyon17 challenge. IEEE Transactions on Medical Imaging
+  \textbf{38}(2) (2018)
+
+\bibitem{agakov2004vim}
+Barber, D., Agakov, F.: The im algorithm: a variational approach to information
+  maximization. Neural Information Processing Systems  (2004)
+
+\bibitem{beery2018terraincognita}
+Beery, S., Van~Horn, G., Perona, P.: Recognition in terra incognita. In:
+  European Conference on Computer Vision (2018)
+
+\bibitem{belghazi2018mine}
+Belghazi, M.I., Baratin, A., Rajeshwar, S., Ozair, S., Bengio, Y., Courville,
+  A., Hjelm, D.: Mutual information neural estimation. In: International
+  Conference on Machine Learning (2018)
+
+\bibitem{blanchard2021mtl_marginal_transfer_learning}
+Blanchard, G., Deshmukh, A.A., Dogan, U., Lee, G., Scott, C.: Domain
+  generalization by marginal transfer learning. Journal of Machine Learning
+  Research  \textbf{22}(2),  1--55 (2021)
+
+\bibitem{bui2021mdsdi}
+Bui, M.H., Tran, T., Tran, A., Phung, D.: Exploiting domain-specific features
+  to enhance domain generalization. Neural Information Processing Systems
+  (2021)
+
+\bibitem{carlucci2019jigsaw_jigen}
+Carlucci, F.M., D'Innocente, A., Bucci, S., Caputo, B., Tommasi, T.: Domain
+  generalization by solving jigsaw puzzles. In: Computer Vision and Pattern
+  Recognition (2019)
+
+\bibitem{cha2021swad}
+Cha, J., Chun, S., Lee, K., Cho, H.C., Park, S., Lee, Y., Park, S.: Swad:
+  Domain generalization by seeking flat minima. In: Neural Information
+  Processing Systems (2021)
+
+\bibitem{chattopadhyay2020dmg}
+Chattopadhyay, P., Balaji, Y., Hoffman, J.: Learning to balance specificity and
+  invariance for in and out of domain generalization. In: European Conference
+  on Computer Vision (2020)
+
+\bibitem{chen2022preserving}
+Chen, J., Wang, J., Lin, W., Zhang, K., de~Silva, C.W.: Preserving domain
+  private representation via mutual information maximization. arXiv preprint
+  arXiv:2201.03102  (2022)
+
+\bibitem{chen2021mocov3}
+Chen, X., Xie, S., He, K.: An empirical study of training self-supervised
+  vision transformers. In: International Conference on Computer Vision (2021)
+
+\bibitem{dai2018dark}
+Dai, D., Van~Gool, L.: Dark model adaptation: Semantic image segmentation from
+  daytime to nighttime. In: International Conference on Intelligent
+  Transportation Systems (2018)
+
+\bibitem{dosovitskiy2021vit}
+Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X.,
+  Unterthiner, T., Dehghani, M., Minderer, M., Heigold, G., Gelly, S., et~al.:
+  An image is worth 16x16 words: Transformers for image recognition at scale.
+  In: International Conference on Learning Representations (2021)
+
+\bibitem{dou2019masf}
+Dou, Q., Castro, D.C., Kamnitsas, K., Glocker, B.: Domain generalization via
+  model-agnostic learning of semantic features. Neural Information Processing
+  System  (2019)
+
+\bibitem{erhan2009visualizing}
+Erhan, D., Bengio, Y., Courville, A., Vincent, P.: Visualizing higher-layer
+  features of a deep network. University of Montreal  \textbf{1341}(3), ~1
+  (2009)
+
+\bibitem{fan2021adversarially_single_dg}
+Fan, X., Wang, Q., Ke, J., Yang, F., Gong, B., Zhou, M.: Adversarially adaptive
+  normalization for single domain generalization. In: Computer Vision and
+  Pattern Recognition (2021)
+
+\bibitem{fang2013vlcs}
+Fang, C., Xu, Y., Rockmore, D.N.: Unbiased metric learning: On the utilization
+  of multiple datasets and web images for softening bias. In: International
+  Conference on Computer Vision (2013)
+
+\bibitem{ganin2016dann}
+Ganin, Y., Ustinova, E., Ajakan, H., Germain, P., Larochelle, H., Laviolette,
+  F., Marchand, M., Lempitsky, V.: Domain-adversarial training of neural
+  networks. Journal of Machine Learning Research  \textbf{17}(1),  2096--2030
+  (2016)
+
+\bibitem{geirhos2019cnn_biased_towards_texture}
+Geirhos, R., Rubisch, P., Michaelis, C., Bethge, M., Wichmann, F.A., Brendel,
+  W.: Imagenet-trained cnns are biased towards texture; increasing shape bias
+  improves accuracy and robustness. In: International Conference on Learning
+  Representations (2019)
+
+\bibitem{gulrajani2020domainbed}
+Gulrajani, I., Lopez-Paz, D.: In search of lost domain generalization. In:
+  International Conference on Learning Representations (2021)
+
+\bibitem{he2016_cvpr_resnet}
+He, K., Zhang, X., Ren, S., Sun, J.: Deep residual learning for image
+  recognition. In: Computer Vision and Pattern Recognition (2016)
+
+\bibitem{huang2020rsc}
+Huang, Z., Wang, H., Xing, E.P., Huang, D.: Self-challenging improves
+  cross-domain generalization. European Conference on Computer Vision  (2020)
+
+\bibitem{kim2021selfreg}
+Kim, D., Yoo, Y., Park, S., Kim, J., Lee, J.: Selfreg: Self-supervised
+  contrastive regularization for domain generalization. In: International
+  Conference on Computer Vision (2021)
+
+\bibitem{kingma2015adam}
+Kingma, D.P., Ba, J.: Adam: A method for stochastic optimization. In:
+  International Conference on Learning Representations (2015)
+
+\bibitem{koh2021wilds}
+Koh, P.W., Sagawa, S., Marklund, H., Xie, S.M., Zhang, M., Balsubramani, A.,
+  Hu, W., Yasunaga, M., Phillips, R.L., Gao, I., et~al.: Wilds: A benchmark of
+  in-the-wild distribution shifts. In: International Conference on Machine
+  Learning (2021)
+
+\bibitem{krueger2020vrex}
+Krueger, D., Caballero, E., Jacobsen, J.H., Zhang, A., Binas, J., Priol, R.L.,
+  Courville, A.: Out-of-distribution generalization via risk extrapolation
+  (rex). arXiv preprint arXiv:2003.00688  (2020)
+
+\bibitem{kumar2022iclr_finetuning_distort}
+Kumar, A., Raghunathan, A., Jones, R., Ma, T., Liang, P.: Fine-tuning can
+  distort pretrained features and underperform out-of-distribution. In:
+  International Conference on Learning Representations (2022)
+
+\bibitem{li2018mldg}
+Li, D., Yang, Y., Song, Y.Z., Hospedales, T.: Learning to generalize:
+  Meta-learning for domain generalization. In: AAAI Conference on Artificial
+  Intelligence (2018)
+
+\bibitem{li2017pacs}
+Li, D., Yang, Y., Song, Y.Z., Hospedales, T.M.: Deeper, broader and artier
+  domain generalization. In: International Conference on Computer Vision (2017)
+
+\bibitem{li2019episodic_epi-fcr}
+Li, D., Zhang, J., Yang, Y., Liu, C., Song, Y.Z., Hospedales, T.M.: Episodic
+  training for domain generalization. In: International Conference on Computer
+  Vision (2019)
+
+\bibitem{li2018mmd}
+Li, H., Pan, S.J., Wang, S., Kot, A.C.: Domain generalization with adversarial
+  feature learning. In: Computer Vision and Pattern Recognition (2018)
+
+\bibitem{li2019delta}
+Li, X., Xiong, H., Wang, H., Rao, Y., Liu, L., Huan, J.: Delta: Deep learning
+  transfer using feature map with attention for convolutional networks. In:
+  International Conference on Learning Representations (2019)
+
+\bibitem{li2018cdann}
+Li, Y., Gong, M., Tian, X., Liu, T., Tao, D.: Domain generalization via
+  conditional invariant representations. In: AAAI Conference on Artificial
+  Intelligence (2018)
+
+\bibitem{li2019heteroDG}
+Li, Y., Yang, Y., Zhou, W., Hospedales, T.: Feature-critic networks for
+  heterogeneous domain generalization. In: International Conference on Machine
+  Learning (2019)
+
+\bibitem{li2017lwf}
+Li, Z., Hoiem, D.: Learning without forgetting. IEEE Transactions on Pattern
+  Analysis and Machine Intelligence  \textbf{40}(12),  2935--2947 (2017)
+
+\bibitem{matsuura2020aaai_mixture_mld}
+Matsuura, T., Harada, T.: Domain generalization using a mixture of multiple
+  latent domains. In: AAAI Conference on Artificial Intelligence (2020)
+
+\bibitem{michaelis2019benchmarking}
+Michaelis, C., Mitzkus, B., Geirhos, R., Rusak, E., Bringmann, O., Ecker, A.S.,
+  Bethge, M., Brendel, W.: Benchmarking robustness in object detection:
+  Autonomous driving when winter is coming. arXiv preprint arXiv:1907.07484
+  (2019)
+
+\bibitem{muandet2013icml_DIFL}
+Muandet, K., Balduzzi, D., Sch{\"o}lkopf, B.: Domain generalization via
+  invariant feature representation. In: International Conference on Machine
+  Learning (2013)
+
+\bibitem{nam2019sagnet}
+Nam, H., Lee, H., Park, J., Yoon, W., Yoo, D.: Reducing domain gap by reducing
+  style bias. In: Computer Vision and Pattern Recognition (2021)
+
+\bibitem{nuriel2020padain}
+Nuriel, O., Benaim, S., Wolf, L.: Permuted adain: Reducing the bias towards
+  global statistics in image classification. In: Computer Vision and Pattern
+  Recognition (2021)
+
+\bibitem{peng2019domainnet}
+Peng, X., Bai, Q., Xia, X., Huang, Z., Saenko, K., Wang, B.: Moment matching
+  for multi-source domain adaptation. In: International Conference on Computer
+  Vision (2019)
+
+\bibitem{radford2021clip}
+Radford, A., Kim, J.W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry,
+  G., Askell, A., Mishkin, P., Clark, J., et~al.: Learning transferable visual
+  models from natural language supervision. In: International Conference on
+  Machine Learning (2021)
+
+\bibitem{radosavovic2020regnet}
+Radosavovic, I., Kosaraju, R.P., Girshick, R., He, K., Doll{\'a}r, P.:
+  Designing network design spaces. In: Computer Vision and Pattern Recognition
+  (2020)
+
+\bibitem{robey2021mbdg_model_based_domain_generalization}
+Robey, A., Pappas, G.J., Hassani, H.: Model-based domain generalization. Neural
+  Information Processing Systems  (2021)
+
+\bibitem{russakovsky2015imagenet}
+Russakovsky, O., Deng, J., Su, H., Krause, J., Satheesh, S., Ma, S., Huang, Z.,
+  Karpathy, A., Khosla, A., Bernstein, M., et~al.: Imagenet large scale visual
+  recognition challenge. International Journal of Computer Vision
+  \textbf{115}(3),  211--252 (2015)
+
+\bibitem{Sagawa2020GroupDRO}
+Sagawa*, S., Koh*, P.W., Hashimoto, T.B., Liang, P.: Distributionally robust
+  neural networks. In: International Conference on Learning Representations
+  (2020)
+
+\bibitem{scimeca2022wcst-ml}
+Scimeca, L., Oh, S.J., Chun, S., Poli, M., Yun, S.: Which shortcut cues will
+  dnns choose? a study from the parameter-space perspective. In: International
+  Conference on Learning Representations (2022)
+
+\bibitem{shi2022gradient}
+Shi, Y., Seely, J., Torr, P., N, S., Hannun, A., Usunier, N., Synnaeve, G.:
+  Gradient matching for domain generalization. In: International Conference on
+  Learning Representations (2022)
+
+\bibitem{singh2022swag}
+Singh, M., Gustafson, L., Adcock, A., de~Freitas~Reis, V., Gedik, B., Kosaraju,
+  R.P., Mahajan, D., Girshick, R., Doll{\'a}r, P., van~der Maaten, L.:
+  Revisiting weakly supervised pre-training of visual perception models. In:
+  Computer Vision and Pattern Recognition (2022)
+
+\bibitem{sun2016coral}
+Sun, B., Saenko, K.: Deep coral: Correlation alignment for deep domain
+  adaptation. In: European Conference on Computer Vision (2016)
+
+\bibitem{tian2019crd}
+Tian, Y., Krishnan, D., Isola, P.: Contrastive representation distillation. In:
+  International Conference on Learning Representations (2019)
+
+\bibitem{vapnik1998statistical}
+Vapnik, V.: Statistical learning theory. NY: Wiley  (1998)
+
+\bibitem{venkateswara2017officehome}
+Venkateswara, H., Eusebio, J., Chakraborty, S., Panchanathan, S.: Deep hashing
+  network for unsupervised domain adaptation. In: Computer Vision and Pattern
+  Recognition (2017)
+
+\bibitem{de2019does}
+de~Vries, T., Misra, I., Wang, C., van~der Maaten, L.: Does object recognition
+  work for everyone? In: Computer Vision and Pattern Recognition Workshops
+  (2019)
+
+\bibitem{wang2020interdomain_mixup_icassp_dg}
+Wang, Y., Li, H., Kot, A.C.: Heterogeneous domain generalization via domain
+  mixup. In: International Conference on Acoustics, Speech and Signal
+  Processing (2020)
+
+\bibitem{wortsman2021robust}
+Wortsman, M., Ilharco, G., Kim, J.W., Li, M., Kornblith, S., Roelofs, R.,
+  Lopes, R.G., Hajishirzi, H., Farhadi, A., Namkoong, H., et~al.: Robust
+  fine-tuning of zero-shot models. In: Computer Vision and Pattern Recognition
+  (2022)
+
+\bibitem{xiao2020background_challenge_bgc}
+Xiao, K.Y., Engstrom, L., Ilyas, A., Madry, A.: Noise or signal: The role of
+  image backgrounds in object recognition. In: International Conference on
+  Learning Representations (2020)
+
+\bibitem{xu2020interdomain_mixup_aaai}
+Xu, M., Zhang, J., Ni, B., Li, T., Wang, C., Tian, Q., Zhang, W.: Adversarial
+  domain adaptation with domain mixup. In: AAAI Conference on Artificial
+  Intelligence (2020)
+
+\bibitem{xuhong2018l2sp}
+Xuhong, L., Grandvalet, Y., Davoine, F.: Explicit inductive bias for transfer
+  learning with convolutional networks. In: International Conference on Machine
+  Learning (2018)
+
+\bibitem{yan2020interdomain_mixup}
+Yan, S., Song, H., Li, N., Zou, L., Ren, L.: Improve unsupervised domain
+  adaptation with mixup training. arXiv preprint arXiv:2001.00677  (2020)
+
+\bibitem{yang2021atsl_adversarial_teacher_student_learning}
+Yang, F.E., Cheng, Y.C., Shiau, Z.Y., Wang, Y.C.F.: Adversarial teacher-student
+  representation learning for domain generalization. Neural Information
+  Processing Systems  (2021)
+
+\bibitem{yang2020towards}
+Yang, K., Qinami, K., Fei-Fei, L., Deng, J., Russakovsky, O.: Towards fairer
+  datasets: Filtering and balancing the distribution of the people subtree in
+  the imagenet hierarchy. In: Conference on Fairness, Accountability, and
+  Transparency (2020)
+
+\bibitem{zbontar2021barlowtwins}
+Zbontar, J., Jing, L., Misra, I., LeCun, Y., Deny, S.: Barlow twins:
+  Self-supervised learning via redundancy reduction. In: International
+  Conference on Machine Learning (2021)
+
+\bibitem{zhang2020arm}
+Zhang, M., Marklund, H., Gupta, A., Levine, S., Finn, C.: Adaptive risk
+  minimization: Learning to adapt to domain shift. In: Neural Information
+  Processing Systems (2021)
+
+\bibitem{zhao2020er_entropy_regularization}
+Zhao, S., Gong, M., Liu, T., Fu, H., Tao, D.: Domain generalization via entropy
+  regularization. Neural Information Processing Systems  (2020)
+
+\bibitem{zhou2020l2a_ot}
+Zhou, K., Yang, Y., Hospedales, T., Xiang, T.: Learning to generate novel
+  domains for domain generalization. In: European Conference on Computer Vision
+  (2020)
+
+\bibitem{zhou2021mixstyle}
+Zhou, K., Yang, Y., Qiao, Y., Xiang, T.: Domain generalization with mixstyle.
+  In: International Conference on Learning Representations (2021)
+
+\end{thebibliography}

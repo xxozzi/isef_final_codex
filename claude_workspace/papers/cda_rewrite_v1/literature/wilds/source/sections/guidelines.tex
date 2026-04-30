@@ -1,0 +1,39 @@
+\section{Guidelines for method developers}\label{sec:guidelines}
+
+We now discuss some community guidelines for method development using \Wilds.
+More specific submission guidelines for our leaderboard can be found at
+\url{https://wilds.stanford.edu}.
+
+\subsection{General-purpose and specialized training algorithms}
+\Wilds is primarily designed as a benchmark for developing and evaluating  algorithms for training models that are robust to distribution shifts.
+To facilitate systematic comparisons of these algorithms,
+we encourage algorithm developers to use the standardized datasets (i.e., with no external data) and default model architectures provided in \Wilds,
+as doing so will help to isolate the contributions of the algorithm versus the training dataset or model architecture.
+Our primary leaderboard will focus on submissions that follow these guidelines.
+
+Moreover, we encourage developers to test their algorithms on all applicable \Wilds datasets, so as to assess how well they do across different types of data and distribution shifts. We emphasize that it is still an open question
+if a single general-purpose training algorithm can produce models that do well on all of the datasets without accounting for the particular structure of the distribution shift in each dataset.
+As such, it would still be a substantial advance if an algorithm significantly improves performance on one type of shift but not others;
+we aim for \Wilds to facilitate research into both general-purpose algorithms as well as ones that are more specifically tailored to a particular application and type of distribution shift.
+
+\subsection{Methods beyond training algorithms}
+Beyond new training algorithms, there are many other promising directions for improving distributional robustness, including new model architectures and pre-training on additional external data beyond what is used in our default models. We encourage developers to test these approaches on \Wilds as well, and we will track all such submissions on a separate leaderboard from the training algorithm leaderboard.
+
+\subsection{Avoiding overfitting to the test distribution}
+While each \Wilds dataset aims to benchmark robustness to a type of distribution shift (e.g., shifts to unseen hospitals), practical limitations mean that for some datasets, we have data from only a limited number of domains (e.g., one OOD test hospital in \Camelyon).
+As there can be substantial variability in performance across domains,
+developers should be careful to avoid overfitting to the specific test sets in \Wilds, especially on datasets like \Camelyon with limited test domains.
+We strongly encourage all model developers to use the provided OOD validation sets for development and model selection, and to only use the OOD test sets for their final evaluations.
+
+\subsection{Reporting both ID and OOD performance}
+Prior work has shown that for many tasks, ID and OOD performance can be highly correlated across different model architectures and hyperparameters \citep{taori2020measuring,liu2021concur,miller2021line}.
+It is reasonable to expect that methods for improving ID performance could also give corresponding improvements in OOD performance in \Wilds, and we welcome submissions of such methods.
+To better understand the extent to which any gains in OOD performance can be attributed to improved ID performance versus a model that is more robust to (i.e., less affected by) the distribution shift,
+we encourage model developers to report both ID and OOD performance numbers.
+See \citet{miller2021line} for an in-depth discussion of this point.
+
+
+\subsection{Extensions to other problem settings}
+In this paper, we focused on the domain generalization and subpopulation shift settings.
+In \refapp{other_problems}, we discuss how \Wilds can be used  in other realistic problem settings that allow training algorithms to leverage additional information, such as unlabeled test data in unsupervised domain adaptation \citep{bendavid2006analysis}.
+These sources of leverage could be fruitful approaches to improving OOD performance, and we welcome community contributions towards this effort.

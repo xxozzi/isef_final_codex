@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Existing ML benchmarks for distribution shifts}{}% 2
+\BOOKMARK [1][-]{section.3}{Problem settings}{}% 3
+\BOOKMARK [1][-]{section.4}{Wilds datasets}{}% 4
+\BOOKMARK [1][-]{section.5}{Performance drops from distribution shifts}{}% 5
+\BOOKMARK [1][-]{section.6}{Baseline algorithms for distribution shifts}{}% 6
+\BOOKMARK [1][-]{section.7}{Empirical trends}{}% 7
+\BOOKMARK [1][-]{section.8}{Distribution shifts in other application areas}{}% 8
+\BOOKMARK [1][-]{section.9}{Guidelines for method developers}{}% 9
+\BOOKMARK [1][-]{section.10}{Using the Wilds package}{}% 10
+\BOOKMARK [1][-]{section.A}{Dataset realism}{}% 11
+\BOOKMARK [1][-]{section.B}{Prior work on ML benchmarks for distribution shifts}{}% 12
+\BOOKMARK [1][-]{section.C}{Potential extensions to other problem settings}{}% 13
+\BOOKMARK [1][-]{section.D}{Additional experimental details}{}% 14
+\BOOKMARK [1][-]{section.E}{Additional dataset details and results}{}% 15
+\BOOKMARK [1][-]{section.F}{Datasets with distribution shifts that do not cause performance drops}{}% 16

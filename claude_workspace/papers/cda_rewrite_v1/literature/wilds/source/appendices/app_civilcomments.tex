@@ -1,0 +1,253 @@
+\subsection{\CivilComments}\label{sec:app_civilcomments}
+Automatic review of user-generated text is an important tool for moderating the sheer volume of text written on the Internet.
+We focus here on the task of detecting toxic comments.
+Prior work has shown that toxicity classifiers can pick up on biases in the training data and spuriously associate toxicity with the mention of certain demographics \citep{park2018reducing, dixon2018measuring}.
+These types of spurious correlations can significantly degrade model performance on particular subpopulations \citep{sagawa2020group}.
+
+We study this issue through a modified variant of the CivilComments dataset \citep{borkan2019nuanced}.
+
+\subsubsection{Setup}
+\paragraph{Problem setting.}
+We cast \CivilComments as a subpopulation shift problem, where the subpopulations correspond to different demographic identities, and our goal is to do well on all subpopulations (and not just on average across these subpopulations).
+Specifically, we focus on mitigating biases with respect to comments that mention particular demographic identities, and not comments written by members of those demographic identities; we discuss this distinction in the broader context section below.
+
+The task is a binary classification task of determining if a comment is toxic.
+Concretely, the input $x$ is a comment on an online article (comprising one or more sentences of text) and the label $y$ is whether it is rated toxic or not.
+In \CivilComments, unlike in most of the other datasets we consider, the domain annotation $d$ is a multi-dimensional binary vector, with the 8 dimensions corresponding to whether the comment mentions each of the 8 demographic identities \textit{male}, \textit{female}, \textit{LGBTQ}, \textit{Christian}, \textit{Muslim}, \textit{other religions}, \textit{Black}, and \textit{White}.
+
+\paragraph{Data.}
+\CivilComments comprises 450,000 comments, each annotated for toxicity and demographic mentions by multiple crowdworkers. We model toxicity classification as a binary task. Toxicity labels were obtained in the original dataset via crowdsourcing and majority vote, with each comment being reviewed by at least 10 crowdworkers. Annotations of demographic mentions were similarly obtained through crowdsourcing and majority vote.
+
+Each comment was originally made on some online article. We randomly partitioned these articles into disjoint training, validation, and test splits, and then formed the corresponding datasets by taking all comments on the articles in those splits. This gives the following splits:
+\begin{enumerate}
+  \item \textbf{Training:} 269,038 comments.
+  \item \textbf{Validation:} 45,180 comments.
+  \item \textbf{Test:} 133,782 comments.
+\end{enumerate}
+
+\paragraph{Evaluation.}
+We evaluate a model by its worst-group accuracy, i.e., its lowest accuracy over groups of the test data that we define below.
+
+As mentioned above, toxicity classifiers can spuriously latch onto mentions of particular demographic identities, resulting in a biased tendency to flag comments that innocuously mention certain demographic groups as toxic \citep{park2018reducing, dixon2018measuring}.
+To measure the extent of this bias, we define subpopulations based on whether they mention a particular demographic identity, compute the sensitivity (a.k.a. recall, or true positive rate) and specificity (a.k.a. true negative rate) of the classifier on each subpopulation,
+and then report the worst of these two metrics over all subpopulations of interest.
+This is equivalent to further dividing each subpopulation into two groups according to the label, and then computing the accuracy on each of these two groups.
+
+Specifically, for each of the 8 identities we study (e.g., ``male''), we form 2 groups based on the toxicity label
+(e.g., one group of comments that mention the male gender and are toxic, and another group that mentions the male gender and are not toxic), for a total of 16 groups.
+These groups overlap (a comment might mention multiple identities) and are not a complete partition (a comment might not mention any identity).
+
+We then measure a model's performance by its worst-group accuracy, i.e., its lowest accuracy over these 16 groups.
+A high worst-group accuracy (relative to average accuracy) implies that the model is not spuriously associating a demographic identity with toxicity.
+We can view this subpopulation shift problem as testing on multiple test distributions (corresponding to different subsets of the test set, based on demographic identities and the label) and reporting the worst performance over these different test distributions.
+
+We use 16 groups (8 identities $\times$ 2 labels) instead of just 8 groups (8 identities) to capture the desire to balance true positive and true negative rates across each of the demographic identities.
+Without splitting by the label, it would be possible for two different groups to have equal accuracies,
+but one group might be much more likely to have non-toxic comments flagged as toxic, whereas the other group might be much more likely to have toxic comments flagged as non-toxic.
+This would be undesirable from an application perspective, as such a model would still be biased against a particular demographic.
+In \refapp{app_civilcomments_details}, we further discuss the motivation for our choice of evaluation metric as well as its limitations.
+
+As variability in performance over replicates can be high due to the small sizes of some demographic groups (\reftab{groupsizes_civilcomments}), we report results averaged over 5 random seeds, instead of the 3 seeds that we use for most other datasets.
+
+\paragraph{Potential leverage.}
+Since demographic identity annotations are provided at training time, we have an i.i.d. dataset available at training time for each of the test distributions of interest (corresponding to each group).
+Moreover, even though demographic identity annotations are unavailable at test time,
+they are relatively straightforward to predict.
+
+\subsubsection{Baseline results}
+
+\paragraph{Model.}
+For all experiments, we fine-tuned DistilBERT-base-uncased models \citep{sanh2019distilbert}, using the implementation from \citet{wolf2019transformers} and with the following hyperparameter settings:
+batch size 16; learning rate $10^{-5}$ using the AdamW optimizer \citep{loshchilov2019decoupled} for 5 epochs with early stopping; an $L_2$-regularization strength of $10^{-2}$;
+and a maximum number of tokens of 300, since 99.95\% of the input examples had $\leq$300 tokens.
+The learning rate was chosen through a grid search over
+$\{10^{-6}, 2 \times 10^{-6}, 10^{-5}, 2 \times 10^{-5}\}$, and all other hyperparameters were simply set to standard/default values.
+
+\paragraph{ERM results and performance drops.}
+The ERM model does well on average, with 92.2\% average accuracy (\reftab{results_civilcomments}). However, it does poorly on some subpopulations, e.g., with 57.4\% accuracy on toxic comments that mention \textit{other religions}.
+Overall, accuracy on toxic comments (which are a minority of the dataset) was lower than accuracy on non-toxic comments, so we also trained a reweighted model that balanced toxic and non-toxic comments by upsampling the toxic comments. This reweighted model had a slightly worse average accuracy of 89.8\% and a better worst-group accuracy of 69.2\% (\reftab{results_civilcomments}, Reweighted (label)), but a significant gap remains between average and worst-group accuracies.
+
+We note that the relatively small size of some of the demographic subpopulations makes it infeasible to run a test-to-test comparison, i.e., estimate how well a model could do on each subpopulation (corresponding to demographic identity) if it were trained on just that subpopulation.
+For example, Black comments comprise only \textless 4\% of the training data,
+and training just on those Black comments is insufficient to achieve high in-distribution accuracy.
+Without running the test-to-test comparison, it is possible that the gap between average and worst-group accuracies can be explained at least in part by differences in the intrinsic difficulty of some of the subpopulations, e.g., the labels of some subpopulations might be noisier because human annotators might disagree more frequently on comments mentioning a particular demographic identity.
+Future work will be required to establish estimates of in-distribution accuracies for each subpopulation that can account for these differences.
+
+\begin{table*}[tbp]
+  \caption{Baseline results on \CivilComments. The reweighted (label) algorithm samples equally from the positive and negative class; the group DRO (label) algorithm additionally weights these classes so as to minimize the maximum of the average positive training loss and average negative training loss.
+  Similarly, the reweighted (label $\times$ Black) and group DRO (label $\times$ Black) algorithms sample equally from the four groups corresponding to all combinations of class and whether there is a mention of Black identity. The CORAL and IRM algorithms extend the reweighted algorithm by adding their respective penalty terms, so they also sample equally from each group.
+  We show standard deviation across 5 random seeds in parentheses.
+  }
+  \label{tab:results_civilcomments}
+  \centering
+  \resizebox{\textwidth}{!}{
+    \begin{tabular}{lcccc}
+    \toprule
+        Algorithm & Avg val acc & Worst-group val acc & Avg test acc & Worst-group test acc\\
+        \midrule
+        ERM & 92.3 (0.2) & 50.5 (1.9) & \textbf{92.2} (0.1) & 56.0 (3.6) \\
+        \midrule
+        Reweighted (label) & 90.1 (0.4) & 65.9 (1.8) & 89.8 (0.4) & 69.2 (0.9) \\
+        Group DRO (label) & 90.4 (0.4) & 65.0 (3.8) & 90.2 (0.3) & 69.1 (1.8) \\
+        \midrule
+        Reweighted (label $\times$ Black) & 89.5 (0.6) & 66.6 (1.5) & 89.2 (0.6) & 66.2 (1.2) \\
+        CORAL (label $\times$ Black) & 88.9 (0.6) & 64.7 (1.4) & 88.7 (0.5) & 65.6 (1.3) \\
+        IRM (label $\times$ Black) & 89.0 (0.7) & 65.9 (2.8) & 88.8 (0.7) & 66.3 (2.1) \\
+        Group DRO (label $\times$ Black) & 90.1 (0.4) & 67.7 (1.8) & 89.9 (0.5) & \textbf{70.0} (2.0) \\
+    \bottomrule
+  \end{tabular}
+}
+\end{table*}
+
+\begin{table*}[!h]
+  \caption{Accuracies on each subpopulation in \CivilComments, averaged over models trained by group DRO (label).}
+  \label{tab:groupresults_y_civilcomments}
+  \centering
+  \begin{tabular}{lcccc}
+  \toprule
+  Demographic & Test accuracy on non-toxic comments & Test accuracy on toxic comments\\
+  \midrule
+  Male                & 88.4 (0.7) & 75.1 (2.1) \\
+  Female              & 90.0 (0.6) & 73.7 (1.5) \\
+  LGBTQ               & 76.0 (3.6) & 73.7 (4.0) \\
+  Christian           & 92.6 (0.6) & 69.2 (2.0) \\
+  Muslim              & 80.7 (1.9) & 72.1 (2.6) \\
+  Other religions     & 87.4 (0.9) & 72.0 (2.5) \\
+  Black               & 72.2 (2.3) & 79.6 (2.2) \\
+  White               & 73.4 (1.4) & 78.8 (1.7) \\
+  \bottomrule
+  \end{tabular}
+\end{table*}
+
+\paragraph{Additional baseline methods.}
+The CORAL, IRM, and group DRO baselines involve partitioning the training data into disjoint domains.
+We study the following partitions, corresponding to different rows in \reftab{results_civilcomments}:
+\begin{enumerate}
+  \item \textit{Label}: 2 domains, 1 for each class.
+  \item \textit{Label $\times$ Black}: 4 domains, 1 for each combination of class and \textit{Black}.
+\end{enumerate}
+
+On the \textit{Label} partition, we used Group DRO to train a model that seeks to balance the losses on the positive and negative examples. This performs similarly to the standard reweighted models described above
+(\reftab{results_civilcomments}, Group DRO (label)).
+We found that the worst-performing demographic for non-toxic comments was the Black demographic (\reftab{groupresults_y_civilcomments}), which motivated the \textit{Label $\times$ Black} partition. There, we used CORAL, IRM, and Group DRO to train models. However, these models did not perform significantly better (\reftab{results_civilcomments}, label $\times$ Black). While there were slight improvements on the Black groups, accuracy degraded on some other groups like non-toxic LBGTQ comments.
+
+We note that our implementations of CORAL and IRM are built on top of the standard reweighting algorithm, i.e., they sample equally from each group. As these two algorithms perform similarly to
+reweighting, it indicates that the additional penalty term is not significantly affecting performance.
+Indeed, our grid search for the penalty weights selected the lowest value of the penalties ($\lambda=10.0$ for CORAL and $\lambda=1.0$ for IRM).
+
+\paragraph{Discussion.}
+Adapting the baseline methods to handle multiple overlapping groups, which were not studied in their original settings, could be a potential approach to improving accuracy on this task.
+Another potential approach is using baselining to account for different groups having different intrinsic levels of difficulty \citep{oren2019drolm}.
+For example, comments mentioning different demographic groups might differ in terms of how subjective classifying them is.
+Others have also explored specialized data augmentation techniques for mitigating demographic biases in toxicity classifiers \citep{zhao2018gender}.
+
+\citet{adragna2020fairness} recently used a simplified variant of the CivilComments dataset, with artificially-constructed training and test environments, to show a proof-of-concept that IRM can improve performance on minority groups. Methods such as IRM and group DRO rely heavily on the choice of groups/domains/environments; investigating the effect of different choices would be a useful direction for future work.
+Other recent work has studied methods that try to automatically learn groups, for example, through unsupervised clustering \citep{oren2019drolm,sohoni2020subclass}
+or identifying high-loss points \citep{nam2020learning,liu2021jtt}.
+
+Toxicity classification is one application where human moderators can work together with an ML model to handle examples that the model is unsure about. However, \citet{jones2021selective} found that using selective classifiers---where the model is allowed to abstain if it is unsure---can actually further worsen performance on minority subpopulations. This suggests that in addition to having low accuracy on minority subpopulations, standard models can be poorly calibrated on them.
+
+Another important consideration for toxicity detection in practice is shifts over time, as online discourse changes quickly, and what is seen as toxic today might not have even appeared in the dataset from a few months ago. We do not study this distribution shift in this work. One limitation of the \CivilComments dataset is that it is fixed to a relatively short period in time, with most comments being written in the span of a year; this makes it harder to use as a dataset for studying temporal shifts.
+
+Finally, we note that collecting ``ground truth'' human annotation of toxicity is itself a subjective and challenging process; recent work has studied ways of making it less biased and more efficient \citep{sap2019risk, han2020fortifying}.
+
+\subsubsection{Broader context}
+The \CivilComments dataset does not assume that user demographics are available; instead, it uses mentions of different demographic identities in the actual comment text.
+For example, we want models that do not associate comments that mention being Black with being toxic, regardless of whether a Black or non-Black person wrote the comment.
+This setting is particularly relevant when user demographics are unavailable, e.g., when considering anonymous online comments.
+
+A related and important setting is subpopulation shifts with respect to user demographics (e.g., the demographics of the author of the comment, regardless of the content of the comment).
+Such demographic disparities have been widely documented in natural language and speech processing tasks \citep{hovy2016social}, among other areas.
+For example, NLP models have been shown to obtain worse performance on African-American Vernacular English compared to Standard American English on
+part-of-speech tagging \citep{jorgensen2015},
+dependency parsing \citep{blodgett2016},
+language identification \citep{blodgett2017racial},
+and auto-correct systems \citep{hashimoto2018repeated}.
+Similar disparities exist in speech, with state-of-the-art commercial systems obtaining higher word error rates on particular races \citep{koenecke2020racial} and dialects \citep{tatman2017}.
+
+These disparities are present not just in academic models, but in large-scale commercial systems that are already widely deployed, e.g., in speech-to-text systems from Amazon, Apple, Google, IBM, and Microsoft \citep{tatman2017, koenecke2020racial} or language identification systems from IBM, Microsoft, and Twitter \citep{blodgett2017racial}.
+Indeed, the original CivilComments dataset was developed by Google's Conversation AI team, which is also behind a public toxicity classifier (Perspective API) that was developed in partnership with The New York Times \citep{nyt2016jigsaw}.
+
+\subsubsection{Additional details}\label{sec:app_civilcomments_details}
+
+\paragraph{Evaluation metrics.}
+The evaluation metric used in the original competition was a complex weighted combination of various metrics, including subgroup AUCs for each demographic identity, and a new pinned AUC metric introduced by the original authors \citep{borkan2019nuanced}; conceptually, these metrics also measure the degree to which model accuracy is uniform across the different identities.
+After discussion with the original authors, we replace the composite metric with worst-group accuracy (i.e., worst TPR/FPR over identities) for simplicity.
+Measuring subgroup AUCs can be misleading in this context, because it assumes that the classifier can set separate thresholds for different subgroups \citep{borkan2019nuanced, borkan2019limitations}.
+
+One downside is that measuring worst-group accuracy treats false positives and false negatives equally.
+In deployment systems, one might want to weight these differently, e.g., using cost-sensitive learning or by simply raising or lowering the classification threshold,
+especially since real data is highly imbalanced (with a lot more negatives than positives).
+One could also binarize the labels and identities differently: in this benchmark, we simply use majority voting from the annotators.
+
+Perhaps more fundamentally, even if TPR and FPR were balanced across different identities, this need not imply unambiguously equitable performance, because different subpopulations might have different intrinsic levels of noise and difficulty. See \citet{davies_measure_2018} for more discussion of this problem of infra-marginality.
+
+In practice, models might also do poorly on intersections of groups \citep{kearns2018preventing}, e.g., on comments that mention multiple identities. Given the size of the dataset and comparative rarity of some identities and of toxic comments in general, accuracies on these intersections are difficult to estimate from this dataset.
+A potential avenue of future work is to develop methods for evaluating models on such subgroups, e.g., by generating data in particular groups through templates
+\citep{park2018reducing,ribeiro2020beyond}.
+
+\paragraph{Data processing.}
+The \CivilComments dataset comprises comments from a large set of articles from the Civil Comments platform, annotated for toxicity and demographic identities \citep{borkan2019nuanced}. We partitioned the articles into disjoint training, validation, and test splits, and then formed the corresponding datasets by taking all comments on the articles in those splits.
+In total, the training set comprised 269,038 comments (60\% of the data); the validation set comprised 45,180 comments (10\%); and the test set comprised 133,782 (30\%).
+
+\begin{table*}[!t]
+  \caption{Group sizes in the test data for \CivilComments. The training and validation data follow similar proportions.}
+  \label{tab:groupsizes_civilcomments}
+  \centering
+  \begin{tabular}{lcccc}
+  \toprule
+  Demographic & Number of non-toxic comments & Number of toxic comments \\
+  \midrule
+  Male                &   12092 &   2203 \\
+  Female              &   14179 &   2270 \\
+  LGBTQ               &    3210 &   1216 \\
+  Christian           &   12101 &   1260 \\
+  Muslim              &    5355 &   1627 \\
+  Other religions     &    2980 &    520 \\
+  Black               &    3335 &   1537 \\
+  White               &    5723 &   2246 \\
+  \bottomrule
+  \end{tabular}
+\end{table*}
+
+
+\paragraph{Modifications to the original dataset.}
+The original dataset\footnote{\url{www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification/}} also had a training and test split with disjoint articles. These splits are related to ours in the following way. Let the number of articles in the original test split be $m$. To form our validation split, we took $m$ articles (sampled uniformly at random) from the original training split, and to form our test split, we took $2m$ articles (also sampled uniformly at random) from the original training split and added it to the existing test split.
+We added a fixed validation set to allow other researchers to be able to compare methods more consistently, and we tripled the size of the test set to allow for more accurate worst-group accuracy measurement.
+
+Similarly, we combined some of the demographic identities in the original dataset to obtain larger groups (for which we could more accurately estimate accuracy). Specifically, we created an aggregate \textit{LGBTQ} identity that combines the original
+\textit{homosexual\_gay\_or\_lesbian},
+\textit{bisexual},
+\textit{other\_sexual\_orientation},
+\textit{transgender}, and
+\textit{other\_gender} identities (e.g., it is 1 if any of those identities are 1),
+and an aggregate \textit{other\_religions} identity that combines the original
+\textit{jewish},
+\textit{hindu},
+\textit{buddhist},
+\textit{atheist}, and
+\textit{other\_religion} identities.
+We also omitted the \textit{psychiatric\_or\_mental\_illness} identity, which was evaluated in the original Kaggle competition, because of a lack of sufficient data for accurate estimation; but we note that baseline group accuracies for that identity seemed higher than for the other groups, so it is unlikely to factor into worst-group accuracy.
+In our new split, each identity we evaluate on (\textit{male}, \textit{female}, \textit{LGBTQ}, \textit{Christian}, \textit{Muslim}, \textit{other\_religions}, \textit{Black}, and \textit{White}) has at least 500 positive and 500 negative examples.
+In \reftab{groupsizes_civilcomments} we show the sizes of each subpopulation in the test set; the training and validation sets follow similar proportions.
+
+For convenience, we also add an \textit{identity\_any} identity; this combines all of the identities in the original dataset, including \textit{psychiatric\_or\_mental\_illness} and related identities.
+
+\paragraph{Additional baseline results.}
+We also trained a group DRO model using $2^9 = 512$ domains, 1 for each combination of class and the 8 identities. This model performed similarly to the other group DRO models.
+
+\paragraph{Additional data sources.}
+All of the data, including the data with identity annotations that we use and the data with just label annotations, are also annotated for additional toxicity subtype attributes, specifically
+\textit{severe\_toxicity},
+\textit{obscene},
+\textit{threat},
+\textit{insult},
+\textit{identity\_attack}, and
+\textit{sexual\_explicit}.
+These annotations can be used to train models that are more aware of the different ways that a comment can be toxic;
+in particular, using the \textit{identity\_attack} attribute to learn which comments are toxic because of the use of identities might help the model learn how to avoid spurious associations between toxicity and identity.
+These additional annotations are included in the metadata provided through the \Wilds package.
+
+The original CivilComments dataset \citep{borkan2019nuanced} also contains $\approx$1.5M training examples that have toxicity (label) annotations but not identity (group) annotations.
+For simplicity, we have omitted these from the current version of \CivilComments.
+These additional data points can be downloaded from the original data source and could be used, for example, by first inferring which group each additional point belongs to, and then running group DRO or a similar algorithm that uses group annotations at training time.

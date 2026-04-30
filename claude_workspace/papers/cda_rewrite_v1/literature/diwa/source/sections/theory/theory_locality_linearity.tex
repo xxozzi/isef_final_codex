@@ -1,0 +1,7 @@
+\subsubsection{Locality and linear mode connectivity}
+\label{subsec:expression_loc_lir}
+To ensure that WA approximates ENS, the last locality term $O(\Deltab^2)$ constrains the weights to be close.
+Yet, the covariance term analyzed in \Cref{subsec:expression_cov_div} is antagonistic, as it motivates functionally diverse models.
+Overall, to reduce WA's error in \ood, we thus seek a good trade-off between diversity and locality.
+In practice, we consider that the main goal of this locality term is to ensure that the weights are averageable despite the nonlinearities in the NN such that WA's error does not explode.
+This is why in \Cref{sect:dwa}, we empirically relax this locality constraint and simply require that the weights are linearly connectable in the loss landscape, as in the linear mode connectivity \cite{Frankle2020}. We empirically verify later in \Cref{fig:home0_samediffruns_net_soup} that the approximation $f_{\text{WA}} \approx f_{\text{ENS}}$ remains valid even in this case.

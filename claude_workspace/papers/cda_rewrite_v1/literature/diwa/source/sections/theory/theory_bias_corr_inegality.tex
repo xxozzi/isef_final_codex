@@ -1,0 +1,31 @@
+\subsubsection{Bias and correlation shift (and support mismatch)}
+\label{subsec:expression_ood_bias}
+We relate \ood bias to correlation shift \cite{ye2021odbench} %, \ie posterior shift between $p_S(Y|X)$ and $p_T(Y|X)$.
+under \Cref{ass:no_bias_iid}, where $\bar{f}_{S}\left(x\right) \triangleq \mathbb{E}_{l_S} \left[f\left(x,\theta\left(l_S\right)\right)\right]$.
+As discussed in \Cref{app:bias_correlation_ass_noiidbias}, \Cref{ass:no_bias_iid} is reasonable for a large NN trained on a large dataset representative of the source domain $S$. 
+It is relaxed in \Cref{prop:app_bias_full} from \Cref{app:bias_correlation}.
+\begin{assumption}[Small \iid bias]%
+    $\exists \epsilon > 0 \text{~small~s.t.~} \forall x\in \X_S, |f_{S}\left(x\right)-\bar{f}_{S}\left(x\right)|\leq \epsilon$.%
+    \label{ass:no_bias_iid}%
+    % \vspace{-0.5em}%
+\end{assumption}%
+\begin{proposition}[\ood bias and correlation shift. Proof in \Cref{app:bias_correlation}] \label{prop:bias}
+    With a bounded difference between the labeling functions $f_T-f_S$ on $\X_T \cap \X_S$, under \Cref{ass:no_bias_iid}, the bias on domain $T$ is:
+    \begin{equation}\label{eq:bias}
+        \begin{aligned}
+            \mathbb{E}_{(x,y)\sim p_T}[\biasb^2(x, y)] &= \text{Correlation shift} + \text{Support mismatch} + O(\epsilon), \\
+            \text{where~} \text{Correlation shift} &= \int_{\X_T \cap \X_S} \left(f_T(x)-f_S(x)\right)^{2} p_T(x) dx, \\
+            \text{and~} \text{Support mismatch} &= \int_{\X_T \setminus \X_S} \left(f_T(x)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx.%
+        \end{aligned}%
+    \end{equation}
+\end{proposition}%
+We analyze the first term by noting that $f_T(x) \triangleq \mathbb{E}_{p_T}[Y|X=x]$ and $f_S(x) \triangleq \mathbb{E}_{p_S}[Y|X=x],$ $\forall x \in \X_T \cap \X_S$.
+This expression confirms that our correlation shift term measures shifts in posterior distributions between source and target, as in \cite{ye2021odbench}.
+It increases in presence of spurious correlations: \eg on ColoredMNIST \cite{arjovsky2019invariant} where the color/label correlation is reversed at test time.
+The second term is caused by support mismatch between source and target.
+It was analyzed in \cite{ruan2022optimal} and shown irreducible in their \enquote{No free lunch for learning representations for DG}.
+Yet, this term can be tackled if we transpose the analysis in the feature space rather than the input space. This motivates encoding the source and target domains into a shared latent space, \eg by pretraining the encoder on a task with minimal domain-specific information as in \cite{ruan2022optimal}.
+
+This analysis explains why WA fails under correlation shift, as shown on ColoredMNIST in \Cref{app:failure_corr_shift}.
+Indeed, combining different models does \textit{not} reduce the bias.
+\Cref{subsec:expression_ood_var} explains that WA is however efficient against diversity shift.%

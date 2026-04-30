@@ -1,0 +1,23 @@
+
+\begin{table}
+\centering
+\small
+% \begin{tabular}{l|rrr}
+\renewcommand{\arraystretch}{1.1}
+\caption{\textbf{Basic statistics of benchmark datasets.} \sr{how about describing these in text?}
+\sr{I think that table is OK but there are too many tables in this paper.}
+\jb{It is my first consideration but I think the table-way is better for brevity but I think so too describing in text is more natural.} 
+\sr{Actually, I wonder where the domain gaps comes from. For example, extracting different source datasets or gathering different environments.. } \jb{Good point. I will try to write this table into text with description about that.}}
+\begin{tabular}{l|rrr}
+\toprule
+Dataset   & {\#Domains} & {\#Classes} & {\#Data}  \\
+\midrule
+\data{PACS}           & 4                              & 7                              & $9,991$                                \\
+\data{VLCS}           & 4                              & 5                              & $10,729$                               \\
+\data{OfficeHome}     & 4                              & 65                             & $15,588$                               \\
+\data{TerraIncognita} & 4                              & 10                             & $24,788$                               \\
+\data{DomainNet}      & 6                              & 345                            & $586,575$                             \\
+\bottomrule
+\end{tabular}
+\label{table:data_stats}
+\end{table}

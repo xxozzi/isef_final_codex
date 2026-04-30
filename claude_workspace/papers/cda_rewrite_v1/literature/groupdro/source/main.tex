@@ -1,0 +1,94 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{iclr2020_conference,times}
+
+\usepackage{floatrow}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{mathtools}
+\usepackage[algoruled]{algorithm2e}
+\usepackage{multirow}
+\usepackage{tabularx}
+\input{macros}
+\input{std-macros}
+
+\title{Distributionally Robust Neural Networks for Group Shifts: On the Importance of\\
+\mbox{Regularization for Worst-Case Generalization}}
+
+\author{Shiori Sagawa\thanks{Equal contribution.}\\
+Stanford University\\\texttt{ssagawa@cs.stanford.edu}\And
+Pang Wei Koh\footnotemark[1]\\Stanford University\\\texttt{pangwei@cs.stanford.edu}\mbox{\hspace{17.12mm}}\\\AND
+Tatsunori B. Hashimoto\\Microsoft\\\texttt{tahashim@microsoft.com}\\\And
+Percy Liang\\Stanford University\\\texttt{pliang@cs.stanford.edu}}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\iclrfinalcopy % Uncomment for camera-ready version, but NOT for submission.
+\begin{document}
+
+\maketitle
+\vspace{-3mm}
+
+\begin{abstract}
+  \input{abstract}
+%  \begin{figure}[h!]
+%    \centering
+%    \includegraphics[width=0.55\textwidth]{figs/waterbirds.jpg}
+%  \end{figure}
+\end{abstract}
+\vspace{-2mm}
+\input{intro}
+\input{setup}
+\input{experiments}
+\input{experiments_unreg}
+\input{experiments_complexity_control}
+\input{experiments_adjustments}
+\input{resampling}
+\input{algorithm}
+\input{related}
+\input{discussion}
+
+\newpage
+\section*{Acknowledgments}
+We are grateful to
+Shyamal Buch,
+Yair Carmon,
+Zhenghao Chen,
+John Duchi,
+Jean Feng,
+Christina Heinze-Deml,
+Robin Jia,
+Daphne Koller,
+Ananya Kumar,
+Tengyu Ma,
+Jesse Mu,
+Hongseok Namkoong,
+Emma Pierson,
+and Fanny Yang
+for helpful discussions and suggestions.
+This work was funded by an Open Philanthropy Project Award.
+Toyota Research Institute (``TRI'') also provided funds to assist the authors with their research but this article solely reflects the opinions and conclusions of its authors and not TRI or any other Toyota entity.
+SS was supported by a Stanford Graduate Fellowship and PWK was supported by the Facebook Fellowship Program.
+
+\section*{Reproducibility}
+Code for training group DRO models is available at \url{https://github.com/kohpangwei/group_DRO}.
+The datasets used in this paper are also available at that link, as well as scripts to modify dataset generation (e.g., to choose different spurious attributes for CelebA and MultiNLI, or different object backgrounds or relative group sizes for Waterbirds).
+
+\bibliography{refdb/all}
+\bibliographystyle{iclr2020_conference}
+
+\appendix
+\input{opt_proof}
+\input{supp_expt}
+\input{expt_details}
+
+\end{document}

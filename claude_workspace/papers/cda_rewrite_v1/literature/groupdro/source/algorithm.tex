@@ -1,0 +1,63 @@
+\section{Algorithm}\label{sec:alg}
+To train group DRO models efficiently, we introduce an online optimization algorithm with convergence guarantees.
+Prior work on group DRO has either used batch optimization algorithms, which do not scale to large datasets, or stochastic optimization algorithms without convergence guarantees.
+
+In the convex and batch case, there is a rich literature on distributionally robust optimization which treats the problem as a standard convex conic program \citep{bental2013robust, duchi2016, bertsimas2018data, lam2015quantifying}.
+For general non-convex DRO problems, two types of stochastic optimization methods have been proposed:
+(i) stochastic gradient descent (SGD) on the Lagrangian dual of the objective \citep{duchi2018learning,hashimoto2018repeated}, and
+(ii) direct minimax optimization \citep{namkoong2016stochastic}.
+The first approach fails for group DRO because the gradient of the dual objective is difficult to estimate in a stochastic and unbiased manner.%
+\footnote{
+The dual optimization problem for group DRO is $\min_{\theta,\beta}\frac{1}{\alpha}\E_g[\max(0,\E_{x,y\sim\hP_g}\left[\ell(\theta; (x,y))\mid g\right]-\beta)] + \beta$ for constant $\alpha$. The $\max$ over \emph{expected} loss makes it difficult to obtain an unbiased, stochastic gradient estimate.
+}
+An algorithm of the second type has been proposed for group DRO \citep{oren2019drolm},
+but this work does not provide convergence guarantees, and we observed instability in practice under some settings.
+
+Recall that we aim to solve the optimization problem \refeqn{htdro}, which can be rewritten as
+\begin{align}
+  \min_{\theta \in \Theta} \sup_{q \in \Delta_m} \ \sum_{g=1}^m q_g \E_{(x, y) \sim P_g}[\ell(\theta; (x, y))].
+\end{align}
+Extending existing minimax algorithms for DRO \citep{namkoong2016stochastic,oren2019drolm},
+we interleave gradient-based updates on $\theta$ and $\padv$.
+Intuitively, we maintain a distribution $\padv$ over groups, with high masses on high-loss groups,
+and update on each example proportionally to the mass on its group.
+Concretely, we interleave SGD on $\theta$ and exponentiated gradient ascent on $\padv$
+(\refalg{opt}). (In practice, we use minibatches and a momentum term for $\theta$; see \refapp{model_details} for details.)
+The key improvement from the existing group DRO algorithm \citep{oren2019drolm} is that $\padv$ is updated using gradients instead of picking the group with worst average loss at each iteration,
+which is important for stability and obtaining convergence guarantees.
+The run time of the algorithm is similar to that of SGD for a given number of epochs (less than a 5\% difference), as run time is dominated by the computation of the loss and its gradient.
+
+\begin{algorithm}[H]
+\label{alg:opt}
+ \DontPrintSemicolon
+ \KwIn{Step sizes $\eta_q, \eta_\theta; P_g$ for each $g\in \gset$}
+ Initialize $\theta\iter{0}$ and $\padv\iter{0}$\;
+ \For{$t=1,\dots,T$}{
+  $ g \sim \text{Uniform}(1,\dots,\ngroup)$ \tcp*{Choose a group $g$ at random}
+  $ x,y \sim P_g$ \tcp*{Sample $x, y$ from group $g$}
+  $ \padv^\prime \gets \padv\iter{t-1}$;\
+  $ \padv^\prime_g \gets \padv^\prime_g\exp({\eta_q\ell(\theta\iter{t-1}; (x,y))})$ \tcp*{Update weights for group $g$}
+  $ \padv\iter{t} \gets \padv^\prime / \sum_{g^\prime} \padv^\prime_{g^\prime}$ \tcp*{Renormalize $q$}
+  $\theta\iter{t} \gets \theta\iter{t-1} - \eta_\theta \padv_g^{(t)}\nabla \ell(\theta\iter{t-1}; (x,y))$ \tcp*{Use $q$ to update $\theta$}
+ }
+  \caption{Online optimization algorithm for group DRO}
+\end{algorithm}
+
+We analyze the convergence rate by studying the error $\varepsilon_T$ of the average iterate $\bar{\theta}\iter{1:T}$:
+\begin{align}
+    \varepsilon_T
+    &= \max_{\padv\in\Delta_\ngroup}L\bigl(\bar{\theta}\iter{1:T}, \padv\bigr)
+       - \min_{\theta\in\Theta}\max_{\padv\in\Delta_\ngroup} L\bigl(\theta, \padv\bigr),
+\end{align}
+where $L(\theta, \padv) \eqdef \sum_{g=1}^\ngroup \padv_g\E_{(x, y) \sim P_g}[\ell(\theta; (x, y))]$ is the expected worst-case loss.
+Applying results from \citet{nemirovski2009robust}, we can show that
+\refalg{opt} has a standard convergence rate of $O\bigl(1 / \sqrt{T} \bigr)$ in the convex setting (proof in \refsec{proof_opt}):
+\begin{proposition}\label{thm:opt}
+  Suppose that the loss $\ell(\cdot; (x, y))$ is non-negative, convex, $\Bgrad$-Lipschitz continuous, and bounded by $\Bloss$ for all $(x, y)$ in $\sX \times \sY$, and $\|\theta\|_2\le \Btheta$ for all $\theta\in\Theta$ with convex $\Theta \subseteq \R^d$.
+  Then, the average iterate of \refalg{opt} achieves an expected error at the rate
+  \begin{align}
+    \E[\varepsilon_T]
+      \le 2\ngroup\sqrt{\frac{10(\Btheta^2\Bgrad^2 + \Bloss^2\log\ngroup)}{T}}.
+  \end{align}
+  where the expectation is taken over the randomness of the algorithm.
+\end{proposition}

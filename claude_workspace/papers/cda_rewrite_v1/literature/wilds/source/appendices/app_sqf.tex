@@ -1,0 +1,116 @@
+\subsection{\SQF: Criminal possession of weapons across race and locations}\label{sec:app_sqf}
+
+In this section, we provide more details on the stop-and-frisk dataset discussed in \refsec{fairness}.
+The original data was provided by the New York City Police Department, and has been widely used in previous ML and data analysis work \citep{goel_precinct_2016, zafar_parity_2017,
+pierson_fast_2018, kallus_residual_2018, srivastava_robustness_2020}.
+For our analysis, we use the version of the dataset that was processed by  \citet{goel_precinct_2016}. Our problem setting and dataset structure closely follow theirs.
+
+\subsubsection{Setup}
+
+\paragraph{Problem setting.} We study a subpopulation shift in a weapons prediction task, where each data point corresponds to a pedestrian who was stopped by the police on suspicion of criminal possession of a weapon. The input $x$ is a vector that represents 29 observable features from the UF-250 stop-and-frisk form filled out by the officer after each stop: e.g., whether the stop was initiated based on a radio run or at an officer's discretion, whether the officer was uniformed, and any reasons the officer gave for the stop (encoded as a categorical variable). Importantly, these features can all be observed by the officer prior to making the stop.\footnote{%
+  When we consider subpopulation shifts over race groups, the input $x$ additionally includes 75 one-hot indicators corresponding to the precinct that the stop was made in.
+  We do not include those features when we consider shifts over locations,
+  as they prevent the model from generalizing to new locations.
+}
+The binary label $y$ is whether the pedestrian in fact possessed a weapon (i.e., whether the stop fulfilled its stated purpose).
+We consider, separately, two types of domains $d$: 1) race groups and 2) locations (boroughs in New York City). We consider location and race as our domains because previous work has shown that they can produce substantial disparities in policing practices and in algorithmic performance~\citep{goel_precinct_2016}.
+
+\paragraph{Data.}
+Each row of the dataset represents one stop of one pedestrian. Following \citet{goel_precinct_2016}, we filter for the 621,696 stops where the reason for the stop is suspicion of criminal possession of a weapon. We then filter for rows with complete data for observable features; with stopped pedestrians who are Black, white, or Hispanic; and who are stopped during the years 2009-2012 (the time range used in \citet{goel_precinct_2016}). These filters yield a total of 506,283 stops,
+3.5\% of which are positive examples (in which the officer finds that the pedestrian is illegally possessing a weapon).
+
+The training versus validation split is a random 80\%-20\% partition of all stops in 2009 and 2010. We test on stops from 2011-2012; this follows the experimental setup in \citet{goel_precinct_2016}. Overall, our data splits are as follows:
+\begin{enumerate}
+  \item \textbf{Training:} 241,964 stops from 2009 and 2010.
+  \item \textbf{Validation:} 60,492 stops from 2009 and 2010, disjoint from the training set.
+  \item \textbf{Test:} 289,863 stops from 2011 and 2012.
+\end{enumerate}
+
+In the experiments below, we do not use the entire training set,
+as we observed in our initial experiments that the model performed less well on certain subgroups (Black pedestrians and pedestrians from the Bronx).
+To determine whether this inferior performance might be ameliorated by training specifically on those groups, we controlled for training set size by downsampling the training set to the size of the disadvantaged population of interest for a given split.
+Specifically, we consider the following (overlapping) training subsets, each of which is subsampled from the overall training set described above:
+\begin{enumerate}
+  \item \textbf{Black pedestrians only:} 155,929 stops of Black pedestrians from 2009 and 2010.
+  \item \textbf{All pedestrians, subsampled to \# Black pedestrians:} 155,929 stops of all pedestrians from 2009 and 2010.
+  \item \textbf{Bronx pedestrians only:} 69,129 stops of pedestrians in the Bronx from 2009 and 2010.
+  \item \textbf{All pedestrians, subsampled to \# Bronx pedestrians:} 69,129 stops of all pedestrians from 2009 and 2010.
+\end{enumerate}
+These amount to running a test-to-test comparison for the subpopulations of Black pedestrians and Bronx pedestrians.
+
+\paragraph{Evaluation.}
+Our metric for classifier performance is the precision for each race group and each borough at a global recall
+of 60\%---i.e., when using a threshold which recovers 60\% of all weapons in the test data, similar to the recall evaluated in \citet{goel_precinct_2016}.
+The results are similar when using different recall thresholds.
+Examining the precision for each race/borough captures the fact, discussed in \citet{goel_precinct_2016}, that very low-precision stops may violate the Fourth Amendment, which requires \emph{reasonable suspicion} for conducting a police stop; thus, the metric encapsulates the intuition that the police are attempting to avoid Fourth Amendment violations for any race group or borough while still recovering a substantial fraction of the illegal weapons.
+
+\subsubsection{Baseline results}
+
+\paragraph{Model.} For all experiments, we use a logistic regression model trained with the Adam optimizer \citep{kingma2014adam} and early stopping.
+We trained one model on each of the 4 training sets, separately picking hyperparameters through a grid search across 7 learning rates logarithmically-spaced in $[5 \times 10^{-8}, 5 \times 10^{-2}]$ and batch sizes in $\{4,8,16,32,64\}$.
+\reftab{policing_hyperparams} provides the hyperparameters used for each training set.
+All models were trained with a reweighted cross-entropy objective that upsampled the positive examples to achieve class balance.
+
+\paragraph{ERM results and performance drops.}
+Performance differed substantially across race and location groups: precision was lowest on Black pedestrians (\reftab{sqf_precision_by_race}, top row) and pedestrians in the Bronx (\reftab{sqf_precision_by_borough}, top row).
+To assess whether in-distribution training would improve performance on these groups, we trained the model only on Black pedestrians (\reftab{sqf_precision_by_race}, bottom row) and pedestrians in the Bronx (\reftab{sqf_precision_by_borough}, bottom row).
+However, this did not substantially improve performance on Black pedestrians or pedestrians from the Bronx; the difference in precision was less than 0.005 for both groups relative to the original model trained on all races and locations.
+This is consistent with the fact that groups with the lowest performance are not necessarily small minorities of the dataset: for example, more than 90\% of the stops are of Black or Hispanic pedestrians, but performance on these groups is worse than that for white pedestrians.
+The lack of improvement from in-distribution training suggests that approaches like group DRO would be unlikely to further improve performance, and we thus did not assess these approaches.
+
+\begin{table*}[tbp]
+  \caption{Comparison of precision scores for each race group at 60\% global weapon recall. Train set size is 69,129 for both rows.}
+  \centering
+  \begin{tabular}{lcccc}
+  \toprule
+  & \multicolumn{3}{c}{Precision at 60\% recall} \\
+  Training dataset  &          Black & Hispanic & White          \\
+  \midrule
+  Black pedestrians only        & 0.131      & 0.174 & 0.360          \\
+  All pedestrians, subsampled to \# Black pedestrians        & 0.135     &  0.183  & 0.362      \\
+  \bottomrule
+  \end{tabular}
+  \label{tab:sqf_precision_by_race}
+\end{table*}
+
+\begin{table*}[tbp]
+  \caption{Comparison of precision scores for each borough at a threshold which achieves 60\% global weapon recall. Train set size is 155,929 for both rows.}
+  \centering
+  \resizebox{\textwidth}{!}{
+  \begin{tabular}{lcccccc}
+  \toprule
+  & \multicolumn{5}{c}{Precision at 60\% recall} \\
+  Training dataset  &    Bronx & Brooklyn & Manhattan & Queens & Staten Island         \\
+  \midrule
+  Bronx pedestrians only      &     0.074 	&     0.158 & 0.207 &  0.157  & 0.105	\\
+  All pedestrians, subsampled to \# Bronx pedestrians     &        0.075 &      0.162 & 0.224 &  0.168    & 0.107	      \\
+  \bottomrule
+  \end{tabular}
+  }
+ \label{tab:sqf_precision_by_borough}
+\end{table*}
+
+\begin{table*}[!t]
+  \caption{Model parameters used in this analysis.}
+  \centering
+  \resizebox{\textwidth}{!}{
+  \begin{tabular}{lccc}
+  \toprule
+  Training data & Batch size & Learning rate & Number of epochs \\
+  \midrule
+  Black pedestrians only  & 4     & $5 \times 10^{-4}$ & 1      \\
+  All pedestrians, subsampled to \# Black pedestrians    & 4       & $5 \times 10^{-4}$ & 4        \\
+  \midrule
+  Bronx pedestrians only  & 4     & $5 \times 10^{-4}$ & 2       \\
+  All pedestrians, subsampled to \# Bronx pedestrians   & 4       & $5 \times 10^{-3}$ & 4        \\
+  \bottomrule
+  \end{tabular}
+}
+ \label{tab:policing_hyperparams}
+\end{table*}
+
+\paragraph{Discussion.} We observed large disparities in performance across race and location groups. However, the fact that test-to-test in-distribution training did not ameliorate these disparities suggests that they do not occur because some groups comprise small minorities of the original dataset, and thus suffer worse performance. Instead, our results suggest that classification performance on some race and location groups are intrinsically noisier; it is possible, for example, that collection of additional features would be necessary to improve performance on these groups~\citep{chen2018my}.
+
+\subsubsection{Additional details}
+\paragraph{Modifications to the original dataset.}
+The features we use are very similar to those used in \citet{goel_precinct_2016}. The two primary differences are that 1) we remove features which convey information about a stopped pedestrian's race, since those might be illegal to use in real-world policing contexts and 2) we do not include a ``local hit rate'' feature which captures the fraction of historical stops in the vicinity of a stop which resulted in discovery of a weapon; we omit this latter feature because it was unnecessary to match performance in \citet{goel_precinct_2016}.

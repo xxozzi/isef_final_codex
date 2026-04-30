@@ -1,0 +1,9 @@
+\section{Conclusion}
+Traditional domain generalization (DG) approaches focus to learn a robust representation using multiple source domains.
+However, in the recent trends of scaling up pre-training, the use of a large-scale pre-trained model becomes more important than the use of DG algorithms for the real-world DG.
+In line with this trend, we propose \fullname{} (\method{}) to robustly exploit the pre-trained model by approximating an oracle model.
+To do this, we first re-formulate the domain generalization objective by introducing a concept of an oracle model.
+Then, we derive a tractable variational bound of the objective by approximating the oracle model with the pre-trained model.
+% We empirically validate the approximation.
+Our experimental results demonstrate both the effectiveness and the potential of the proposed method. \method{} achieves state-of-the-art performance in the DomainBed benchmarks. Furthermore, when combining \method{} with large-scale pre-trained backbones, such as CLIP \cite{radford2021clip} or SWAG \cite{singh2022swag}, the performance improvements remarkably increases. 
+We hope that this study promotes a new research direction of exploiting pre-trained backbones to learn robust representations for domain generalization.

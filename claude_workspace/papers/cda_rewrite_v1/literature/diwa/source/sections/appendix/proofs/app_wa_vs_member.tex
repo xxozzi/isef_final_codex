@@ -1,0 +1,26 @@
+\subsection{WA \versus its members}
+\label{app:proof_wa_ind}
+We validate that WA's expected error is smaller than its members' error under the locality constraint.
+\begin{lemma}[WA \versus its members.]\label{lemma:wa_ind}
+    \begin{equation}
+        \mathbb{E}_{L_S^M}\mathcal{E}_T(\theta_{\text{WA}}(L_S^M)) - \mathbb{E}_{l_S} \mathcal{E}_T \left(\theta \left( l_S \right) \right)= \frac{M-1}{M} \mathbb{E}_{x\sim p_T}[\covb(x)-\varb(x)] + O(\Deltab^2) \leq O(\bar{\Delta}^2).%
+    \end{equation}%
+\end{lemma}%
+\begin{proof}
+    The proof builds upon \Cref{eq:b_var_cov}:
+    \begin{equation*}
+        \mathbb{E}_{L_S^M}\mathcal{E}_T(\theta_{\text{WA}}) = \mathbb{E}_{(x,y)\sim p_T}\Big[\biasb(x,y)^{2}+\frac{1}{M} \varb(x)+\frac{M-1}{M} \covb(x)\Big] + O(\Deltab^2),
+    \end{equation*}
+    and the expression of the standard bias-variance decomposition in \Cref{eq:b_v} from \cite{kohavi1996bias},
+    \begin{equation*}
+        \mathbb{E}_{l_S}\mathcal{E}_T(\theta) = \mathbb{E}_{(x,y)\sim p_T}\Big[\biasb(x,y)^{2}+\varb(x)\Big].
+    \end{equation*}
+    The difference between the two provides:
+    \begin{equation*}
+        \mathbb{E}_{L_S^M}\mathcal{E}_T(\theta_{\text{WA}}) - \mathbb{E}_{l_S}\mathcal{E}_T(\theta) = \frac{M-1}{M} \mathbb{E}_{(x,y)\sim p_T} \Big[\covb(x)-\varb(x)\Big] + O(\Deltab^2).
+    \end{equation*}
+    Cauchy Schwartz inequality states $|\mathrm{cov}(Y, Y')| \leq \sqrt{\mathrm{var}(Y) \mathrm{var}(Y')}$, thus $\covb(x)\leq\varb(x)$. Then:
+    \begin{equation*}
+        \mathbb{E}_{L_S^M}\mathcal{E}_T(\theta_{\text{WA}}) - \mathbb{E}_{l_S}\mathcal{E}_T(\theta) \leq O(\Deltab^2).
+    \end{equation*}
+\end{proof}

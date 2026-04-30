@@ -1,0 +1,141 @@
+\section{Performance drops from distribution shifts}\label{sec:erm_drops}
+
+For a dataset to be appropriate for \Wilds, the distribution shift reflected in its official train/test split should cause significant performance drops in standard models.
+How to measure the performance drop due to a distribution shift is a crucial but subtle question.
+In this section, we discuss our approach and the results on each of the \Wilds datasets.
+To construct \Wilds, we selected datasets with large performance drops;
+in \refsec{other_datasets}, we discuss other datasets with real-world shifts that did not show large performance drops and were therefore not included in the benchmark.
+
+Our general approach is to measure the difference between the out-of-distribution (OOD) and in-distribution (ID) performance of standard models trained via empirical risk minimization (ERM).
+Concretely, we first measure the OOD performance using the official train/test splits described in \refsec{datasets}.
+We then construct an appropriate in-distribution (ID) setting to measure ID performance, typically by modifying the official train/test splits.
+However, practical constraints often prevent us from constructing an ID setting in exactly the way we want, which makes the choice of appropriate ID setting for each dataset a case-by-case issue.
+
+\subsection{In-distribution performance should be measured on $\Ptest$, not $\Ptrain$}
+\label{sec:indist-control}
+Choosing an appropriate in-distribution (ID) setting is the crux of measuring how much a distribution shift affects performance.
+But what distribution should ``in-distribution'' be taken with respect to?
+Consider a distribution shift from a training distribution $\Ptrain$ to a test distribution $\Ptest$.
+It is common to measure ID performance by taking a model trained on $\Ptrain$ and evaluating it on additional held-out data from $\Ptrain$.\footnote{For example, in domain generalization, we might train a model on the training domains and then report its ID performance on held-out examples from the same domains; and in subpopulation shift, we might report average performance on $\Ptrain$ as the ID performance.}
+This is useful for checking if the model can generalize well on both the training and the shifted test distributions.
+However, it fails to isolate the effect of the distribution shift since it does not control for the data distribution on which the model is evaluated: the ID setting evaluates on data from $\Ptrain$, whereas the OOD setting evaluates on data from $\Ptest$.
+As a result, the performance gap might also be due to other factors such as differences in the difficulty of fitting a model to $\Ptrain$ versus $\Ptest$.
+
+For illustration, consider the task of wheat head detection on \Wheat.
+The shift from $\Ptrain$ to $\Ptest$, which contain images of wheat fields in Europe and North America respectively, involves changes in factors such as wheat genotype, illumination, and growing conditions.
+These changes mean that the task can be more challenging in some regions than others:
+for example, wheat is grown in higher densities in certain regions than others, and it is harder to detect wheat heads reliably when they are more densely packed together.
+If, for example, the task is harder in the regions in $\Ptest$, then we might see especially low performance on $\Ptest$ compared to $\Ptrain$. However, this performance gap would overestimate the actual gap caused by the distribution shift, in the sense that performance on $\Ptest$ would still be lower even if we could train a model purely on data from $\Ptest$.
+
+To isolate the gap caused by the distribution shift, it is therefore important to keep the evaluation data distribution fixed between the ID and OOD settings by evaluating on $\Ptest$ in the ID setting.
+For example, we could measure ID performance by training on $\Ptest$ and evaluating on $\Ptest$ and then compare this with the standard OOD setting of training on $\Ptrain$ and evaluating on $\Ptest$.
+However, there is a practical drawback: we generally have much more data from $\Ptrain$ rather than $\Ptest$, and training and evaluating on $\Ptest$ would require us to have a substantial number of labeled examples from each test domain.
+In contrast, the standard ID setting of training and evaluating on $\Ptrain$ is typically much more feasible, and it is also more convenient as we can reuse the same model trained on $\Ptrain$ for both ID and OOD evaluations.
+
+In \Wilds, we take the approach of measuring ID performance on $\Ptest$ whenever practically feasible, and we lean on standard ID evaluations on $\Ptrain$ otherwise.
+In either case, we generally provide held-out data from $\Ptrain$ in order to track model performance on $\Ptrain$.
+
+\subsection{Types of in-distribution settings}
+\label{sec:indist-types}
+
+To measure the performance drop on each \Wilds dataset, we picked the most appropriate ID setting(s) that were feasible.
+We now describe five specific ways of constructing ID settings and their pros and cons.
+The first two ID settings (test-to-test and mixed-to-test) control for the evaluation distribution and thus isolate the performance drops due to distribution shifts, as discussed in \refsec{indist-control}.
+However, these procedures require substantial training data from test domains, so in cases where such data is not practically available, we consider the other ID settings (train-to-train, average, and random split).
+\refapp{app_datasets} describes dataset-specific rationales for the selected ID settings and additional details for each dataset.
+
+Below, we denote the training and OOD test sets of the official \Wilds splits as $\Dtrain$ and $\Dtest$, sampled from distributions $\Ptrain$ and $\Ptest$, respectively.
+
+\paragraph{Test-to-test (train on $\Ptest$, test on $\Ptest$).}
+To control for the evaluation distribution, we can hold the test set $\Dtest$ fixed and train on a separate but identically-distributed training set $\Dptest$ drawn from $\Ptest$.
+The ID performance reported in this setting is directly comparable to OOD performance, which is also evaluated on $\Dtest$.
+The main drawback is that for a fair comparison to the OOD setting, where we train a model on $\Dtrain$, we would require $\Dptest$ to match the size of $\Dtrain$.
+This is not feasible in our datasets, as $\Dtrain$ typically comprises the bulk of the available data.
+We therefore do not use the test-to-test comparison for any of the \Wilds datasets and instead consider the more practical alternative below, which still controls for the evaluation data distribution.
+
+\paragraph{Mixed-to-test (train on a mixture of $\Ptrain$ and $\Ptest$, test on $\Ptest$).}
+In the mixed-to-test setting, we train a model on a mixture of data from $\Ptrain$ and $\Ptest$ and then evaluate it only on $\Ptest$.
+This is a more practical version of the test-to-test setting, as it retains the advantage of controlling for the evaluation distribution, while mitigating the need for large amounts of labeled data from $\Ptest$ to use for training.\footnote{In practice, we typically split up $\Dtest$ and use some of it for training by replacing examples in $\Dtrain$ (so that the size of the training set is similar to the OOD setting). This still requires $\Dtest$ to be large enough to support using a sufficient number of examples for training while also having enough examples left over for accurate evaluation.}
+We use the mixed-to-test comparison for the \Wilds datasets wherever feasible, except when we expect the train-to-train comparison to give similar results as described in the below discussion on train-to-train setting (e.g., for \iWildCam and \Py).
+
+One downside is that compared to the test-to-test setting, the mixed-to-test setting might underestimate ID performance, since it trains a model that simultaneously fits both $\Ptrain$ and $\Ptest$, instead of just focusing on $\Ptest$.
+However, this is useful as a sanity check that we can learn a model that can simultaneously fit both $\Ptrain$ and $\Ptest$; if such a model were not possible to learn, then it suggests that the distribution shift in the dataset is intractable for the model family.
+
+
+\paragraph{Train-to-train (train on $\Ptrain$, evaluate on $\Ptrain$).}
+In the train-to-train setting, we train a model on $\Dtrain$ and evaluate on a separate but identically-distributed test set $\Dptrain$ drawn from $\Ptrain$.
+As discussed in \refsec{indist-control}, this is practical---it does not require large amounts of data from $\Ptest$, and we can reuse the model for OOD evaluation---but has the drawback of not controlling for the evaluation distribution.
+
+This drawback is less of an issue when we expect $\Dtrain$ and $\Dtest$ to be of equal difficulty in the sense of \refsec{indist-control}.
+This may be the case when the dataset has a relatively large number of training and test domains that are drawn from the same distribution, and they are thus roughly interchangeable.
+For instance, in \iWildCam and \Py, there are many available domains (camera traps and GitHub repositories, respectively) randomly split across $\Dtrain$ and $\Dtest$, so we use the train-to-train comparison for them.
+For most of the other datasets, we also include train-to-train comparisons to track model performance on $\Ptrain$ (i.e., the official splits typically also include a held-out $\Dptrain$; we report results on these in \refapp{app_datasets}), but we complement them whenever feasible with other ID settings that better isolate the effect of the distribution shift.
+
+\paragraph{Average (report average instead of worst-case performance).}
+In subpopulation shift datasets, we measure the OOD performance of a model by reporting the performance on the worst-case subpopulation, and we can measure ID performance by simply reporting the average performance.
+This average comparison corresponds to a special case of the train-to-train setting,\footnote{In subpopulation shifts, the training distribution reflects the empirical make-up over the pre-defined subpopulations, whereas the test distribution of interest corresponds to the worst-case subpopulation.}
+so they share the same pros and cons.
+In particular, the average comparison is much more practical than running a test-to-test comparison on each subpopulation, as it can be especially difficult to obtain sufficient training examples from minority subpopulations.
+%In particular, in subpopulation shift problems, we are often concerned with minority subpopulations for which we do not have much data available.
+%This means that reporting the average performance is much more practical than training a separate in-distribution model for each subpopulation, as there might not be enough data from each subpopulation for the latter.
+%On the other hand, the worst-case subpopulation might be intrinsically more difficult or noisy, which would manifest as an ID-OOD gap that cannot be closed.
+In \reftab{erm_drops}, we use this average comparison for the \CivilComments and \Amazon datasets, which both consider a large number of subpopulations that are individually quite small.
+%In \refapp{app_datasets}, we also report average model performance for all datasets that involve some form of subpopulation shift.
+
+
+\paragraph{Random split (train and evaluate on an i.i.d.~split).}
+Another standard approach to measuring ID performance is to shuffle all of the data in $\Dtrain \cup \Dtest$ into i.i.d.~training, validation, and test splits, while keeping the size of the training set constant.
+We use this in $\Mol$ to be consistent with prior work from the Open Graph Benchmark \citep{hu2020open}.
+As with the train-to-train comparison, the random split comparison is simple to implement and does not require large amounts of data from $\Dtest$, but it does not control for the evaluation distribution.
+
+
+\subsection{Model selection}\label{sec:erm_drops_model_selection}
+We used standard model architectures for each dataset: ResNet and DenseNet for images \citep{he2016resnet, huang2017densely}, DistilBERT for text \citep{sanh2019distilbert}, a Graph Isomorphism Network (GIN) for graphs \citep{xu2018powerful}, and Faster-RCNN \citep{ren2015faster} for detection.
+As our goal is high OOD performance,
+we use a separate OOD validation set for early stopping and hyperparameter selection.\footnote{This means that while the ERM models do not make use of any additional metadata (e.g., domain annotations) during training, this metadata is still implicitly (but very mildly) used for model selection.}
+Relative to the training set, this OOD validation set reflects a distribution shift similar to, but distinct from, the test set.
+For example, in \iWildCam, the training, validation, and test sets each comprise photos from distinct sets of camera traps. We detail experimental protocol in \refapp{experiments} and models and hyperparameters for each dataset in \refapp{app_datasets}.
+
+For the ID comparisons, we use the same hyperparameters optimized on the OOD validation set, so our ID results are slightly lower than if we had optimized hyperparameters for ID performance (\refapp{experiments}). In other words, the ID-OOD gaps in \reftab{erm_drops} are slightly underestimated.
+
+
+\subsection{Results}
+\reftab{erm_drops} shows that for each dataset, OOD performance is consistently and substantially lower than the corresponding ID performance.
+Moreover, on the datasets that allow for mixed-to-test ID comparisons,
+we show that models trained on a mix of the ID and OOD distributions can simultaneously achieve high ID and OOD performance,
+indicating that lower OOD performance is not due to the OOD test sets being intrinsically more difficult than the ID test sets.
+Overall, these results demonstrate that the real-world distribution shifts reflected in the \Wilds datasets meaningfully degrade standard model performance.
+Additional results for datasets that admit multiple ID comparisons are described for each dataset in \refapp{app_datasets}.
+
+
+\begin{table*}[p]
+  \caption{The in-distribution (ID) vs.~out-of-distribution (OOD) performance of models trained with empirical risk minimization.
+  The OOD test sets are drawn from the shifted test distributions described in \refsec{datasets},
+  while the ID comparisons vary per dataset and are described in \refsec{indist-control}.
+  For each dataset, higher numbers are better.
+  In all tables in this paper, we report in parentheses the standard deviation across 3+ replicates, which measures the variability between replicates; note that this is higher than the standard error of the mean, which measures the variability in the estimate of the mean across replicates.
+  All datasets show performance drops due to distribution shift, with substantially better ID performance than OOD performance.
+  }
+  \label{tab:erm_drops}
+  \centering
+  \resizebox{\textwidth}{!}{
+  \begin{small}
+  \begin{tabular}{l|c|c|r|r|r}
+  \toprule
+    Dataset & Metric &  In-dist setting & \multicolumn{1}{c|}{In-dist} & \multicolumn{1}{c|}{Out-of-dist} & \multicolumn{1}{c}{Gap}\\
+  \midrule
+  \iWildCam      & Macro F1              & Train-to-train   & 47.0 (1.4)    & 31.0 (1.3) & 16.0 \\
+  \Camelyon      & Average acc           & Train-to-train   & 93.2 (5.2)    & 70.3 (6.4) & 22.9 \\
+  \RxRx          & Average acc           & Mixed-to-test    & 39.8 (0.2)    & 29.9 (0.4) & 9.9  \\
+  \Mol           & Average AP            & Random split     & 34.4 (0.9)    & 27.2 (0.3) & 7.2  \\
+  \Wheat         & Average domain acc    & Mixed-to-test    & 63.3 (1.7)    & 49.6 (1.9) & 13.7 \\
+  \CivilComments & Worst-group acc       & Average          & 92.2 (0.1)    & 56.0 (3.6) & 36.2 \\
+  \FMoW          & Worst-region acc      & Mixed-to-test    & 48.6 (0.9)    & 32.3 (1.3) & 16.3 \\
+  \PovertyMap    & Worst-U/R Pearson R   & Mixed-to-test    & 0.60 (0.06)   & 0.45 (0.06)& 0.15 \\
+  \Amazon        & 10th percentile acc   & Average          & 71.9 (0.1)    & 53.8 (0.8) & 18.1 \\
+  \Py            & Method/class acc      & Train-to-train   & 75.4 (0.4)    & 67.9 (0.1) & 7.5  \\
+  \bottomrule
+  \end{tabular}
+  \end{small}
+  }
+\end{table*}

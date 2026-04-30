@@ -1,0 +1,56 @@
+\clearpage
+\section{Experimental results on the DomainBed benchmark}%
+\label{sec:domainbed}%%
+% \subsection{Benchmark and experimental details}%
+% \label{subsec:implem_domainbed}%
+\textbf{Datasets.}
+We now present our evaluation on DomainBed \cite{gulrajani2021in}.
+By imposing the code, the training procedures and the ResNet50 \cite{he51deep} architecture, DomainBed is arguably the fairest benchmark for \ood generalization.
+It includes $5$ multi-domain real-world datasets: PACS \cite{li2017deeper}, VLCS \cite{fang2013unbiased}, OfficeHome \cite{venkateswara2017deep}, TerraIncognita \cite{beery2018recognition} and DomainNet \cite{peng2019moment}. \cite{ye2021odbench} showed that \textit{diversity shift dominates in these datasets}. Each domain is successively considered as the target $T$ while other domains are merged into the source $S$. The validation dataset is sampled from $S$, \ie we follow DomainBed's training-domain model selection.
+The experimental setup is further described in \Cref{app:domainbed_description}.
+Our code is available at \url{https://github.com/alexrame/diwa}.%will be available anonymously at \url{https://anonymous.4open.science/r/DiWA-anonymous-9884/}.%
+
+\textbf{Baselines.}
+ERM is the standard Empirical Risk Minimization.
+Coral \cite{coral216aaai} is the best approach based on domain invariance.
+SWAD (Stochastic Weight Averaging Densely) \cite{cha2021wad} and MA (Moving Average) \cite{arpit2021ensemble} average weights along one training trajectory but differ in their weight selection strategy.
+SWAD \cite{cha2021wad} is the current state of the art (SoTA) thanks to it \enquote{overfit-aware} strategy, yet at the cost of three additional hyperparameters (a patient parameter, an overfitting patient parameter and a tolerance rate) tuned per dataset.
+In contrast, MA \cite{arpit2021ensemble} is easy to implement as it simply combines all checkpoints uniformly starting from batch $100$ until the end of training.
+\reb{Finally, we report the scores obtained in \cite{arpit2021ensemble} for the costly Deep Ensembles (DENS) \cite{Lakshminarayanan2017} (with different initializations)}: we discuss other ensembling strategies in~\Cref{app:wa_vs_ens_analysis}.
+% For the sake of fairness, we only report methods with no ;%
+
+\textbf{Our runs.}
+ERM and DiWA share the same training protocol in DomainBed: yet, instead of keeping only one run from the grid-search, DiWA leverages $M$ runs.
+In practice, we sample $20$ configurations from the hyperparameter distributions detailed in \Cref{tab:hyperparam} and report the mean and standard deviation across $3$ data splits.
+For each run, we select the weights of the epoch with the highest validation accuracy.
+ERM and MA select the model with highest validation accuracy across the $20$ runs, following standard practice on DomainBed.
+\reb{Ensembling (ENS) averages the predictions of all $M=20$ models (with shared initialization).}
+DiWA-restricted selects $1 \leq M \leq 20 $ weights with \Cref{alg:pseudo-code} while DiWA-uniform averages all $M=20$ weights.
+DiWA$^{\dagger}$ averages uniformly the $M=3\times20=60$ weights from all $3$ data splits.
+DiWA$^{\dagger}$ benefits from larger $M$ (without additional inference cost) and from data diversity (see \Cref{app:more_diversity_comparison}).
+However, we cannot report standard deviations for DiWA$^{\dagger}$ for computational reasons. Moreover, DiWA$^{\dagger}$ cannot leverage the restricted weight selection, as the validation is not shared across all $60$ weights that have different data splits.
+
+\subsection{Results on DomainBed}
+\label{subsec:domain_bed}
+We report our \textbf{main results} in \Cref{table:db_all_training}, detailed per domain in \Cref{app:full_results}.
+With a randomly initialized classifier, DiWA$^\dagger$-uniform is the best on PACS, VLCS and OfficeHome:
+DiWA-uniform is the second best on PACS and OfficeHome.
+On TerraIncognita and DomainNet, DiWA is penalized by some bad runs, filtered in DiWA-restricted which improves results on these datasets.
+Classifier initialization with linear probing (LP) \cite{kumar2022finetuning} improves all methods on OfficeHome, TerraIncognita and DomainNet.
+On these datasets, DiWA$^\dagger$ increases MA by $1.3$, $0.5$ and $1.1$ points respectively.
+After averaging, DiWA$^\dagger$ with LP \textit{establishes a new SoTA of $68.0\%$}, improving SWAD by $1.1$ points.%
+\input{tables/domainbed/db_main_results.tex}%
+\clearpage
+\input{tables/domainbed/db_main_officehome0_lateral}%
+\textbf{DiWA with different objectives.}
+So far we used ERM that does not leverage the domain information.
+\Cref{table:db_home0_training} shows that DiWA-uniform benefits from averaging weights trained with Interdomain Mixup \cite{yan2020improve} and Coral \cite{coral216aaai}: accuracy gradually improves as we add more objectives.
+Indeed, as highlighted in \Cref{app:more_diversity_comparison}, DiWA benefits from the increased diversity brought by the various objectives.
+This suggests a new kind of linear connectivity across models trained with different objectives; the full analysis of this is left for future work.%
+\vspace{-0.2em}%
+\subsection{Limitations of DiWA}
+\label{subsec:limitations}
+Despite this success, DiWA has some limitations.
+\textit{First}, DiWA cannot benefit from additional diversity that would break the linear connectivity between weights --- as discussed in \Cref{app:wa_vs_ens_analysis}.
+\textit{Second}, DiWA (like all WA approaches) can tackle diversity shift but not correlation shift: this property is explained for the first time in \Cref{subsec:analysisbvc} and illustrated in \Cref{app:failure_corr_shift} on ColoredMNIST.%
+\vspace{-0.2em}%

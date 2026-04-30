@@ -1,0 +1,120 @@
+\section{Experiments}
+% In this section, we evaluate our proposed method on the standard DG benchmarks. We first describe the experimental settings, and compare \method{} with state-of-the-art DG methods. We also provide analysis of \method{} 
+
+% \subsection{Evaluation protocols and implementation details}
+\subsection{Experiment setups and implementation details}
+
+% \subsubsection{Benchmark datasets.} 
+% Following the previous DG studies \cite{cha2021swad,gulrajani2020domainbed}, we evaluate the proposed method on the five benchmark datasets, namely \data{PACS}~\cite{li2017pacs} (4 domains, 7 classes, and $9,991$ examples), \data{VLCS}~\cite{fang2013vlcs} (4 domains, 5 classes, and $10,729$ examples), \data{OfficeHome}~\cite{venkateswara2017officehome} (4 domains, 65 classes, and $15,588$ images), \data{TerraIncognita}~\cite{beery2018terraincognita} (4 domains, 10 classes, and $24,788$ examples), and \data{DomainNet}~\cite{peng2019domainnet} (6 domains, 345 classes, and $586,575$ examples).
+
+% hmm....
+\subsubsection{Evaluation protocols and datasets.} 
+%We employ DomainBed evaluation protocols~\cite{gulrajani2020domainbed} for fair comparison, with following modifications from \citet{cha2021swad}. 
+%\citet{cha2021swad} slightly modifies the protocols by increasing the total training steps for convergence and reducing hyperparameter (HP) search space for efficiency.
+% We use DomainBed~\cite{gulrajani2020domainbed} as the testbed for DG tasks. Since the original DomainBed requires very heavy computation resources, we apply minor modifications by increasing total training steps and reducing hyperparameter search space, following Cha \etal \cite{cha2021swad}.
+% We evaluate the proposed method in DomainBed comparison protocol  \cite{gulrajani2020domainbed, cha2021swad}.
+We employ DomainBed evaluation protocols \cite{gulrajani2020domainbed, cha2021swad} for a fair comparison. The five benchmark datasets are used: \data{PACS}~\cite{li2017pacs} (4 domains, 7 classes, and $9,991$ images), \data{VLCS}~\cite{fang2013vlcs} (4 domains, 5 classes, and $10,729$ images), \data{OfficeHome}~\cite{venkateswara2017officehome} (4 domains, 65 classes, and $15,588$ images), \data{TerraIncognita}~\cite{beery2018terraincognita} (4 domains, 10 classes, and $24,788$ images), and \data{DomainNet}~\cite{peng2019domainnet} (6 domains, 345 classes, and $586,575$ images).
+%Details are given in Appendix.
+%Performance on each dataset is evaluated by \textit{leave-one-out cross-validation}, where averaged accuracy over all target domains is recorded as a performance of the dataset. When a domain is selected as a target domain, the other domains are used for training. The data in the training domains are splitted again to $80\%$ for training and $20\%$ for validation. Since the out-of-domain performance has rather higher variance than in-domain performance, every experiment is repeated three times by different trial seeds. We report the average score of the three repeated trials.
+All performance scores are evaluated by \textit{leave-one-out cross-validation}, where averaging all cases that use a single domain as the target (test) domain and the others as the source (training) domains. Every experiment is repeated three times. We leave 20\% of source domain data for validation. We use training-domain validation for the model selection and the hyperparameter search following DomainBed \cite{gulrajani2020domainbed}.
+% The data in the source domains are split again to $80\%$ for training and $20\%$ for validation. 
+% Every experiment is repeated three times by different trial seeds. 
+
+\subsubsection{Implementation details.}
+We use ResNet-50 \cite{he2016_cvpr_resnet} pre-trained in the ImageNet \cite{russakovsky2015imagenet} as default. The model is optimized using Adam \cite{kingma2015adam} optimizer. A mini-batch contains all domains and 32 examples per domain.
+% Proposed method introduces only one hyperparameter $\lambda$. 
+The regularization coefficient $\lambda$ is tuned in [1.0, 0.1, 0.01, 0.001].
+%using training-domain validation set following DomainBed \cite{gulrajani2020domainbed}. 
+The other hyperparameters, such as batch size, learning rate, dropout rate, and weight decay, are tuned in the similar search space proposed in Cha \etal \cite{cha2021swad}. We provide full details in Appendix \ref{sec:additional_impl_details}.
+
+% \subsubsection{Implementation details.}
+
+% \subsubsection{Design of the mean and variance encoders.} 
+% We consider the task shift from the pre-trained task in designing encoders. Since high-level representations include task-related semantic information, our encoder adopts multi-scale structure, to utilize diverse representations from low-level to high-level. Instead, we employ as simple as possible architectures, identity function for the mean encoder and bias-only model for the variance encoder, to minimize additional computational cost from the multi-scale design. We also tested architectures with more parameters, but they only increase computational cost without performance improvement.
+
+% \subsubsection{Hyperparameter tuning.} 
+
+\subsection{Main results}
+
+\input{tables/main_result}
+\subsubsection{Comparison with domain generalization methods.}
+We provide exhaustive out-of-domain performance comparisons on five DG benchmarks in Table~\ref{table:main_table}. 
+Compared to ERM, the proposed MI regularization significantly improves performance on every benchmark dataset, resulting in +1.7pp average improvement. 
+%(+1.2pp in \pacs, +1.7pp in \vlcs, +2.9pp in \oh, +2.6pp in \tr, and +0.3pp in \dn). 
+Compared with the state-of-the-art methods, \method{} achieves the best performances in all benchmarks, except \pacs. 
+Especially, \method{} remarkably outperforms previous methods: +1.3pp in \oh{} (mDSDI \cite{bui2021mdsdi}; $69.2\% \rightarrow 70.5\%$) and +1.8pp in \tr{} (SagNet \cite{nam2019sagnet}; $48.6\% \rightarrow 50.4\%$).
+%Especially, \method{} remarkably outperforms previous state-of-the-arts: +1.3pp in \oh{} and +1.8pp in \tr{} compared with mDSDI \cite{bui2021mdsdi} and SagNet \cite{nam2019sagnet}, respectively. 
+Considering the extensive experiment setup with 5 datasets and 22 target domains, the results demonstrate the effectiveness of \method{} to the diverse visual data types.
+
+The second part of Table~\ref{table:main_table} shows the performance with stochastic weight averaging densely (SWAD)~\cite{cha2021swad}, a state-of-the-art optimizer for DG by seeking flat minima. Since SWAD is an orthogonal direction to \method{}, we also evaluate the combination of \method{} and SWAD.
+% The authors show the flatness of solution is important factor for out-of-domain generalizability and propose SWAD to find flat minima by averaging optimization trajectory. Since seeking flat minima is orthogonal direction to most of DG methods, including \method{}, it can be combined with any other method. Therefore, we compare our method in the setup of SWAD combination. 
+As shown in the table, the combination of \method{} and SWAD achieves the best performance in all datasets, resulting in +0.8pp average improvement compared to the previous best results. 
+
+
+In the last part of Table \ref{table:main_table}, we push the limits of the out-of-domain performance by employing a large-scale backbone, RegNetY-16GF pre-trained by SWAG \cite{singh2022swag}; a weakly-supervised pre-trained model using 3.6 billion noisy Instagram images and hashtags. As shown in our previous study on MI with the oracle model, the pre-trained RegNet has higher MI than ImageNet pre-trained ResNet (Figure \ref{fig:mi}). In the experiments, we first observe that the improvement gap by \method{} becomes remarkably large compared to the ResNet pre-trained model (from +1.7pp to +6.1pp). We presume that this significantly large gap originated from the negative effect of naive fine-tuning as observed by previous works \cite{wortsman2021robust, kumar2022iclr_finetuning_distort} and our study (Figure \ref{fig:mi-regnet}). As shown in Figure \ref{fig:mi-regnet}, \method{} keeps MI with the oracle model high, resulting in remarkable performance gains on large-scale models. We further explore the effect of the scalability of pre-trained models in the later section.
+Finally, by combining \method{} with RegNet backbone and SWAD, we achieve the best domain generalization results (77.3\%) on our evaluation benchmark.
+% SWAG indicates weakly supervised pre-training using 3.6 billions Instagram images and hashtags. 
+% In this setup, \method{} with SWAD remarkably improves the performance, +9.3pp in average, from the ERM.
+
+
+\input{tables/backbones_v3}
+% \subsubsection{Robustness and scalability analysis.}
+\subsubsection{\method{} with various pre-trained models.} 
+In this subsection, we investigate the robustness of the proposed method to the choice of pre-trained models.
+In Table~\ref{table:varying_dataset_method_backbone_scale}, we explore the performance changes of \method{} by varying pre-training datasets, methods, and backbones.
+From the pre-training method perspective, we examine two image self-supervised pre-training methods (Barlow Twins \cite{zbontar2021barlowtwins} and MoCo v3 \cite{chen2021mocov3}), one image-language self-supervised pre-training method (CLIP \cite{radford2021clip}), and one weakly-supervised pre-training method (SWAG \cite{singh2022swag}), as well as ImageNet supervised pre-training baseline (ImageNet ERM). 
+From the pre-training scale perspective, we employ the ImageNet \cite{russakovsky2015imagenet} dataset of 1.3 million examples, the CLIP dataset of 400 million examples, and the Instagram dataset of 3.6 billion examples. 
+We use ResNet-50 \cite{he2016_cvpr_resnet} backbone architecture as default, but a bigger model is also used for the large-scale pre-training, such as ViT-B \cite{dosovitskiy2021vit} for CLIP or RegNetY-16GF \cite{radosavovic2020regnet} for SWAG.
+% Following scaling laws~\cite{zhai2021scaling}, we also uses bigger model, such as ViT-B~\cite{dosovitskiy2021vit} or RegNetY-16GF~\cite{radosavovic2020regnet}, than ResNet-50~\cite{he2016_cvpr_resnet} for the large-scale pre-training, such as CLIP or IG-3.6B.
+
+As shown in the table, \method{} improves performances compared with the baseline ERM in all experiments. For the ImageNet pre-training, applying \method{} results in performance improvements of +1.7pp, +3.5pp, and +1.3pp for ERM (supervised learning), Barlow Twins, and MoCo v3, respectively. For the large-scale pre-training, such as CLIP and SWAG, \method{} brings larger performance improvements of +16.3pp, +12.6pp, and +6.1pp for CLIP, CLIP-ViT, and SWAG, respectively.
+These experiments demonstrate the robustness of the proposed method to the pre-training methods, datasets, and backbone architectures. 
+
+Notably, performance improvements of \method{} are remarkable with large-scale pre-trained models, such as CLIP, CLIP-ViT, and SWAG. This is consistent with our observation in Section~\ref{subsection:mi_with_oracle}.
+Our method helps large-scale pre-trained models (in terms of the pre-training dataset size) not to be biased to the training source domains compared to naive fine-tuning. Especially, naive fine-tuning of CLIP-ViT (61.1\%) shows worse out-of-domain performance than fine-tuning ImageNet pre-trained model (64.2\%). 
+%However, \method{} can leverage the pre-trained knowledge from CLIP-ViT (73.7\%), resulting in remarkable improvements than the ImageNet pre-trained model (65.9\%) with a significant gap.
+In contrast, \method{} can leverage the pre-trained knowledge from CLIP-ViT, resulting in superior performance (73.7\%) compared with the ImageNet pre-trained model (65.9\%).
+In our later analysis, we show that the knowledge of large-scale pre-trained models is more beneficial to domain generalization than the knowledge of ImageNet pre-trained models.
+
+
+\input{tables/transfer_learnings}
+\subsubsection{Comparison with methods exploiting pre-trained models.}
+\label{subsubsection:learning_from_pretrained_exp}
+Other DG methods simply employ pre-trained models as weight initialization, while \method{} additionally exploits it in the training process. This is the first approach to exploit pre-trained models in domain generalization, but there are several studies in other fields for different purposes. Table \ref{table:learning_from_pretrained} provides a comparison of the methods applicable to our DG settings. We exclude the methods that require additional information other than pre-trained models (\eg, pre-training datasets) or are restricted to a specific model.
+% Although our approach is the first study to exploit the pre-trained model in the training process for domain generalization, there are several studies that utilize the pre-trained model for different purposes. In the transfer learning field, L$^2$-SP \cite{xuhong2018l2sp} and DELTA \cite{li2019delta} are proposed to improve in-domain performance in the fine-tuning scenario. Learning without forgetting (LwF) \cite{li2017lwf} is designed to maintain old task performance when learning new tasks in the continual learning setting. LP-FT \cite{kumar2022iclr_finetuning_distort} shows that fine-tuning distorts the pre-trained features and it inhibits out-of-distribution generalization. They propose a simple baseline to alleviate the distortion, freezing the feature extractor in the early training phase.
+As shown in the table, \method{} outperforms the comparison methods with large margins. These results demonstrate the effectiveness of our method design for the out-of-domain generalization.
+
+\subsection{Analysis of \method{}}
+
+\input{figures/sigma_dist}
+\subsubsection{Loss function interpretation: $\Sigma$ distribution analysis.}
+% \subsubsection{$\Sigma$ distribution analysis.}
+We can interpret the variance term of \method{}, $\Sigma(z_f)$ in Equation \eqref{eq:method}, as control variables of the distance loss between pre-trained features $z_{f^0}$ and current learning features $z_f$. During the training phase, if the variance values become smaller then the model will preserve MI with the pre-trained model.
+% if the model tries to maintain pre-trained information of a certain feature, the variance becomes small. 
+On the contrary, when the model needs to learn new information, the variance will increase. We illustrate the learned variances in Figure~\ref{fig:sigma_dist}. The figure shows that pre-trained information is preserved well in lower layers, while task-specific new information is learned in higher layers.
+% and the higher the layer, the more new information is learned.
+This result is consistent with the interpretation that high layer features represent more task-specific semantic information than low layer features \cite{erhan2009visualizing}; task shifts during fine-tuning make higher layer features learn more semantics than lower layers.
+% the widely known understanding that the features of higher layers represent semantic information. 
+% Since task shift occurs in the fine-tuning process for DG tasks, the results show that the features of higher layers need to learn new information more than lower layers.
+
+
+% \input{figures/camelyon_examples}
+% \input{figures/imagenet_camelyon}
+\input{tables/camelyon}
+\subsubsection{Case study on \data{Camelyon17}: large distribution shift between pre-training and fine-tuning.} As shown in Equation~\eqref{eq:distribution_change}, the tightness of the lower bound is directly connected to the divergence between the representations of oracle and pre-trained models. Therefore, we investigate the case that there is a large shift between pre-trained and target datasets using the medical dataset \cite{bandi2018camelyon17,koh2021wilds}, \data{Camelyon17}. %Among the variants of the dataset, we use the patch-based version provided by Koh \etal \cite{koh2021wilds}. 
+This dataset consists of whole-slide images of histological lymph node sections from the five hospitals, where each hospital corresponds to each domain.
+% Distribution shifts between hospitals are caused by the way to acquire and process the tissue slide images.
+The task is to predict whether the image contains tumor tissue of breast cancer. There is a large gap between the pre-training distribution (ImageNet or Instagram-3.6B) and the fine-tuning distribution (\data{Camelyon17}). Detailed visual examples are provided in Appendix \ref{subsec:imagenet_vs_camelyon17}. The results in Table~\ref{table:camelyon} demonstrate \method{} leads the model to learn robust representations even in the large distribution shift setup between pre-training and fine-tuning.
+
+
+
+\input{figures/accdiff_by_lambda}
+\subsubsection{Relationship between the pre-training scale and the intensity of the MI regularization.}
+%$\lambda$ is a term representing Lagrangian multiplier $\beta$. 
+Our method has a control parameter $\lambda$, which controls the balance between the cross-entropy loss and the MI regularization loss. If $\lambda$ becomes larger, it implies that the strength of MI regularization becomes stronger, while it weakens the strength of the ERM objective. Intuitively, if the pre-trained knowledge is informative enough to the target task, larger $\lambda$ will improve the performances, while if the pre-trained knowledge is uninformative to the target task, then larger $\lambda$ can harm the performances, because of the penalty on the ERM objective.
+We compare three pre-trained models (ImageNet pre-trained model, SWAG, and CLIP-ViT) by varying $\lambda$.
+Figure~\ref{fig:accdiff_varying_lambda} shows how the out-of-domain performance of \method{} with different pre-trained backbones changes by $\lambda$. The additional results on different datasets are given in Appendix \ref{subsec:accdiff_by_lambda_more}.
+
+First, we observe that the ImageNet pre-trained backbone has a negative correlation between the performance difference and $\lambda$ in target domains. When distribution shifts significantly differ, such as cartoon and sketch domains, we can observe an apparent negative correlation. We presume that it is because the ImageNet samples barely contain non-photo images, such as art painting or sketch images. On the other hand, we observe that \method{} with SWAG and CLIP-ViT backbones make significant performance improvements by choosing larger $\lambda$. In other words, SWAG and CLIP-ViT pre-trained knowledge are helpful to learn robust features for various target domains compared to the ImageNet pre-trained model. Furthermore, it implies that larger pre-trained models trained with massive diverse domain images show less sensitivity to the choice of $\lambda$, not only bringing remarkable performance improvements as shown in Table \ref{table:varying_dataset_method_backbone_scale}.
+% It means that the intensity of the regularization should be carefully tuned when using the ImageNet-scale pre-trained backbones. We make a significant performance improvements by tuning $\lambda$ via training-domain validation, but there is still room for improvement depending on how to search the $\lambda$.
+% On the other hand, the large-scale pre-trained backbones, such as CLIP and SWAG, the performance is consistently improved as increasing $\lambda$. That is, combining \method{} with large-scale pre-trained backbones not only brings large performance improvements (Table \ref{table:varying_dataset_method_backbone_scale}), but also makes it easy to search appropriate $\lambda$.

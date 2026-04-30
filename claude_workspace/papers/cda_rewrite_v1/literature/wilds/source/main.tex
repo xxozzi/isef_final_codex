@@ -1,0 +1,182 @@
+\documentclass{article}
+
+\PassOptionsToPackage{linktoc=all}{hyperref}
+\usepackage{jmlr2e}
+% \usepackage[accepted]{icml2021}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{pifont}         % for checkmarks and crosses
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+% \usepackage{floatrow}
+\usepackage[dvipsnames,hyperref,table]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage[font=small]{caption}
+\usepackage{mathtools}
+\usepackage[algoruled]{algorithm2e}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{thmtools}
+\usepackage{thm-restate}
+\usepackage{xspace}
+\usepackage{makecell}
+\usepackage{adjustbox}
+\usepackage{setspace}
+\usepackage{placeins}
+\usepackage{tocloft}
+\usepackage{color, colortbl}
+\definecolor{Gray}{gray}{0.93}
+\renewcommand\tabularxcolumn[1]{m{#1}}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\input{std_macros}
+\input{macros}
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
+
+\setlist[enumerate]{leftmargin=*}
+
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z}
+
+\title{\Wilds: A Benchmark of in-the-Wild Distribution Shifts}
+
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+\author{%
+  Pang Wei Koh\thanks{These authors contributed equally to this work.\\
+  \textit{Proceedings of the
+  $\mathit{38}^{th}$ International Conference on Machine Learning},
+   PMLR 139, 2021.\\
+  Copyright 2021 by the authors.}
+  ~\and Shiori Sagawa\footnotemark[\value{footnote}]
+                                \email{\{pangwei, ssagawa\}@cs.stanford.edu}
+  \AND Henrik Marklund          \email{marklund@stanford.edu}
+  \AND Sang Michael Xie         \email{xie@cs.stanford.edu}
+  \AND Marvin Zhang             \email{marvin@eecs.berkeley.edu}
+  \AND Akshay Balsubramani      \email{abalsubr@stanford.edu}
+  \AND Weihua Hu                \email{weihuahu@stanford.edu}
+  \AND Michihiro Yasunaga       \email{myasu@stanford.edu}
+  \AND Richard Lanas Phillips   \email{richard@cs.cornell.edu}
+  \AND Irena Gao                \email{igao@stanford.edu}
+  \AND Tony Lee                 \email{tonyhlee@stanford.edu}
+  \AND Etienne David            \email{etienne.david@inrae.fr}
+  \AND Ian Stavness             \email{stavness@usask.ca}
+  \AND Wei Guo                  \email{guowei@g.ecc.u-tokyo.ac.jp}
+  \AND Berton A. Earnshaw       \email{berton.earnshaw@recursionpharma.com}
+  \AND Imran S. Haque           \email{imran.haque@recursionpharma.com}
+  \AND Sara Beery               \email{sbeery@caltech.edu}
+  \AND Jure Leskovec            \email{jure@cs.stanford.edu}
+  \AND Anshul Kundaje           \email{akundaje@stanford.edu}
+  \AND Emma Pierson             \email{epierson@microsoft.com}
+  \AND Sergey Levine            \email{svlevine@eecs.berkeley.edu}
+  \AND Chelsea Finn             \email{cbfinn@cs.stanford.edu}
+  \AND Percy Liang              \email{pliang@cs.stanford.edu}
+  \AND
+  \begin{center}
+    {\rm Correspondence to: }{\tt wilds@cs.stanford.edu}\\
+  \end{center}
+}
+
+% \hypersetup{draft}
+\hypersetup{
+  colorlinks   = true, %Colours links instead of ugly boxes
+  urlcolor     = ForestGreen, %Colour for external hyperlinks
+  linkcolor    = Blue, %Colour of internal links
+  citecolor   = ForestGreen %Colour of citations
+}
+\setcounter{tocdepth}{1}% Allow only \chapter in ToC
+% \pagenumbering{gobble}
+
+\begin{document}
+
+\date{}
+\editor{}
+\maketitle
+\vspace{-5mm}
+\begin{abstract}
+  \input sections/abstract
+\end{abstract}
+
+\vspace{-5mm}
+\clearpage
+
+% \renewcommand\cftsecafterpnum{\vskip-10pt}
+% \renewcommand{\baselinestretch}{0.5}\normalsize
+\tableofcontents
+% \renewcommand{\baselinestretch}{1.0}\normalsize
+
+\clearpage
+% \twocolumn
+\input sections/intro
+\input sections/related
+\input sections/problems
+\addtocontents{toc}{\protect\setcounter{tocdepth}{3}}
+\input sections/datasets
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+\FloatBarrier
+\input sections/erm_drops
+\input sections/baselines
+\input sections/discussion
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+\input sections/other_datasets
+\input sections/guidelines
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+\input sections/library
+
+\FloatBarrier
+\input sections/reproducibility
+\input sections/acknowledgements
+
+% \setcitestyle{numbers}
+\bibliography{references}
+% \bibliographystyle{icml2021}
+% \setcitestyle{authoryear,open={(},close={)}}
+
+\clearpage
+\appendix
+\input appendices/app_realism
+\input appendices/app_related
+\input appendices/other_problems
+\input appendices/experiments
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+\input appendices/app_datasets
+\input appendices/app_iwildcam
+\input appendices/app_camelyon
+\input appendices/app_rxrx1
+\input appendices/app_molpcba
+\input appendices/app_wheat
+\input appendices/app_civilcomments
+\input appendices/app_fmow
+\input appendices/app_povertymap
+\input appendices/app_amazon
+\input appendices/app_py150
+\section{Datasets with distribution shifts that do not cause performance drops}\label{sec:negative_examples}
+\input appendices/app_sqf
+\input appendices/app_encode
+\input appendices/app_bdd
+\input appendices/app_amazon_other
+\input appendices/app_yelp
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+
+\end{document}

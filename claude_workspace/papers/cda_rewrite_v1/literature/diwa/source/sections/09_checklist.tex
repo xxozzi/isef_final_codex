@@ -1,0 +1,71 @@
+\clearpage
+\section*{Checklist}
+%%% BEGIN INSTRUCTIONS %%%
+%The checklist follows the references.  Please read the checklist guidelines carefully for information on how to answer these questions.  For each question, change the default \answerTODO{} to \answerYes{}, \answerNo{}, or \answerNA{}.  You are strongly encouraged to include a {\bf justification to your answer}, either by referencing the appropriate section of your paper or providing a brief inline description.  For example:
+% \begin{itemize}
+%   \item Did you include the license to the code and datasets? \answerYes{See Section~\ref{}.}
+%   \item Did you include the license to the code and datasets? \answerNo{The code and the data are proprietary.}
+%   \item Did you include the license to the code and datasets? \answerNA{}
+% \end{itemize}
+% Please do not modify the questions and only use the provided macros for your
+% answers.  Note that the Checklist section does not count towards the page
+% limit.  In your paper, please delete this instructions block and only keep the
+% Checklist section heading above along with the questions/answers below.
+%%% END INSTRUCTIONS %%%
+\begin{enumerate}
+\item For all authors...
+\begin{enumerate}
+  \item Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
+    \answerYes{}
+  \item Did you describe the limitations of your work?
+    \answerYes{In \Cref{subsec:limitations}.}
+  \item Did you discuss any potential negative societal impacts of your work?
+    \answerYes{In \Cref{app:broader_impact}}
+  \item Have you read the ethics review guidelines and ensured that your paper conforms to them?
+    \answerYes{}
+\end{enumerate}
+
+\item If you are including theoretical results...
+\begin{enumerate}
+    \item Did you state the full set of assumptions of all theoretical results?
+    \answerYes{\Cref{ass:no_bias_iid} discussed in \Cref{app:bias_correlation_ass_noiidbias} and \Cref{ass:infinite_width,ass:inter_sample} discussed in \Cref{app:discussion_inter_sample}.}
+    \item Did you include complete proofs of all theoretical results?
+    \answerYes{In \Cref{app:proof}}
+\end{enumerate}
+
+\item If you ran experiments...
+\begin{enumerate}
+    \item Did you include the code, data, and instructions needed to reproduce the main experimental results (either in the supplemental material or as a URL)? \answerYes{Our code is available at \url{https://github.com/alexrame/diwa}.}
+    % \answerYes{Code is open sourced and included in the Domainbed benchmark.}
+    \item Did you specify all the training details (e.g., data splits, hyperparameters, how they were chosen)? \answerYes{See \Cref{sec:domainbed} and \Cref{app:domainbed_description}}
+    \item Did you report error bars (e.g., with respect to the random seed after running experiments multiple times)?
+    \answerYes{Defined by different data splits when possible.}
+    \item Did you include the total amount of compute and the type of resources used (e.g., type of GPUs, internal cluster, or cloud provider)?
+    \answerYes{Approximately $20000$ hours of GPUs (Nvidia V100) on an internal cluster, mostly for the $2640$ runs needed in \Cref{table:db_all_training}.}
+\end{enumerate}
+
+\item If you are using existing assets (e.g., code, data, models) or curating/releasing new assets...
+\begin{enumerate}
+  \item If your work uses existing assets, did you cite the creators?
+    \answerYes{DomainBed benchmark \cite{gulrajani2021in} and its datasets.}
+  \item Did you mention the license of the assets?
+    \answerYes{DomainBed is under \enquote{The MIT License}.}
+  \item Did you include any new assets either in the supplemental material or as a URL?
+    \answerNo{}
+  \item Did you discuss whether and how consent was obtained from people whose data you're using/curating?
+    \answerNA{}
+  \item Did you discuss whether the data you are using/curating contains personally identifiable information or offensive content?
+    \answerNA{}
+\end{enumerate}
+
+\item If you used crowdsourcing or conducted research with human subjects...
+\begin{enumerate}
+  \item Did you include the full text of instructions given to participants and screenshots, if applicable?
+    \answerNA{}
+  \item Did you describe any potential participant risks, with links to Institutional Review Board (IRB) approvals, if applicable?
+    \answerNA{}
+  \item Did you include the estimated hourly wage paid to participants and the total amount spent on participant compensation?
+    \answerNA{}
+\end{enumerate}
+
+\end{enumerate}

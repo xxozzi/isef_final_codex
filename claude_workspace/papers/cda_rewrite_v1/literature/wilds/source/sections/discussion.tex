@@ -1,0 +1,31 @@
+\section{Empirical trends}\label{sec:discussion}
+We end our discussion of experimental results by briefly reporting on several trends that we observed across multiple datasets.
+
+\subsection{Underspecification}
+Prior work has shown that there is often insufficient information at training time to distinguish models that would generalize well under distribution shift;
+many models that perform similarly in-distribution (ID) can vary substantially out-of-distribution (OOD) \citep{mccoy2019berts,zhou2020curse,damour2020underspecification}.
+In \Wilds, we attempt to alleviate this issue by providing multiple training domains in each dataset as well as an OOD validation set for model selection.
+Perhaps as a result, we do not observe significantly higher variance in OOD performance than ID performance in \reftab{erm_drops}, with the exception of
+\Amazon and \CivilComments, where the OOD performance is measured on a smaller subpopulation and is therefore naturally more variable.
+Excluding those datasets, the average standard deviation from \reftab{erm_drops} is 2.6\% for OOD performance and 2.0\% for ID performance, which is comparable.
+These results raise the question of when underspecification, as reported in prior work, could be more of an issue.
+
+\subsection{Model selection with in-distribution versus out-of-distribution validation sets}
+All of the baseline results reported in this paper use an OOD validation set for model selection, as discussed in \refsec{erm_drops_model_selection}.
+To facilitate research into comparisons of ID versus OOD performance, most \Wilds datasets also provide an ID validation and/or test set.
+For example, in \iWildCam, the ID validation set comprises photos from the same set of camera traps used for the training set.
+These ID sets are not used for model selection nor official evaluation.
+
+\citet{gulrajani2020search} showed that on the DomainBed domain generalization datasets, selecting models with an ID validation set leads to higher OOD performance than using an OOD validation set.
+This contrasts with our approach of using OOD validation sets, which we find to generally provide a good estimate of OOD test performance.
+Specifically, in \refapp{experiments_id_vs_ood}, we show that for our baseline models, model selection using an OOD validation set results in comparable or higher OOD performance than model selection using an ID validation set.
+This difference could stem from many factors: for example, \Wilds datasets tend to have many more domains, whereas DomainBed datasets tend to have fewer domains that can be quite different from each other (e.g., cartoons vs. photos);
+and there are some differences in the exact procedures for comparing performance using ID versus OOD validation sets.
+Further study of the effects of these different model selection procedures and choices of validation sets would be a useful direction for future work.
+
+\subsection{The compounding effects of multiple distribution shifts}
+Several \Wilds datasets consider hybrid settings, where the goal is to simultaneously generalize to unseen domains as well as to certain subpopulations.
+We observe that combining these types of shifts can exacerbate performance drops.
+For example, in \PovertyMap and \FMoW, the shift to unseen domains exacerbates the gap in subpopulation performance (and vice versa).
+Notably, in \FMoW, the difference in subpopulation performance (across regions) is not even manifested until also considering another shift (across time).
+While we do not always observe the compounding effect of distribution shifts---e.g., in \Amazon, subpopulation performance is similar whether we consider shifts to unseen users or not---these observations underscore the importance of evaluating models on the combination of distribution shifts that would occur in practice, instead of considering each shift in isolation.

@@ -1,0 +1,44 @@
+\section{Prior work on ML benchmarks for distribution shifts}\label{sec:app_related}
+
+In this section, we discuss existing ML distribution shift benchmarks in more detail, categorizing them by how they induce their respective distribution shifts.
+We focus here on work that has appeared in ML conferences and journals; we discuss related work from other research communities in \refsec{other_datasets} and \refapp{app_datasets}.
+We also restrict our attention to publicly-available datasets.
+While others have studied some proprietary datasets with realistic distribution shifts, such as the StreetView StoreFronts dataset \citep{hendrycks2020many} or diabetic retinopathy datasets \citep{damour2020underspecification}, these datasets are not publicly available due to privacy and other commercial reasons.
+
+\paragraph{Distribution shifts from transformations.} Some of the most widely-adopted benchmarks induce distribution shifts by synthetically transforming the data.
+Examples include rotated and translated versions of MNIST and CIFAR \citep{worrall2017harmonic,gulrajani2020search};
+surface variations such as texture, color, and corruptions like blur in Colored MNIST \citep{gulrajani2020search}, Stylized ImageNet \citep{geirhos2018imagenet}, ImageNet-C \citep{hendrycks2019benchmarking},
+and similar ImageNet variants  \citep{geirhos2018generalisation};
+and datasets that crop out objects and replace their backgrounds, as in the Backgrounds Challenge \citep{xiao2020noise} and other similar datasets \citep{sagawa2020group, koh2020bottleneck}.
+Benchmarks for adversarial robustness also fall in this category of distribution shifts from transformations \citep{goodfellow2015explaining,croce2020robustbench}.
+Though adversarial robustness is not a focus of this work,
+we note that recent work on temporal perturbations with the ImageNet-Vid-Robust and YTBB-Robust datasets \citep{shankar2019image}
+represents a different form of distribution shift that also impacts real-world applications.
+Outside of visual object recognition, other work has used synthetic datasets and transformations to explore compositional generalization, e.g., SCAN \citep{lake2018generalization}.
+We discuss this more in \refsec{other_datasets}.
+
+\paragraph{Synthetic-to-real transfers.}
+Fully synthetic datasets such as SYNTHIA \citep{ros2016synthia} and StreetHazards \citep{dan2020scaling} have been adopted for out-of-distribution detection as well as domain adaptation and generalization, e.g., by testing robustness to transformations in the seasons, weather, time, or architectural style \citep{hoffman2018cycada,volpi2018generalizing}.
+While the data is synthetic, it can still look realistic if a high-fidelity simulator is used.
+In particular, synthetic benchmarks that study transfers from synthetic to real data \citep{ganin2015domain,richter2016playing,peng2018visda} can be important tools for tackling real-world problems: even though the data is synthesized and by definition, not real, the synthetic-to-real distribution shift can still be realistic in contexts where real data is much harder to acquire than synthetic data \citep{bellemare2020autonomous}.
+In this work, we do not study these types of synthetic distribution shifts; instead, we focus on distribution shifts that occur in the wild between real data distributions.
+
+\paragraph{Distribution shifts from constrained splits.} Other benchmarks do not rely on transformations but instead split the data in a way that induces particular distribution shifts.
+These benchmarks have realistic data, e.g., the data points are derived from real-world photos,
+but they do not necessarily reflect distribution shifts that would arise in the wild.
+For example, BREEDS \citep{santurkar2020breeds} and a related dataset \citep{hendrycks2019benchmarking} test generalization to unseen ImageNet subclasses by holding out subclasses specified by several controllable parameters;
+similarly, NICO \citep{he2020towards} considers subclasses that are defined by their context, such as dogs at home versus dogs on the beach;
+DeepFashion-Remixed \citep{hendrycks2020many} constrains the training set to include only photos from a single camera viewpoint and tests generalization to unseen camera viewpoints;
+BDD-Anomaly \citep{dan2020scaling} uses a driving dataset but with all motorcycles, trains, and bicycles removed from the training set only;
+and ObjectNet \citep{barbu2019objectnet} comprises images taken from a few pre-specified viewpoints, allowing for systematic evaluation for robustness to camera angle changes but deviating from natural camera angles.
+
+\paragraph{Distribution shifts across datasets.} A well-studied special case of the above category is the class of distribution shifts obtained by combining several disparate datasets \citep{torralba2011unbiased}, training on one or more of them and then testing on the remaining datasets.
+A recent influential example is the ImageNetV2 dataset \citep{recht2019doimagenet}, which was constructed to be similar to the original ImageNet dataset.
+Unlike ImageNetV2, however, many of these distribution shifts were constructed to be more drastic than might arise in the wild.
+For example, standard domain adaptation benchmarks include training on MNIST but testing on SVHN street signs \citep{lecun1998mnist,netzer2011reading,tzeng2017domain,hoffman2018cycada},
+as well as transfers across datasets containing different renditions (e.g., photos, clipart, sketches) in DomainNet \citep{peng2019moment} and the Office-Home dataset \citep{venkateswara2017deep}.
+
+The main difference between domain adaptation and domain generalization is that in the latter, we do not assume access to unlabeled data from the test distribution.
+This makes it straightforward to use domain adaptation benchmarks for domain generalization, e.g., in DomainBed \citep{gulrajani2020search}; we focus on domain generalization in this work,
+but further discuss unsupervised domain adaptation in \refsec{other_problems}.
+Other similar benchmarks that have been proposed for domain generalization include VLCS \citep{fang2013unbiased}, which tests generalization across similar visual object recognition datasets; PACS \citep{li2017deeper}, which (like DomainNet) tests generalization across datasets with different renditions; and ImageNet-R \citep{hendrycks2020many} and ImageNet-Sketch \citep{wang2019learning}, which also test generalization across different renditions by collecting separate datasets from Flickr and Google Image queries.

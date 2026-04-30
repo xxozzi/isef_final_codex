@@ -1,0 +1,588 @@
+\begin{thebibliography}{100}
+
+\bibitem{Zech2018}
+John~R. Zech, Marcus~A. Badgeley, Manway Liu, Anthony~B. Costa, Joseph~J.
+  Titano, and Eric~Karl Oermann.
+\newblock Variable generalization performance of a deep learning model to
+  detect pneumonia in chest radiographs: A cross-sectional study.
+\newblock {\em PLOS Medicine}, 2018.
+
+\bibitem{degrave2021ai}
+Alex~J DeGrave, Joseph~D Janizek, and Su-In Lee.
+\newblock {AI} for radiographic {COVID}-19 detection selects shortcuts over
+  signal.
+\newblock {\em Nature Machine Intelligence}, 2021.
+
+\bibitem{hendrycks2018benchmarking}
+Dan Hendrycks and Thomas Dietterich.
+\newblock Benchmarking neural network robustness to common corruptions and
+  perturbations.
+\newblock In {\em ICLR}, 2019.
+
+\bibitem{NEURIPS2020_6cfe0e61}
+Harshay Shah, Kaustav Tamuly, Aditi Raghunathan, Prateek Jain, and Praneeth
+  Netrapalli.
+\newblock The pitfalls of simplicity bias in neural networks.
+\newblock In {\em NeurIPS}, 2020.
+
+\bibitem{d2020underspecification}
+Alexander D'Amour, Katherine Heller, Dan Moldovan, Ben Adlam, Babak Alipanahi,
+  Alex Beutel, Christina Chen, Jonathan Deaton, Jacob Eisenstein, Matthew~D
+  Hoffman, et~al.
+\newblock Underspecification presents challenges for credibility in modern
+  machine learning.
+\newblock {\em JMLR}, 2020.
+
+\bibitem{muandet2013domain}
+Krikamol Muandet, David Balduzzi, and Bernhard Sch{\"o}lkopf.
+\newblock Domain generalization via invariant feature representation.
+\newblock In {\em ICML}, 2013.
+
+\bibitem{peters2016causal}
+Jonas Peters, Peter B{\"u}hlmann, and Nicolai Meinshausen.
+\newblock Causal inference by using invariant prediction: identification and
+  confidence intervals.
+\newblock {\em JSTOR}, 2016.
+
+\bibitem{arjovsky2019invariant}
+Martin Arjovsky, Léon Bottou, Ishaan Gulrajani, and David Lopez-Paz.
+\newblock Invariant risk minimization.
+\newblock {\em arXiv preprint}, 2019.
+
+\bibitem{krueger2020utofdistribution}
+David Krueger, Ethan Caballero, Joern-Henrik Jacobsen, Amy Zhang, Jonathan
+  Binas, Dinghuai Zhang, Remi~Le Priol, and Aaron Courville.
+\newblock Out-of-distribution generalization via risk extrapolation (rex).
+\newblock In {\em ICML}, 2021.
+
+\bibitem{coral216aaai}
+Baochen Sun, Jiashi Feng, and Kate Saenko.
+\newblock Return of frustratingly easy domain adaptation.
+\newblock In {\em AAAI}, 2016.
+
+\bibitem{rame_fishr_2021}
+Alexandre Rame, Corentin Dancette, and Matthieu Cord.
+\newblock Fishr: Invariant gradient variances for out-of-distribution
+  generalization.
+\newblock In {\em ICML}, 2022.
+
+\bibitem{gulrajani2021in}
+Ishaan Gulrajani and David Lopez-Paz.
+\newblock In search of lost domain generalization.
+\newblock In {\em ICLR}, 2021.
+
+\bibitem{izmailov2018}
+Pavel Izmailov, Dmitrii Podoprikhin, Timur Garipov, Dmitry Vetrov, and {Andrew
+  Gordon} Wilson.
+\newblock Averaging weights leads to wider optima and better generalization.
+\newblock In {\em UAI}, 2018.
+
+\bibitem{cha2021wad}
+Junbum Cha, Sanghyuk Chun, Kyungjae Lee, Han-Cheol Cho, Seunghyun Park, Yunsung
+  Lee, and Sungrae Park.
+\newblock {SWAD}: Domain generalization by seeking flat minima.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{Lakshminarayanan2017}
+Balaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell.
+\newblock Simple and scalable predictive uncertainty estimation using deep
+  ensembles.
+\newblock In {\em NeurIPS}, 2017.
+
+\bibitem{Ovadia2019}
+Yaniv Ovadia, Emily Fertig, Jie Ren, Zachary Nado, David Sculley, Sebastian
+  Nowozin, Joshua Dillon, Balaji Lakshminarayanan, and Jasper Snoek.
+\newblock Can you trust your model's uncertainty? evaluating predictive
+  uncertainty under dataset shift.
+\newblock In {\em NeurIPS}, 2019.
+
+\bibitem{ashukha2020pitfalls}
+Arsenii Ashukha, Alexander Lyzhov, Dmitry Molchanov, and Dmitry Vetrov.
+\newblock Pitfalls of in-domain uncertainty estimation and ensembling in deep
+  learning.
+\newblock In {\em ICLR}, 2020.
+
+\bibitem{ueda1996generalization}
+Naonori Ueda and Ryohei Nakano.
+\newblock Generalization error of ensemble estimators.
+\newblock In {\em ICNN}, 1996.
+
+\bibitem{ye2021odbench}
+Nanyang Ye, Kaican Li, Lanqing Hong, Haoyue Bai, Yiting Chen, Fengwei Zhou, and
+  Zhenguo Li.
+\newblock Ood-bench: Benchmarking and understanding out-of-distribution
+  generalization datasets and algorithms.
+\newblock {\em CVPR}, 2022.
+
+\bibitem{Fort2019DeepEA}
+Stanislav Fort, Huiyi Hu, and Balaji Lakshminarayanan.
+\newblock Deep ensembles: A loss landscape perspective.
+\newblock {\em arXiv preprint}, 2019.
+
+\bibitem{gontijolopes2022no}
+Raphael Gontijo-Lopes, Yann Dauphin, and Ekin~Dogus Cubuk.
+\newblock No one representation to rule them all: Overlapping features of
+  training methods.
+\newblock In {\em ICLR}, 2022.
+
+\bibitem{batchnorm2015}
+Sergey Ioffe and Christian Szegedy.
+\newblock Batch normalization: Accelerating deep network training by reducing
+  internal covariate shift.
+\newblock In {\em ICML}, 2015.
+
+\bibitem{agarap2018deep}
+Abien~Fred Agarap.
+\newblock Deep learning using rectified linear units (relu).
+\newblock {\em arXiv preprint}, 2018.
+
+\bibitem{Frankle2020}
+Jonathan Frankle, Gintare~Karolina Dziugaite, Daniel~M. Roy, and Michael
+  Carbin.
+\newblock Linear mode connectivity and the lottery ticket hypothesis.
+\newblock In {\em ICML}, 2020.
+
+\bibitem{Neyshabur2020}
+Behnam Neyshabur, Hanie Sedghi, and Chiyuan Zhang.
+\newblock What is being transferred in transfer learning?
+\newblock In {\em NeurIPS}, 2020.
+
+\bibitem{Wortsman2022robust}
+Mitchell Wortsman, Gabriel Ilharco, Jong~Wook Kim, Mike Li, Hanna Hajishirzi,
+  Ali Farhadi, Hongseok Namkoong, and Ludwig Schmidt.
+\newblock Robust fine-tuning of zero-shot models.
+\newblock In {\em CVPR}, 2022.
+
+\bibitem{mergefisher21}
+Michael Matena and Colin Raffel.
+\newblock Merging models with {Fisher}-weighted averaging.
+\newblock In {\em NeurIPS}, 2022.
+
+\bibitem{Wortsman2022ModelSA}
+Mitchell Wortsman, Gabriel Ilharco, Samir~Yitzhak Gadre, Rebecca Roelofs,
+  Raphael Gontijo-Lopes, Ari~S. Morcos, Hongseok Namkoong, Ali Farhadi, Yair
+  Carmon, Simon Kornblith, and Ludwig Schmidt.
+\newblock Model soups: averaging weights of multiple fine-tuned models improves
+  accuracy without increasing inference time.
+\newblock In {\em ICML}, 2022.
+
+\bibitem{arpit2021ensemble}
+Devansh Arpit, Huan Wang, Yingbo Zhou, and Caiming Xiong.
+\newblock Ensemble of averages: Improving model selection and boosting
+  performance in domain generalization.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{foret2021}
+Pierre Foret, Ariel Kleiner, Hossein Mobahi, and Behnam Neyshabur.
+\newblock Sharpness-aware minimization for efficiently improving
+  generalization.
+\newblock In {\em ICLR}, 2021.
+
+\bibitem{questionsflatminima22}
+Jean Kaddour, Linqing Liu, Ricardo Silva, and Matt Kusner.
+\newblock When do flat minima optimizers work?
+\newblock In {\em NeurIPS}, 2022.
+
+\bibitem{kohavi1996bias}
+Ron Kohavi, David~H Wolpert, et~al.
+\newblock Bias plus variance decomposition for zero-one loss functions.
+\newblock In {\em ICML}, 1996.
+
+\bibitem{domingos2000unified}
+Pedro Domingos.
+\newblock A unified bias-variance decomposition.
+\newblock In {\em ICML}, 2000.
+
+\bibitem{dietterich2000ensemble}
+Thomas Dietterich.
+\newblock Ensemble methods in machine learning.
+\newblock In {\em MCS}, 2000.
+
+\bibitem{brown2005between}
+Gavin Brown, Jeremy Wyatt, and Ping Sun.
+\newblock Between two extremes: Examining decompositions of the ensemble
+  objective function.
+\newblock In {\em MCS}, 2005.
+
+\bibitem{ruan2022optimal}
+Yangjun Ruan, Yann Dubois, and Chris~J. Maddison.
+\newblock Optimal representations for covariate shift.
+\newblock In {\em ICLR}, 2022.
+
+\bibitem{Jacot2018}
+Arthur Jacot, Franck Gabriel, and Clement Hongler.
+\newblock {Neural Tangent Kernel}: Convergence and generalization in neural
+  networks.
+\newblock In {\em NeurIPS}, 2018.
+
+\bibitem{daniely2017sgd}
+Amit Daniely.
+\newblock Sgd learns the conjugate kernel class of the network.
+\newblock In {\em NeurIPS}, 2017.
+
+\bibitem{Lee2018DeepNN}
+Jaehoon Lee, Yasaman Bahri, Roman Novak, Samuel~S Schoenholz, Jeffrey
+  Pennington, and Jascha Sohl-Dickstein.
+\newblock Deep neural networks as gaussian processes.
+\newblock In {\em ICLR}, 2017.
+
+\bibitem{ah2010normalized}
+Julien Ah-Pine.
+\newblock Normalized kernels as similarity indices.
+\newblock In {\em PAKDD}, 2010.
+
+\bibitem{ghojogh2021reproducing}
+Benyamin Ghojogh, Ali Ghodsi, Fakhri Karray, and Mark Crowley.
+\newblock Reproducing kernel hilbert space, mercer's theorem, eigenfunctions,
+  nystrom method, and use of kernels in machine learning: Tutorial and survey.
+\newblock {\em arXiv preprint}, 2021.
+
+\bibitem{rennie2005}
+Jason Rennie.
+\newblock How to normalize a kernel matrix.
+\newblock {\em MIT Computer Science - Artificial Intelligence Lab Tech Rep},
+  2005.
+
+\bibitem{He2020The}
+Hangfeng He and Weijie Su.
+\newblock The local elasticity of neural networks.
+\newblock In {\em ICLR}, 2020.
+
+\bibitem{seleznova2022neural}
+Mariia Seleznova and Gitta Kutyniok.
+\newblock Neural tangent kernel beyond the infinite-width limit: Effects of
+  depth and initialization.
+\newblock {\em ICML}, 2022.
+
+\bibitem{kuncheva2003measures}
+Ludmila~I Kuncheva and Christopher~J Whitaker.
+\newblock Measures of diversity in classifier ensembles and their relationship
+  with the ensemble accuracy.
+\newblock {\em Machine learning}, 2003.
+
+\bibitem{aksela2003comparison}
+Matti Aksela.
+\newblock Comparison of classifier selection methods for improving committee
+  performance.
+\newblock In {\em MCS}, 2003.
+
+\bibitem{DBLP:journals/corr/abs-1905-00414}
+Simon Kornblith, Mohammad Norouzi, Honglak Lee, and Geoffrey~E. Hinton.
+\newblock Similarity of neural network representations revisited.
+\newblock In {\em ICML}, 2019.
+
+\bibitem{krizhevsky2012imagenet}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In {\em NeurIPS}, 2012.
+
+\bibitem{kumar2022finetuning}
+Ananya Kumar, Aditi Raghunathan, Robbie~Matthew Jones, Tengyu Ma, and Percy
+  Liang.
+\newblock Fine-tuning can distort pretrained features and underperform
+  out-of-distribution.
+\newblock In {\em ICLR}, 2022.
+
+\bibitem{venkateswara2017deep}
+Hemanth Venkateswara, Jose Eusebio, Shayok Chakraborty, and Sethuraman
+  Panchanathan.
+\newblock Deep hashing network for unsupervised domain adaptation.
+\newblock In {\em CVPR}, 2017.
+
+\bibitem{li2017deeper}
+Da~Li, Yongxin Yang, Yi-Zhe Song, and Timothy~M Hospedales.
+\newblock Deeper, broader and artier domain generalization.
+\newblock In {\em ICCV}, 2017.
+
+\bibitem{he51deep}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em CVPR}, 2016.
+
+\bibitem{fang2013unbiased}
+Chen Fang, Ye~Xu, and Daniel~N Rockmore.
+\newblock Unbiased metric learning: On the utilization of multiple datasets and
+  web images for softening bias.
+\newblock In {\em ICCV}, 2013.
+
+\bibitem{beery2018recognition}
+Sara Beery, Grant Van~Horn, and Pietro Perona.
+\newblock Recognition in {Terra Incognita}.
+\newblock In {\em ECCV}, 2018.
+
+\bibitem{peng2019moment}
+Xingchao Peng, Qinxun Bai, Xide Xia, Zijun Huang, Kate Saenko, and Bo~Wang.
+\newblock Moment matching for multi-source domain adaptation.
+\newblock In {\em ICCV}, 2019.
+
+\bibitem{yan2020improve}
+Shen Yan, Huan Song, Nanxiang Li, Lincan Zou, and Liu Ren.
+\newblock Improve unsupervised domain adaptation with mixup training.
+\newblock {\em arXiv preprint}, 2020.
+
+\bibitem{Sagawa2020Distributionally}
+Shiori Sagawa, Pang~Wei Koh, Tatsunori~B. Hashimoto, and Percy Liang.
+\newblock Distributionally robust neural networks.
+\newblock In {\em ICLR}, 2020.
+
+\bibitem{ganin2016domain}
+Yaroslav Ganin, Evgeniya Ustinova, Hana Ajakan, Pascal Germain, Hugo
+  Larochelle, Fran{\c{c}}ois Laviolette, Mario Marchand, and Victor Lempitsky.
+\newblock Domain-adversarial training of neural networks.
+\newblock {\em JMLR}, 2016.
+
+\bibitem{pmlr-v139-koh21a}
+Pang~Wei Koh, Shiori Sagawa, Henrik Marklund, Sang~Michael Xie, Marvin Zhang,
+  Akshay Balsubramani, Weihua Hu, Michihiro Yasunaga, Richard~Lanas Phillips,
+  Irena Gao, Tony Lee, Etienne David, Ian Stavness, Wei Guo, Berton Earnshaw,
+  Imran Haque, Sara~M Beery, Jure Leskovec, Anshul Kundaje, Emma Pierson,
+  Sergey Levine, Chelsea Finn, and Percy Liang.
+\newblock {WILDS}: A benchmark of in-the-wild distribution shifts.
+\newblock In {\em ICML}, 2021.
+
+\bibitem{hansen1990neural}
+Lars~Kai Hansen and Peter Salamon.
+\newblock Neural network ensembles.
+\newblock {\em TPAMI}, 1990.
+
+\bibitem{krogh1995neural}
+Anders Krogh and Jesper Vedelsby.
+\newblock Neural network ensembles, cross validation, and active learning.
+\newblock In {\em NeurIPS}, 1995.
+
+\bibitem{thopalli2021multidomain}
+Kowshik Thopalli, Sameeksha Katoch, Jayaraman~J. Thiagarajan, Pavan~K. Turaga,
+  and Andreas Spanias.
+\newblock Multi-domain ensembles for domain generalization.
+\newblock In {\em NeurIPS Workshop}, 2021.
+
+\bibitem{Mesbah2022}
+Yusuf Mesbah, Youssef~Youssry Ibrahim, and Adil~Mehood Khan.
+\newblock Domain generalization using ensemble learning.
+\newblock In {\em ISWA}, 2022.
+
+\bibitem{li2022domain}
+Ziyue Li, Kan Ren, Xinyang Jiang, Bo~Li, Haipeng Zhang, and Dongsheng Li.
+\newblock Domain generalization using pretrained models without fine-tuning.
+\newblock {\em arXiv preprint}, 2022.
+
+\bibitem{lee2022diversify}
+Yoonho Lee, Huaxiu Yao, and Chelsea Finn.
+\newblock Diversify and disambiguate: Learning from underspecified data.
+\newblock {\em arXiv preprint}, 2022.
+
+\bibitem{pagliardini2022agree}
+Matteo Pagliardini, Martin Jaggi, Fran{\c{c}}ois Fleuret, and Sai~Praneeth
+  Karimireddy.
+\newblock Agree to disagree: Diversity through disagreement for better
+  transferability.
+\newblock {\em arXiv preprint}, 2022.
+
+\bibitem{wenzel2020hyperparameter}
+Florian Wenzel, Jasper Snoek, Dustin Tran, and Rodolphe Jenatton.
+\newblock Hyperparameter ensembles for robustness and uncertainty
+  quantification.
+\newblock In {\em NeurIPS}, 2020.
+
+\bibitem{breiman1996bagging}
+Leo Breiman.
+\newblock Bagging predictors.
+\newblock {\em Machine learning}, 1996.
+
+\bibitem{nixon2020why}
+Jeremy Nixon, Balaji Lakshminarayanan, and Dustin Tran.
+\newblock Why are bootstrapped deep ensembles not better?
+\newblock In {\em NeurIPS Workshop}, 2020.
+
+\bibitem{Yeo2021}
+Teresa Yeo, Oguzhan~Fatih Kar, and Amir~Roshan Zamir.
+\newblock Robustness via cross-domain ensembles.
+\newblock In {\em ICCV}, 2021.
+
+\bibitem{wen2021combining}
+Yeming Wen, Ghassen Jerfel, Rafael Muller, Michael~W Dusenberry, Jasper Snoek,
+  Balaji Lakshminarayanan, and Dustin Tran.
+\newblock Combining ensembles and data augmentation can harm your calibration.
+\newblock In {\em ICLR}, 2021.
+
+\bibitem{rame2021ixmo}
+Alexandre Rame, Remy Sun, and Matthieu Cord.
+\newblock {MixMo}: Mixing multiple inputs for multiple outputs via deep
+  subnetworks.
+\newblock In {\em ICCV}, 2021.
+
+\bibitem{rame2021dice}
+Alexandre Ramé and Matthieu Cord.
+\newblock {DICE}: Diversity in deep ensembles via conditional redundancy
+  adversarial estimation.
+\newblock In {\em ICLR}, 2021.
+
+\bibitem{teneydiv}
+Damien Teney, Ehsan Abbasnejad, Simon Lucey, and Anton van~den Hengel.
+\newblock Evading the simplicity bias: Training a diverse set of models
+  discovers solutions with superior ood generalization.
+\newblock {\em arXiv preprint}, 2021.
+
+\bibitem{Draxler2018}
+Felix Draxler, Kambis Veschgini, Manfred Salmhofer, and Fred Hamprecht.
+\newblock Essentially no barriers in neural network energy landscape.
+\newblock In {\em ICML}, 2018.
+
+\bibitem{Guo2022}
+Hao Guo, Jiyong Jin, and Bin Liu.
+\newblock Stochastic weight averaging revisited.
+\newblock {\em arXiv preprint}, 2022.
+
+\bibitem{zhang2019lookahead}
+Michael Zhang, James Lucas, Jimmy Ba, and Geoffrey~E Hinton.
+\newblock Lookahead optimizer: k steps forward, 1 step back.
+\newblock {\em NeurIPS}, 32, 2019.
+
+\bibitem{nagarajan2019uniform}
+Vaishnavh Nagarajan and J~Zico Kolter.
+\newblock Uniform convergence may be unable to explain generalization in deep
+  learning.
+\newblock {\em NeurIPS}, 2019.
+
+\bibitem{Benton2021}
+Gregory Benton, Wesley Maddox, Sanae Lotfi, and Andrew Gordon~Gordon Wilson.
+\newblock Loss surface simplexes for mode connecting volumes and fast
+  ensembling.
+\newblock In {\em ICML}, 2021.
+
+\bibitem{Gupta2020Stochastic}
+Vipul Gupta, Santiago~Akle Serrano, and Dennis DeCoste.
+\newblock Stochastic weight averaging in parallel: Large-batch training that
+  generalizes well.
+\newblock In {\em ICLR}, 2020.
+
+\bibitem{choshen2022fusing}
+Leshem Choshen, Elad Venezian, Noam Slonim, and Yoav Katz.
+\newblock Fusing finetuned models for better pretraining.
+\newblock {\em arXiv preprint}, 2022.
+
+\bibitem{wortsman2021learning}
+Mitchell Wortsman, Maxwell Horton, Carlos Guestrin, Ali Farhadi, and Mohammad
+  Rastegari.
+\newblock Learning neural network subspaces.
+\newblock {\em ICML}, 2021.
+
+\bibitem{maddox2019simple}
+Wesley~J Maddox, Pavel Izmailov, Timur Garipov, Dmitry~P Vetrov, and
+  Andrew~Gordon Wilson.
+\newblock A simple baseline for bayesian uncertainty in deep learning.
+\newblock In {\em NeurIPS}, 2019.
+
+\bibitem{izmailov_subspace_2019}
+Pavel Izmailov, Wesley Maddox, Polina Kirichenko, Timur Garipov, Dmitry Vetrov,
+  and Andrew~Gordon Wilson.
+\newblock Subspace inference for bayesian deep learning.
+\newblock In {\em UAI}, 2019.
+
+\bibitem{kirichenko2022last}
+Polina Kirichenko, Pavel Izmailov, and Andrew~Gordon Wilson.
+\newblock Last layer re-training is sufficient for robustness to spurious
+  correlations.
+\newblock In {\em ICLR}, 2023.
+
+\bibitem{blodgett2016demographic}
+Su~Lin Blodgett, Lisa Green, and Brendan O'Connor.
+\newblock Demographic dialectal variation in social media: A case study of
+  african-american english.
+\newblock In {\em EMNLP}, 2016.
+
+\bibitem{barocas2016big}
+Solon Barocas and Andrew~D Selbst.
+\newblock Big data's disparate impact.
+\newblock {\em Calif. L. Rev.}, 2016.
+
+\bibitem{pmlr-v70-dinh17b}
+Laurent Dinh, Razvan Pascanu, Samy Bengio, and Yoshua Bengio.
+\newblock Sharp minima can generalize for deep nets.
+\newblock In {\em ICML}, 2017.
+
+\bibitem{petzka2021relative}
+Henning Petzka, Michael Kamp, Linara Adilova, Cristian Sminchisescu, and Mario
+  Boley.
+\newblock Relative flatness and generalization.
+\newblock In {\em NeurIPS}, 2021.
+
+\bibitem{yao2020pyhessian}
+Zhewei Yao, Amir Gholami, Kurt Keutzer, and Michael~W Mahoney.
+\newblock Pyhessian: Neural networks through the lens of the hessian.
+\newblock In {\em Big Data}, 2020.
+
+\bibitem{dallev2}
+Aditya Ramesh, Prafulla Dhariwal, Alex Nichol, Casey Chu, and Mark Chen.
+\newblock Hierarchical text-conditional image generation with clip latents.
+\newblock {\em arXiv preprint}, 2022.
+
+\bibitem{RasmussenW06}
+Carl~Edward Rasmussen.
+\newblock Gaussian processes in machine learning.
+\newblock In {\em Summer school on machine learning}, 2003.
+
+\bibitem{perez2013gaussian}
+Fernando P{\'e}rez-Cruz, Steven Van~Vaerenbergh, Juan~Jos{\'e} Murillo-Fuentes,
+  Miguel L{\'a}zaro-Gredilla, and Ignacio Santamaria.
+\newblock Gaussian processes for nonlinear signal processing: An overview of
+  recent advances.
+\newblock {\em EEE Signal Process. Mag.}, 2013.
+
+\bibitem{yang2019}
+Greg Yang and Hadi Salman.
+\newblock A fine-grained spectral perspective on neural networks.
+\newblock {\em arXiv preprint}, 2019.
+
+\bibitem{brain1999effect}
+Damien Brain and Geoffrey~I Webb.
+\newblock On the effect of data set size on bias and variance in classification
+  learning.
+\newblock In {\em AKAW}, 1999.
+
+\bibitem{Gretton2012}
+Arthur Gretton, Karsten~M. Borgwardt, Malte~J. Rasch, Bernhard Sch{{\"o}}lkopf,
+  and Alexander Smola.
+\newblock A kernel two-sample test.
+\newblock {\em Journal of Machine Learning Research}, 13(25):723--773, 2012.
+
+\bibitem{magnus2019matrix}
+Jan~R Magnus and Heinz Neudecker.
+\newblock {\em Matrix differential calculus with applications in statistics and
+  econometrics}.
+\newblock John Wiley \& Sons, 2019.
+
+\bibitem{radford2021learning}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+  Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+  et~al.
+\newblock Learning transferable visual models from natural language
+  supervision.
+\newblock In {\em ICML}, 2021.
+
+\bibitem{singh2016swapout}
+Saurabh Singh, Derek Hoiem, and David Forsyth.
+\newblock Swapout: Learning an ensemble of deep architectures.
+\newblock In {\em NeurIPS}, 2016.
+
+\bibitem{efron1992bootstrap}
+Bradley Efron.
+\newblock Bootstrap methods: another look at the jackknife.
+\newblock In {\em Breakthroughs in statistics}. 1992.
+
+\bibitem{kingma2014adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock In {\em ICLR}, 2015.
+
+\bibitem{lecun2010mnist}
+Yann LeCun, Corinna Cortes, and Chris Burges.
+\newblock Mnist handwritten digit database, 2010.
+
+\bibitem{rosenfeld2022domain}
+Elan Rosenfeld, Pradeep Ravikumar, and Andrej Risteski.
+\newblock Domain-adjusted regression or: Erm may already learn features
+  sufficient for out-of-distribution generalization.
+\newblock {\em arXiv preprint}, 2022.
+
+\end{thebibliography}

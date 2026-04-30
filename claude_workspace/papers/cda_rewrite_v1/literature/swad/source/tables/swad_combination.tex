@@ -1,0 +1,31 @@
+\begin{table}[b]
+\centering
+\small
+\caption{\small {\bf Combination of SWAD and other methods.} The scores are averaged over every target domain case. The performances of ERM, CORAL, and SAM are optimized by HP searches of DomainBed. In contrast, for the SWAD combination cases, 
+%each algorithm and SWAD use HPs from default and ERM + SWAD, respectively.
+% \jb{each algorithm uses default HPs and SWAD adopts HPs found in ERM + SWAD, without additional HP search.}
+CORAL and SAM use default HPs without additional HP search.
+% SWAD is simply applied without any HP search.
+We additionally compare SWAD to SWA$_\text{w/ const}$.
+Note that ERM + SWAD is same as ``SWAD'' in Table~\ref{table:full_table}.
+% We additionally report more results by SWA variants in Appendix D.1.
+%Note that the methods combined with SWAD show better performance than the hyperparameter searched baseline results, even though they use the default hyperparameters. \jb{In DomainNet column, ERM/CORAL use 5000 steps, while the others use 15000 steps.}
+}
+\label{table:swad_combination}
+\vspace{0.2cm}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{lccccc|c} 
+\toprule
+                & \data{PACS} & \data{VLCS} & \data{OfficeHome} & \data{TerraInc} & \data{DomainNet} & Avg. ($\Delta$)  \\ \midrule
+ERM             & 85.5 \scriptsize$\pm0.2$ & 77.5 \scriptsize$\pm0.4$ & 66.5 \scriptsize$\pm0.3$ & 46.1 \scriptsize$\pm1.8$ & 40.9 \scriptsize$\pm0.1$ & 63.3  \\
+ERM + SWA$_\text{w/ const}$                                    & 86.9 \scriptsize$\pm0.2$ & 76.6 \scriptsize$\pm0.1$ & 69.3 \scriptsize$\pm0.3$       & 49.2 \scriptsize$\pm1.2$     & 45.9 \scriptsize$\pm0.0$      & 65.6 (+2.3) \\
+ERM + SWAD      & 88.1 \scriptsize$\pm0.1$ & 79.1 \scriptsize$\pm0.1$ & 70.6 \scriptsize$\pm0.2$ & 50.0 \scriptsize$\pm0.3$ & 46.5 \scriptsize$\pm0.1$ & 66.9 (+3.6)  \\
+\midrule
+CORAL           & 86.2 \scriptsize$\pm0.3$ & 78.8 \scriptsize$\pm0.6$ & 68.7 \scriptsize$\pm0.3$ & 47.6 \scriptsize$\pm1.0$ & 41.5 \scriptsize$\pm0.1$ & 64.5  \\
+CORAL + SWAD    & 88.3 \scriptsize$\pm0.1$ & 78.9 \scriptsize$\pm0.1$ & 71.3 \scriptsize$\pm0.1$ & 51.0 \scriptsize$\pm0.1$ & 46.8 \scriptsize$\pm0.0$ & 67.3 (+2.8) \\
+\midrule
+SAM             & 85.8 \scriptsize$\pm0.2$ & 79.4 \scriptsize$\pm0.1$ & 69.6 \scriptsize$\pm0.1$ & 43.3 \scriptsize$\pm0.7$ & 44.3 \scriptsize$\pm0.0$ & 64.5  \\
+SAM + SWAD      & 87.1 \scriptsize$\pm0.2$ & 78.5 \scriptsize$\pm0.2$ & 69.9 \scriptsize$\pm0.1$ & 45.3 \scriptsize$\pm0.9$ & 46.5 \scriptsize$\pm0.1$ & 65.5 (+1.0)     \\
+\bottomrule
+\end{tabular}
+\end{table}

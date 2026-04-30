@@ -1,0 +1,27 @@
+\begin{table}[t]
+\centering
+\small
+\caption{\small {\bf Comparison with methods exploiting pre-trained models.} Out-of-domain accuracies on five domain generalization benchmarks are shown. 
+% We highlight the \textbf{best results} by bold. 
+Average accuracies and standard errors are reported from three trials.
+}
+\label{table:learning_from_pretrained}
+\renewcommand{\arraystretch}{1.1}
+\setlength{\tabcolsep}{5pt}
+\setlength{\abovetopsep}{0.5em}
+\begin{tabular}{l|ccccc|c} 
+\toprule
+\textbf{Algorithm}  & \data{PACS} & \data{VLCS} & \data{OfficeHome} & \data{TerraInc} & \data{DomainNet} & Avg.  \\
+\midrule
+CRD \cite{tian2019crd}             & 82.3\scriptsize{$\pm1.0$}  &  76.6\scriptsize{$\pm0.9$}  &  67.6\scriptsize{$\pm0.4$}  &  44.0\scriptsize{$\pm1.9$}  &  42.1\scriptsize{$\pm0.1$}  &  62.5  \\
+VID \cite{ahn2019vid}             & 84.9\scriptsize{$\pm0.3$}  &  76.2\scriptsize{$\pm0.2$}  &  64.6\scriptsize{$\pm0.5$}  &  48.3\scriptsize{$\pm1.3$}  &  42.5\scriptsize{$\pm0.1$}  &  63.3  \\
+LP-FT \cite{kumar2022iclr_finetuning_distort}             & 84.6\scriptsize{$\pm0.8$}  &  76.7\scriptsize{$\pm1.5$}  &  65.0\scriptsize{$\pm0.2$}  &  47.1\scriptsize{$\pm0.7$}  &  43.0\scriptsize{$\pm0.1$}  &  63.3  \\
+L$^2$-SP \cite{xuhong2018l2sp}         & 83.6\scriptsize{$\pm0.3$}  &  78.8\scriptsize{$\pm0.4$}  &  65.0\scriptsize{$\pm0.3$}  &  47.9\scriptsize{$\pm2.1$}  &  42.5\scriptsize{$\pm0.2$}  &  63.6  \\
+DELTA \cite{li2019delta}            & 83.1\scriptsize{$\pm1.1$}  &  77.7\scriptsize{$\pm0.4$}  &  68.5\scriptsize{$\pm0.3$}  &  45.7\scriptsize{$\pm0.9$}  &  42.8\scriptsize{$\pm0.1$}  &  63.6  \\
+LwF \cite{li2017lwf}            & 83.1\scriptsize{$\pm0.8$}  &  77.2\scriptsize{$\pm0.7$}  &  70.0\scriptsize{$\pm0.2$}  &  49.2\scriptsize{$\pm1.2$}  &  42.7\scriptsize{$\pm0.1$}  &  64.5  \\
+% \method            & 86.3 & 78.5 & 70.0       & 50.0           & 43.8      & 65.7  \\
+% \textbf{\method}   & \textbf{85.4} & \textbf{79.0} & \textbf{70.5}       & \textbf{50.4}           & \textbf{44.3}      & \textbf{65.9}  \\
+\textbf{\method{}}      & \textbf{85.4\scriptsize{$\pm0.4$}} & \textbf{79.0\scriptsize{$\pm0.0$}} & \textbf{70.5\scriptsize{$\pm0.4$}} & \textbf{50.4\scriptsize{$\pm1.1$}} & \textbf{44.3\scriptsize{$\pm0.2$}} & \textbf{65.9}  \\
+\bottomrule
+\end{tabular}
+\end{table}

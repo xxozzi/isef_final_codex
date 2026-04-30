@@ -1,0 +1,11 @@
+# LaTeX build artifacts for the rewrite workspace.
+src/*.aux
+src/*.bbl
+src/*.blg
+src/*.log
+src/*.out
+src/*.toc
+src/*.fls
+src/*.fdb_latexmk
+src/*.synctex.gz
+src/main.pdf

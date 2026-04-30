@@ -1,0 +1,180 @@
+\section{Proofs}
+
+\subsection{Equivalence of DRO and importance weighting in the convex setting}\label{sec:proof_convex}
+
+\begin{repproposition}{prop:convex-reweight}
+  Suppose that the loss $\ell(\cdot; z)$ is continuous and convex for all $z$ in $\sZ$,
+  and let the uncertainty set $\sQ$ be a set of distributions supported on $\sZ$.
+  Assume that $\sQ$ and the model family $\Theta \subseteq \R^d$ are convex and compact,
+  and let $\theta^* \in \Theta$ be a minimizer of the worst-group objective $\sR(\theta)$.
+  Then there exists a distribution $Q^* \in \sQ$ such that $\theta^* \in \argmin_\theta \E_{z \sim Q^*} [\ell(\theta;z)]$.
+\end{repproposition}
+
+\begin{proof}
+  Let $h(\theta, Q) \eqdef \E_{z \sim Q} [\ell(\theta; z)]$. Since the loss $\ell(\theta; z)$ is continuous and convex in $\theta$ for all $z$ in $\sZ$,
+  we have that $h(\theta, Q)$ is continuous,
+  convex in $\theta$, and concave (linear) in $Q$.
+  Moreover, since convexity and lower semi-continuity are preserved under arbitrary pointwise suprema,
+  $\sup_{Q \in \sQ} h(\theta, Q)$ is also convex and lower semi-continuous (therefore proper).
+
+  Together with the compactness of $\Theta$ and $\sQ$,
+  the above conditions imply
+  (by Weierstrass' theorem, proposition 3.2.1, \citet{bertsekas2009convex}),
+  that the optimal value of the DRO objective
+  \begin{align}
+      \underset{\theta \in \Theta}{\vphantom{\sup}\inf} \sR(\theta) = \underset{\theta \in \Theta}{\vphantom{\sup}\inf} \sup_{Q \in \sQ} \ h(\theta, Q).
+  \end{align}
+  is attained at some $\theta^* \in \Theta$.
+
+  A similar argument implies that the sup-inf objective
+  \begin{align}
+     \sup_{Q \in \sQ} \underset{\theta \in \Theta}{\vphantom{\sup}\inf} \ h(\theta, Q)
+  \end{align}
+  attains its optimum at some $Q^* \in \sQ$.
+
+  Moreover, because $\Theta$ and $\sQ$ are compact and $h$ is continuous,
+  we have the max-min equality (see, e.g., Ex 5.25 in \citet{boyd2004convex})
+  \begin{align}
+     \sup_{Q \in \sQ} \underset{\theta \in \Theta}{\vphantom{\sup}\inf} \ h(\theta, Q) = \underset{\theta \in \Theta}{\vphantom{\sup}\inf} \sup_{Q \in \sQ} \ h(\theta, Q).
+  \end{align}
+
+  Together, the above results imply that $(\theta^*, Q^*)$ form a saddle point (proposition 3.4.1, \citet{bertsekas2009convex}),
+  that is,
+  \begin{align}
+     \sup_{Q \in \sQ} \ h(\theta^*, Q) =
+     h(\theta^*, Q^*) =
+      \underset{\theta \in \Theta}{\vphantom{\sup}\inf} \ h(\theta, Q^*).
+  \end{align}
+  In particular, the second equality indicates that the optimal DRO model $\theta^*$
+  also minimizes the weighted risk
+  $h(\theta, Q^*) = \E_{Z \sim Q^*} [\ell(\theta; Z)]$,
+  as desired.
+
+\end{proof}
+
+
+\subsection{Convergence rate of \refalg{opt}}\label{sec:proof_opt}
+
+\begin{repproposition}{thm:opt}
+  Suppose that the loss $\ell(\cdot; (x, y))$ is non-negative, convex, $\Bgrad$-Lipschitz continuous, and bounded by $\Bloss$ for all $(x, y)$ in $\sX \times \sY$, and $\|\theta\|_2\le \Btheta$ for all $\theta\in\Theta$ with convex $\Theta \subseteq \R^d$.
+  Then, the average iterate of \refalg{opt} achieves an expected error at the rate
+  \begin{align}
+    \E[\varepsilon_T]
+      \le 2\ngroup\sqrt{\frac{10[\Btheta^2\Bgrad^2 + \Bloss^2\log\ngroup]}{T}}.
+  \end{align}
+  where the expectation is taken over the randomness of the algorithm.
+\end{repproposition}
+
+\begin{proof}
+  Our proof is an application of the regret bound for online mirror descent on saddle point optimization from \citet{nemirovski2009robust}.
+
+  We first introduce the existing theorem. Consider the saddle-point optimization problem
+  \begin{align}
+      \min_{\theta\in\Theta}\max_{\padv\in\Delta_\ngroup} \sum_{g=1}^\ngroup \padv_g f_g(\theta)
+  \end{align}
+  under the following assumptions:
+
+  \begin{assumption}
+     $f_g$ is convex on $\Theta$.
+  \end{assumption}
+
+  \begin{assumption}
+    $f_g(\theta) = \E_{\xi \sim q}[F_g(\theta; \xi)]$ for some function $F_g$.
+  \end{assumption}
+
+  \begin{assumption}
+     We generate i.i.d.\ examples $\xi \sim q$. For a given $\theta\in\Theta$ and $\xi \in \Xi$, we can compute $F_g(\theta, \xi)$ and unbiased stochastic subgradient $\nabla F_g(\theta; \xi)$, that is, $\E_{\xi\sim q}\left[\nabla F_g(\theta; \xi)\right] = \nabla f_g(\theta)$.
+  \end{assumption}
+
+  Online mirror descent with some $c$-strongly convex norm $\|\cdot\|_\theta$,
+  yielding iterates
+  $\theta\iter{1}, \ldots, \theta\iter{T}$ and
+  $\padv\iter{1}, \ldots, \padv\iter{T}$,
+  has the following guarantee.
+
+  \begin{theorem}[\citet{nemirovski2009robust}, Eq 3.23]\label{thm:nemirovski}
+    Suppose that Assumptions 1-3 hold. Then the pseudo-regret of the average iterates $\bar\padv_g\iter{1:T}$
+    and $\bar\padv_g\iter{1:T}$ can be bounded as
+    \begin{align}
+        &\E\left[\max_{\padv\in\Delta_\ngroup} \sum_{g=1}^\ngroup \padv_g f_g(\bar{\theta}\iter{1:T}) - \min_{\theta\in\Theta} \sum_{g=1}^\ngroup \bar\padv_g\iter{1:T} f_g(\theta) \right]
+        \le & 2\sqrt{\frac{10[R_\theta^2M_{*,\theta}^2 + M_{*,\padv}^2\log \ngroup]}{T}},
+    \end{align}
+    where
+    \begin{align}
+        &\E\left[\left\|\nabla_\theta \sum_{g=1}^\ngroup \padv F_g(\theta; \xi) \right\|^2_{*,\theta}\right] \le M_{*,\theta}\\
+        &\E\left[\left\|\nabla_{\padv} \sum_{g=1}^\ngroup \padv F_g(\theta; \xi) \right\|^2_{*,\padv}\right] \le M_{*,\padv}\\
+        & R_\theta^2 = \frac{1}{c}(\max_\theta \|\theta\|^2_\theta - \min_\theta \|\theta\|^2_\theta)
+    \end{align}
+    for online mirror descent with $c$-strongly convex norm $\|\cdot\|_\theta$.
+  \end{theorem}
+
+  It remains to formulate our algorithm as an instance of online mirror descent applied to the saddle-point problem above. We start by defining the following:
+  \begin{definition}
+    Let $q$ be a distribution over $\xi = (x,y,g)$
+    that is a uniform mixture of individual group distributions $P_g$:
+    \begin{align}
+        (x,y,g) \sim q \eqdef \frac{1}{\ngroup}\sum_{\gp=1}^{\ngroup} P_{\gp}.
+    \end{align}
+  \end{definition}
+
+  \begin{definition}
+    Let $F_{\gp}(\theta; (x,y,g))) \eqdef m\BI[g=\gp]\ell(\theta; (x,y))$.
+    Correspondingly, let $f_{\gp} \eqdef \E_{P_{\gp}}\left[\ell(\theta; (x,y))\right]$.
+  \end{definition}
+
+  We now check that Assumptions 1-3 hold under the original assumptions in the statement of \refthm{opt}:
+  \begin{enumerate}
+    \item We assume that the loss $\ell(\cdot; (x, y))$ is non-negative, continuous, and convex for all $(x, y)$ in $\sX \times \sY$. As a result, $f_g(\theta)$ is non-negative, continuous, and convex on $\Theta$.
+
+    \item The expected value of $F_{g}(\theta)$ over distribution $q$ is $f_g(\theta)$:
+    \begin{align*}
+        \E_{x,y,g\sim q}[F_{\gp}(\theta; (x,y,g))]
+        &= \frac{1}{\ngroup}\sum_{i=1}^{\ngroup} \E_{P_{i}}\left[F_{\gp}(\theta; (x,y,g)) \mid g=i\right]\\
+        &= \frac{1}{\ngroup} \E_{P_{\gp}}\left[F_{\gp}(\theta; (x,y,g))\mid g=\gp\right] \\
+        &= \frac{1}{\ngroup} \E_{P_{\gp}}\left[m\ell(\theta; x,y) \mid g=\gp\right] \\
+        &= \E_{P_{\gp}}\left[\ell(\theta; x,y) \mid g=\gp\right] \\
+        &= f_{\gp}(\theta).
+    \end{align*}
+
+    \item We can compute an unbiased stochastic subgradient $\nabla F_{\gp}(\theta; (x,y,g))$
+    \begin{align*}
+        \E_{x,y,g\sim q}[\nabla F_{\gp}(\theta; (x,y,g))]
+        &= \E_{x,y,g\sim q}[\nabla m\BI[g=\gp]\ell(\theta; (x,y))] \\
+        &= \frac{1}{\ngroup}\sum_{i=1}^{\ngroup}\E_{P_{i}}[\nabla m\BI[g=\gp]\ell(\theta; x,y)] \\
+        &= \E_{Q_{\gp}}[\nabla\ell(\theta; (x,y))] \\
+        &= \nabla f_g(\theta).
+    \end{align*}
+  \end{enumerate}
+
+  Finally, we compute the constants required for the regret bound in \refthm{nemirovski}.
+  Recalling the original assumptions of \refthm{opt},
+  \begin{enumerate}
+      \item Bounded losses: $\ell(\theta; (x,y))\le \Bloss$ for all $x,y,\theta$
+      \item Bounded gradients: $\|\nabla \ell(\theta; (x,y)) \|_2\le \Bgrad$ for all $\theta,x,y$
+      \item Bounded parameter norm: $\|\theta\|_2 \le \Btheta$ for all $\theta \in \Theta$,
+  \end{enumerate}
+  we obtain:
+  \begin{align}
+      \E\left[\left\|\nabla_\theta \sum_{\gp=1}^\ngroup \padv_{\gp} F_{\gp}(\theta; (x,y,g)) \right\|^2_{*,\theta}\right]
+      &\le \ngroup^2 \Bgrad ^2
+      =M_{*,\theta}
+  \end{align}
+  \begin{align}
+      \E\left[\left\|\nabla_{\padv} \sum_{\gp=1}^\ngroup \padv_{\gp} F_{\gp}(\theta; (x,y,g)) \right\|^2_{*,\padv}\right]
+      &\le \ngroup^2 \Bloss ^2
+      = M_{*,\padv}
+  \end{align}
+  \begin{align}
+      R_\theta^2
+      &= \max_\theta \|\theta\|^2_\theta - \min_\theta \|\theta\|^2_\theta
+      = \Btheta^2.
+  \end{align}
+
+  Plugging in these constants into the regret bound from \refthm{nemirovski},
+  we obtain
+  \begin{align}
+      &\E\left[\max_{\padv\in\Delta_\ngroup} \sum_{g=1}^\ngroup \padv_g f_g(\bar{\theta}\iter{1:T}) - \min_{\theta\in\Theta} \sum_{g=1}^\ngroup \bar\padv_g\iter{1:T} f_g(\theta) \right]
+      \le & 2\ngroup\sqrt{\frac{10[\Btheta^2\Bgrad^2 + \Bloss^2\log\ngroup]}{T}}
+  \end{align}
+This implies \refthm{opt} because the minimax game is convex-concave.
+\end{proof}

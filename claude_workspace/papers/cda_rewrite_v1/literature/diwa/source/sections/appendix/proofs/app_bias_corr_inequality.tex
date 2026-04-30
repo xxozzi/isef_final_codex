@@ -1,0 +1,107 @@
+\subsection{Bias, correlation shift and support mismatch}
+\label{app:bias_correlation}
+We first present in \Cref{app:app_bias_full} a decomposition of the \ood bias without any assumptions.
+We then justify in \Cref{app:bias_correlation_ass_noiidbias} the simplifying \Cref{ass:no_bias_iid} from \Cref{subsec:expression_ood_bias}.
+\subsubsection{\ood bias}
+\label{app:app_bias_full}
+\begin{proposition}[\ood bias]
+    \label{prop:app_bias_full}
+    Denoting $\bar{f}_{S}\left(x\right) = \mathbb{E}_{l_S}[f\left(x,\theta\left(l_S\right)\right)]$, the bias is:
+    \begin{align*}
+        &\mathbb{E}_{(x,y)\sim p_T} [\biasb^2(x, y)] = \int_{\X_T \cap \X_S} \left(f_T\left(x\right)-f_S\left(x\right)\right)^{2} p_T(x) dx                                          & (\text{Correlation shift})                                               \\
+                         & + \int_{\X_T \cap \X_S} \left(f_{S}(x)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx                                                            & (\text{Weighted \iid bias})                                               \\
+                         & + \int_{\X_T \cap \X_S} 2 \left(f_T\left(x\right) - f_S\left(x\right)\right) \left(f_S\left(x\right) - \bar{f}_{S}\left(x\right)\right) p_T(x)dx & (\text{Interaction \iid bias and corr. shift})                     \\
+                         & + \int_{\X_T \setminus \X_S} \left(f_T\left(x\right)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx.                                   & (\text{Support mismatch}) %
+    \end{align*}%
+\end{proposition}%
+
+\begin{proof}
+    This proof is original and based on splitting the \ood bias in and out of $\X_S$:
+    \begin{align*}
+        &\mathbb{E}_{(x,y)\sim p_T}[\biasb^2(x, y)] = \mathbb{E}_{(x,y)\sim p_T} \left(y -\bar{f}_{S}\left(x\right)\right)^{2}                          \\
+                                         & = \int_{\X_T} \left(f_T\left(x\right)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx                \\
+                                         & =\int_{\X_T \cap \X_S} \left(f_T\left(x\right)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx +\int_{\X_T \setminus \X_S} \left(f_T\left(x\right)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx.
+    \end{align*}
+    To decompose the first term, we write $\forall x \in \X_S$, $ - \bar{f}_{S}\left(x\right) = - f_S\left(x\right) + \left(f_{S}(x) - \bar{f}_{S}\left(x\right)\right)$.
+    \begin{align*}
+        &\int_{\X_T \cap \X_S} \left(f_T\left(x\right)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx=\int_{\X_T \cap \X_S} \left((f_T\left(x\right) - f_S\left(x\right)) + \left(f_{S}(x) - \bar{f}_{S}\left(x\right)\right) \right)^{2} p_T(x) dx \\
+        & =\int_{\X_T \cap \X_S} \left(f_T\left(x\right) - f_S\left(x\right)\right)^{2} p_T(x)dx + \int_{\X_T \cap \X_S} \left(f_{S}(x) - \bar{f}_{S}\left(x\right)\right)^{2} p_T(x)dx \\
+        & + \int_{\X_T \cap \X_S} 2 \left(f_T\left(x\right) - f_S\left(x\right)\right) \left(f_S\left(x\right) - \bar{f}_{S}\left(x\right)\right) p_T(x)dx.
+    \end{align*}%
+    % Finally because $\X:=\{x\in \X / p_T(x)>0\}$, we have:
+    % $$\int_{\X_T \cap \X_S} \left(f_{S}(x) - \bar{f}_{S}\left(x\right)\right)^{2} p_T(x)dx = \int_{\X_T \cap \X_S} \left(f_{S}(x) - \bar{f}_{S}\left(x\right)\right)^{2} p_T(x)dx.$$
+\end{proof}
+The four terms can be qualitatively analyzed:
+\begin{itemize}
+    \item The first term measures differences between train and test labelling function. By rewriting $\forall x \in \X_T \cap \X_S$, $f_T(x) \triangleq \mathbb{E}_{p_T}[Y|X=x]$ and $f_S(x) \triangleq \mathbb{E}_{p_S}[Y|X=x]$, this term measures whether conditional distributions differ.
+    This recovers a similar expression to the correlation shift formula from \cite{ye2021odbench}.
+    \item The second term is exactly the \iid bias, but weighted by the marginal distribution $p_T(X)$.
+    \item The third term  $\int_{\X_T \cap \X_S} 2 \left(f_T\left(x\right) - f_S\left(x\right)\right) \left(f_S\left(x\right) - \bar{f}_{S}\left(x\right)\right) p_T(x)dx$ measures to what extent the \iid bias compensates the correlation shift. It can be negative if (by chance) the \iid bias goes in opposite direction to the correlation shift.
+    \item The last term measures support mismatch between test and train marginal distributions. It lead to the \enquote{No free lunch for learning representations for DG} in \cite{ruan2022optimal}. The error is irreducible because \enquote{outside of the source domain, the label distribution is unconstrained}: \enquote{for any domain which gives some probability mass on an example that has not been seen during training, then all \textelp{} labels for that example} are possible.
+\end{itemize}
+
+\subsubsection{Discussion of the small \iid bias \Cref{ass:no_bias_iid}}
+\label{app:bias_correlation_ass_noiidbias}
+\Cref{ass:no_bias_iid} states that $\exists \epsilon > 0 \text{~small~s.t.~} \forall x\in \X_S, |f_{S}\left(x\right)-\bar{f}_{S}\left(x\right)|\leq \epsilon$ where $\bar{f}_{S}\left(x\right) = \mathbb{E}_{l_S} \left[f\left(x,\theta\left(l_S\right)\right)\right]$.
+$\bar{f}_{S}$ is the expectation over the possible learning procedures $l_S=\{d_S, c\}$. Thus \Cref{ass:no_bias_iid} involves:
+\begin{itemize}
+    \item the network architecture $f$ which should be able to fit a given dataset $d_S$. This is realistic when the network is sufficiently parameterized, \ie when the number of weights $|\theta|$ is large.
+    \item the expected datasets $d_S$ which should be representative enough of the underlying domain $S$; in particular the dataset size $n_S$ should be large.
+    \item the sampled configurations $c$ which should be well chosen: the network should be trained for enough steps, with an adequate learning rate ...
+\end{itemize}
+For DiWA, this is realistic as it selects the weights with the highest training validation accuracy from each run. For SWAD \cite{cha2021wad}, this is also realistic thanks to their overfit-aware weight selection strategy. In contrast, this assumption may not perfectlty hold for MA \cite{arpit2021ensemble}, which averages weights starting from batch $100$ until the end of training: indeed, $100$ batches are not enough to fit the training dataset.%
+\subsubsection{\ood bias when small \iid bias}
+\label{app:simplified_bias}
+We now develop our equality under \Cref{ass:no_bias_iid}.
+\begin{proposition*}[\ref{prop:bias}. \ood bias when small \iid bias]
+    With a bounded difference between the labeling functions $f_T-f_S$ on $\X_T \cap \X_S$, under \Cref{ass:no_bias_iid}, the bias on domain $T$ is:
+    \begin{equation*} \tag{\ref{eq:bias}}
+        \begin{aligned}
+            &\mathbb{E}_{(x,y)\sim p_T}[\biasb^2(x, y)] = \text{Correlation shift} + \text{Support mismatch} + O(\epsilon), \\
+            &\text{where~} \text{Correlation shift} = \int_{\X_T \cap \X_S} \left(f_T(x)-f_S(x)\right)^{2} p_T(x) dx, \\
+            &\text{and~} \text{Support mismatch} = \int_{\X_T \setminus \X_S} \left(f_T(x)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx.%
+        \end{aligned}%
+    \end{equation*}%
+\end{proposition*}%
+\begin{proof}
+    We simplify the second and third terms from \Cref{prop:app_bias_full} under \Cref{ass:no_bias_iid}.
+
+    \textbf{The second term} is $\int_{\X_T \cap \X_S} \left(f_{S}\left(x\right)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx$. Under \Cref{ass:no_bias_iid}, $|f_{S}\left(x\right)-\bar{f}_{S}\left(x\right)|\leq \epsilon$. Thus the second term is $O(\epsilon^2)$.
+    
+    \textbf{The third term} is $\int_{\X_T \cap \X_S} 2 \left(f_T\left(x\right) - f_S\left(x\right)\right) \left(f_S\left(x\right) - \bar{f}_{S}\left(x\right)\right) p_T(x)dx$.
+    As $f_T - f_S$ is bounded on $\X_S \cap \X_T$, $\exists K\geq0$ such that $\forall x \in \X_S$,
+    $$
+        |\left(f_T(x) - f_S(x)\right)\left(f_{S}(x) - \bar{f}_{S}\left(x\right)\right) p_T(x)| \leq K \left|f_{S}(x) - \bar{f}_{S}\left(x\right)\right|p_T(x) = O(\epsilon) p_T(x).
+    $$
+    Thus the third term is $O(\epsilon)$.
+    
+    Finally, note that we cannot say anything about $\bar{f}_{S}\left(x\right)$ when $x\in \X_T \setminus \X_S$.
+\end{proof}%
+
+To prove the previous equality, we needed a bounded difference between labeling functions $f_T-f_S$ on $\X_T \cap \X_S$.
+We relax this bounded assumption to obtain an inequality in the following \Cref{prop:oodbias_smalliid_nobound}.
+\begin{proposition}[\ood bias when small \iid bias without bounded difference between labeling functions]
+\label{prop:oodbias_smalliid_nobound}
+    Under \Cref{ass:no_bias_iid},
+    \begin{equation}
+        \begin{aligned}
+            &\mathbb{E}_{(x,y)\sim p_T}[\biasb^2(x, y)] \leq 2 \times \text{Correlation shift} + \text{Support mismatch} + O(\epsilon^2)
+            % , \\
+            % &\text{where~} \text{Correlation shift} = \int_{\X_T \cap \X_S} \left(f_T(x)-f_S(x)\right)^{2} p_T(x) dx, \\
+            % &\text{and~} \text{Support mismatch} = \int_{\X_T \setminus \X_S} \left(f_T(x)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx. %
+        \end{aligned}%
+    \end{equation}%
+\end{proposition}%
+\begin{proof}
+    % Under \Cref{ass:no_bias_iid}, $|f_{S}\left(x\right)-\bar{f}_{S}\left(x\right)|\leq \epsilon$.
+    We follow the same proof as in \Cref{prop:app_bias_full}, except that we now use: $(a+b)^2\leq 2 (a^2 + b^2)$. Then,
+    \begin{align*}
+    &\int_{\X_T \cap \X_S} \left(f_T\left(x\right)-\bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx=\int_{\X_T \cap \X_S} \left((f_T\left(x\right) - f_S\left(x\right)) + \left(f_{S}(x) - \bar{f}_{S}\left(x\right)\right) \right)^{2} p_T(x) dx \\
+    & \leq 2 \times \int_{\X_T \cap \X_S} \left(f_T\left(x\right) - f_S\left(x\right)\right)^{2} + \left(f_{S}(x) - \bar{f}_{S}\left(x\right)\right)^{2} p_T(x) dx \\
+    & \leq 2 \times \int_{\X_T \cap \X_S} \left(f_T\left(x\right) - f_S\left(x\right)\right)^{2} p_T(x) dx + 2 \times \int_{\X_T \cap \X_S} \epsilon^2 p_T(x) dx \\
+    & \leq 2 \times \int_{\X_T \cap \X_S} \left(f_T\left(x\right) - f_S\left(x\right)\right)^{2} p_T(x) dx + O(\epsilon^2)
+    \end{align*}%
+    % Thus the second and third terms from \Cref{prop:app_bias_full} are zero.
+    % Then we replace $\forall x \in \X_S \cap  \X_T$: $$f_S(x)=\mathbb{E}_{p_S}[Y|X=x] \text{~~and~~} f_T(x)=\mathbb{E}_{p_T}[Y|X=x].$$
+    % Finally, note that we cannot say anything about $\bar{f}_{S}\left(x\right)$ when $x\in \X_T \setminus \X_S$.
+\end{proof}%

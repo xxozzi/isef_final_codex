@@ -1,0 +1,29 @@
+\section{Problem settings}\label{sec:problems}
+Each \Wilds dataset is associated with a type of domain shift: domain generalization, subpopulation shift, or a hybrid of both (\reffig{datasets}).
+We focus on these types of distribution shifts because they collectively capture the structure of most of the shifts in the applications we studied; see \refsec{other_datasets} for more discussion. 
+In each setting, we can view the overall data distribution as a mixture of $D$ domains $\Dom = \{1,\dots,D\}$.
+Each domain $\dom\in\Dom$ corresponds to a fixed data distribution $\Pdom$ over $(x, y, \dom)$, where $x$ is the input, $y$ is the prediction target, and all points sampled from $\Pdom$ have domain $\dom$.
+We encode the domain shift by assuming that the training distribution $\Ptrain = \sum_{\dom\in\Dom} \qtraindom\Pdom$ has mixture weights $\qtraindom$ for each domain $\dom$,
+while the test distribution $\Ptest = \sum_{\dom\in\Dom} \qtestdom\Pdom$ is a different mixture of domains with weights $\qtestdom$.
+For convenience, we define the set of training domains as $\Domtrain = \{\dom\in\Dom \mid \qtraindom > 0\}$, and likewise, the set of test domains as $\Domtest=\{\dom\in\Dom \mid \qtestdom > 0\}$.
+
+At training time, the learning algorithm gets to see the domain annotations $\dom$, i.e., the training set comprises points $(x, y, \dom) \sim \Ptrain$.
+At test time, the model gets either $x$ or $(x,d)$ drawn from $\Ptest$, depending on the application.
+
+\subsection{Domain generalization (\reffig{problems}-Top)}
+In domain generalization, we aim to generalize to test domains $\Domtest$ that are disjoint from the training domains $\Domtrain$, i.e., $\Domtrain \cap \Domtest=\emptyset$.
+To make this problem tractable, the training and test domains are typically similar to each other: e.g., in \Camelyon, we train on data from some hospitals and test on a different hospital, and in \iWildCam, we train on data from some camera traps and test on different camera traps.
+We typically seek to minimize the average error on the test distribution.
+
+\subsection{Subpopulation shift (\reffig{problems}-Bottom)}
+In subpopulation shift, we aim to perform well across a wide range of domains seen during training time.
+Concretely, all test domains are seen at training, with $\Domtest\subseteq\Domtrain$, but the proportions of the domains can change, with $\qtest\neq\qtrain$.
+We typically seek to minimize the maximum error over all test domains.
+For example, in \CivilComments, the domains $\dom$ represent particular demographics, some of which are a minority in the training set, and we seek high accuracy on each of these subpopulations without observing their demographic identity $\dom$ at test time.
+
+\subsection{Hybrid settings}
+The categories of domain generalization and subpopulation shift provide a general framework for thinking about domain shifts,
+and the methods that have been developed for each setting have been quite different, as we will discuss in \refsec{baselines}.
+However, it is not always possible to cleanly define a problem as one or the other; for example, a test domain might be present in the training set but at a very low frequency.
+In \Wilds, we consider some hybrid settings that combine both domain generalization and subpopulation shift. For example, in \FMoW, the inputs are satellite images and the domains correspond to the year and geographical region in which they were taken.
+We simultaneously consider domain generalization across time (the training/test sets comprise images taken before/after a certain year) and subpopulation shift across regions (there are images from the same regions in the training and test sets, and we seek high performance across all regions).

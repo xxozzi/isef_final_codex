@@ -1,0 +1,145 @@
+\subsection{\AmazonName{}: Sentiment classification across different categories and time}\label{sec:app_amazon_other}
+
+Our benchmark dataset \Amazon studies user shifts.
+In \refsec{discussion}, we discussed empirical trends on other types of distribution shifts on the same underlying 2018 Amazon Reviews dataset \citep{ni2019justifying}.
+We now present the detailed setup and empirical results for the time and category shifts.
+
+\subsubsection{Setup}
+\paragraph{Model.}
+For all experiments in this section, we finetune BERT-base-uncased models, using the implementation from \citet{wolf2019transformers}, and with the following hyperparameter settings:
+batch size 8; learning rate $2 \times 10^{-6}$; $L_2$-regularization strength $0.01$; 3 epochs; and a maximum number of tokens of 512.
+These hyperparameters are taken from the \Amazon experiments.
+
+
+\subsubsection{Time shifts}
+\paragraph{Problem setting.}
+We consider the domain generalization setting, where the domain $d$ is the year in which the reviews are written.
+As in \Amazon, the task is multi-class sentiment classification, where
+the input $x$ is the text of a review, the label $y$ is a corresponding star rating from 1 to 5.
+
+\paragraph{Data.}
+The dataset is a modified version of the Amazon Reviews dataset \citep{ni2019justifying} and comprises customer reviews on Amazon.
+Specifically, we consider the following split:
+\begin{enumerate}
+  \item \textbf{Training:} 1,000,000 reviews written in years 2000 to 2013.
+  \item \textbf{Validation (OOD):} 20,000 reviews written in years 2014 to 2018.
+  \item \textbf{Test (OOD):} 20,000 reviews written in years 2014 to 2018.
+\end{enumerate}
+To construct the above split, we first randomly sample 4,000 reviews per year for the evaluation splits. For years in which there are not sufficient reviews, we split the reviews equally between validation and test. After constructing the evaluation set, we then randomly sample from the remaining reviews to form the training set.
+
+\paragraph{Evaluation.}
+To assess whether models generalize to future years, we evaluate models by their average accuracy on the OOD test set.
+
+\paragraph{ERM results and performance drops.}
+We only observed modest performance drops due to time shift.
+Our baseline model performs well on the OOD test set, achieving 76.0\% accuracy on average and 75.4\% on the worst year (\reftab{results_amazon_time}).
+To measure performance drops due to distribution shifts, we ran a test-to-test comparison by training a model on reviews written in years 2014 to 2018 (\reftab{compare_amazon_time}).
+The performance gaps between the model trained on the official split and the model trained on the test-to-test split are consistent but modest across the years, with the biggest drop of 1.1\% for 2018.
+
+\begin{table*}[tbp]
+  \caption{Baseline results on time shifts on the Amazon Reviews Dataset. We report the accuracy of models trained using ERM. In addition to the average accuracy across all years in each split, we report the accuracy for the worst-case year.}\label{tab:results_amazon_time}
+  \centering
+  \begin{tabular}{lcccccccccc}
+  \toprule
+   & \multicolumn{2}{c}{Train} & \multicolumn{2}{c}{Validation (OOD)} & \multicolumn{2}{c}{Test (OOD)} \\
+  Algorithm & Average & Worst year & Average & Worst year & Average & Worst year \\
+  \midrule
+    ERM	& 75.0 (0.0)	& 72.4 (0.1)	& 75.7 (0.1)	& 74.6 (0.1)	& 76.0 (0.1)	& 75.4 (0.1) \\
+  \bottomrule
+  \end{tabular}
+\end{table*}
+
+\begin{table*}[tbp]
+  \caption{Test-to-test in-distribution comparison for time shifts on Amazon Reviews Dataset. We observe only modest performance drops due to time shifts.}\label{tab:compare_amazon_time}
+  \centering
+  \begin{tabular}{lccccccccc}
+  \toprule
+  Setting & Year & 2014 & 2015 & 2016 & 2017 & 2018 \\
+  \midrule
+  Official & 75.4 (0.1) & 75.8 (0.1) & 76.3 (0.1) & 76.4 (0.4) & 76.1 (0.1) \\
+  Test-to-test & 76.1 (0.2) & 76.8 (0.1) & 77.1 (0.2) & 77.5 (0.2) & 77.0 (0.0) \\
+  \bottomrule
+  \end{tabular}
+\end{table*}
+
+\subsubsection{Category shifts}
+Shifts across categories---where a model is trained on reviews in one category and then tested on another---have been studied extensively \citep{blitzer2007biographies,mansour2009dams,hendrycks2020pretrained}.
+In line with prior work, we observe that model performance drops upon evaluating on a few unseen categories.
+However, the observed difference between out-of-distribution and in-distribution baselines varies from category to category and is not consistently large \citep{hendrycks2020pretrained}.
+In addition, we find that training on more diverse data with more product categories tends to improve generalization to unseen categories and reduce the effect of the distribution shift; similar phenomena have also been reported in prior work \citep{mansour2009dams,guo2018multi}.
+
+\paragraph{Problem setting.}
+We consider the domain generalization setting, where the domain $d$ is the product category.
+As in \Amazon, the task is multi-class sentiment classification, where
+the input $x$ is the text of a review, the label $y$ is a corresponding star rating from 1 to 5.
+
+\paragraph{Data.}
+The dataset is a modified version of the Amazon Reviews dataset \citep{ni2019justifying} and comprises customer reviews on Amazon.
+Specifically, we consider the following split for a given set of training categories:
+\begin{enumerate}
+  \item \textbf{Training:} up to 1,000,000 reviews in training categories.
+  \item \textbf{Validation (OOD):} reviews in categories unseen during training.
+  \item \textbf{Test (OOD):} reviews in categories unseen during training.
+  \item \textbf{Validation (ID):} reviews in training categories.
+  \item \textbf{Test (ID):} reviews in training categories.
+\end{enumerate}
+To construct the above split, we first randomly sample 1,000 reviews per category for the evaluation splits (for categories with insufficient number of reviews, we split the reviews equally between validation and test) and then randomly sample from the remaining reviews to form the training set.
+
+\paragraph{Evaluation.}
+To assess whether models generalize to unseen categories, we evaluate models by their average accuracy on each of the categories in the OOD test set.
+
+
+\begin{table*}[tbp]
+  \caption{Baseline results on category shifts on the Amazon Reviews Dataset. We report the accuracy of models trained using ERM on a single category (Books) versus four categories (Books, Movies and TV, Home and Kitchen, and Electronics). Across many categories unseen at training time, corresponding to each row, the latter model modestly but consistently outperforms the former.}\label{tab:results_amazon_category}
+  \centering
+  \begin{small}
+  \begin{tabular}{lcccccccccc}
+  \toprule
+  & \multicolumn{2}{c}{Validation (OOD)} & \multicolumn{2}{c}{Test (OOD)} \\
+    Category & Single & Multiple & Single & Multiple \\
+  \midrule
+  All Beauty & 87.8 (0.8) & 85.6 (1.4) & 82.9 (0.8) & 83.1 (0.8) \\
+  Arts Crafts and Sewing & 81.6 (0.7) & 83.4 (0.4) & 79.5 (0.2) & 81.7 (0.2) \\
+  Automotive & 78.2 (0.4) & 80.4 (0.4) & 76.5 (0.2) & 78.9 (0.2) \\
+  CDs and Vinyl & 78.1 (0.7) & 78.6 (0.2) & 78.5 (0.7) & 79.7 (0.3) \\
+  Cell Phones and Accessories & 76.8 (0.3) & 79.0 (0.7) & 78.0 (0.5) & 80.2 (1.0) \\
+  Clothing Shoes and Jewelry & 69.8 (0.6) & 72.6 (0.2) & 73.3 (0.2) & 75.2 (0.2) \\
+  Digital Music & 77.5 (0.5) & 77.8 (0.5) & 80.7 (1.0) & 81.7 (0.6) \\
+  Gift Cards & 88.2 (1.5) & 90.7 (3.1) & 90.7 (0.8) & 91.2 (0.0) \\
+  Grocery and Gourmet Food & 79.0 (0.3) & 79.0 (0.1) & 79.3 (0.7) & 79.2 (0.2) \\
+  Industrial and Scientific & 77.0 (0.4) & 78.1 (0.6) & 77.4 (0.2) & 78.9 (0.1) \\
+  Kindle Store & 75.0 (0.3) & 74.5 (0.3) & 73.2 (0.3) & 73.1 (0.5) \\
+  Luxury Beauty & 67.2 (0.2) & 70.2 (0.6) & 67.4 (0.7) & 69.4 (0.9) \\
+  Magazine Subscriptions & 74.2 (3.2) & 71.0 (0.0) & 90.3 (0.0) & 89.2 (1.9) \\
+  Musical Instruments & 76.1 (0.3) & 78.3 (0.3) & 78.8 (0.8) & 80.9 (0.2) \\
+  Office Products & 78.5 (0.3) & 80.0 (0.5) & 76.7 (0.5) & 78.9 (0.4) \\
+  Patio Lawn and Garden & 70.8 (0.6) & 72.9 (0.3) & 75.5 (0.6) & 79.7 (0.6) \\
+  Pet Supplies & 74.5 (0.4) & 77.1 (0.9) & 74.4 (0.4) & 76.8 (0.5) \\
+  Prime Pantry & 80.5 (0.3) & 80.2 (0.2) & 78.5 (0.6) & 79.4 (0.3) \\
+  Software & 65.8 (1.7) & 67.1 (1.1) & 71.3 (1.5) & 72.6 (0.5) \\
+  Sports and Outdoors & 74.2 (0.5) & 76.0 (0.2) & 75.8 (0.2) & 78.3 (0.6) \\
+  Tools and Home Improvement & 74.0 (1.1) & 76.4 (0.3) & 73.1 (0.6) & 74.4 (0.2) \\
+  Toys and Games & 78.9 (0.4) & 79.9 (0.2) & 77.6 (0.2) & 80.9 (0.2) \\
+  Video Games & 76.0 (0.2) & 76.6 (0.8) & 76.9 (0.6) & 78.0 (0.6) \\
+  \bottomrule
+  \end{tabular}
+  \end{small}
+\end{table*}
+
+\paragraph{ERM results.}
+We first considered training on four categories (Books, Movies and TV, Home and Kitchen, and Electronics) and evaluating on unseen categories.
+We observed that a BERT-base-uncased model trained via ERM yields a test accuracy of 75.4\% on the four in-distribution categories and a wide range of accuracies on unseen categories (\reftab{results_amazon_category}, columns Multiple).
+While the accuracies on some unseen categories are lower than the train-to-train in-distribution accuracy, it is unclear whether the performance gaps stem from the distribution shift or differences in intrinsic difficulty across categories;
+in fact, the accuracy is higher on many unseen categories (e.g., All Beauty) than on the in-distribution categories, illustrating the importance of accounting for intrinsic difficulty.
+
+To control for intrinsic difficulty, we ran a test-to-test comparison on each target category.
+We controlled for the number of training reviews to the extent possible;
+the standard model is trained on 1 million reviews in the official split, and each test-to-test model is trained on 1 million reviews or less, as limited by the number of reviews per category.
+We observed performance drops on some categories, for example on Clothing, Shoes, and Jewelry (83.0\% in the test-to-test setting versus 75.2\% in the official setting trained on the four different categories) and on Pet Supplies (78.8\% to 76.8\%).
+However, on the remaining categories, we observed more modest performance gaps, if at all.
+While we thus found no evidence for significance performance drops for many categories, these results do not rule out such drops either:
+one confounding factor is that some of the oracle models are trained on significantly smaller training sets and therefore underestimate the in-distribution performance.
+
+In addition, we compared training on four categories (Books, Movies and TV, Home and Kitchen, and Electronics), as above, to training on just one category (Books), while keeping the training set size constant.
+We found that decreasing the number of training categories in this way lowered out-of-distribution performance:
+across many OOD categories, accuracies were modestly but consistently higher for the model trained on four categories than for the model trained on a single category (\reftab{results_amazon_category}).

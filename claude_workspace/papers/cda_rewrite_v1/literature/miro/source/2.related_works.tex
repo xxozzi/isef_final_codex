@@ -1,0 +1,100 @@
+\section{Related works}
+
+\subsubsection{Domain generalization.}
+% 인트로에 있는 거 좀 가져와서 DG 정리하고,
+% 우리처럼 domain-invariant feature learning 의 limitation 을 지적하는 연구들도 따로 정리하면서 우리 페이퍼 포지셔닝.
+% The existing DG approaches have tried to learn invariant features across multiple domains by minimizing feature divergences between the source domains~\cite{muandet2013icml_DIFL,ganin2016dann,li2018mmd,sun2016coral,matsuura2020aaai_mixture_mld,li2018cdann,zhao2020er_entropy_regularization}, simulating domain shifts based on meta-learning~\cite{li2018mldg,balaji2018metareg,dou2019masf,li2019episodic_epi-fcr,zhang2020arm}, robust optimization \cite{arjovsky2019irm, krueger2020vrex, Sagawa2020GroupDRO, shi2022gradient}, or augmenting source domain examples~\cite{shankar2018crossgrad,nuriel2020padain,zhou2021mixstyle,nam2019sagnet,carlucci2019jigsaw_jigen,zhou2020l2a_ot,bai2020decaug}.
+Learning domain-invariant features from source domains has been a major branch in the DG field. The main idea is discarding biased knowledge to a specific domain while preserving invariant features over source domains, by minimizing feature divergences between the source domains \cite{muandet2013icml_DIFL,ganin2016dann,li2018mmd,sun2016coral,matsuura2020aaai_mixture_mld,li2018cdann,zhao2020er_entropy_regularization}, simulating domain shifts based on meta-learning \cite{li2018mldg,balaji2018metareg,dou2019masf,li2019episodic_epi-fcr,zhang2020arm,bui2021mdsdi}, robust optimization \cite{arjovsky2019irm,krueger2020vrex,Sagawa2020GroupDRO, shi2022gradient,cha2021swad}, or augmenting source domain examples \cite{nuriel2020padain,zhou2021mixstyle,nam2019sagnet,carlucci2019jigsaw_jigen,zhou2020l2a_ot,bai2020decaug,robey2021mbdg_model_based_domain_generalization,yang2021atsl_adversarial_teacher_student_learning}.
+% However, although the regularization on the source domains can capture common features within the source domains, the model still can be biased to the source domains and the performance gain in a target domain might be limited. 
+% However, even if the model learns invariant representation to source domains, it can still be biased to the source domains which causes limited performance improvement. Another branch focuses to explore DG out of the source domains by augmenting source domain examples with extra visual patterns \cite{nuriel2020padain,zhou2021mixstyle,nam2019sagnet,carlucci2019jigsaw_jigen,zhou2020l2a_ot,bai2020decaug,robey2021mbdg_model_based_domain_generalization,yang2021atsl_adversarial_teacher_student_learning}. They require augmentation strategies addressing the unseen target domains. 
+However, even if the model learns invariant representation to source domains, it can still be biased toward the source domains which causes limited performance on unseen target domains. That is, learning invariant representation across source domains is not enough to achieve the underlying objective of domain generalization \cite{bui2021mdsdi,chattopadhyay2020dmg,chen2022preserving}. 
+To compensate for the issue, this paper employs pre-trained models, which provide general representations across various domains including unseen target domains.
+%In this research perspective, we propose a novel regularization approach based on a pre-trained model.
+
+% In general, utilizing pre-trained models is an effective way to prevent being biased to the training domain. Several DG methods have used pre-trained models as the initial status of the model and finetune them~\cite{gulrajani2020domainbed}. Since pre-trained models have learned from large-scale data in diverse domains, robust optimization~\cite{krueger2020vrex, Sagawa2020GroupDRO, shi2022gradient} based on the pre-trained models has been a promising method for out-of-domain generalization. In this paper, we provide a regularization method \sr{[Our method positioning]}. 
+
+% Invariant Representations (over domains) -- previous approaches (capture common things)
+% Learning from Oracle Representations -- ours? (do not forget general features or not to be biased to the source domains)
+% Domain Generalization -- Transfer Learning 하고 노 상관
+    % Domain Generalization via Conditional Invariant Representations (AAAI18)
+    % Deep Domain Generalization via Conditional Invariant Adversarial Networks
+
+\subsubsection{Exploiting pre-trained models.}
+There have been numerous attempts to exploit pre-trained models in various fields.
+Transfer learning \cite{xuhong2018l2sp,li2019delta} and knowledge distillation \cite{ahn2019vid,tian2019crd} employ pre-trained models to improve in-domain performance when dataset or architecture shift occurs between pre-training and fine-tuning.
+%Transfer learning use the pre-trained models to improve in-domain performance in the dataset shift setting \cite{xuhong2018l2sp,li2019delta,gouk2020mars_distance}.
+%Knowledge distillation also use the pre-trained model for the in-domain performance when the pre-training and fine-tuning datasets are same.
+% There have been numerous attempts to improve in-domain performance using pre-trained models in various fields, such as transfer learning \cite{xuhong2018l2sp,li2019delta,gouk2020mars_distance} and knowledge distillation \cite{ahn2019vid,tian2019crd}. 
+Continual learning utilizes the pre-trained model to maintain old task performance when learning new tasks \cite{li2017lwf}.
+% Recently, it has been discovered that naive fine-tuning is not suitable for out-of-domain generalization
+% Recently, studies on fine-tuning methods for out-of-distribution generalization are emerging \cite{kumar2022iclr_finetuning_distort,wortsman2021robust}. 
+% Our setting focuses on domain generalization with no additional auxiliary information, \eg, pre-training datasets. We provide the empirical DG results on the fair comparison setting in Table~\ref{table:learning_from_pretrained}.
+Recently, several studies targeting the out-of-distribution generalization are emerging \cite{kumar2022iclr_finetuning_distort,wortsman2021robust}. 
+Kumar \etal \cite{kumar2022iclr_finetuning_distort} show that naive fine-tuning distorts the pre-trained features and propose a simple baseline, named LP-FT, to alleviate the distortion. 
+% Kumar \etal \cite{kumar2022iclr_finetuning_distort} propose a well-designed fine-tuning strategy, LP-FT, that reduces distortion of pre-trained features to provide better performance on out-of-distribution.
+WiSE-FT \cite{wortsman2021robust} focuses on zero-shot models. It combines pre-trained and fine-tuned weights to preserve the generalizability of the pre-trained zero-shot models.
+% WiSE-FT \cite{wortsman2021robust} combines pre-trained and fine-tuned weights to prevent losing the domain generality of the pre-trained model. 
+%We will provide a comparison with these studies. 
+%%%%%%%%%%%%%%%%% 개념적 차이를 포인팅 해주어야 할 것 같습니다. 이 친구들은 무엇에 집중 했고, 우리는 이런 부분에 집중했다. 뒤에 Table 3에도 이와 같은 내용은 없기에, 비교 실험에 존재를 알려주고 마치기 보다는 개념적 차이를 말하면 좋겠네요.
+% Standing with these studies, 
+In this paper, we propose a MI-based regularization method, \method{}, to exploit the generalizability of the pre-trained representation in the training process.
+
+% in Section \ref{subsubsection:learning_from_pretrained_exp} and Table \ref{table:learning_from_pretrained}.
+
+% LP-FT \cite{kumar2022iclr_finetuning_distort} shows that fine-tuning distorts the pre-trained features and it inhibits out-of-distribution generalization. They propose a simple baseline to alleviate the distortion, freezing the feature extractor in the early training phase.
+
+% Our method can be viewed as a same line of these studies.
+% From this point of view, we propose a way to better utilize the pre-trained model for out-of-domain generalization, with no additional auxiliary information, \eg, pre-training datasets.
+
+
+% Fine-tuning focused on out-of-domain generalization is emerging recently \cite{kumar2022iclr_finetuning_distort,wortsman2021robust}. 
+% We focus on the out-of-domain generalization by exploiting pre-trained models with no additional auxiliary information, \eg, pre-training datasets. We provide the comparison of learning from pre-trained methods
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 뭔가 여기서 설명하기 애매하네
+% \subsubsection{Regularization based on mutual information.}
+% % MI 는 두 r.v. 의 dependence 를 측정하기 위해 널리 사용되었다.
+% % 다른 다양한 대체재가 있지만, MI 는 이론적으로 널리 연구되어 좋은 백그라운드를 제공하며, 동시에 경험적으로도 좋은 결과를 보여왔다 [CITES].
+% % 우리 연구에서도 이러한 맥락에서 MI 를 활용하며, 그 결과 pre-trained model 을 활용한 다른 regularization methods 와 비교했을 때 더 좋은 성능을 내었다.
+% Mutual information is widely used measure to compute dependence between two random variables. 
+
+% Conceptually, our proposed objective Eq. (2) can be varying by choosing different metrics rather than MI, such as L1, L2, weighted L2, HSIC, or MMD in feature or parameter spaces \cite{xuhong2018l2sp,li2019delta}.
+% We focus on MI because MI theoretically sounds, its approximation works well with a proper theoretical bound (proved in Sec. A), and performs better than others empirically. For example, MI (65.9\%) outperforms weighted L2 in feature space (63.6\%) and L2 in parameter space (63.6\%).
+% % Partially yes. We tested several different metrics, such as L1, L2, and weighted L2, in two different spaces, namely feature and weight spaces {\scriptsize [\ct{L2SP}, \ct{DELTA}]}. We found that MI is more principled, better supported theoretically, and shows better results empirically.
+% Furthermore, it has been shown in various fields, \eg, knowledge distillation, that MI is an appropriate metric to transfer information between two representations [CRD, WCRD]. However, we agree that it is still an interesting future research topic to find a better metric than MI.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+% Merged into intro
+% Traditional domain generalization approaches have tried to learn domain-invariant features from multiple source domains by minimizing feature divergences between the source domains~\cite{ganin2016dann,li2018mmd,sun2016coral,matsuura2020aaai_mixture_mld,muandet2013icml_DIFL,li2018cdann,zhao2020er_entropy_regularization}, normalizing domain-specific gradients based on meta-learning~\cite{li2018mldg,balaji2018metareg,dou2019masf,li2019episodic_epi-fcr}, or augmenting source domain examples~\cite{nuriel2020padain,zhou2021mixstyle,nam2019sagnet,carlucci2019jigsaw_jigen,zhou2020l2a_ot,bai2020decaug}.
+% These methods have demonstrated that their domain-invariant properties are required for domain generalization.
+
+% Recently, DomainBed~\cite{gulrajani2020domainbed} compared the multiple methods with a common evaluation protocol and found that the simple empirical risk minimization (ERM) provides comparable or better performances when a model becomes larger. In other words, existing methods of learning domain-invariant features tend to be less effective in large pre-trained models. Moreover, a flat minimum on ERM provides better generalization performances on both in- and out-domains~\cite{cha2021swad}. These recent works applied several methods to the fine-tuning phase of pre-trained models and provided practical methods for domain generalization.
+
+% However, the pre-trained models have only been used for initializing models without an additional in-depth analysis of their effectiveness. To compensate for the issue, this paper identifies the relation between pre-trained models and domain generalization by comparing feature distributions before and after fine-tuning and provides a better transfer learning method for domain generalization.
+
+% Using pre-trained models for vision or NLP tasks becomes ubiquitous, thanks to their transferable knowledge learned from large-scale data.
+% Basic approach -- initialize weights and fine-tune them
+% 
+
+% Message 1: How to use the pre-trained knowledge -- important challenges for diverse tasks 
+% -- transfer learning (it-self), domain adaptation, continual learning, knowledge distillation
+% -- Ours is aligned in the same direction but for different task.
+
+% Message 2: Pre-trained models have been used in domain generalization, but its extension have never been explored. 
+% -- We did!
+
+% Message 3: Novelty of using mutual information in our research direction? (X)
+
+
+

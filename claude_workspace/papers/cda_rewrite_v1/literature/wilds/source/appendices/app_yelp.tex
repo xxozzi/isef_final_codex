@@ -1,0 +1,107 @@
+\subsection{\Yelp: Sentiment classification across different users and time}\label{sec:app_yelp}
+We present empirical results on time and user shifts in the Yelp Open Dataset\footnote{https://www.yelp.com/dataset}.
+
+\subsubsection{Setup}
+\paragraph{Model.}
+For all experiments in this section, we finetune BERT-base-uncased models, using the implementation from \citet{wolf2019transformers}, and with the following hyperparameter settings:
+batch size 8; learning rate $2 \times 10^{-6}$; $L_2$-regularization strength $0.01$; 3 epochs with early stopping; and a maximum number of tokens of 512.
+We select the above hyperparameters based on a grid search over learning rates $1 \times 10^{-6}, 2 \times 10^{-6}, 1 \times 10^{-5}, 2 \times 10^{-5}$, using the time shift setup; for the user shifts, we adopted the same hyperparameters.
+
+\subsubsection{Time shifts}
+\paragraph{Problem setting.}
+We consider the domain generalization setting, where the domain $d$ is the year in which the reviews are written.
+As in \Amazon, the task is multi-class sentiment classification, where
+the input $x$ is the text of a review, the label $y$ is a corresponding star rating from 1 to 5.
+
+\paragraph{Data.}
+The dataset is a modified version of the Yelp Open Dataset and comprises 1 million customer reviews on Yelp.
+Specifically, we consider the following split:
+\begin{enumerate}
+  \item \textbf{Training:} 1,000,000 reviews written in years 2006 to 2013.
+  \item \textbf{Validation (OOD):} 20,000 reviews written in years 2014 to 2019.
+  \item \textbf{Test (OOD):} 20,000 reviews written in years 2014 to 2019.
+\end{enumerate}
+To construct the above split, we first randomly sample 1,000 reviews per year for the evaluation splits. For years in which there are not sufficient reviews, we split the reviews equally between validation and test. After constructing the evaluation set, we then randomly sample from the remaining reviews to form the training set.
+
+\paragraph{Evaluation.}
+To assess whether models generalize to future years, we evaluate models by their average accuracy on the OOD test set.
+
+\paragraph{ERM results and performance drops.}
+We observe modest performance drops due to time shift.
+A BERT-base-uncased model trained with the standard ERM objective performs well on the OOD test set, achieving 76.0\% accuracy on average and 73.9\% on the worst year (\reftab{results_yelp_time}).
+To measure performance drops due to distribution shifts, we run a test-to-test in-distribution comparison by training on reviews written in years 2014 to 2019 (\reftab{compare_yelp_time}).
+While there are consistent performance gaps between the out-of-distribution and the in-distribution baselines in later years, they are modest in magnitude with the largest drop of 3.1\% for 2018.
+
+\begin{table*}[tbp]
+  \caption{Baseline results on time shifts on the Yelp Open Dataset. We report the accuracy of models trained using ERM. Parentheses show standard deviation across 3 replicates.}\label{tab:results_yelp_time}
+  \centering
+  \begin{small}
+  \begin{tabular}{lcccccccccc}
+  \toprule
+   & \multicolumn{2}{c}{Train} & \multicolumn{2}{c}{Validation (OOD)} & \multicolumn{2}{c}{Test (OOD)}\\
+  Algorithm & Average & Worst year & Average & Worst year & Average & Worst year \\
+  \midrule
+ERM	& 71.4 (0.7)	& 65.7 (1.1)	& 76.1 (0.1)	& 73.1 (0.2)	& 76.0 (0.4)	& 73.9 (0.4)\\
+  \bottomrule
+  \end{tabular}
+  \end{small}
+\end{table*}
+
+\begin{table*}[tbp]
+  \caption{Test-to-test in-distribution comparison on the Yelp Open Dataset. We observe only modest performance drops due to time shifts. Parentheses show standard deviation across 3 replicates.}\label{tab:compare_yelp_time}
+  \centering
+  \begin{tabular}{lccccccccc}
+  \toprule
+  Year & 2014 & 2015 & 2016 & 2017 & 2018 & 2019 \\
+  \midrule
+  OOD baseline (ERM) & 75.8 (0.6) & 75.2 (0.9) & 73.9 (0.4) & 77.0 (0.4) & 76.7 (0.3) & 77.2 (0.6) \\
+  ID baseline (oracle) & 75.2 (0.5) & 75.0 (0.5) & 76.4 (0.7) & 78.8 (0.6) & 79.6 (0.4) & 79.5 (0.5) \\
+  \bottomrule
+  \end{tabular}
+\end{table*}
+
+
+\subsubsection{User shift}
+\paragraph{Problem setting.}
+As in \Amazon, we consider the domain generalization setting, where the domains are reviewers and the task is multi-class sentiment classification.
+Concretely, the input $x$ is the text of a review, the label $y$ is a corresponding star rating from 1 to 5, and the domain $d$ is the identifier of the user that wrote the review.
+
+\paragraph{Data.}
+The dataset is a modified version of the Yelp Open Dataset and comprises 1.2 million customer reviews on Yelp.
+To measure generalization to unseen reviewers, we train on reviews written by a set of reviewers and consider reviews written by \emph{unseen} reviewers at test time.
+Specifically, we consider the following random split across reviewers:
+\begin{enumerate}
+  \item \textbf{Training:} 1,000,104 reviews from 11,856 reviewers.
+  \item \textbf{Validation (OOD):} 40,000 reviews from another set of 1,600 reviewers, distinct from training and test (OOD).
+  \item \textbf{Test (OOD):} 40,000 reviews from another set 1,600 reviewers, distinct from training and validation (OOD).
+  \item \textbf{Validation (ID):} 40,000 reviews from 1,600 of the 11,856 reviewers in the training set.
+  \item \textbf{Test (ID):} 40,000 reviews from 1,600 of the 11,856 reviewers in the training set.
+\end{enumerate}
+The training set includes at least 25 reviews per reviewer, whereas the evaluation sets include exactly 25 reviews per reviewer.
+While we primarily evaluate model performance on the above OOD test set, we also provide in-distribution validation and test sets for potential use in hyperparameter tuning and additional reporting.
+These in-distribution splits comprise reviews written by reviewers in the training set.
+
+\paragraph{Evaluation.}
+To assess whether models perform consistently well across reviewers, we evaluate models by their accuracy on the reviewer at the 10th percentile.
+
+\paragraph{ERM results and performance drops.}
+We observe only modest variations in performance across reviewers.
+A BERT-base-uncased model trained with the standard ERM objective achieves 71.5\% accuracy on average and 56.0\% accuracy at the 10th percentile reviewer (\reftab{results_yelp}).
+The above variation is modestly larger than expected from randomness; a random binomial baseline with equal average accuracy would have a tenth percentile accuracy of 60.1\%.
+
+\begin{table*}[tbp]
+  \caption{Baseline results on user shifts on the Yelp Open Dataset. We report the accuracy of models trained using ERM. In addition to the average accuracy across all reviews, we compute the accuracy for each reviewer and report the performance for the reviewer in the 10th percentile. In-distribution (ID) results correspond to the train-to-train setting. Parentheses show standard deviation across 3 replicates.}\label{tab:results_yelp}
+  \centering
+  \begin{small}
+  \begin{adjustbox}{width=1\textwidth}
+  \begin{tabular}{lcccccccccc}
+  \toprule
+  & \multicolumn{2}{c}{Validation (OOD)} & \multicolumn{2}{c}{Test (OOD)} & \multicolumn{2}{c}{Validation (ID)} & \multicolumn{2}{c}{Test (ID)} \\
+  Algorithm & 10th percentile & Average & 10th percentile & Average & 10th percentile & Average  & 10th percentile & Average \\
+  \midrule
+    ERM       & 56.0 (0.0) & 70.5 (0.0) & 56.0 (0.0) & 71.5 (0.0) & 56.0 (0.0) & 70.6 (0.0) & 56.0 (0.0) & 70.9 (0.1)\\
+  \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+  \end{small}
+\end{table*}

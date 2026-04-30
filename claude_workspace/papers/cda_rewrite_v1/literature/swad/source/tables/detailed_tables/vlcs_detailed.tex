@@ -1,0 +1,30 @@
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.1}
+\caption{\small\textbf{Out-of-domain accuracies (\%) on} \data{VLCS}\textbf{.}}
+\begin{tabular}{lllll|c}
+\toprule
+\textbf{Algorithm} & \textbf{C} & \textbf{L} & \textbf{S} & \textbf{V} & \textbf{Avg} \\
+\midrule
+GroupDRO$^\dagger$ & 97.3 \scriptsize$\pm0.3$ & 63.4 \scriptsize$\pm0.9$ & 69.5 \scriptsize$\pm0.8$ & 76.7 \scriptsize$\pm0.7$ & 76.7 \\
+RSC$^\dagger$ & 97.9 \scriptsize$\pm0.1$ & 62.5 \scriptsize$\pm0.7$ & 72.3 \scriptsize$\pm1.2$ & 75.6 \scriptsize$\pm0.8$ & 77.1 \\
+MLDG$^\dagger$ & 97.4 \scriptsize$\pm0.2$ & 65.2 \scriptsize$\pm0.7$ & 71.0 \scriptsize$\pm1.4$ & 75.3 \scriptsize$\pm1.0$ & 77.2 \\
+MTL$^\dagger$ & 97.8 \scriptsize$\pm0.4$ & 64.3 \scriptsize$\pm0.3$ & 71.5 \scriptsize$\pm0.7$ & 75.3 \scriptsize$\pm1.7$ & 77.2 \\
+ERM$^\ddagger$ & 98.0 \scriptsize$\pm0.3$ & 64.7 \scriptsize$\pm1.2$ & 71.4 \scriptsize$\pm1.2$ & 75.2 \scriptsize$\pm1.6$ & 77.3 \\
+I-Mixup & 98.3 \scriptsize$\pm0.6$ & 64.8 \scriptsize$\pm1.0$ & 72.1 \scriptsize$\pm0.5$ & 74.3 \scriptsize$\pm0.8$ & 77.4 \\
+ERM$^\dagger$ & 97.7 \scriptsize$\pm0.4$ & 64.3 \scriptsize$\pm0.9$ & 73.4 \scriptsize$\pm0.5$ & 74.6 \scriptsize$\pm1.3$ & 77.5 \\
+MMD$^\dagger$ & 97.7 \scriptsize$\pm0.1$ & 64.0 \scriptsize$\pm1.1$ & 72.8 \scriptsize$\pm0.2$ & 75.3 \scriptsize$\pm3.3$ & 77.5 \\
+CDANN$^\dagger$ & 97.1 \scriptsize$\pm0.3$ & 65.1 \scriptsize$\pm1.2$ & 70.7 \scriptsize$\pm0.8$ & 77.1 \scriptsize$\pm1.5$ & 77.5 \\
+ARM$^\dagger$ & 98.7 \scriptsize$\pm0.2$ & 63.6 \scriptsize$\pm0.7$ & 71.3 \scriptsize$\pm1.2$ & 76.7 \scriptsize$\pm0.6$ & 77.6 \\
+SagNet$^\dagger$ & 97.9 \scriptsize$\pm0.4$ & 64.5 \scriptsize$\pm0.5$ & 71.4 \scriptsize$\pm1.3$ & 77.5 \scriptsize$\pm0.5$ & 77.8 \\
+Mixstyle$^\ddagger$ & 98.6 \scriptsize$\pm0.3$ & 64.5 \scriptsize$\pm1.1$ & 72.6 \scriptsize$\pm0.5$ & 75.7 \scriptsize$\pm1.7$ & 77.9 \\
+VREx$^\dagger$ & 98.4 \scriptsize$\pm0.3$ & 64.4 \scriptsize$\pm1.4$ & 74.1 \scriptsize$\pm0.4$ & 76.2 \scriptsize$\pm1.3$ & 78.3 \\
+IRM$^\dagger$ & 98.6 \scriptsize$\pm0.1$ & 64.9 \scriptsize$\pm0.9$ & 73.4 \scriptsize$\pm0.6$ & 77.3 \scriptsize$\pm0.9$ & 78.6 \\
+DANN$^\dagger$ & \textbf{99.0} \scriptsize$\pm0.3$ & 65.1 \scriptsize$\pm1.4$ & 73.1 \scriptsize$\pm0.3$ & 77.2 \scriptsize$\pm0.6$ & 78.6 \\
+CORAL$^\dagger$ & 98.3 \scriptsize$\pm0.1$ & \textbf{66.1} \scriptsize$\pm1.2$ & 73.4 \scriptsize$\pm0.3$ & 77.5 \scriptsize$\pm1.2$ & 78.8 \\
+\midrule
+Ours & 98.8 \scriptsize$\pm0.1$ & 63.3 \scriptsize$\pm0.3$ & \textbf{75.3} \scriptsize$\pm0.5$ & \textbf{79.2} \scriptsize$\pm0.6$ & \textbf{79.1} \\
+\bottomrule
+\end{tabular}
+\end{table}

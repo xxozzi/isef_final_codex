@@ -1,0 +1,23 @@
+\begin{figure}[t]%
+    \centering%
+    \begin{subfigure}{.33\textwidth}%
+        \centering%
+        \includegraphics[width=\linewidth]{pictures/files/final/boxplot_masam_train_hess.png}%
+        \caption{Hessian trace ($\downarrow$) in train.}%
+        \label{fig:home0:boxplot_masam_train_hess}%
+    \end{subfigure}%
+    \begin{subfigure}{.33\textwidth}%
+        \centering%
+        \includegraphics[width=\linewidth]{pictures/files/final/boxplot_masam_ood_hess.png}%
+        \caption{Hessian trace ($\downarrow$) in test \ood.}%
+        \label{fig:home0:boxplot_masam_ood_hess}%
+    \end{subfigure}%
+    \begin{subfigure}{.33\textwidth}%
+        \centering%
+        \includegraphics[width=\linewidth]{pictures/files/final/boxplot_masam_ood_acc.png}%
+        \caption{Accuracy ($\uparrow$) in test \ood.}
+        \label{fig:soup:boxplot_masam_ood_acc}%
+    \end{subfigure}%
+    \caption{MA \cite{arpit2021ensemble} (a WA strategy) and SAM \cite{foret2021} similarly improve flatness. When combined, they further improve flatness. Yet, MA outperforms SAM and beats MA + SAM in \ood accuracy on domain \enquote{Art} from OfficeHome.}%
+    \label{fig:soup:boxplot_masam}%
+\end{figure}%

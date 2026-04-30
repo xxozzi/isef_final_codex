@@ -1,0 +1,234 @@
+\subsection{\Wheat}\label{sec:app_wheat}
+
+Models for automated, high-throughput plant phenotyping---measuring the physical characteristics of plants and crops, such as wheat head density and counts---are important tools for crop breeding \citep{thorp2018high,reynolds2020breeder} and agricultural field management~\citep{shi2016uav}.
+These models are typically trained on data collected in a limited number of regions, even for crops grown worldwide such as wheat \citep{madec2019ear, xiong2019tasselnetv2,ubbens2020autocount, ayalew2020unsupervised}.
+However, there can be substantial variation between regions, due to differences in crop varieties, growing conditions, and data collection protocols.
+Prior work on wheat head detection has shown that this variation can significantly degrade model performance on regions unseen during training \citep{david2020global}.
+
+We study this shift in an expanded version of the Global Wheat Head Dataset~\citep{david2020global,david2021global}, a large set of wheat images collected from 12 countries around the world.
+
+\subsubsection{Setup}
+\paragraph{Problem setting.}
+We consider the domain generalization setting, where the goal is to learn models that generalize to images taken from new countries and acquisition sessions (\reffig{dataset_wheat}).
+The task is wheat head detection, which is a single-class object detection task.
+Concretely, the input $x$ is an overhead outdoor image of wheat plants, and the label $y$ is a set of bounding box coordinates that enclose the wheat heads (the spike at the top of the wheat plant containing grain), excluding the hair-like awns that may extend from the head.
+The domain $d$ specifies an \emph{acquisition session}, which corresponds to a specific location, time, and sensor for which a set of images were collected.
+Our goal is to generalize to new acquisition sessions that are unseen during training.
+In particular, the dataset split captures a shift in location, with training and test sets comprising images from disjoint countries as discussed below.
+
+\paragraph{Data.}
+The dataset comprises 6,515 images containing 275,187 wheat heads.
+These images were collected over 47 acquisition sessions in 16 research institutes across 12 countries. We describe the metadata and statistics of each acquisition session in \reftab{app_dataset_detail_wheat}.
+
+Many factors contribute to the variation in wheat appearance across acquisition sessions.
+In particular, across locations, there is substantial variation due to differences in wheat genotypes, growing conditions (e.g., planting density), illumination protocols, and sensors.
+We study the effect of this location shift by splitting the dataset by country
+and assigning acquisition sessions from disjoint continents to the training and test splits:
+\begin{enumerate}
+\item	\textbf{Training:} Images from 18 acquisition sessions in Europe (France $\times$13, Norway $\times$2, Switzerland, United Kingdom, Belgium), containing 131,864 wheat heads across  2,943 images.
+\item \textbf{Validation (OOD):}
+Images from 7 acquisition sessions in Asia (Japan $\times$ 4, China $\times$ 3) and 1 acquisition session in Africa (Sudan), containing 44,873 wheat heads across 1,424 images.
+\item \textbf{Test (OOD):} Images from 11 acquisition sessions in Australia and 10 acquisition sessions in North America (USA $\times$ 6, Mexico $\times$ 3, Canada), containing 66,905 wheat heads across 1,434 images.
+\item \textbf{Validation (ID):} Images from the same 18 training acquisition sessions in Europe, containing 15,733 wheat heads across 357 images.
+\item \textbf{Test (ID):} Images from the same 18 training acquisition sessions in Europe, containing 16,093 wheat heads across 357 images.
+\end{enumerate}
+
+
+\begin{table*}[h]
+  \caption{
+ Acquisition sessions in \Wheat. Growth stages are abbreviated as F: Filling, R: Ripening, PF: Post-flowering. Locations are abbreviated as VLB: Villiers le B\^acle, VSC: Villers-Saint-Christophe. UTokyo\_1 and UTokyo\_2 are from the same location with different cart sensors and UTokyo\_3 consists of images from a variety of farms in Hokkaido between 2016 and 2019.
+ The \# images and \# heads in the ``Train'' domains include the images and heads used in the Val (ID) and Test (ID) splits, which are taken from the same set of training domains. The ``Val'' and ``Test'' domains refer to the Val (OOD) and Test (OOD) splits, respectively.
+  }
+  \centering
+    \scalebox{0.74}{
+  \begin{small}
+  \begin{tabular}{lcccccccrr}
+  \toprule
+Split & Name & Owner & Country & Site & Date & Sensor & Stage & \# Images & \# Heads \\
+  \midrule
+Training & Ethz\_1 & ETHZ & Switzerland & Eschikon & 06/06/2018 & Spidercam & F & 747 & 49603 \\
+Training & Rres\_1 & Rothamsted & UK & Rothamsted & 13/07/2015 & Gantry & F-R & 432 & 19210 \\
+Training & ULi\`ege\_1 & Uli\`ege & Belgium & Gembloux & 28/07/2020 & Cart & R & 30 & 1847 \\
+Training & NMBU\_1 & NMBU & Norway & NMBU & 24/07/2020 & Cart & F & 82 & 7345 \\
+Training & NMBU\_2 & NMBU & Norway & NMBU & 07/08/2020 & Cart & R & 98 & 5211 \\
+Training & Arvalis\_1 & Arvalis & France & Gr\'eoux & 02/06/2018 & Handheld & PF & 66 & 2935 \\
+Training & Arvalis\_2 & Arvalis & France & Gr\'eoux & 16/06/2018 & Handheld & F & 401 & 21003 \\
+Training & Arvalis\_3 & Arvalis & France & Gr\'eoux & 07/2018 & Handheld & F-R & 588 & 21893 \\
+Training & Arvalis\_4 & Arvalis & France & Gr\'eoux & 27/05/2019 & Handheld & F & 204 & 4270 \\
+Training & Arvalis\_5 & Arvalis & France & VLB* & 06/06/2019 & Handheld & F & 448 & 8180 \\
+Training & Arvalis\_6 & Arvalis & France & VSC* & 26/06/2019 & Handheld & F-R & 160 & 8698 \\
+Training & Arvalis\_7 & Arvalis  & France & VLB* & 06/2019 & Handheld & F-R & 24 & 1247 \\
+Training & Arvalis\_8 & Arvalis & France & VLB* & 06/2019 & Handheld & F-R & 20 & 1062 \\
+Training & Arvalis\_9 & Arvalis & France & VLB* & 06/2020 & Handheld & R & 32 & 1894 \\
+Training & Arvalis\_10 & Arvalis & France & Mons & 10/06/2020 & Handheld & F & 60 & 1563 \\
+Training & Arvalis\_11 & Arvalis & France & VLB* & 18/06/2020 & Handheld & F & 60 & 2818 \\
+Training & Arvalis\_12 & Arvalis & France & Gr\'eoux & 15/06/2020 & Handheld & F & 29 & 1277 \\
+Training & Inrae\_1 & INRAe & France & Toulouse & 28/05/2019 & Handheld & F-R & 176 & 3634 \\
+Val & Utokyo\_1 & UTokyo & Japan & NARO-Tsukuba & 22/05/2018 & Cart & R & 538 & 14185 \\
+Val & Utokyo\_2 & UTokyo & Japan & NARO-Tsukuba & 22/05/2018 & Cart & R & 456 & 13010 \\
+Val & Utokyo\_3 & UTokyo & Japan & NARO-Hokkaido & 2016-19 &  Handheld & multiple & 120 & 3085 \\
+Val & Ukyoto\_1 & UKyoto & Japan & Kyoto & 30/04/2020 & Handheld & PF & 60 & 2670 \\
+Val & NAU\_1 & NAU & China & Baima & n/a & Handheld & PF & 20 & 1240 \\
+Val & NAU\_2 & NAU & China & Baima & 02/05/2020 & Cart & PF & 100 & 4918 \\
+Val & NAU\_3 & NAU & China & Baima & 09/05/2020 & Cart & F & 100 & 4596 \\
+Val & ARC\_1 & ARC & Sudan & Wad Medani & 03/2021 & Handheld & F & 30 & 1169 \\
+Test & Usask\_1 & USaskatchewan & Canada & Saskatoon & 06/06/2018 & Tractor & F-R & 200 & 5985 \\
+Test & KSU\_1 & KansasStateU & US & Manhattan, KS & 19/05/2016 & Tractor & PF & 100 & 6435 \\
+Test & KSU\_2 & KansasStateU & US & Manhattan, KS & 12/05/2017 & Tractor & PF & 100 & 5302 \\
+Test & KSU\_3 & KansasStateU & US & Manhattan, KS & 25/05/2017 & Tractor & F & 95 & 5217 \\
+Test & KSU\_4 & KansasStateU & US & Manhattan, KS & 25/05/2017 & Tractor & R & 60 & 3285 \\
+Test & Terraref\_1 & TERRA-REF & US & Maricopa & 02/04/2020 & Gantry & R & 144 & 3360 \\
+Test & Terraref\_2 & TERRA-REF & US & Maricopa & 20/03/2020 & Gantry & F & 106 & 1274 \\
+Test & CIMMYT\_1 & CIMMYT & Mexico & Ciudad Obregon & 24/03/2020 & Cart & PF & 69 & 2843 \\
+Test & CIMMYT\_2 & CIMMYT & Mexico & Ciudad Obregon & 19/03/2020 & Cart & PF & 77 & 2771 \\
+Test & CIMMYT\_3 & CIMMYT & Mexico & Ciudad Obregon & 23/03/2020 & Cart & PF & 60 & 1561 \\
+Test & UQ\_1 & UQueensland & Australia & Gatton & 12/08/2015 & Tractor & PF & 22 & 640 \\
+Test & UQ\_2 & UQueensland & Australia & Gatton & 08/09/2015 & Tractor & PF & 16 & 39 \\
+Test & UQ\_3 & UQueensland & Australia & Gatton & 15/09/2015 & Tractor & F & 14 & 297 \\
+Test & UQ\_4 & UQueensland & Australia & Gatton & 01/10/2015 & Tractor & F & 30 & 1039 \\
+Test & UQ\_5 & UQueensland & Australia & Gatton & 09/10/2015 & Tractor & F-R & 30 & 3680 \\
+Test & UQ\_6 & UQueensland & Australia & Gatton & 14/10/2015 & Tractor & F-R & 30 & 1147 \\
+Test & UQ\_7 & UQueensland & Australia & Gatton & 06/10/2020 & Handheld & R & 17 & 1335 \\
+Test & UQ\_8 & UQueensland & Australia & McAllister & 09/10/2020 & Handheld & R & 41 & 4835 \\
+Test & UQ\_9 & UQueensland & Australia & Brookstead & 16/10/2020 & Handheld & F-R & 33 & 2886 \\
+Test & UQ\_10 & UQueensland & Australia & Gatton & 22/09/2020 & Handheld & F-R & 106 & 8629 \\
+Test & UQ\_11 & UQueensland & Australia & Gatton & 31/08/2020 & Handheld & PF & 84 & 4345 \\
+  \bottomrule
+  \end{tabular}
+\end{small}  }
+  \label{tab:app_dataset_detail_wheat}
+\end{table*}
+
+\paragraph{Evaluation.}
+We evaluate models by first computing the average accuracy of bounding box detection within each image;
+then computing the average accuracy for each acquisition session by averaging its per-image accuracies;
+and finally averaging the accuracies of each acquisition session.
+The accuracy of a bounding box detection is measured at a fixed Intersection over Union (IoU) threshold of 0.5.
+The accuracy of an image is computed as $\frac{TP}{TP + FN + FP}$, where
+$TP$ is the number of true positives, which are ground-truth bounding boxes that can be matched with some predicted bounding box at IoU above the threshold;
+$FN$ is the number of false negatives, which are ground-truth bounding boxes that cannot be matched as above; and
+$FP$ is the number of false positives, which are predicted bounding boxes that cannot be matched with any ground-truth bounding box.
+We use accuracy rather than average precision, which is a common metric for object detection, because it was used in previous Global Wheat Challenges with the dataset~\citep{david2020global,david2021global}. We use a permissive IoU threshold of 0.5 because there is some uncertainty regarding the precise outline of wheat head instances due to the stem and awns extending from the head.
+We measure the average accuracy across acquisition sessions because the number of images varies significantly across acquisition sessions, from 17 to 200 images in the test set, and we use average accuracy instead of worst-case accuracy because the wheat images are more difficult for some acquisition sessions.
+
+\paragraph{Potential leverage.}
+The appearance of wheat heads in the images taken from different acquisition sessions can vary significantly, due to differences in the sensors used; illumination conditions, due to differences in illumination protocols, or the time of day and time of year that the images were taken; wheat genotypes; growth stages; growing conditions; and planting strategies.
+For example, different locations might feature a mix of different varieties of wheat (with different genotypes) with different appearances. Likewise, wheat planting strategies and growing conditions vary between regions and can contribute to differences between sessions, e.g., higher planting density may result in more closely packed plants and more occlusion between wheat head instances.
+
+To provide leverage for models to learn to generalize across these conditions, we include images from 5 countries and 18 acquisition sessions in the training set.
+These training sessions cover all growth stages and include significant variation among all of the other factors.
+While the test domains include unseen conditions (e.g., sensors and genotypes not seen in the training set), our hope is that the variation in the training set will be sufficient to learn models that are robust to changes in these conditions.
+
+\subsubsection{Baseline results}
+
+\paragraph{Model.}
+For all experiments, we use the Faster-RCNN detection model \citep{ren2015faster}, which has been successfully applied to the wheat head localization problem \citep{madec2019ear, david2020global}.
+To train, we fine-tune a model pre-trained with ImageNet, using a batch size of 4, a learning rate of $10^{-5}$, and weight decay of $10^{-3}$ for 10 epochs with early stopping.
+The hyperparameters were chosen from a grid search over learning rates $\{10^{-6},10^{-5},10^{-4}\}$ and weight decays $\{0, 10^{-4}, 10^{-3}\}$.
+We report results aggregated over 3 random seeds.
+
+\begin{table}[tbp]
+    \caption{Baseline results on \Wheat. In-distribution (ID) results correspond to the train-to-train setting. Parentheses show standard deviation across 3 replicates.}
+  \centering
+  \begin{tabular}{lrrrr}
+  \toprule
+  Algorithm & Validation (ID) acc & Validation (OOD) acc & Test (ID) acc & Test (OOD) acc\\
+  \midrule
+  ERM        & 77.4 (1.1)      & 68.6 (0.4)       & 77.1 (0.5) & 51.2 (1.8) \\
+  Group DRO  & 76.1 (1.0)      & 66.2 (0.4)       & 76.2 (0.8) & 47.9 (2.0) \\
+  \bottomrule
+  \end{tabular}
+  \label{tab:wheat_baseline}
+\end{table}
+
+\begin{table}[tbp]
+    \caption{Mixed-to-test comparison for ERM models on \Wheat.
+    In the official OOD setting, we train on data from Europe, whereas in the mixed-to-test ID setting, we train on a mix of data from Europe, Africa, and North America.
+    In both settings, we test on data from Africa and North America.
+    For this comparison, we report performance on 50\% of the official test set (randomly selecting 50\% of each test domain), with the rest of the test set mixed in to the training set in the mixed-to-test setting.
+    Parentheses show standard deviation across 3 replicates.}
+  \centering
+  \begin{tabular}{lll}
+  \toprule
+  Setting & Algorithm & Test accuracy (\%) \\
+  \midrule
+  Official (train on ID examples)             & ERM & 49.6 (1.9) \\
+  Mixed-to-test (train on ID + OOD examples)  & ERM & 63.3 (1.7) \\
+  \bottomrule
+  \end{tabular}
+  \label{tab:wheat_ood}
+\end{table}
+
+\begin{table}[!h]
+  \caption{Mixed-to-test comparison for ERM models on \Wheat, broken down by each test domain. This is a more detailed version of \reftab{wheat_ood}. Parentheses show standard deviation across 3 replicates.}
+\centering
+  \begin{tabular}{llrrrr}
+    \toprule
+      Session    & Country & \# Images &  ID (mixed-to-test) acc     &     OOD acc       &  ID-OOD gap \\
+    \midrule
+      CIMMYT\_1   & Mexico    & 35   &   63.1 (1.4)  &     48.0 (2.6)    & 15.1 \\
+      CIMMYT\_2   & Mexico    & 39   &   76.1 (0.9)  &     58.2 (3.6)    & 17.9 \\
+      CIMMYT\_3   & Mexico    & 30   &   65.6 (3.1)  &     63.3 (2.1)    & 2.3 \\
+      KSU\_1      & US        & 50  &   73.5 (1.1)  &     53.2 (2.3)    & 20.3 \\
+      KSU\_2      & US        & 50  &   73.6 (0.5)  &     52.7 (2.7)    & 20.9 \\
+      KSU\_3      & US        & 48   &   73.3 (1.2)  &     48.9 (3.0)    & 24.4 \\
+      KSU\_4      & US        & 30   &   68.3 (0.6)  &     48.7 (3.5)    & 19.6 \\
+      Terraref\_1 & US        & 72  &   48.9 (0.5)  &     17.9 (4.3)    & 31.0 \\
+      Terraref\_2 & US        & 53  &   34.7 (1.3)  &     16.0 (3.4)    & 18.7 \\
+      Usask\_1    & Canada    & 100  &   78.3 (0.8)  &     77.1 (1.4)    &  1.2 \\
+      UQ\_1       & Australia & 11    &   41.8 (1.4)  &     29.0 (1.0)    & 12.8 \\
+      UQ\_2       & Australia & 8     &   81.6 (12.5) &     76.5 (14.4)   & 5.1 \\
+      UQ\_3       & Australia & 7    &   56.4 (13.8) &     54.3 (10.0)    & 2.1 \\
+      UQ\_4       & Australia & 15   &   68.8 (0.5)  &     60.6 (1.3)    & 8.2 \\
+      UQ\_5       & Australia & 15   &   54.4 (2.1)  &     38.6 (2.1)    & 15.8 \\
+      UQ\_6       & Australia & 15   &   75.8 (1.1)  &     71.9 (0.7)    &  3.9 \\
+      UQ\_7       & Australia & 9   &   68.9 (0.6)  &     62.8 (2.5)    &  6.1 \\
+      UQ\_8       & Australia & 21   &   58.6 (0.6)  &     46.5 (2.1)    & 11.1 \\
+      UQ\_9       & Australia & 17   &   54.7 (1.5)  &     43.6 (2.1)    &  11.1 \\
+      UQ\_10      & Australia & 53   &   61.7 (0.8)  &     39.6 (2.5)    & 22.1 \\
+      UQ\_11      & Australia & 42   &   50.4 (1.5)  &     33.5 (2.7)    & 16.9 \\
+    \midrule
+      Total       &  & 720 &   63.3 (1.7)  &     49.6 (1.9)    & 13.7 \\
+    \bottomrule
+    \end{tabular}
+  \label{tab:wheat_drop}
+\end{table}
+
+
+\paragraph{ERM results and performance drops.}
+We ran both train-to-train and mixed-to-test comparisons.
+For the train-to-train comparison, which uses the data splits described in the previous subsection, the Test (ID) accuracy is substantially higher than the Test (OOD) accuracy (77.1 (0.5) vs.~51.2 (1.8); \reftab{wheat_baseline}). However, the Test (ID) and Test (OOD) sets come from entirely different regions, so this performance gap could also reflect a difference in the difficulty of the wheat head detection task in different regions (e.g., wheat heads that are more densely packed are harder to tell apart).
+
+The mixed-to-test comparison controls for the test distribution by randomly splitting each test domain (acquisition session) into two halves, and then assigning one half to the training set. In other words, we randomly take out half of the test set and use it to replace existing examples in the training set, so that the total training set size is the same, and we retain the other half of the test set for evaluation.
+We also evaluated the ERM model trained on the official split on this subsampled test set.
+On this subsampled test set, the mixed-to-test ID accuracy is significantly higher than the OOD accuracy of the ERM model trained on the official split (63.3 (1.7) vs. 49.6 (1.9); \reftab{wheat_ood}).
+
+We also compared the per-domain accuracies of the models trained in the mixed-to-test and official settings (\reftab{wheat_drop}) on the subsampled test set.
+The accuracy drop is not evenly distributed across each domain, though some of the domains have a relatively small number of images, so there is some variance across random replicates.
+The location/site of the acquisition session---which is correlated with factors like wheat genotype and the sensor used---has a large effect on performance (e.g., the KSU and Terraref sessions displayed a larger drop than the other sessions), but beyond that, it is not clear what factors are most strongly driving the accuracy drop.
+The Terraref sessions were particularly difficult even in the mixed-to-test setting, because of the strong contrast in its photos and the presence of hidden wheat heads under leaves.
+On the other hand, the KSU sessions had comparatively high accuracies in the mixed-to-test setting, but still displayed a large accuracy drop in the official OOD setting.
+As the KSU sessions differed primarily in their development stages and had largely similar ID and OOD accuracies, development stage does not seem to be a main driver of the accuracy drop.
+Finally, we note that the especially high variance across replicates for UQ\_2 and UQ\_3 is due to the proportion of empty images in those domains (88\% for UQ\_2 and 57\% for UQ\_3). Empty images are scored as either having 0\% or 100\% accuracy and therefore can have a large impact on the overall domain accuracy.
+
+\paragraph{Additional baseline methods.}
+We also trained models with group DRO, treating each acquisition session as a domain, and using the same model hyperparameters as ERM.
+However, the group DRO models perform poorly compared to the ERM model as reported in \reftab{wheat_baseline}.
+We leave the investigation of CORAL and IRM for future work because it is not straightforward to apply these algorithms to detection tasks.
+
+\paragraph{Discussion.}
+Our baseline models were trained without any data augmentation, in contrast to baselines reported in the original dataset \citep{david2020global}.
+Data augmentation could reduce the performance gap and warrants further investigation in future work, although \citet{david2020global} still observed performance gaps on models trained with data augmentation in the original version of the dataset.
+Moreover, while we evaluated models by their average performance across acquisition sessions, we noticed a large variability in performance across domains.
+It is possible that some domains are more challenging or suffer from larger performance drops than others, and characterizing and mitigating these variations is interesting future work.
+
+\subsubsection{Broader context}
+Wheat head localization, while being an important operational trait for wheat breeders and farmers, is not the only deep learning application in plant phenotyping that suffers from lack of generalization. Other architectural traits such as plant segmentation \citep{sadeghi2017multi, kuznichov2019data}, plant and plant organ detection \citep{fan2018automatic, madec2019ear}, leaves and organ disease classification \citep{fuentes2017robust, shakoor2017high, toda2019convolutional}, and biomass and yield prediction \citep{aich2018deepwheat, dreccer2019yielding} would also benefit from plant phenotyping models that generalize to new deployments. In many of these applications, field images exhibit variations in illumination and sensors, and there has been work on mitigating biases across sensors \citep{ayalew2020unsupervised, gogoll2020unsupervised}. Finally, developing models that generalize across plant species would benefit the breeding and growing of specialized crops that are presently under-represented in plant phenotyping research worldwide~\citep{ward2020scalable}.
+We hope that \Wheat can foster the development of general solutions to plant phenotyping problems, increase collaboration between plant scientists and computer vision scientists, and encourage the development of new multi-domain plant datasets to ensure that plant phenotyping results are generalizable to all crop growing regions of the world.
+
+\subsubsection{Additional details}
+\paragraph{Modifications to the original dataset.}
+The data is taken directly from the 2021 Global Wheat Challenge \citep{david2021global}, which is an expanded version of the 2020 Global Wheat Challenge dataset \citep{david2020global}.
+Compared to the challenge, the dataset splits are different:
+we split off part of the training set to form the Validation (ID) and Test (ID) sets, and we rearranged the Validation (OOD) and Test (OOD) sets so that they split along disjoint continents.
+Finally, we note that the 2021 challenge differs from the 2020 challenge in that images from North America were in the training set in the 2020 challenge, but were used for evaluation in the 2021 challenge, and are consequently assigned to the test set in \Wheat.

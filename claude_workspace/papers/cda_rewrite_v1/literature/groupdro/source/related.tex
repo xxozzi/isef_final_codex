@@ -1,0 +1,35 @@
+\section{Related work}
+
+\paragraph{The problem of non-uniform accuracy.}
+Existing approaches to addressing non-uniform accuracy over the data distribution include
+domain adaptation techniques for \emph{known} target distributions \citep{bendavid2006analysis,ganin2015domain}
+and work in ML fairness \citep{dwork2012,hardt2016,kleinberg2017}.
+As we discuss in \refsec{resampling}, importance weighting is a classic example of the former \citep{shimodaira2000improving}.
+\citet{byrd2019effect} empirically study importance weighting in neural networks and demonstrate that it has little effect unless regularization is applied.
+This is consistent with the theoretical analysis in \citet{wen2014robust},
+which points out that weighting has little impact in the zero-loss regime,
+and with our own observations in the context of DRO.
+
+\paragraph{Distributionally robust optimization.}
+Prior work in DRO typically defines the uncertainty set $\sQ$
+as a divergence ball around the training distribution over $(x,y)$ \citep{bental2013robust,  lam2015quantifying,
+duchi2016, miyato2018virtual, esfahani2018data, bertsimas2018data, blanchet2019quantifying}.
+With small divergence balls of radii $O(1/n)$,
+DRO acts as a regularizer \citep{shafieezadeh2015distributionally, namkoong2017variance}.
+However, when the radius is larger, the resulting $\sQ$ can be too pessimistic.
+In contrast, group DRO considers $\sQ$ that is of wider radius but with fewer degrees of freedom (shifts over groups instead of over $(x,y)$).
+Prior work proposed group DRO in the context of label shifts \citep{hu2018does} and shifts in data sources \citep{oren2019drolm}.
+Our work studies group DRO in the overparameterized regime with vanishing training loss and poor worst-case generalization.
+In contrast,
+most DRO work has focused on the classic (underparameterized) model setting \citep{namkoong2017variance,hu2018does,duchi2019distributionally}.
+~\citet{sinha2018certifiable} study neural networks but with a more conservative Wasserstein uncertainty set that leads to non-vanishing training loss; and \citet{oren2019drolm} study neural networks but for generative modeling where loss tradeoffs arise naturally.
+
+\paragraph{Generalization of robust models.}
+There is extensive work investigating generalization of neural networks in terms of average loss,
+theoretically and empirically \citep{hardt2016train,szegedy2016rethinking,hoffer2017train}.
+However, analysis on robust losses is limited.
+For label shifts, prior work has observed overfitting on rare labels
+and proposed algorithms to mitigate it \citep{buda2018systematic,cui2019class,cao2019learning}.
+In the DRO literature, generalization bounds on the DRO objective exist for particular uncertainty sets (e.g., \citet{duchi2018learning}), but those works do not study overparameterized models.
+Invariant prediction models, mostly from the causal inference literature, similarly aim to achieve high performance on a range of test distributions
+\citep{peters2016causal,buhlmann2016magging,heinze2017conditional,rothenhausler2018anchor,yang2019invariance,arjovsky2019invariant}. For example, the maximin regression framework \citep{meinshausen2015maximin} also assumes group-based shifts, but focuses on settings without the generalization problems identified in our work.

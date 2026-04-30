@@ -1,0 +1,29 @@
+\begin{wraptable}{r}{.42\linewidth}
+\vspace{-1.5em}
+\caption{\small \textbf{Comparison between generalization methods on \data{PACS}.} The scores are averaged over all settings using different target domains. \greenp{$\uparrow$} and \redp{$\downarrow$} indicate statistically significant improvement and degradation from ERM.}
+\vspace{-0.5em}
+%\resizebox{\linewidth}{!} {
+\centering
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lcc@{}} 
+\toprule
+                & \multicolumn{1}{l}{Out-of-domain} & \multicolumn{1}{l}{In-domain}  \\
+\midrule
+ERM             & 85.3\scriptsize{$\pm0.4$} & 96.6\scriptsize{$\pm0.0$}                      \\
+EMA             & 85.5{\scriptsize$\pm0.4$}(-) & 97.0{\scriptsize$\pm0.1$}\greenp{$\uparrow$}                      \\
+SAM             & 85.5{\scriptsize$\pm0.1$}(-) & 97.4{\scriptsize$\pm0.1$}\greenp{$\uparrow$}                     \\
+Mixup           & 84.8{\scriptsize$\pm0.3$}(-) & 97.3{\scriptsize$\pm0.1$}\greenp{$\uparrow$}                      \\
+CutMix          & 83.8{\scriptsize$\pm0.4$}\redp{$\downarrow$} & 97.6{\scriptsize$\pm0.1$}\greenp{$\uparrow$}                      \\
+% SAM             & 84.9 \scriptsize{$\pm0.4$}                          & 97.3 \scriptsize{$\pm0.2$}                      \\
+VAT             & 85.4{\scriptsize$\pm0.6$}(-)  & 96.9{\scriptsize$\pm0.2$}\greenp{$\uparrow$}                      \\
+$\Pi$-model     & 83.5{\scriptsize$\pm0.5$}\redp{$\downarrow$}  & 96.8{\scriptsize$\pm0.2$}\greenp{$\uparrow$}                      \\
+\midrule
+SWA      & 85.9{\scriptsize$\pm0.1$}\greenp{$\uparrow$}        & 97.1{\scriptsize$\pm0.1$}\greenp{$\uparrow$}                      \\
+% SWA$_{\text{fit-on-val}}$ & 86.2 \scriptsize{$\pm0.2$}                          & 97.5 \scriptsize{$\pm0.2$}                      \\
+SWAD   & \textbf{87.1}{\scriptsize$\pm0.2$}\greenp{$\uparrow$} & \textbf{97.7}{\scriptsize$\pm0.1$}\greenp{$\uparrow$}             \\
+\bottomrule
+\end{tabular}
+%}
+\vspace{-1em}
+\label{table:generalization}
+\end{wraptable}

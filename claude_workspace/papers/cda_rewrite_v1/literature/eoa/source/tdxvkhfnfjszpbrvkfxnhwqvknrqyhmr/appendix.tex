@@ -1,0 +1,663 @@
+\appendix
+\onecolumn
+\section*{Appendix}
+
+\begin{table*}[]
+\centering
+\caption{Hyper-parameter search space for all experiments.}
+\begin{tabular}{cccc}
+\hline
+\textbf{Hyper-parameter}   & \textbf{Default value}           & \multicolumn{2}{c}{\textbf{Random distribution}}   \\ 
+&& \cite{gulrajani2020search} & Ours\\
+\hline
+Learning rate & $5e-5$     & $10^{\text{Uniform}(-5, -3.5)}$ & $5e-5$\\
+Batch size & 32 & $2^{\text{Uniform}(3, 5.5)}$ & 32\\
+ResNet dropout & 0 & RandomChoice([0, 0.1, 0.5]) & RandomChoice([0, 0.1, 0.5])\\
+Weight decay & 0 & $10^{\text{Uniform}(-6, -2)}$ & $10^{\text{Uniform}(-6, -4)}$\\
+\hline
+\end{tabular}
+\label{tab:hyper_param}
+\end{table*}
+
+\section{Broader Impact}
+\label{sec_broader_impact}
+Our work aims at improving out-domain performance of models. Thus it is naturally geared towards mitigating the effects of training dataset biases on the hypothesis learned by the model, which we believe has a positive societal impact.
+
+\section{Training and Evaluation Protocols for DomainBed Benchmarking}
+\label{sec_training_protocol}
+
+We use the training protocol described in \cite{gulrajani2020search} with minor changes: we use a smaller hyper-parameter search space (shown in Table \ref{tab:hyper_param}) and smaller number of random trials for computational reasons, and train on DomainNet dataset for $15,000$ iterations instead of $5,000$ similar to \cite{cha2021swad}, because its training loss is quite high. For a dataset with $D$ domains, we run a total of $6D$ random trials. This results in $6$ experiments per domain, in which this domain is used as the test set, while the remaining domains are used as training/validation set (randomly split). This is also the reason why we use a smaller hyper-parameter search space, because otherwise the search space would be under-sampled. For moving average models, the iteration $t_0$ at which averaging is started (Eq. \ref{eq_my_sma}) is set to be $100$ in all experiments unless specified otherwise. For ensembles (both with and without averaged models), the $6$ models corresponding to the $6$ experiments per domain, in which this domain is used as the test set (as described above), are used for ensembling as described in section \ref{sec_eoa}.
+
+All models are trained using the ERM objective and optimized using the Adam optimizer \cite{kingma2014adam}. We use ResNet-50 \cite{he2016deep} pre-trained on Imagenet as our initialization for training in all the experiments. In the final benchmarking experiment, we also use ResNeXt-50 32x4d, that is trained using semi-weakly supervised objective on IG-1B targeted (containing 1 billion weakly labeled images) and ImageNet labeled data \cite{yalniz2019billion}. This model was downloaded from Pytorch hub. For all models, the batch normalization \cite{ioffe2015batch} statistics are kept frozen throughout training and inference. Validation accuracy is calculated every 300 iterations for all datasets except DomainNet where it is calculated every 1000 iterations. Unless specified otherwise, we use the said protocol in all the experiments. For model selection, we use the \textit{training-domain validation set} protocol in \cite{gulrajani2020search} with $80\%-20\%$ training-validation split, and the average out-domain test performance is reported across all runs for each domain. 
+
+All experiments were performed on Google Could Platform (GCP) using 24 NVIDIA A100 GPUs.
+
+
+% \section{Experiments on cross-run rank correlation}
+
+\begin{figure*}
+% \vspace{-2pt}
+    \centering
+        \includegraphics[width=0.45\columnwidth]{figs/mo_start_iter_PACS.pdf}
+        % \hfil
+      \includegraphics[width=0.45\columnwidth]{figs/mo_start_iter_TerraIncognita.pdf}
+    \caption{The impact of iteration $t_0$ at which we start simple moving averaging as described in Eq. \ref{eq_my_sma}, on the domain generalization performance for PACS and TerraIncognita datasets. The dominant pattern across all the experiments suggests that starting averaging earlier yields a stronger boost in performance.}
+    \label{fig:mo_start_iter}
+% \vspace{-11pt}
+\end{figure*}
+
+\begin{figure*}
+% \vspace{-2pt}
+    \centering
+        \includegraphics[width=0.45\columnwidth]{figs/sma_freq_PACS.pdf}
+        % \hfil
+      \includegraphics[width=0.45\columnwidth]{figs/sma_freq_TerraIncognita.pdf}
+    \caption{The impact of the frequency (number of iterations), at which model states are sampled for computing the simple moving average (SMA), on the domain generalization performance for PACS and TerraIncognita datasets. Broadly, we find that the frequency of sampling does not have a major influence on performance unless the sampling interval is too large: performance drops significantly on TerraIncognita only when the frequency is set to sampling every 1000 iterations.}
+    \label{fig:sma_freq}
+\vspace{-11pt}
+\end{figure*}
+
+\section{Additional Ablation Analysis of Our Model Averaging Protocol (Eq. \ref{eq_my_sma})}
+\label{sec_ablation_sm}
+
+\subsection{Dataset and Experiment Details for SMA Ablation Analysis in Section \ref{sec_ma_analysis}, \ref{sec_start_iter}, and \ref{sec_freq_analysis}}
+
+\textbf{Experimentation Details}: We use the training protocol described in \cite{gulrajani2020search} with minor changes: we use a smaller hyper-parameter search space for feasibility, and train on DomainNet dataset for $15,000$ iterations instead of $5,000$ similar to \cite{cha2021swad}, because its training loss is quite high. Unless specified otherwise, we use the said protocol in all the experiments. For model selection, we use the \textit{training-domain validation set} protocol in \cite{gulrajani2020search}, where the average out-domain test performance is reported across all runs. For more details, see section \ref{sec_training_protocol} in the appendix. 
+
+\textbf{Dataset Details}: We use a subset of the DomainBed benchmark: PACS dataset (4 domains, 7 classes, and 9,991 images), TerraIncognita dataset (4 domains, 10 classes, and 24,788 images), VLCS dataset (4 domains, 5 classes, and 10,729 images), OfficeHome dataset (4 domains, 65 classes, and 15,588 images), and DomainNet dataset (6 domains, 345 classes, and 586,575 images).
+
+
+\subsection{Start Iteration}
+\label{sec_start_iter}
+
+We investigate how domain generalization performance is impacted by the choice of iteration $t_0$ when we start model averaging in Eq. \ref{eq_my_sma}. In this section, we simply refer to it as start iteration, which should not be confused with the start of the training process. 
+For experiments, we use the PACS and TerraIncognita datasets. To investigate a wide range of start and end iterations, for all experiments in this section, we train models for $10,000$ iterations. 
+
+We consider starting model averaging from iterations in $\{0, 100, 500, 2000, 4000, 6000, 8000\}$. We plot the performance in Figure \ref{fig:mo_start_iter} for each value. We find that the test performance, averaged across all the domains for both datasets, decreases if we start model averaging later during the training, and choosing $t_0$ close to initialization yields the best performance. We believe using the initialization state in model averaging causes a slight dip in performance because loss is initially high. Based on these experiments, instead of tuning start iteration as a hyper-parameter, \textit{we arbitrarily choose 100 as the start iteration for the remaining experiments in this paper}. This choice of starting averaging later during training is called \textit{tail averaging}, and the theoretical motivation for this choice are discussed in more detail in section \ref{sec_relatedw_ma_models}.
+
+\subsection{Averaging Frequency}
+\label{sec_freq_analysis}
+
+When performing simple model averaging described in Eq. \ref{eq_my_sma}, instead of averaging iterates from every iteration, we can alternatively sample iterates at a larger interval. We study the impact of averaging frequency on out-domain test performance. Once again, we use the PACS and TerraIncognita datasets. We train models for $10,000$ iterations, and sample iterates at intervals in $\{10^0, 10^1, 10^2, 10^3\}$ iterations. Test accuracy is once again computed using the protocol of \cite{gulrajani2020search} for each case. The performance as a function of the iterate sampling interval used in SMA is shown in Figure \ref{fig:sma_freq}. Broadly, we find that the frequency of sampling does not have a major impact on performance unless the sampling interval is too large, which happens in the case of TerraIncognita, where performance drops significantly when the sampling interval is set to 1000.
+
+
+
+
+
+\subsection{Rank Correlation}
+\label{sec_rank_corr_intro}
+Rank correlation metrics aim to quantify the degree to which an increase in one random variable's value is consistent with an increase in the other random variable's value. Therefore, instead of Pearson's correlation, they are better suited for studying the relationship between the in-domain and out-domain performance for the purpose of model selection because we select the best model during an optimization based on ranking the validation performance (early stopping). We consider Spearman correlation in our experiments. Its value vary between $-1$ and $+1$, where $-1$ implies the ranking of the two random variables are exactly the reverse of each other, and $+1$ implies the ranking of the two random variables are exactly the same as each other. A value of $0$ implies there is no relationship between the two variables.
+
+\subsection{Instability Reduction: Qualitative Analysis}
+\label{sec_qualitative_analysis}
+Here we try to qualitatively study the robustness of  model selection using in-domain validation set, on out-domain performance. To do so, consider the ideal scenario where the in-domain validation performance correlates well with the out-domain performance. In this case, training longer should not be a problem in general, because if the model starts overfitting beyond a certain point, model selection can take care of it. In such a situation, we would expect the out-domain performance to either improve with longer training, or remain stable.
+
+We use TerraIncognita dataset for this experiment. We consider training duration to be $1,000$ to $10,000$ iterations, at intervals of $1,000$. We plot the performance in Figure \ref{fig:end_iter} for online model (left) and moving average model (right). We find that the performance of moving average models is more stable compared to online models, suggesting that model selection is more reliable when using moving average models. Figure \ref{fig:terra_evolution_all} in the appendix shows the training loss, in-domain validation accuracy and out-domain test accuracy for all the runs used in the above experiment. It shows that the out-domain test performance is unstable during optimization without model averaging, which causes problem for model selection using the in-domain validation performance, as is evident in the above experiment. 
+
+\subsection{Cross-run rank correlation}
+\label{sec_cross_run_rank_corr}
+In addition to the experiments in \ref{sec_rank_corr}, there is another way in which it makes sense to study the rank correlation between validation and test performance. Suppose we set one of the domains of PACS as our test domain, and the remaining as training/validation data, and perform multiple independent runs with different seeds/hyper-parameter values. At each iteration during training, we can gather the tuple (validation, test) accuracy for each of these runs, and then study the rank correlation between them. The utility of this perspective is to assess the reliability of model selection in terms of selecting a single model across multiple independently trained models, based on their validation performance. We study this rank correlation for PACS and TerraIncognita datasets. The results are shown in Figure \ref{fig:cross_run_spearman} in the appendix. We find that the cross-run rank correlations are poor (not consistently close to 1) for both online model (without averaging) and moving average model. This implies that in-domain validation performance based model selection is not a reliable approach for selecting a model from a pool of multiple independently trained models.
+
+\begin{figure}[t]
+% \vspace{-2pt}
+    \centering
+      \includegraphics[width=0.45\columnwidth]{figs/no-mo_end_iter_TerraIncognita.pdf}
+      \includegraphics[width=0.45\columnwidth]{figs/mo_end_iter_TerraIncognita.pdf}
+    \caption{Qualitatively accessing the reliability of model selection while varying the training duration. For each training duration, the out-domain test accuracy is calculated using model selection over the in-domain validation data. Not using model averaging leads to unreliable model selection as evident in the instability of the out-domain performance. Model averaging is able to reduce this instability.}
+    \label{fig:end_iter}
+\vspace{41pt}
+\end{figure}
+
+
+\begin{table}[t]
+% \vspace{-50pt}
+\caption{Spearman correlation (closer to 1 is better) between within-run in-domain validation accuracy and out-domain test accuracy on the multiple datasets in the DomainBed benchmark for individual models (left) and ensembles (right). In most cases, using model averaging results in a significantly better rank correlation, which makes model selection more reliable.}
+
+\begin{minipage}{.5\linewidth}
+      \caption{Individual Models}
+      \centering
+        \begin{tabular}{lll}
+        \hhline{===}
+        PACS    & w/o avg & with avg   \\ \hline
+        Art     & 0.31 $\pm$ 0.04   & \textbf{0.62 $\pm$ 0.04}   \\
+        Cartoon & 0.25 $\pm$ 0.10   & \textbf{0.52 $\pm$ 0.03}  \\
+        Photo   & \textbf{0.09 $\pm$ 0.07}   & -0.38 $\pm$ 0.15 \\
+        Sketch  & 0.24 $\pm$ 0.06   & \textbf{0.53 $\pm$ 0.06}  \\ \hhline{===}
+        TerraIncognita    & w/o avg & with avg   \\ \hline
+        L100     & 0.21 $\pm$ 0.07   & \textbf{0.90 $\pm$ 0.05}   \\
+        L38 & 0.12 $\pm$ 0.13   & \textbf{0.83 $\pm$ 0.05}  \\
+        L43   & 0.30 $\pm$ 0.06   & \textbf{0.67 $\pm$ 0.18} \\
+        L46  & 0.03 $\pm$ 0.11   & \textbf{0.52 $\pm$ 0.14}  \\ 
+        \hhline{===}
+        VLCS    & w/o avg & with avg   \\ \hline
+        Caltech101     & \textbf{0.21 $\pm$ 0.10}   & 0.16 $\pm$ 0.15   \\
+        LabelMe & \textbf{0.30 $\pm$ 0.08}   & 0.02 $\pm$ 0.14  \\
+        Sun09   & 0.27 $\pm$ 0.12   & \textbf{0.32 $\pm$ 0.11} \\
+        VOC2007  & 0.17 $\pm$ 0.11   & \textbf{0.38 $\pm$ 0.05}  \\ \hhline{===}
+        OfficeHome    & w/o avg & with avg   \\ \hline
+        Art     & 0.05 $\pm$ 0.11   & \textbf{0.80 $\pm$ 0.04}   \\
+        Clipart & 0.33 $\pm$ 0.04   & \textbf{0.84 $\pm$ 0.04} \\
+        Product   & 0.61 $\pm$ 0.04   & \textbf{0.80 $\pm$ 0.04} \\
+        RealWorld  & 0.41 $\pm$ 0.06   & \textbf{0.74 $\pm$ 0.04}  \\ \hhline{===}
+        DomainNet    & w/o avg & with avg   \\ \hline
+        Clip     & 0.96 $\pm$ 0.01   & \textbf{1 $\pm$ 0}   \\
+        Info & 0.80 $\pm$ 0.05   & \textbf{1 $\pm$ 0}  \\
+        Paint   & 0.87 $\pm$ 0.02   & \textbf{1 $\pm$ 0} \\
+        Quick  & 0.65 $\pm$ 0.04   & \textbf{1 $\pm$ 0}  \\ 
+        Real   & 0.91 $\pm$ 0.01   & \textbf{1 $\pm$ 0} \\
+        Sketch  & 0.82 $\pm$ 0.04   & \textbf{1 $\pm$ 0}  \\ 
+        \hline
+        \end{tabular}
+        \label{tab:rank_correlation}
+    \end{minipage}%
+    \begin{minipage}{.5\linewidth}
+      \centering
+        \caption{Ensembles}
+        \begin{tabular}{lll}
+        \hhline{===}
+        PACS    & w/o avg & with avg   \\ \hline
+        Art     & 0.06   & \textbf{0.78}   \\
+        Cartoon & 0.33   & \textbf{0.81}  \\
+        Photo   & \textbf{-0.12}   & -0.52 \\
+        Sketch  & 0.43   & \textbf{0.70}  \\ \hhline{===}
+        TerraIncognita    & w/o avg & with avg   \\ \hline
+        L100     & 0.48   & \textbf{1}   \\
+        L38 & 0.17   & \textbf{0.95}  \\
+        L43   & \textbf{0.59}   & 0.38 \\
+        L46  & 0.08   & \textbf{0.61}  \\ 
+        \hhline{===}
+        VLCS    & w/o avg & with avg   \\ \hline
+        Caltech101     & 0.52   & \textbf{0.81}   \\
+        LabelMe & 0.05   &\textbf{ 0.38}  \\
+        Sun09   & 0.63   & \textbf{0.82} \\
+        VOC2007  & 0.55   & \textbf{0.65}  \\ \hhline{===}
+        OfficeHome    & w/o avg & with avg   \\ \hline
+        Art     & 0.27   & \textbf{0.92}   \\
+        Clipart & 0.66   & \textbf{0.95} \\
+        Product   & 0.20   & \textbf{0.95} \\
+        RealWorld  & 0.09   & \textbf{0.78}  \\ \hhline{===}
+        DomainNet    & w/o avg & with avg   \\ \hline
+        Clip     & \textbf{1}   & \textbf{1}   \\
+        Info & 0.88   & \textbf{1 }  \\
+        Paint   & 0.98   & \textbf{1 } \\
+        Quick  & 0.95   & \textbf{1 }  \\ 
+        Real   & 0.97   & \textbf{1 } \\
+        Sketch  & 0.97   & \textbf{1 }  \\ 
+        \hline
+        \end{tabular}
+        \label{tab:rank_correlation_ensemble}
+    \end{minipage} 
+% \vspace{-20pt}
+\end{table}
+% \footnote{To explain the negative correlation on PACS, we note that test performance on the Photo domain converges to $\sim 99\%$ soon after training begins (because the photo domain is close to the ImageNet dataset, which is the dataset on which the model is pre-trained on). Therefore the correlation between validation and test accuracy is largely noise. See Fig. \ref{fig:pacs_evolution_all} in appendix.}
+
+\begin{figure}[t]
+% \vspace{-2pt}
+    \centering
+        \includegraphics[width=0.23\columnwidth]{figs/cross_rank/cross-rank_PACS_Art.pdf}
+       \includegraphics[width=0.23\columnwidth]{figs/cross_rank/cross-rank_PACS_Cartoon.pdf}
+       \includegraphics[width=0.23\columnwidth]{figs/cross_rank/cross-rank_PACS_Photo.pdf}
+       \includegraphics[width=0.23\columnwidth]{figs/cross_rank/cross-rank_PACS_Sketch.pdf}
+       %
+       \includegraphics[width=0.23\columnwidth]{figs/cross_rank/cross-rank_terra_L100.pdf}
+       \includegraphics[width=0.23\columnwidth]{figs/cross_rank/cross-rank_terra_L38.pdf}
+       \includegraphics[width=0.23\columnwidth]{figs/cross_rank/cross-rank_terra_L43.pdf}
+       \includegraphics[width=0.23\columnwidth]{figs/cross_rank/cross-rank_terra_L46.pdf}
+    \caption{Spearman correlation between \textit{cross-run} in-domain validation accuracy and out-domain test accuracy for PACS dataset (top) and TerraIncognita dataset (bottom). The cross-run rank correlations are poor (not consistently close to 1) for both online model (without avg) and moving average model. This implies that in-domain validation performance based model selection is not a reliable approach for selecting a single model from a pool of multiple independently trained models. See section \ref{sec_rank_corr} for details.}
+    \label{fig:cross_run_spearman}
+% \vspace{-11pt}
+\end{figure}
+
+\section{Why Does Ensembling Improve Performance?}
+\label{sec_ablation_details}
+
+We describe the histogram experiment presented in section \ref{sec_histogram_ablation}. For this experiment, we use the TerraIncognita dataset with L46 as the test domain. We use one of the runs with model averaging from the experiments done in section \ref{sec_benchmarking}. We begin by re-writing the Taylor's expansion more precisely for our model averaging protocol,
+\begin{align}
+% \label{eq_taylor_expansion_ours}
+    \frac{1}{T-t_0+1}\cdot \sum_{t=t_0}^{T} f(\mathbf{x}; {\theta_t})_k &\approx f(\mathbf{x}; \hat{\theta}_{T})_k + 0.5 \cdot \frac{1}{T-t_0+1}\cdot \sum_{t=t_0}^{T} (\hat{\theta}_{T} - {\theta}_t)^T  \frac{\partial^2 f(\mathbf{x}; {\hat{\theta}_{T}})_k }{\partial \hat{\theta}_{T}^2} (\hat{\theta}_{T} - {\theta}_t)
+\end{align}
+where $\hat{\theta}_T := \frac{1}{T-t_0+1}\cdot \sum_{t=t_0}^{T} {\theta}_t$. Notice the first order term has been omitted since it is zero. As an important detail, instead of computing the second order term in the above equation for all integer valued $t$ between $t_0$ and $T$, we only use $\theta_t$ for $t = 300*i$ for $i \in \{1,2,\hdots, 16\}$ due to computational constraints. This should not affect our conclusion because as shown in section \ref{sec_freq_analysis}, averaging frequency does not have a significant impact on performance. Finally, we record the logit values and the second order term for 1000 randomly selected samples $\mathbf{x}$ from the test domain data. Note that TerraIncognita has 10 classes and so we have the above equation for $k \in \{1,2, \hdots, 10\}$. We plot the histogram of the logit values and the second order term corresponding to each class's output separately. All the plots are shown in figure \ref{fig:ablation_dim_all}. The conclusion is the same as described in the main text.
+
+\begin{figure*}
+% \vspace{-2pt}
+    \centering
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-0_terra.pdf}
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-1_terra.pdf}
+        \vfil
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-2_terra.pdf}
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-3_terra.pdf}
+        \vfil
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-4_terra.pdf}
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-5_terra.pdf}
+        \vfil
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-6_terra.pdf}
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-7_terra.pdf}
+        \vfil
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-8_terra.pdf}
+        \includegraphics[width=0.45\columnwidth,trim={0cm 0cm 0cm 0},clip]{figs/histogram_ablation/ablation_histogram_per_dim-9_terra.pdf}
+    \caption{The scale of terms-- moving average model's logit and the second order term in Eq. \ref{eq_taylor_expansion}. The latter concentrates around 0, suggesting our model averaging protocol approximates ensembles.}
+    \label{fig:ablation_dim_all}
+\vspace{-15pt}
+\end{figure*}
+
+
+\section{Discussions and Limitations}
+\label{sec_discussion}
+
+\textbf{Domain Generalization Limitations}: The Bias-Variance trade-off analysis of EoA in section \ref{sec_histogram_ablation} shows that the expected loss of individual models constitutes both the bias and variance term, while that of ensembles is dominated by the bias term alone, and is thus strictly lower. Thus ensembles (either explicitly or implicitly by model averaging) is guaranteed to improve performance on OOD data compared to the corresponding individual unaveraged models. However, this strategy cannot go beyond getting rid of the variance term, and other strategies need to be used to reduce the bias term, which will further improve the OOD performance. 
+
+Additionally, our proposal does not make use of the environment ID of samples. A popular strategy to utilize this information is to increase some form of alignment between the latent representations of different domains, which has been shown to be one of the terms in the upper bound of the test domain generalization error \cite{ben2006analysis}. While a number of prior work has proposed variants of this strategy (eg. CORAL, DANN, see section \ref{sec_related_work_dg} for a discussion), \cite{gulrajani2020search} has showed that ERM with appropriate training-validation protocol performs at least as well as these methods. Further, \cite{vedantam2021empirical} has recently argued supported by empirical evidence that domain alignment is neither necessary nor sufficient for domain generalization. Thus it remains an open question what other strategies can be used to utilize the environment ID to boost domain generalization
+
+\textbf{Functional Diversity}: Model averaging mitigates instability within a run, which makes model selection more reliable. However, we note that the gap in performance between different runs still exists, though it is smaller on average compared with online models (see training evolution plots in appendix for reference). On another note, while our analysis in section \ref{sec_histogram_ablation} suggests that model averaging behaves as an ensemble, we believe that it does not offer as much of functional diversity as independently trained models. This is because if it did, model averaging should have had a much better performance compared with a traditional ensembles (since there are $T-t_0+1$ models in model averaging while only 6 models in the traditional ensemble in our experiments), but this is not the case (see their performance in table \ref{tab:benchmark_full} for a comparison). This implies that there is still diversity among the independently trained models with model averaging. This is also inline with \cite{fort2019deep} which shows that ensembling methods such as model averaging and Monte Carlo dropout \cite{gal2016dropout} do not provide diversity in function space as much as ensembles of independently trained models. Perhaps this is why EoA performs better compared to both individual moving average models and traditional ensembles, by better approximating the expected ensemble behavior. 
+
+\textbf{Scalability}: Following the protocol of \cite{gulrajani2020search}, we used samples from all the training domains in each mini-batch update. However, in settings where the number of domains is very large, this approach can be prohibitive. As an alternative, we also performed preliminary experiments in which we stochastically picked one of the training domains at every iteration, and sampled a mini-batch from that domain to update parameters. We found that this protocol resulted in a similar performance as that achieved by the protocol used in our work.
+
+\textbf{Computational Complexity}: The computational overhead due to SMA is practically negligible (compared to back-propagation) since it merely involves a running average estimate of the parameters. So its complexity is the same as that of training a vanilla supervised deep network. On the other hand, since EoA trains an ensemble of models, the complexity scales linearly with the number of models used in the ensemble compared with SMA on a single model, if these models are trained sequentially. Of course, these different models can be trained in parallel if resources are available, given each model is trained independently of one another, in which case the complexity of EoA remains the same as that of vanilla supervised training.
+
+\textbf{Information leaking considerations}: We present many experiments where validation and test performances are studied. It is therefore natural to wonder if there was any information leak from the test set while performing this analysis. We note that in the model averaging protocol we investigated, there were two moving parts: iteration $t_0$ at which model averaging is started, and averaging frequency. We studied them in section \ref{sec_start_iter} and \ref{sec_freq_analysis} respectively. For both of them, we proposed to fix their values universally instead of tuning them on each dataset. Specifically, \cite{jain2018parallelizing} propose tail averaging in which iterates from every iteration are used for computing the simple moving average. We found this proposal to work well empirically in our analysis, and therefore set averaging frequency to 1. For start iteration $t_0$ on the other hand, \cite{jain2018parallelizing} theoretically show that the initial bias term in the excess error upper bound decays exponentially with $t_0$. In line with this theory, our analysis showed that an iteration close to but not at initialization worked well. So we arbitrarily set $t_0=100$. Note that these are not their optimal values, but are rather arbitrary choices guided by our investigation and existing theory. Aside from these two objects (which we fix in all experiments except the aforementioned ablation), there are no hyper-parameters introduced by the averaging protocol or the ensemble of averages studied in this paper, and all other experiments are purely observational. Finally, we followed the protocol of \cite{gulrajani2020search} for training and evaluation.
+
+\textbf{Smaller HP search space}: We use a smaller hyper-parameter search space compared with that in \cite{gulrajani2020search}. Nonetheless, we find that on average, our runs of the ERM baseline performance (without model averaging) yield $64\%$ test accuracy on average compared with $63.8\%$ reported in \cite{gulrajani2020search} on the 5 datasets we used. We also note that model averaging and ensemble of averages, that we study in our work, are not competing with ERM baseline, in the sense that these techniques essentially rely on the quality of the baseline model to further boost performance. Therefore any boost in the ERM baseline performance is likely to improve the model averaging and EoA performance. This is also evident in our benchmarking experiments in Table \ref{tab:benchmark}, where using ResNeXt-50 32x4d pre-trained on a larger dataset \cite{yalniz2019billion} has a better ERM baseline performance compared to ResNet-50 pre-trained on ImageNet. This results in a further boost of $3.9\%$ and $5\%$ test accuracy on average when using model averaging and EoA respectively.
+
+
+
+
+
+\begin{table*}[]
+\small
+\centering
+\caption{Performance benchmarking on 5 datasets of the DomainBed benchmark using two different pre-trained models. SWAD is the previous SOTA. Note that ensembles do not have confidence interval because an ensemble uses all the models to make a prediction. Gray background shows our proposal. \textit{Our runs} implies we ran experiments, but we did not propose it.}
+\begin{tabular}{llllll|l}
+\hline
+{Algorithm}          & {PACS}           & {VLCS}           & {OfficeHome}     & {TerraIncognita} & {DomainNet}      & {Avg}. \\ \hhline{======|=}
+\multicolumn{7}{c}{{ResNet-50 (25M Parameters, pre-trained on ImageNet)}}\\
+\hline
+ERM (our runs) & 84.4 $\pm$ 0.8 & 77.1 $\pm$ 0.5 & 66.6 $\pm$ 0.2 & 48.3 $\pm$ 0.2 & 43.6 $\pm$ 0.1 & 64.0 \\
+Ensemble (our runs) & 87.6             & 78.5           &       70.8         & 49.2           &          \textbf{47.7}      &   66.8   \\
+ERM \cite{gulrajani2020search} & 85.7 $\pm$ 0.5 & 77.4 $\pm$ 0.3 & 67.5 $\pm$ 0.5 & 47.2 $\pm$ 0.4 & 41.2 $\pm$ 0.2 & 63.8\\ 
+IRM \cite{arjovsky2019invariant}  & 84.4 $\pm$ 1.1            & 78.1 $\pm$ 0.0            & 66.6 $\pm$ 1.0            & 47.9 $\pm$ 0.7            & 35.7 $\pm$ 1.9 & 62.5\\
+Group DRO \cite{sagawa2019distributionally}   & 84.1 $\pm$ 0.4            & 77.2 $\pm$ 0.6            & 66.9 $\pm$ 0.3            & 47.0 $\pm$ 0.3            & 33.7 $\pm$ 0.2 & 61.8\\
+Mixup \cite{xu2020adversarial,wang2020heterogeneous}   & 84.3 $\pm$ 0.5            & 77.7 $\pm$ 0.4            & 69.0 $\pm$ 0.1            & 48.9 $\pm$ 0.8            & 39.6 $\pm$ 0.1 & 63.9\\
+MLDG  \cite{li2018learning}    & 84.8 $\pm$ 0.6            & 77.1 $\pm$ 0.4            & 68.2 $\pm$ 0.1            & 46.1 $\pm$ 0.8            & 41.8 $\pm$ 0.4 & 63.6\\
+CORAL  \cite{sun2016deep}   & 86.0 $\pm$ 0.2            & 77.7 $\pm$ 0.5            & 68.6 $\pm$ 0.4            & 46.4 $\pm$ 0.8            & 41.8 $\pm$ 0.2 & 64.1\\
+MMD   \cite{li2018domain}  & 85.0 $\pm$ 0.2            & 76.7 $\pm$ 0.9            & 67.7 $\pm$ 0.1            & 49.3 $\pm$ 1.4            & 39.4 $\pm$ 0.8 & 63.6\\
+DANN \cite{ganin2016domain}  & 84.6 $\pm$ 1.1            & 78.7 $\pm$ 0.3            & 65.4 $\pm$ 0.6            & 48.4 $\pm$ 0.5            & 38.4 $\pm$ 0.0 & 63.1\\
+C-DANN  \cite{li2018deep}  & 82.8 $\pm$ 1.5            & 78.2 $\pm$ 0.4            & 65.6 $\pm$ 0.5            & 47.6 $\pm$ 0.8            & 38.9 $\pm$ 0.1 & 62.6\\
+Fish \cite{shi2021gradient} & 85.5 $\pm$ 0.3 & 77.8 $\pm$ 0.3 & 68.6 $\pm$ 0.4 & 45.1 $\pm$ 1.3 & 42.7 $\pm$ 0.2 & 63.9\\
+Fishr \cite{rame2021fishr} & 85.5 $\pm$ 0.4 & 77.8 $\pm$ 0.1 & 67.8 $\pm$ 0.1 & 47.4 $\pm$ 1.6 & 41.7 $\pm$ 0.0 & 65.7\\
+SWAD \cite{cha2021swad} & 88.1 $\pm$ 0.4 & \textbf{79.1 $\pm$ 0.4} & 70.6 $\pm$ 0.3 & 50.0 $\pm$ 0.4 & 46.5 $\pm$ 0.2 & 66.9\\
+MIRO \cite{cha2022domain} & 85.4 $\pm$ 0.4 & {79.0 $\pm$ 0.} & 70.5 $\pm$ 0.4 & 50.4 $\pm$ 1.1 & 44.3 $\pm$ 0.2 & 65.9\\
+\hline
+\rowcolor{Gray}
+SMA (ours)    & 87.5 $\pm$ 0.2 & 78.2 $\pm$ 0.2   & 70.6 $\pm$ 0.1   & 50.3 $\pm$ 0.5 & 46 $\pm$ 0.1 & 66.5 \\
+\rowcolor{Gray}
+EoA (ours) & \textbf{88.6}           & \textbf{79.1}           & \textbf{72.5}          & \textbf{52.3}           &        {47.4}        & \textbf{68.0}\\
+\hhline{======|=}
+\multicolumn{7}{c}{{ResNeXt-50 32x4d  \cite{yalniz2019billion} (25M Parameters, Pre-trained 1B Images)}}\\
+\hline
+ERM (our runs) & 88.9 $\pm$ 0.3 & 79.0 $\pm$ 0.1 & 70.9 $\pm$ 0.5 & 51.4 $\pm$ 1.2 & 48.1 $\pm$ 0.2 & 67.7 \\ %\hline
+Ensemble (our runs) & 91.2             & 80.3           &       77.8         & 53.5           &          52.8      &   71.1   \\
+ \hline
+ \rowcolor{Gray}
+SMA (ours)    & {92.7 $\pm$ 0.3} & {79.7 $\pm$ 0.3}   & {78.6 $\pm$ 0.1}   & {53.3 $\pm$ 0.1} & {53.5 $\pm$ 0.1} & {71.6} \\ 
+\rowcolor{Gray}
+EoA (ours) & \textbf{93.2}           & \textbf{80.4}           &  \textbf{80.2}  & \textbf{55.2}   &  \textbf{54.6}   & \textbf{72.7} \\
+\hhline{======|=}
+\multicolumn{7}{c}{{RegNetY-16GF \cite{singh2022revisiting} (81M Parameters, Pre-trained on 3.6B Images)}}\\
+\hline
+ERM (our runs) & 92.0 $\pm$ 0.4 & 78.6 $\pm$ 0.6 &  $73.8 \pm$ 0.5 & 55.6 $\pm$ 0.9  & 53.2 $\pm$ 0.2 & 70.6 \\ %\hline
+Ensemble (our runs) &     95.1        &     80.6       &        80.5       &      59.5     &     57.8       &   74.7 \\
+ERM \cite{cha2022domain} & 89.6 $\pm$ 0.4 & 78.6 $\pm$ 0.3 & 71.9 $\pm$ 0.6 & 51.4 $\pm$ 1.8 & 48.5 $\pm$ 0.6 & 68.0 \\
+SWAD \cite{cha2022domain}& 94.7 $\pm$ 0.2 & 79.7 $\pm$ 0.2 & 80.0 $\pm$ 0.1 & 57.9 $\pm$ 0.7 & 53.6 $\pm$ 0.6 & 73.2 \\
+MIRO \cite{cha2022domain}& \textbf{97.4 $\pm$ 0.2} & 79.9 $\pm$ 0.6 & 80.4 $\pm$ 0.2 & 58.9 $\pm$ 1.3 & 53.8 $\pm$ 0.1 & 74.1\\
+ \hline
+ \rowcolor{Gray}
+SMA (ours)    & {95.5$\pm$ 0.0} & {80.7 $\pm$ 0.1}   & {82.0 $\pm$ 0.0}   & {59.7 $\pm$ 0.0} & {60.0 $\pm$ 0.0} & {75.6} \\ 
+\rowcolor{Gray}
+EoA (ours) & {95.8}           & \textbf{81.1}           &  \textbf{83.9}  & \textbf{61.1}   &  \textbf{60.9}   & \textbf{76.6} \\
+\hline
+\end{tabular}
+\label{tab:benchmark_full}
+\end{table*}
+
+
+
+
+
+\begin{table*}[]
+\centering
+\caption{Out-domain accuracy for PACS dataset.}
+\begin{tabular}{lllll|l}
+\hline
+\textbf{Algorithm}          & \textbf{A}           & \textbf{C}           & \textbf{P}     & \textbf{S}    & \textbf{Avg}. \\ \hhline{=====|=}
+\multicolumn{6}{c}{{ResNet-50}}\\
+\hline
+ERM & 86.4 $\pm$ 1.0           & 80.4 $\pm$ 0.6           & 94.8 $\pm$ 0.1          & 76.2 $\pm$ 1.7         & 84.4\\
+Ensemble & 88.3             & \textbf{83.6}           &       96.5         & 81.9 &   87.6  \\
+\hline
+\rowcolor{Gray}
+SMA & 89.1 $\pm$ 0.1           & 82.6 $\pm$ 0.2           & 97.6 $\pm$ 0.0          & 80.5 $\pm$ 0.9         & 87.5\\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{90.5}           & 83.4           & \textbf{98.0}           &        \textbf{82.5}        & \textbf{88.6}\\ 
+\hhline{=====|=}
+\multicolumn{6}{c}{{ResNeXt-50 32x4d  \cite{yalniz2019billion}}}\\
+\hline
+ERM & 84.7 $\pm$ 1.6 & 87.6 $\pm$ 0.1 & 97.6 $\pm$ 0.4 & 85.7 $\pm$ 0.1 & 88.9 \\ %\hline
+Ensemble & 90.2             & 89.2                 & 98.1           &          87.2      &   91.2   \\
+\hline
+\rowcolor{Gray}
+SMA    & 92.6 $\pm$ 0.3 & 90.9 $\pm$ 0.8   & 99.1 $\pm$ 0.3  & 88.3 $\pm$ 0.5 & 92.7 \\ 
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{93.1}           & \textbf{91.8 }     & \textbf{99.2}   &  \textbf{88.9}   & \textbf{93.2} \\
+\hline
+\multicolumn{6}{c}{{RegNetY-16GF \cite{singh2022revisiting}}}\\
+\hline
+ERM & 90.2 $\pm$ 0.6 & 92.6 $\pm$ 0.8 & 97.6 $\pm$ 0.1 & 87.8 $\pm$ 2 & 92 \\ %\hline
+Ensemble &      93.75        &        95.35          &       98.02     &       93.38      &   95.1  \\
+\hline
+\rowcolor{Gray}
+SMA    & 93.8 $\pm$ 0.3 & 95.8 $\pm$ 0.2   & 99.2 $\pm$ 0.2  & \textbf{93.4 $\pm$ 0.2} &  95.5\\ 
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{94.09}           & \textbf{96.33}     & \textbf{99.52}   &  {93.31}   & \textbf{95.8} \\
+\hline
+\end{tabular}
+\label{tab:pacs_perf}
+\end{table*}
+
+
+\begin{table*}[]
+\centering
+\caption{Out-domain accuracy for VLCS dataset.}
+\begin{tabular}{lllll|l}
+\hline
+\textbf{Algorithm}          & \textbf{C}           & \textbf{L}           & \textbf{S}     & \textbf{V}    & \textbf{Avg}. \\ \hhline{=====|=}
+\multicolumn{6}{c}{{ResNet-50}}\\
+\hline
+ERM & 98.5 $\pm$ 0.5           & 62.4 $\pm$ 1.4           & 72.1 $\pm$ 0.0          & 75.4 $\pm$ 0.1         & 77.1\\
+Ensemble & 98.7             & \textbf{64.5}           &       72.1         & \textbf{78.9} &   78.5  \\
+\hline
+\rowcolor{Gray}
+SMA & 99.0 $\pm$ 0.2           & 63.0 $\pm$ 0.2           & 74.5 $\pm$ 0.3          & 76.4 $\pm$ 1.1         & 78.2\\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{99.1}           & 63.1           & \textbf{75.9}           &        78.3        & \textbf{79.1}\\ 
+\hhline{=====|=}
+\multicolumn{6}{c}{{ResNeXt-50 32x4d  \cite{yalniz2019billion}}}\\
+\hline
+ERM & 97.0 $\pm$ 0.4 & 67.8 $\pm$ 0.7 & 75.7 $\pm$ 0.2 & 75.5 $\pm$ 0.6 & 79.0 \\ %\hline
+Ensemble & 98.4             & \textbf{66.1}                 & 76.4           &          {80.5}      &   80.3   \\
+\hline
+\rowcolor{Gray}
+SMA    & \textbf{98.8 $\pm$ 0.2} & 63.3 $\pm$ 0.6   & 77.7 $\pm$ 0.2  & 79.2 $\pm$ 0.8 & 79.7 \\ 
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & 98.7           & 64.1      & \textbf{78.2}   &  \textbf{80.6}   & \textbf{80.4} \\
+\hline
+\multicolumn{6}{c}{{RegNetY-16GF \cite{singh2022revisiting}}}\\
+\hline
+ERM & 96.0 $\pm$ 0.4 & 66.0 $\pm$ 0.8  & 76.1 $\pm$ 0.7 & 76.2 $\pm$ 2.1 & 78.6 \\ %\hline
+Ensemble &       97.88     &       \textbf{67.28}       &    78.46        &       78.55        &   80.6   \\
+\hline
+\rowcolor{Gray}
+SMA    & 98.1 $\pm$ 0.2 & 65.7 $\pm$ 1.1  & 79.2 $\pm$ 1.1 & 79.6 $\pm$ 0.2  & 80.7\\ 
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) &     \textbf{98.23}     &    66.00 & \textbf{79.49}   &  \textbf{80.63}   & \textbf{81.1} \\
+\hline
+\end{tabular}
+\label{tab:vlcs_perf}
+\end{table*}
+
+
+\begin{table*}[]
+\centering
+\caption{Out-domain accuracy for OfficeHome dataset.}
+\begin{tabular}{lllll|l}
+\hline
+\textbf{Algorithm}          & \textbf{A}           & \textbf{C}           & \textbf{P}     & \textbf{R}    & \textbf{Avg}. \\ \hhline{=====|=}
+\multicolumn{6}{c}{{ResNet-50}}\\
+\hline
+ERM & 60.5 $\pm$ 0.7           & 54.5 $\pm$ 0.8           & 74.7 $\pm$ 0.8          & 76.6 $\pm$ 0.2         & 66.6\\
+Ensemble & 65.6             & 58.5           &       78.7         & 80.5 &   70.8  \\
+\hline
+\rowcolor{Gray}
+SMA & 66.7 $\pm$ 0.5           & 57.1 $\pm$ 0.1           & 78.6 $\pm$ 0.1          & 80.0 $\pm$ 0         & 70.6\\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{69.1}           & \textbf{59.8}           & \textbf{79.5}           &        \textbf{81.5}        & \textbf{72.5}\\ 
+\hhline{=====|=}
+\multicolumn{6}{c}{{ResNeXt-50 32x4d  \cite{yalniz2019billion}}}\\
+\hline
+ERM & 64.7 $\pm$ 1.0 & 60.6 $\pm$ 0.3 & 77.1 $\pm$ 0.4 & 81.3 $\pm$ 0.2 & 70.9 \\ %\hline
+Ensemble & 74.1             & 67.3                 & 83.9           &          86.0      &   77.8  \\
+\hline
+\rowcolor{Gray}
+SMA    & 76.7 $\pm$ 0.4 & 67.8 $\pm$ 0.0   & 84.0 $\pm$ 0.1  & 85.8 $\pm$ 0.1 & 78.6 \\ 
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{79.0}           & \textbf{70.0}      & \textbf{85.2}   &  \textbf{86.5}   & \textbf{80.2} \\
+\hline
+\multicolumn{6}{c}{{RegNetY-16GF \cite{singh2022revisiting}}}\\
+\hline
+ERM &  $ 70.7\pm$ 1.3 & 60.0  $\pm$ 0.5 & 82.4 $\pm$ 0.5 & 82.1 $\pm$ 0.4  & 73.8 \\ %\hline
+Ensemble &     79.44     &      68.68    & 86.28 &         87.63     &  80.5  \\
+\hline
+\rowcolor{Gray}
+SMA    & 81.1 $\pm$ 0.4 & 72.3 $\pm$ 0.6  & 86.6 $\pm$ 0.1 & 88.2 $\pm$ 0.1 & 82.0 \\ 
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{83.89}           & \textbf{73.95}      & \textbf{88.22}   &  \textbf{89.37}   & \textbf{83.9} \\
+\end{tabular}
+\label{tab:office_perf}
+\end{table*}
+
+
+
+\begin{table*}[]
+\centering
+\caption{Out-domain accuracy for TerraIncognita dataset.}
+\begin{tabular}{lllll|l}
+\hline
+\textbf{Algorithm}          & \textbf{L100}           & \textbf{L38}           & \textbf{L43}     & \textbf{L46}    & \textbf{Avg}. \\ \hhline{=====|=}
+\multicolumn{6}{c}{{ResNet-50}}\\
+\hline
+ERM & 52.9 $\pm$ 3.3          & 43.3 $\pm$ 1.7           & 56.9 $\pm$ 0.4         & 40.2 $\pm$ 2.1         & 48.3\\
+Ensemble & 53.0             & 42.6           &       60.5         & 40.8 &   49.2  \\
+\hline
+\rowcolor{Gray}
+SMA & 54.9 $\pm$ 0.4           & 45.5 $\pm$ 0.6          & 60.1 $\pm$ 1.5          & 40.5 $\pm$ 0.4         & 50.3\\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{57.8}           & \textbf{46.5}           & \textbf{61.3}          &       \textbf{43.5}        & \textbf{52.3} \\ 
+\hhline{=====|=}
+\multicolumn{6}{c}{{ResNeXt-50 32x4d  \cite{yalniz2019billion}}}\\
+\hline
+ERM & 64.0 $\pm$ 0.0           & 44.7 $\pm$ 3.2           & 56.1 $\pm$ 3.0          & 40.9 $\pm$ 1.4         & 51.4\\
+Ensemble & \textbf{65.7}             & 43.1               & 62.6       &        42.6    & 53.5  \\
+\hline
+\rowcolor{Gray}
+SMA & 60.1 $\pm$ 1.0           & \textbf{47.3 $\pm$ 1.4}           & 61.0 $\pm$ 1.7          & 44.9 $\pm$ 0.8         & 53.3\\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & 63.5        & 46.0   & \textbf{64.3}   &  \textbf{46.9}  & \textbf{55.2} \\
+\hline
+\multicolumn{6}{c}{{RegNetY-16GF \cite{singh2022revisiting}}}\\
+\hline
+ERM & 67.1 $\pm$    2.8        & 46.3 $\pm$    2.9        & 61.4 $\pm$  0    & 47.5  $\pm$  1.9      & 55.6 \\
+Ensemble & {71.67}     &       50.76       &      64.11  &      \textbf{51.45}    &  59.5 \\
+\hline
+\rowcolor{Gray}
+SMA & 72.4 $\pm$ 0.0          & {52.0 $\pm$ 0.5}           & 66.8  $\pm$ 0.4         & 47.4 $\pm$ 0.2        & 59.7 \\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) &   \textbf{73.80}     &  \textbf{52.60}  & \textbf{68.19}   &  {49.75}  & \textbf{61.1} \\
+\hline
+\end{tabular}
+\label{tab:terra_perf}
+\end{table*}
+
+
+
+\begin{table*}[]
+\small
+\centering
+\caption{Out-domain accuracy for Domainet dataset.}
+\begin{tabular}{lllllll|l}
+\hline
+\textbf{Algorithm}          & \textbf{clip}           & \textbf{info}           & \textbf{paint}     & \textbf{quick}  & \textbf{real}  & \textbf{sketch}    & \textbf{Avg}. \\ \hhline{=======|=}
+\multicolumn{7}{c}{{ResNet-50}}\\
+\hline
+ERM & 63.4 $\pm$ 0.2          & 20.6 $\pm$ 0.1           & 50.0 $\pm$ 0.1         & 13.8 $\pm$ 0.4      &   62.1 $\pm$ 0.2  & 51.9 $\pm$ 0.3 & 43.6\\
+Ensemble & \textbf{68.3}             &  23.1           &     54.5  &  16.3  & \textbf{66.9} & 57.0 &   \textbf{47.7}  \\
+\hline
+\rowcolor{Gray}
+SMA & 64.4 $\pm$ 0.3           & 22.4 $\pm$ 0.2          & 53.4 $\pm$ 0.3          & 15.4 $\pm$ 0.1     &  64.7 $\pm$ 0.2  &  55.5 $\pm$ 0.1  & 46.0 \\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & 65.9        & \textbf{23.4}     & \textbf{55.3}  & \textbf{16.5}  & 66.4  &  \textbf{57.1}      & 47.4 \\ 
+\hhline{=======|=}
+\multicolumn{7}{c}{{ResNeXt-50 32x4d  \cite{yalniz2019billion}}}\\
+\hline
+ERM & 68.8 $\pm$ 0.1          & 25.5 $\pm$ 0.1     & 55.9 $\pm$ 0.3         & 14.7 $\pm$ 0.7   & 65.8 $\pm$ 0.4 &  58.0 $\pm$ 0.4 &  48.1 \\
+Ensemble & 74.3       & 28.7   &  61.1 & 17.0   & 71.9    &     63.5   & 52.8 \\
+\hline
+\rowcolor{Gray}
+SMA & 73.7 $\pm$ 0.1      & 29.9 $\pm$ 0.0     & 62.8 $\pm$ 0.1    & 18.1 $\pm$ 0.1  & 73.0 $\pm$ 0.2 & 63.6 $\pm$ 0.4  & 53.5 \\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{74.6}    & \textbf{31.3}  & \textbf{63.7}  & \textbf{19.3}  &   \textbf{73.6}  & \textbf{65.1 }& \textbf{54.6} \\
+\hline
+\multicolumn{6}{c}{{RegNetY-16GF \cite{singh2022revisiting}}}\\
+\hline
+ERM & 74.7 $\pm$    0.1    & 34.8$\pm$ 0.9   & 60.3 $\pm$  0      &  15.2 $\pm$ 0.6   & 71.1 $\pm$ 0.3 & 62.1  $\pm$ 0.1 & 53.1  \\
+Ensemble &   79.12     &  38.71  & 65.89  &  18.13 & 76.43    &   68.40     & 57.8 \\
+\hline
+\rowcolor{Gray}
+SMA & 78.8 $\pm$ 0.1    &  43.0 $\pm$ 0.0     & 68.6 $\pm$    0.0 & 21.2 $\pm$ 0.0  & 78.5 $\pm$ 0.1 & 69.8  $\pm$ 0.1 & 60 \\
+ %\hline
+ \rowcolor{Gray}
+Ensemble of Averages (EoA) & \textbf{79.63}    & \textbf{44.02}  & \textbf{69.57}  & \textbf{22.46}  &   \textbf{77.95}  & \textbf{71.69}& \textbf{60.9} \\
+\hline
+\end{tabular}
+\label{tab:domainnet_perf}
+\end{table*}
+
+
+
+
+% \section{Cross Run Spearman Correlation}
+
+
+
+
+
+% \newpage
+% \section{Additional Tables and Plots}
+
+
+
+\begin{figure*}
+% \vspace{-10pt}
+    \centering
+    \includegraphics[width=0.36\columnwidth]{figs/terra_ensemble_instability/terra_ensemble_no-ma-env-0_.pdf}
+    \hfil
+    \includegraphics[width=0.36\columnwidth]{figs/terra_ensemble_instability/terra_ensemble_ma-env-0_.pdf}
+    \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_ensemble_instability/terra_ensemble_no-ma-env-1_.pdf}
+      \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_ensemble_instability/terra_ensemble_ma-env-1_.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_ensemble_instability/terra_ensemble_no-ma-env-2_.pdf}
+    \hfil
+    \includegraphics[width=0.36\columnwidth]{figs/terra_ensemble_instability/terra_ensemble_ma-env-2_.pdf}
+    \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_ensemble_instability/terra_ensemble_no-ma-env-3_.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_ensemble_instability/terra_ensemble_ma-env-3_.pdf}
+    \caption{Ensemble of moving average (EOA) models (right) has better out-domain test performance \textit{stability} compared with ensemble of online models (left), w.r.t. in-domain validation accuracy. \textbf{Details}: The plots are for the TerraIncognita dataset with the domain name in title used as the test domain, and others as training/validation domain, and ResNet-50. Each ensemble has 6 different models from independent runs with a different random seed and training/validation split.}
+    \label{fig:instability_ensemble_terra_all}
+% \vspace{-11pt}
+\end{figure*}
+
+\begin{figure*}
+% \vspace{-10pt}
+    \centering
+    \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_no-ma-env-0_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_no-ma-env-0_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_no-ma-env-1_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_no-ma-env-1_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_no-ma-env-2_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_no-ma-env-2_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_no-ma-env-3_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_no-ma-env-3_test.pdf}\\
+    %   \hfil
+    \hrulefill\vspace{10pt}\par
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_ma-env-0_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_ma-env-0_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_ma-env-1_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_ma-env-1_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_ma-env-2_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_ma-env-2_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_ma-env-3_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/pacs_5k/PACS_ma-env-3_test.pdf}\\
+    \caption{Evolution of training loss, in-domain validation accuracy and out-domain test accuracy for ResNet-50 (pre-trained on ImageNet) trained on PACS without model averaging (top 4 rows) and with model averaging (bottom 4 rows) for $5,000$ iterations with the domain mentioned in the title used as test domain and remain domains as training/validation data. Each color represents a different run with randomly chosen seed, hyper-parameters and training-validation split following \cite{gulrajani2020search}.}
+    \label{fig:pacs_evolution_all}
+% \vspace{-11pt}
+\end{figure*}
+
+
+\begin{figure*}
+% \vspace{-10pt}
+    \centering
+    \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra-env-0_no-mo_10k-iters_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra-env-0_no-mo_10k-iters_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra-env-1_no-mo_10k-iters_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra-env-1_no-mo_10k-iters_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra-env-2_no-mo_10k-iters_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra-env-2_no-mo_10k-iters_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra-env-3_no-mo_10k-iters_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra-env-3_no-mo_10k-iters_test.pdf}\\
+    %   \hfil
+    \hrulefill\vspace{10pt}\par
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra_ma-env-0_10k-iters_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra_ma-env-0_10k-iters_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra_ma-env-1_10k-iters_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra_ma-env-1_10k-iters_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra_ma-env-2_10k-iters_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra_ma-env-2_10k-iters_test.pdf}
+      \vfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra_ma-env-3_10k-iters_valid.pdf}
+    \hfil
+      \includegraphics[width=0.36\columnwidth]{figs/terra_10k/terra_ma-env-3_10k-iters_test.pdf}
+    \caption{Evolution of training loss, in-domain validation accuracy and out-domain test accuracy for ResNet-50 (pre-trained on ImageNet) trained on TerraIncognita without model averaging (top 4 rows) and with model averaging (bottom 4 rows) for $10,000$ iterations with the domain mentioned in the title used as test domain and remain domains as training/validation data. Each color represents a different run with randomly chosen seed, hyper-parameters and training-validation split following \cite{gulrajani2020search}. \textbf{Gist}: Out-domain test performance is unstable without model averaging, which causes problem for model selection using in-domain validation performance. Model averaging is able to mitigate this instability.}
+    \label{fig:terra_evolution_all}
+% \vspace{-11pt}
+\end{figure*}

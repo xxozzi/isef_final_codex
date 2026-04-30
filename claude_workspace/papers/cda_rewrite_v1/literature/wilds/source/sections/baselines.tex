@@ -1,0 +1,83 @@
+
+\begin{table*}[p]
+  \caption{The out-of-distribution test performance of models trained with different baseline algorithms: CORAL, originally designed for unsupervised domain adaptation; IRM, for domain generalization; and Group DRO, for subpopulation shifts. Evaluation metrics for each dataset are the same as in \reftab{erm_drops}; higher is better.
+  Overall, these algorithms did not improve over empirical risk minimization (ERM), and sometimes made performance significantly worse, except on \CivilComments where they perform better but still do not close the in-distribution gap in \reftab{erm_drops}.
+  For \Wheat, we omit CORAL and IRM as those methods do not port straightforwardly to detection settings; its ERM number also differs from \reftab{erm_drops} as its ID comparison required a slight change to the OOD test set.
+  Parentheses show standard deviation across 3+ replicates.
+  }
+  \label{tab:baselines}
+  \centering
+  \begin{tabular}{l|c|r|r|r|r}
+    \toprule
+    Dataset        & Setting &  \multicolumn{1}{c|}{ERM}         & \multicolumn{1}{c|}{CORAL}       & \multicolumn{1}{c|}{IRM}         & \multicolumn{1}{c}{Group DRO}    \\
+    \midrule
+    \iWildCam      & Domain gen.   & 31.0 (1.3)  & \textbf{32.8 (0.1)}  & 15.1 (4.9)  & 23.9 (2.1) \\
+    \Camelyon      & Domain gen.   & \textbf{70.3 (6.4)}  & 59.5 (7.7) & 64.2 (8.1) & 68.4 (7.3)  \\
+    \RxRx          & Domain gen.   & \textbf{29.9 (0.4)}  & 28.4 (0.3)  & 8.2 (1.1)  & 23.0 (0.3) \\
+    \Mol           & Domain gen.   & \textbf{27.2 (0.3)}  & 17.9 (0.5)  & 15.6 (0.3)  & 22.4 (0.6) \\
+    \Wheat         & Domain gen.   & \textbf{51.2 (1.8)} & ---       & ---       & 47.9 (2.0) \\
+    \midrule
+    \CivilComments & Subpop.~shift & 56.0 (3.6)  & 65.6 (1.3)  & 66.3 (2.1)  & \textbf{70.0 (2.0)} \\
+    \midrule
+    \FMoW          & Hybrid       & \textbf{32.3 (1.3}) & 31.7 (1.2) & 30.0 (1.4) & 30.8 (0.8)\\
+    \PovertyMap    & Hybrid       & \textbf{0.45 (0.06)} & 0.44 (0.06) & 0.43 (0.07) & 0.39 (0.06)\\
+    \Amazon        & Hybrid       & \textbf{53.8 (0.8)}  & 52.9 (0.8)  & 52.4 (0.8)  & 53.3 (0.0) \\
+    \Py            & Hybrid       & \textbf{67.9 (0.1)}  & 65.9 (0.1)  & 64.3 (0.2) &  65.9 (0.1) \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+
+\section{Baseline algorithms for distribution shifts}\label{sec:baselines}
+
+Many algorithms have been proposed for training models that are more robust to particular distribution shifts than standard models trained by empirical risk minimization (ERM), which trains models to minimize the average training loss.
+Unlike ERM, these algorithms tend to utilize domain annotations during training, with the goal of learning a model that can generalize across domains.
+In this section, we evaluate several representative algorithms from prior work and show that the out-of-distribution performance drops shown in \refsec{erm_drops} still remain.
+
+\subsection{Domain generalization baselines}
+Methods for domain generalization typically involve adding a penalty to the ERM objective that encourages some form of invariance across domains.
+We include two such methods as representatives:
+\begin{itemize}
+  \item \textbf{CORAL} \citep{sun2016deep}, which penalizes differences in the means and covariances of the feature distributions (i.e., the distribution of last layer activations in a neural network) for each domain.
+  Conceptually, CORAL is similar to other methods that encourage feature representations to have the same distribution across domains
+  \citep{tzeng2014domain,long2015learning,ganin2016domain,li2018deep,li2018domain}.
+  \item \textbf{IRM} \citep{arjovsky2019invariant}, which penalizes feature distributions that have different optimal linear classifiers for each domain. This builds on earlier work on invariant predictors \citep{peters2016causal}.
+\end{itemize}
+Other techniques for domain generalization include
+conditional variance regularization \citep{heinze2017conditional};
+self-supervision \citep{carlucci2019domain};
+and meta-learning-based approaches \citep{li2018learning,balaji2018metareg,dou19neurips}.
+
+\subsection{Subpopulation shift baselines}
+In subpopulation shift settings, our aim is to train models that perform well on all relevant subpopulations. We test the following approach:
+\begin{itemize}
+  \item \textbf{Group DRO} \citep{hu2018does,sagawa2020group}, which uses distributionally robust optimization to explicitly minimize the loss on the worst-case domain during training. Group DRO builds on the maximin approach developed in \citet{meinshausen2015maximin}.
+\end{itemize}
+Other methods for subpopulation shifts include
+reweighting methods based on class/domain frequencies \citep{shimodaira2000improving,cui2019class};
+label-distribution-aware margin losses \citep{cao2019learning};
+adaptive Lipschitz regularization \citep{cao2020heteroskedastic};
+slice-based learning \citep{chen2019slice,re2019overton};
+style transfer across domains \citep{goel2020model};
+or other DRO algorithms that do not make use of explicit domain information and
+rely on, for example, unsupervised clustering \citep{oren2019drolm,sohoni2020subclass}
+or upweighting high-loss points \citep{nam2020learning,liu2021jtt}.
+
+Subpopulation shifts are also connected to the well-studied notions of tail performance and risk-averse optimization (Chapter 6 in \citet{shapiro2014lectures}).
+For example, optimizing for the worst case over all subpopulations of a certain size, regardless of domain, can guarantee a certain level of performance over the smaller set of subpopulations defined by domains \citep{duchi2019distributionally,duchi2021learning}.
+
+\subsection{Setup}
+We trained CORAL, IRM, and Group DRO models on each dataset.
+While Group DRO was originally developed for subpopulation shifts, for completeness, we also experiment with using it for domain generalization. In that setting, Group DRO models aim to achieve similar performance across domains: e.g., in \Camelyon, where the domains are hospitals, Group DRO optimizes for the training hospital with the highest loss.
+Similarly, we also test CORAL and IRM on subpopulation shifts, where they encourage models to learn invariant representations across subpopulations.
+As in \refsec{erm_drops}, we used the same OOD validation set for early stopping and to tune the penalty weights for the CORAL and IRM algorithms.
+More experimental details are in \refapp{experiments}, and dataset-specific hyperparameters and domain choices are discussed in \refapp{app_datasets}.
+
+\subsection{Results}
+\reftab{baselines} shows that models trained with CORAL, IRM, and Group DRO generally fail to improve over models trained with ERM.
+The exception is the \CivilComments subpopulation shift dataset, where the worst-performing subpopulation is a minority domain. By upweighting the minority domain, Group DRO obtains an OOD accuracy of 70.0\% (on the worst-performing subpopulation) compared to 56.0\% for ERM, though this is still substantially below the ERM model's ID accuracy of 92.2\% (on average over the entire test set). CORAL and IRM also perform well on \CivilComments, though the gains there stem from the fact that our implementation heuristically upsamples the minority domain (see \refapp{app_civilcomments}).
+All other datasets involve domain generalization; the failure of the baseline algorithms here is consistent with other recent findings on standard domain generalization datasets \citep{gulrajani2020search}.
+
+These results indicate that training models to be robust to distribution shifts in the wild remains a significant open challenge. However, we are optimistic about future progress for two reasons.
+First, current methods were mostly designed for other problem settings besides domain generalization, e.g., CORAL for unsupervised domain adaptation and Group DRO for subpopulation shifts.
+Second, compared to existing distribution shift datasets, the \Wilds datasets generally contain diverse training data from many more domains as well as metadata on these domains, which future algorithms might be able to leverage.

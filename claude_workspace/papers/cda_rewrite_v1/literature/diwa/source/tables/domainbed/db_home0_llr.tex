@@ -1,0 +1,17 @@
+\begin{table}[h]%
+    \caption{\reb{\textbf{Accuracy ($\uparrow$)} on domain \enquote{Art} from OfficeHome when some target samples are available for last layer retraining (LLR) \cite{kirichenko2022last}. The feature extractor is either pre-trained only on ImageNet (\xmark), fine-tuned on the source domains \enquote{Clipart}, \enquote{Product} and \enquote{Photo} (ERM), or obtained by averaging multiple runs on these source domains (DiWA-uniform $M=20$).}}
+    \centering
+    \vspace{0.5em}
+    \adjustbox{width=0.8\textwidth}{
+        \reb{\begin{tabular}{l|lll}
+            \toprule
+            \multirow{2}{*}{Training on source domains} & \multicolumn{3}{c}{LLR on target domain (\% domain in training)}                                                     \\
+                                                                                                  & \xmark (0\%)                                                    & \checkmark (20\%)       & \checkmark (80\%)       \\
+            \midrule
+            \xmark                                                                                & -                                                               & 61.2 $\pm$ 0.6          & 74.4 $\pm$ 1.2          \\
+            ERM                                                                                   & 62.9 $\pm$ 1.3                                                  & 68.0 $\pm$ 0.7          & 74.7 $\pm$ 0.6          \\
+            DiWA & \textbf{67.3} $\pm$ 0.3                                         & \textbf{70.4} $\pm$ 0.1 & \textbf{78.1} $\pm$ 0.6 \\
+            \bottomrule
+        \end{tabular}}}
+    \label{table:db_home0_llr}%
+\end{table}

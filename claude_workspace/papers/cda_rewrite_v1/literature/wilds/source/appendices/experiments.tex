@@ -1,0 +1,59 @@
+\section{Additional experimental details}\label{sec:experiments}
+
+\subsection{Model hyperparameters}\label{sec:experiments_id_vs_ood}
+For each hyperparameter setting, we used early stopping to pick the epoch with the best OOD validation performance (as measured by the specified metrics for each dataset described in \refsec{datasets}), and then picked the model hyperparameters with the best early-stopped validation performance.
+We found that this gave similar or slightly better OOD test performance than selecting hyperparameters using the ID validation set (\reftab{id_vs_ood_val_results}).
+
+Using the OOD validation set for early stopping means that even if the training procedure does not explicitly use additional metadata, as in ERM, the metadata might still be implicitly (but mildly) used for model selection in one of two related ways. First, the metric might use the metadata directly (e.g., by computing the accuracy over different subpopulations defined in the metadata). Second, the OOD validation set is generally selected according to this metadata (e.g., comprising data from a disjoint set of domains as the training set).
+We expect that implicitly using the metadata in these ways should increase the OOD performance of each model. Nevertheless, as \refsecs{erm_drops}{baselines} show, there are still large gaps between OOD and ID performance.
+
+In general, we selected model hyperparameters with ERM and used the same hyperparameters for the other algorithm baselines (e.g., CORAL, IRM, or Group DRO).
+For CORAL and IRM, we did a subsequent grid search over the weight of the penalty term,
+using the defaults from \citet{gulrajani2020search}. Specifically, we tried penalty weights of $\{0.1, 1, 10\}$ for CORAL and penalty weights of $\{1, 10, 100, 1000\}$ for IRM.
+We fixed the step size hyperparameter for Group DRO to its default value of 0.01 \citep{sagawa2020group}.
+
+\begin{table*}[t]
+  \centering
+  \caption{\label{tab:id_vs_ood_val_results} The performance of models trained with empirical risk minimization with hyperparameters tuned using the out-of-distribution (OOD) vs. in-distribution (ID) validation set.
+  We excluded \Mol, \RxRx, and \Wheat, as they do not have separate ID validation sets, and \CivilComments, which is a subpopulation shift setting where we measure worst-group accuracy on a validation set that is already identically distributed to the training set.
+  }
+  \resizebox{\textwidth}{!}{\begin{tabular}{l c c c c c}
+  \toprule
+     & & \multicolumn{2}{c}{ID performance} & \multicolumn{2}{c}{OOD performance} \\
+    Dataset & Metric & Tuned on ID val & Tuned on OOD val & Tuned on ID val & Tuned on OOD val  \\
+  \midrule
+   \iWildCam & Macro F1  & 47.2 (2.0)  & 47.0 (1.4)    &   29.8 (0.6) & 31.0 (1.3)   \\
+  \Camelyon      & Average acc              & 98.7 (0.1)    & 93.2 (5.2)  & 65.8 (4.9)    & 70.3 (6.4)   \\
+  \FMoW         & Worst-region acc         & 58.0 (0.5)   & 57.4 (0.2)  & 31.9 (0.8) & 32.8 (0.5) \\
+  \PovertyMap         &  Worst-U/R Pearson R      & 0.65 (0.03)  & 0.62 (0.04)  & 0.46 (0.06) & 0.46 (0.07) \\
+  \Amazon        & 10th percentile acc      &  72.0 (0.0) & 71.9 (0.1)  &   53.8 (0.8)  &  53.8 (0.8)   \\
+  \Py        & Method/class acc   &  75.6 (0.0) & 75.4 (0.4)  & 67.9 (0.1) & 67.9 (0.1) \\
+  \bottomrule
+  \end{tabular}}
+\end{table*}
+
+
+\subsection{Replicates}
+We typically use a fixed train/validation/test split and report results averaged across 3 replicates (random seeds for model initialization and minibatch order), as well as the unbiased standard deviation over those replicates.
+There are three exceptions to this.
+For \PovertyMap, we report results averaged over 5-fold cross validation, as model training is relatively fast on this dataset. For \Camelyon, results vary substantially between replicates, so we report results averaged over 10 replicates instead. Similarly, for \CivilComments, we report results averaged over 5 replicates.
+
+\subsection{Baseline algorithms}
+For all classification datasets, we train models against the cross-entropy loss. For the \PovertyMap regression dataset, we use the mean-squared-error loss.
+
+We adapted the implementations of CORAL from \citet{gulrajani2020search};
+IRM from \citet{arjovsky2019invariant}; and Group DRO from \citet{sagawa2020group}.
+We note that CORAL was originally proposed in the context of domain adaptation \citep{sun2016deep}, where it was shown to substantially improve performance on standard domain adaptation benchmarks, and it was subsequently adapted for domain generalization \citep{gulrajani2020search}.
+
+Following these implementations, we use minibatch stochastic optimizers to train models under each algorithm, and we sample uniformly from each domain regardless of the number of training examples in it.
+This means that the CORAL and IRM algorithms optimize for their respective penalty terms plus a reweighted ERM objective that weights each domain equally (i.e., effectively upweighting minority domains).
+The Group DRO objective is unchanged, as it still optimizes for the domain with the worst loss, but the uniform sampling improves optimization stability.
+
+Both CORAL and IRM are designed for models with featurizers, i.e., models that first map each input to a feature representation and then predict based on the representation.
+To estimate the feature distribution for a domain, these algorithms need to see a sufficient number of examples from that domain in a minibatch.
+However, some of our datasets have large numbers of domains, making it infeasible for each minibatch to contain examples from all domains.
+For these algorithms, our data loaders form a minibatch by first sampling a few domains, and then sampling examples from those domains.
+For consistency in our experiments, we used the same total batch size for these algorithms and for ERM and Group DRO, with a default of 8 examples per domain in each minibatch (e.g., if the batch size was 32, then in each minibatch we would have 8 examples $\times$ 4 domains).
+
+For Group DRO, as in \citet{sagawa2020group}, each example in the minibatch is sampled independently with uniform probabilities across domains, and therefore each minibatch does not need to only comprise a small number of domains.
+We note that reweighting methods like Group DRO are effective only when the training loss is non-vanishing, which we achieve through early stopping \citep{byrd2019effect,sagawa2020group,sagawa2020overparameterization}.

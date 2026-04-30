@@ -1,0 +1,58 @@
+\section{DiWA: Diverse Weight Averaging}%
+\label{sect:dwa}%
+\subsection{Motivation: weight averaging from different runs for more diversity}%
+\label{subsec:diversitybydifferentruns}%
+\paragraph{Limitations of previous WA approaches.}
+Our analysis in \Cref{subsec:expression_ood_bias,subsec:expression_ood_var} showed that the bias and the variance terms are mostly fixed by the distribution shifts at hand.
+In contrast, the covariance term can be reduced by enforcing diversity across models (\Cref{subsec:expression_cov_div}) obtained from learning procedures $\{l_S^{(m)}\}_{m=1}^M$.
+Yet, previous methods \cite{cha2021wad,arpit2021ensemble} only average weights obtained along a single run.
+This corresponds to highly correlated procedures sharing the same initialization, hyperparameters, batch orders, data augmentations and noise, that only differ by the number of training steps. The models are thus mostly similar: this does not leverage the full potential of WA.
+
+\paragraph{DiWA.}
+Our Diverse Weight Averaging approach seeks to reduce the \ood expected error in \Cref{eq:b_var_cov} by decreasing covariance across predictions: DiWA decorrelates the learning procedures $\{l_S^{(m)}\}_{m=1}^M$.
+Our weights are obtained from $M\gg 1$ different runs, with diverse learning procedures: these have different hyperparameters (learning rate, weight decay and dropout probability), batch orders, data augmentations (\eg random crops, horizontal flipping, color jitter, grayscaling), stochastic noise and number of training steps.
+Thus, the corresponding models are more diverse on domain $T$ per \cite{gontijolopes2022no} and reduce the impact of variance when $M$ is large.
+However, this may break the locality requirement analyzed in \Cref{subsec:expression_loc_lir} if the weights are too distant. Empirically, we show that DiWA works under two conditions: shared initialization and mild hyperparameter ranges.%
+\subsection{Approach: shared initialization, mild hyperparameter search and weight selection}%
+\label{subsec:sharedinithpws}%
+\paragraph{Shared initialization.}
+The shared initialization condition follows \cite{Neyshabur2020}: when models are fine-tuned from a shared pretrained model, their weights can be connected along a linear path where error remains low \cite{Frankle2020}.
+Following standard practice on DomainBed \cite{gulrajani2021in}, our encoder is pretrained on ImageNet \cite{krizhevsky2012imagenet}; this pretraining is key as it controls the bias (by defining the feature support mismatch, see \Cref{subsec:expression_ood_bias}) and variance (by defining the kernel $K$, see \Cref{remark:mmdk}).
+Regarding the classifier initialization, we test two methods.
+The first is the random initialization, which may distort the features \cite{kumar2022finetuning}.
+The second is Linear Probing (LP) \cite{kumar2022finetuning}: it first learns the classifier (while freezing the encoder) to serve as a shared initialization.
+Then, LP fine-tunes the encoder and the classifier together in the $M$ subsequent runs; the locality term is smaller as weights remain closer (see \cite{kumar2022finetuning}).%
+
+\paragraph{Mild hyperparameter search.}
+As shown in \Cref{fig:home0_locality_requirement}, extreme hyperparameter ranges lead to weights whose average may perform poorly.
+Indeed, weights obtained from extremely different hyperparameters may not be linearly connectable; they may belong to different regions of the loss landscape.
+In our experiments, we thus use the mild search space defined in \Cref{tab:hyperparam}, first introduced in SWAD \cite{cha2021wad}.
+These hyperparameter ranges induce diverse models that are averageable in weights.
+
+\paragraph{Weight selection.}
+The last step of our approach (summarized in \Cref{alg:pseudo-code}) is to choose which weights to average among those available.
+We explore two simple weight selection protocols, as in \cite{Wortsman2022ModelSA}.
+The first \textit{uniform} equally averages all weights; it is practical but may underperform when some runs are detrimental.
+The second \textit{restricted} (\textit{greedy} in \cite{Wortsman2022ModelSA}) solves this drawback by restricting the number of selected weights: weights are ranked in decreasing order of validation accuracy and sequentially added only if they improve DiWA's validation accuracy.
+
+In the following sections, we experimentally validate our theory.
+First, \Cref{sect:analysis} confirms our findings on the OfficeHome dataset \cite{venkateswara2017deep} where diversity shift dominates \cite{ye2021odbench} (see \Cref{app:analysis_pacs} for a similar analysis on PACS \cite{li2017deeper}). Then, \Cref{sec:domainbed} shows that DiWA is state of the art on DomainBed~\cite{gulrajani2021in}.%
+\begin{figure}
+    \vskip -0.1in
+    \begin{algorithm}[H]
+        \caption{DiWA Pseudo-code} \label{alg:pseudo-code}
+        \begin{algorithmic}
+            \REQUIRE $\theta_0$ pretrained encoder and initialized classifier; $\{h_m\}_{m=1}^H$ hyperparameter configurations.
+            \STATE \hspace*{-1.25em} \textit{\underline{Training}:} $\forall m=1$ to $H$, $\theta_m \triangleq \mathrm{FineTune}(\theta_0, h_m)$
+            \STATE \hspace*{-1.25em} \textit{\underline{Weight selection}:}
+            \STATE \hspace*{-0.5em} \textit{Uniform:} $\M=\{1, \cdots, H\}$.
+            \STATE \hspace*{-0.5em} \textit{Restricted:} Rank $\{\theta_m\}_{m=1}^H$ by decreasing $\mathrm{ValAcc}(\theta_m)$. $\M\leftarrow\emptyset$.
+            \FOR{$m=1$ to $H$}
+            \STATE \textbf{If} $\mathrm{ValAcc}(\theta_{\M \cup \{m\}})\geq\mathrm{ValAcc}(\theta_\M)$
+            \STATE $\M \leftarrow \M\cup \{m\}$
+            \ENDFOR
+            \STATE \hspace*{-1.25em} \textit{\underline{Inference}}: with $f(\cdot, \theta_\M)$, where $\theta_\M=\sum_{m\in\M}\theta_m/|\M|$.
+        \end{algorithmic}
+    \end{algorithm}
+    \vskip -0.3in
+\end{figure}%

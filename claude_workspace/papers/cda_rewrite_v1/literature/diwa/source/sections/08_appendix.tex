@@ -1,0 +1,42 @@
+% \clearpage
+% \appendix
+%\setcounter{page}{1}
+% \title{Diverse Weight Averaging for Out-of-Distribution Generalization\\ \normalfont{Supplementary Material}}
+% \maketitle
+
+% further details the theoretical and empirical aspects of our work
+This supplementary material complements the main paper.
+% The Sections follow a similar order than their related Sections in the main paper.
+% We also present some additional results.
+It is organized as follows:
+\begin{enumerate}
+    \item \Cref{app:broader_impact} describes the broader impact of our work.
+    \item \Cref{app:limit_proof_swad} points out the limitations of existing flatness-based analysis of WA and shows how our analysis solves these limitations.
+    \item \Cref{app:proof} details all the proofs of the propositions and lemmas found in our work.
+        \begin{itemize}
+            \item \Cref{app:wa_loss,app:proof_bvc} derive the bias-variance-covariance-locality decomposition for WA (\Cref{prop:b_var_cov}).
+            \item \Cref{app:bias_correlation} establishes the link between bias and correlation shift (\Cref{prop:bias}).
+            \item \Cref{app:var_diversity} establishes the link between variance and diversity shift (\Cref{prop:var}).
+            \item \Cref{app:proof_wa_ind} compares WA with one of its member (\Cref{lemma:wa_ind}).
+        \end{itemize}
+    \item \Cref{app:wa_vs_ens_analysis} empirically compares WA to functional ensembling ENS.
+    \item \Cref{app:additional_diversity_analysis} presents some additional diversity results on OfficeHome and PACS.
+    \item \reb{\Cref{app:valueofm} ablates the importance of the number of training runs}.
+    \item \Cref{app:domainbeddetails} describes our experiments on DomainBed and our per-domain results.
+    \item \Cref{app:failure_corr_shift} empirically confirms a limitation of WA approaches expected from our theoretical analysis: they do not tackle correlation shift on ColoredMNIST.
+    \item \reb{\Cref{app:llr} suggests DiWA's potential when some target data is available for training \cite{kirichenko2022last}}.
+\end{enumerate}
+
+\input{sections/appendix/00_app_broader_impact}
+\input{sections/appendix/00_app_limit_hessian_swad}
+\input{sections/appendix/01_app_proof}
+\input{sections/appendix/02_app_dwa_vs_ens}
+\input{sections/appendix/04_app_diversity.tex}
+\input{sections/appendix/05_app_domainbed.tex}
+
+% DEPRECATED
+% \input{sections/appendix/06_app_correlationshift.tex}
+% \input{sections/appendix/app_failedidea.tex}
+% \input{sections/appendix/app_initialization}
+% \input{sections/appendix/app_hessian.tex}
+% \input{sections/appendix/app_domaininformation.tex}

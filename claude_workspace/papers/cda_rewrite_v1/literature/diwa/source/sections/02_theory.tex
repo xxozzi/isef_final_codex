@@ -1,0 +1,75 @@
+\section{Theoretical insights}
+\label{sec:theory}
+% Under the setting described in \Cref{subsec:notations}, we detail our new theoretical analysis of WA, introduced in \Cref{sec:limithessian}. % theoretically analyze 
+% It relies on a new bias-variance-covariance-locality decomposition of its expected \ood generalization error, derived in \Cref{subsec:biasvariance}.
+% This decomposition highlights the importance of diversity across averaged models.
+% %In \Cref{subsec:biasvariance}, we derive the expected \ood generalization error of WA via a new bias-variance-covariance-locality decomposition.
+% We clarify in \Cref{subsec:analysisbvc} the conditions of WA's \ood success by showing the close links between bias / correlation shift and variance / diversity shift.
+% We then present our two main results: the bias term dominates in the decomposition under correlation shift (see \Cref{subsec:expression_ood_bias}) and variance dominates under diversity shift (see \Cref{subsec:expression_ood_var}).
+% %Based on this analysis, we propose to increase the diversity across models averaged in weights to tackle distribution shift.
+% % This analysis provides guidelines to understand when WA succeeds or fails.
+% This analysis provides guidelines to understand when WA succeeds, and how to improve it.
+% Moreover, this decomposition highlights the importance of diversity across averaged models.
+% %In \Cref{subsec:biasvariance}, we derive the expected \ood generalization error of WA via a new bias-variance-covariance-locality decomposition.
+%  by showing the close links between bias / correlation shift and variance / diversity shift.
+%Based on this analysis, we propose to increase the diversity across models averaged in weights to tackle distribution shift.
+% This will enable us to undertand when WA 
+% In particular, we will show that the bias term dominates in the decomposition under correlation shift (see \Cref{subsec:expression_ood_bias}) and variance dominates under diversity shift (see \Cref{subsec:expression_ood_var}).
+Under the setting described in \Cref{subsec:notations}, we introduce WA in \Cref{sec:limithessian} and decompose its expected \ood error in \Cref{subsec:biasvariance}.
+Then, we separately consider the four terms of this bias-variance-covariance-locality decomposition in \Cref{subsec:analysisbvc}.
+This theoretical analysis will allow us to better understand when WA succeeds, and most importantly, how to improve it empirically in \Cref{sect:dwa}.%
+\subsection{Notations and problem definition}%
+\label{subsec:notations}
+% \vspace{-0.6em}%
+\paragraph{Notations.}%
+We denote $\X$ the input space of images, $\Y$ the label space
+and $\ell:\Y^2 \rightarrow \mathbb{R}_+$ a loss function.
+$S$ is the training (source) domain with distribution $p_S$, and $T$ is the test (target) domain with distribution $p_T$.
+For simplicity, we will indistinctly use the notations $p_S$ and $p_T$ to refer to the joint, posterior and marginal distributions of $(X, Y)$.
+% $p_S$ and $p_T$ will indistinctly refer to the joint, posterior and marginal distributions, respectively $p(X,Y), p(Y|X), p(X)$.
+We note $f_S, f_T:\X\rightarrow\Y$ the source and target labeling functions.
+We assume that there is no noise in the data: then $f_S$ is defined on $\X_S \triangleq \{x\in \X / p_S(x)>0\}$ by $\forall (x, y) \sim p_S,f_S(x)=y$ and similarly $f_T$ is defined on $\X_T \triangleq \{x\in \X / p_T(x)>0\}$ by $\forall (x, y) \sim p_T, f_T(x)=y$.%
+% \vspace{-0.1em}%
+\paragraph{Problem.}
+We consider a neural network (NN) $f(\cdot, \theta):\X\rightarrow\Y$ made of a fixed architecture $f$ with weights $\theta$.
+We seek $\theta$ minimizing the target generalization error:
+\begin{equation} \label{eq:gen_error}
+    \mathcal{E}_T(\theta)= \mathbb{E}_{(x,y) \sim p_T}[\ell(f(x, \theta),y)].
+\end{equation}
+% $\mathcal{E}_T(\theta)= \mathbb{E}_{(x,y) \sim p_T}[\ell(f(x, \theta),y)]$.
+$f(\cdot, \theta)$ should approximate $f_T$ on $\X_T$. However, this is complex in the \ood setup because we only have data from domain $S$ in training, related yet different from $T$.
+The differences between $S$ and $T$ are due to distribution shifts (\ie the fact that
+$p_S(X,Y) \neq p_T(X,Y)$) which are decomposed per \cite{ye2021odbench} into
+\textbf{diversity shift} (\aka covariate shift), when marginal distributions differ (\ie $p_S(X) \neq p_T(X)$), and
+\textbf{correlation shift} (\aka concept shift), when posterior distributions differ (\ie $p_S(Y|X) \neq p_T(Y|X)$ and $f_S \neq f_T$).
+The weights are typically learned on a training dataset $d_S$ from $S$ (composed of $n_S$ i.i.d. samples from $p_S(X,Y)$) with a configuration $c$, which contains all other sources of randomness in learning (\eg initialization, hyperparameters, training stochasticity, epochs, \etc). %number of steps, \etc).
+We call $l_S=\{d_S, c\}$ a learning procedure on domain $S$, and explicitly write $\theta(l_S)$ to refer to the weights obtained after stochastic minimization of $1/n_S \sum_{(x,y)\in d_S} \ell(f(x, \theta), y)$ \wrt $\theta$ under $l_S$.
+% \vspace{-0.1em}%
+\subsection{Weight averaging for OOD and limitations of current analysis}%
+\label{sec:limithessian}%
+\paragraph{Weight averaging.}%
+We study the benefits of combining $M$ individual member weights $\{\theta_m\}_{m=1}^M \triangleq \{\theta(l_S^{(m)})\}_{m=1}^M$ obtained from $M$ (potentially correlated) identically distributed (i.d.) learning procedures $L_S^M\triangleq\{l_S^{(m)}\}_{m=1}^M$.
+Under conditions discussed in \Cref{subsec:sharedinithpws}, these $M$ weights can be averaged despite nonlinearities in the architecture $f$.
+Weight averaging (WA) \cite{izmailov2018}, defined as:
+\begin{equation} \label{eq:f_wa}
+    f_{\text{WA}} \triangleq f(\cdot, \theta_{\text{WA}}), \text{~where~} \theta_{\text{WA}}\triangleq\theta_{\text{WA}}(L_S^M) \triangleq 1/M \sum\nolimits_{m=1}^{M} \theta_m,%
+\end{equation}
+is the state of the art \cite{cha2021wad,arpit2021ensemble} on DomainBed \cite{gulrajani2021in} when the weights $\{\theta_m\}_{m=1}^M$ are sampled along a single training trajectory (a description we refine in \Cref{remark:identical_assumption} from \Cref{app:proof_bvc}).
+\paragraph{Limitations of the flatness-based analysis.}
+To explain this success, Cha \textit{et al.} \cite{cha2021wad} argue that flat minima generalize better; indeed, WA flattens the loss landscape.
+Yet, as shown~in~\Cref{app:limit_proof_swad}, this analysis does not fully explain WA's spectacular results on DomainBed.
+First, flatness does not act on distribution shifts thus the \ood error is uncontrolled with their upper bound (see \Cref{app:flatness_distribution_shifts}).
+Second, this analysis does not clarify why WA outperforms \reb{Sharpness-Aware Minimizer (SAM) \cite{foret2021} for \ood generalization, even though SAM} directly optimizes flatness (see \Cref{app:mav_better_than_sam}).
+Finally, it does not justify why combining WA and SAM succeeds in \iid \cite{questionsflatminima22} yet fails in \ood (see \Cref{app:mav_sam_failure}).
+These observations motivate a new analysis of WA; we propose one below that better explains these~results. %
+\input{sections/theory/theory_bvc}
+\subsection{Analysis of the bias-variance-covariance-locality decomposition}%
+\label{subsec:analysisbvc}
+We now analyze the four terms in \Cref{eq:b_var_cov}.
+We show that bias dominates under correlation shift (\Cref{subsec:expression_ood_bias}) and variance dominates under diversity shift (\Cref{subsec:expression_ood_var}).
+Then, we discuss a trade-off between covariance, reduced with diverse models (\Cref{subsec:expression_cov_div}), and the locality term, reduced when weights are similar (\Cref{subsec:expression_loc_lir}).
+This analysis shows that \textit{WA is effective against diversity shift when $M$ is large and when its members are diverse but close in the weight space}.
+\input{sections/theory/theory_bias_corr_inegality}
+\input{sections/theory/theory_var_diversity}
+\input{sections/theory/theory_cov_diversity}
+\input{sections/theory/theory_locality_linearity}

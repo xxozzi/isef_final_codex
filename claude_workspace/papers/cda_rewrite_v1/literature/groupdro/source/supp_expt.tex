@@ -1,0 +1,8 @@
+\section{Supplementary experiments}\label{sec:supp_expt}
+
+Group DRO can maintain high robust accuracy even when spurious attributes are not perfectly specified. We repeat the CelebA experiment on models with strong $\Ltwo$ penalties (\refsec{experiments_complexity_control}) but with inexact group specifications:
+\begin{enumerate}
+  \item Instead of the ground-truth spurious attribute \emph{Male}, we provide a related attribute \emph{Wearing Lipstick}, and
+  \item We also specify four distractor/non-spurious attributes (\emph{Eyeglasses}, \emph{Smiling}, \emph{Double Chin}, and \emph{Oval Face}).
+\end{enumerate}
+Optimizing for worst-case performance over all $2^6 = 64$ groups (for all combinations of 5 attributes and 1 label), the DRO model attains $78.9\%$ robust accuracy across the 4 original groups (dark-haired males and females, and blond males and females). These robust accuracies are not far off from the original DRO model with just the ground-truth spurious attribute ($86.7\%$) and significantly outperform the ERM model ($37.8\%$).

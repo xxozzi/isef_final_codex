@@ -1,0 +1,47 @@
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+\begin{table}[t]
+\centering
+\small
+\caption{\small {\bf Comparison with domain generalization methods and SWAD.} Out-of-domain accuracies on five domain generalization benchmarks are shown. We highlight the \textbf{best results} and the \underline{second best results}. Note that ERM (reproduced), Mixstyle are reproduced numbers, and other numbers are from the original literature and \citet{gulrajani2020domainbed} (denoted with $\dagger$).
+Our experiments are repeated three times.
+%Our reproduced numbers and results are average of three different runs. 
+}
+\label{table:full_table}
+\vspace{.5em}
+% \renewcommand{\arraystretch}{1.1}
+% \setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc|c}
+\toprule
+\textbf{Algorithm}        & \data{PACS} & \data{VLCS}             & \data{OfficeHome}       & \data{TerraInc}   & \data{DomainNet}        & \textbf{Avg.}              \\
+% \textbf{Algorithm}        & \data{PACS}~\cite{li2017pacs}            & \data{VLCS}~\cite{fang2013vlcs}             & \data{OfficeHome}~\cite{venkateswara2017officehome}       & \data{TerraInc}~\cite{beery2018terraincognita}   & \data{DomainNet}~\cite{peng2019domainnet}        & \textbf{Avg.}              \\
+\midrule
+MASF~\cite{dou2019masf}     & 82.7          & -             & -                   & -                 & -                  & -              \\
+DMG~\cite{chattopadhyay2020dmg}      & 83.4          & -             & -                   & -                 & 43.6               & -              \\
+MetaReg~\cite{balaji2018metareg}  & 83.6          & -             & -                   & -                 & 43.6               & -              \\
+ER~\cite{zhao2020er_entropy_regularization}       & 85.3          & -             & -                   & -                 & -                  & -              \\
+pAdaIN~\cite{nuriel2020padain}   & 85.4          & -             & -                   & -                 & -                  & -              \\
+EISNet~\cite{wang2020eisnet}   & 85.8          & -             & -                   & -                 & -                  & -              \\
+DSON~\cite{seo2020dson}     & \underline{86.6}          & -             & -                   & -                 & -                  & -              \\
+ERM$^\dagger$~\cite{vapnik1998statistical}      & 85.5          & 77.5          & 66.5                & 46.1              & 40.9               & 63.3           \\
+ERM (reproduced)     & 84.2          & 77.3          & 67.6                & 47.8              & \underline{44.0}               & 64.2           \\
+IRM$^\dagger$~\cite{arjovsky2019irm}      & 83.5          & 78.6          & 64.3                & 47.6              & 33.9               & 61.6           \\
+GroupDRO$^\dagger$~\cite{Sagawa2020GroupDRO} & 84.4          & 76.7          & 66.0                & 43.2              & 33.3               & 60.7           \\
+I-Mixup$^\dagger$~\cite{xu2020interdomain_mixup_aaai,yan2020interdomain_mixup,wang2020interdomain_mixup_icassp_dg}    & 84.6          & 77.4          & 68.1                & 47.9              & 39.2               & 63.4           \\
+MLDG$^\dagger$~\cite{li2018mldg}     & 84.9          & 77.2          & 66.8                & 47.8              & 41.2               & 63.6           \\
+CORAL$^\dagger$~\cite{sun2016coral}    & 86.2          & \underline{78.8}          & \underline{68.7}                & 47.7              & 41.5               & 64.5           \\
+MMD$^\dagger$~\cite{li2018mmd}      & 84.7          & 77.5          & 66.4                & 42.2              & 23.4               & 58.8           \\
+DANN$^\dagger$~\cite{ganin2016dann}     & 83.7          & 78.6          & 65.9                & 46.7              & 38.3               & 62.6           \\
+CDANN$^\dagger$~\cite{li2018cdann}    & 82.6          & 77.5          & 65.7                & 45.8              & 38.3               & 62.0           \\
+MTL$^\dagger$~\cite{blanchard2021mtl_marginal_transfer_learning}      & 84.6          & 77.2          & 66.4                & 45.6              & 40.6               & 62.9           \\
+SagNet$^\dagger$~\cite{nam2019sagnet}   & 86.3          & 77.8          & 68.1                & \underline{48.6}              & 40.3               & 64.2           \\
+ARM$^\dagger$~\cite{zhang2020arm}      & 85.1          & 77.6          & 64.8                & 45.5              & 35.5               & 61.7           \\
+VREx$^\dagger$~\cite{krueger2020vrex}     & 84.9          & 78.3          & 66.4                & 46.4              & 33.6               & 61.9           \\
+RSC$^\dagger$~\cite{huang2020rsc}      & 85.2          & 77.1          & 65.5                & 46.6              & 38.9               & 62.7           \\
+Mixstyle~\cite{zhou2021mixstyle} & 85.2          & 77.9          & 60.4                & 44.0              & 34.0               & 60.3           \\ \midrule
+% SAM      & 85.8          & \textbf{79.4} & 69.6                & 43.3              & 44.3               & 64.5           \\ \midrule
+SWAD (ours)    & \textbf{88.1} & \textbf{79.1}          & \textbf{70.6}       & \textbf{50.0}     & \textbf{46.5}      & \textbf{66.9} \\ \addlinespace[-0.15cm]
+& \scriptsize{($\pm0.1$)} & \scriptsize{($\pm0.1$)} & \scriptsize{($\pm0.2$)} & \scriptsize{($\pm0.3$)} & \scriptsize{($\pm0.1$)} &\\
+\bottomrule
+\end{tabular}
+\end{table}

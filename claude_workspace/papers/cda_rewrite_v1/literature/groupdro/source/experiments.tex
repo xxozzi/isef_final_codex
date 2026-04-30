@@ -1,0 +1,12 @@
+\section{Comparison between group DRO and ERM}\label{sec:experiments}
+To study the behavior of group DRO vs.~ERM in the overparametrized setting,
+we fine-tuned ResNet50 models \citep{he2016resnet} on Waterbirds and CelebA
+and a BERT model \citep{devlin2019bert} on MultiNLI.
+These are standard models for image classification and natural language inference which achieve high average test accuracies on their respective tasks.
+
+We train the ERM \refeqn{hterm} and group DRO \refeqn{htdro} models using standard (minibatch) stochastic gradient descent and (minibatch) stochastic algorithm introduced in \refsec{alg}, respectively.
+We tune the learning rate for ERM and use the same setting for DRO
+(\refapp{model_details}).
+For each model, we measure its \emph{average} (in-distribution) accuracy over
+training and test sets drawn from the same distribution,
+as well as its \emph{worst-group} accuracy on the worst-performing group.
