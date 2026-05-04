@@ -7,7 +7,7 @@ This is the sequential checklist for taking the current CDA draft from a verbose
 Three reviewers inspected the current draft, local paper sources, and result ledgers.
 
 - **Motivation reviewer:** The real paper is not “CDA discovers targets from source mixtures.” The defensible claim is that source-only post-hoc selection can be underidentified by scalar source validation, and domain-wise source-risk evidence can be used to make that deployment decision more informative.
-- **Experimental reviewer:** The current empirical section is not publishable. Any result inside `\prov{}`, `\provnum{}`, or scripted figure values is fake until regenerated from raw artifacts. The first empirical task is artifact lineage, not writing.
+- **Experimental reviewer:** The current empirical section is not publishable. Any result inside `\prov{}`, `\provnum{}`, or scripted figure values is fake until regenerated from raw artifacts. The first empirical task is result evidence, not writing.
 - **Style reviewer:** The current paper reads like a proposal memo. It over-explains why statements matter, repeatedly says what CDA is not, embeds diagnostics in the method section, and uses theorem commentary where mature papers would use concise statements and ablations.
 
 The plan below follows those verdicts.
@@ -28,16 +28,18 @@ No introduction, related work, or results prose should be drafted until these ga
 - [x] Create `src/`, `literature/`, `scripts/`, and `misc/`.
 - [x] Copy `neurips.sty` into `src/`.
 - [x] Create modular LaTeX files in `src/`: `main.tex`, section files, appendix files, `packages.tex`, `macros.tex`, `theorems.tex`, and `references.bib`.
+- [x] Record the planned paper skeleton, figure plan, and table plan in `misc/method/paper_skeleton.md`.
 - [x] Create a downloader script for arXiv PDFs and source bundles: `scripts/fetch_arxiv_sources.py`.
 - [x] Download a local literature corpus covering SWA, DomainBed, SWAD, DiWA, MIRO, QRM, model soups, large-scale pretraining DG, DGSAM, GroupDRO, EoA, WDRDG, FAD, and WILDS.
 - [x] Create a source-style audit script: `scripts/audit_literature_style.py`.
-- [x] Generate `misc/literature_style_audit.md`.
+- [x] Generate `misc/literature_notes/literature_style_audit.md`.
+- [x] Organize `misc/` into searchable subfolders for method decisions, result tracking, evidence schemas, audits, literature notes, and reviewer records.
 - [x] Add a rewrite-local `.gitignore` for LaTeX build artifacts.
 - [x] Create a `misc/panel_reviews/` folder for review records.
 
 ## Phase 0A: Modern Literature Refresh Before Narrative Freeze
 
-- [x] Create `misc/modern_literature_refresh.md`.
+- [x] Create `misc/literature_notes/modern_literature_refresh.md`.
 - [x] Build a literature matrix with columns: paper, year/status, problem setting, mechanism or assumption, relation to source mixtures, relation to checkpoint deployment, and implication for CDA novelty.
 - [x] Include classical multi-source adaptation work that explicitly studies target mixtures of source distributions.
 - [x] Include QRM/EQRM and current 2024--2026 critiques or boundary cases.
@@ -84,58 +86,83 @@ No introduction, related work, or results prose should be drafted until these ga
 
 ## Phase 2: Artifact Audit Before Any Result Claim
 
-- [ ] Make a complete inventory of every claimed number in `cda_final_v2/main.tex`.
-- [ ] For each claimed number, record raw run directory, config, method, dataset, target domain, seed, checkpoint bank, commit hash, replay command, BN refresh mode, selected family, soup weights, diagnostics JSON, and metric source.
-- [ ] Mark each number as `verified`, `literature-only`, `provisional`, or `delete`.
-- [ ] Delete all claims that cannot be traced to raw artifacts.
-- [ ] Create `misc/result_lineage_template.csv` with required columns.
-- [ ] Create `misc/result_lineage.csv` populated for all existing usable artifacts.
-- [ ] Write or adapt a parser that converts `results.jsonl`, replay manifests, and diagnostics JSON into a canonical results table.
-- [ ] Add a hard scan for forbidden manuscript tokens: `\prov`, `\provnum`, `\provcaption`, `expected`, `placeholder`, `approved`, `fake`, `TBD`.
-- [ ] Do not write the final results section until this audit is complete.
+- [x] Make a complete inventory of every empirical claim group in `cda_final_v2/main.tex`, `appendix_tables.tex`, the old notes, and the old figure script.
+- [x] For each old claim group, record whether raw run directory, config, method, dataset, target domain, seed, checkpoint bank, commit hash, replay command, BN refresh mode, selected family, soup weights, diagnostics JSON, and metric source were found.
+- [x] Mark each old claim group as `verified`, `literature-only`, `provisional`, or `delete`.
+- [x] Save the audit in `misc/audits/old_results_audit.md`.
+- [x] Save the machine-readable inventory in `misc/audits/old_result_inventory.csv`.
+- [x] Create `misc/results/cda_results_tracking.md` from the current `results/results_ledger.md` CDA-relevant rows.
+- [x] Create `misc/results/cda_results_tracking.csv` with current ledger-backed CDA-BD rows, benchmark templates, and ablation templates.
+- [x] Record the PACS SWAD versus `VSC+CDA-BD` comparison as an accepted same-seed real result based on the ledger values and user confirmation.
+- [x] Add `result_location` and `slurm_log_directory` fields to the CDA result tracker so future HPC paths can be filled in directly.
+- [x] Remove SWAD and late-window uniform from the forward-looking fill-in benchmark table, and remove late-window uniform from the ablation templates.
+<!-- Skipped 2026-04-30: do not delete historical unsupported claims because they live outside the rewrite folder and may remain as archive material. They still cannot be imported into `src/`, generated tables, generated figures, or final prose unless they receive validated evidence records. Original step: `Delete all claims that cannot be traced to raw artifacts.` -->
+- [x] Create `misc/evidence/result_evidence_template.csv` with required columns.
+- [x] Create the populated working result tracker for existing usable artifacts in `misc/results/cda_results_tracking.csv`; use this as the current human-readable evidence staging file.
+<!-- Skipped 2026-04-30: do not block the rewrite on formal evidence-infrastructure scripts. Use `misc/results/cda_results_tracking.csv`, raw run directories, and result ledger entries as the practical result tracker until final result generation. Original step: `Write or adapt a parser that converts results.jsonl, replay manifests, diagnostics JSON, and misc/results/cda_results_tracking.csv into canonical misc/evidence/result_evidence.csv.` -->
+<!-- Skipped 2026-04-30: postpone manuscript-token scanning until a real manuscript draft exists. Original step: `Add a hard scan for forbidden manuscript tokens: \prov, \provnum, \provcaption, expected, placeholder, approved, fake, TBD.` -->
+<!-- Skipped 2026-04-30: replaced by the simpler practical rule that final results prose must use only real tracked results. Original step: `Do not write the final results section until this audit is complete.` -->
 
 ## Phase 2A: Build the Reproducibility Spine
 
-- [x] Create `misc/result_registry.yml` as the registry location for planned tables, figures, metrics, and manuscript claims.
-- [x] Create `misc/result_lineage_schema.md` defining required columns, primary keys, allowed values, and failure conditions.
-- [x] Required lineage columns must include stable `run_id`, `artifact_id`, artifact hashes, source domains, split IDs, selector code path, selection inputs, selection artifact IDs, target-use flags, and artifact immutability.
+- [x] Create `misc/results/result_registry.yml` as the registry location for planned tables, figures, metrics, and manuscript claims.
+- [x] Create `misc/evidence/result_evidence_schema.md` defining required columns, primary keys, allowed values, and failure conditions.
+- [x] Required evidence columns must include stable `run_id`, `artifact_id`, artifact hashes, source domains, split IDs, selector code path, selection inputs, selection artifact IDs, target-use flags, and artifact immutability.
 - [x] Define an immutable artifact root with raw-versus-derived separation: `artifacts/raw_runs`, `artifacts/replays`, `artifacts/diagnostics`, `artifacts/tables`, and `artifacts/figures`.
 - [x] Add a no-overwrite policy: every rerun creates a new `run_id`; every generated artifact creates a new `artifact_id`; final validators fail on duplicate primary keys or `immutable=false`.
 - [x] Add source-only audit fields: `source_domains`, `target_domain`, `selection_inputs`, `selection_artifact_id`, `selector_code_path`, `target_labels_used`, `target_samples_used`, and `target_metadata_used`.
-- [ ] Write `scripts/build_result_lineage.py` to populate `misc/result_lineage.csv` from raw `results.jsonl`, `replay_manifest.json`, diagnostics JSON, and generated CSV files.
-- [ ] Write `scripts/validate_result_lineage.py` and make it fail if any final claim lacks raw artifacts, commit hash, command, seed, target domain, or source-only selection proof.
-- [ ] Write `scripts/scan_manuscript_numbers.py` to scan `src/**/*.tex` and fail if any reported number lacks a matching `claim_id`.
-- [ ] Write `scripts/aggregate_results.py` to compute mean, standard deviation, paired deltas, win/loss counts, and uncertainty convention from validated lineage only.
-- [ ] Write `scripts/generate_tables.py` and `scripts/generate_figures.py` so every manuscript table and figure is generated from validated CSV/JSON artifacts.
-- [ ] Forbid manual evidence sources: `.tex` tables, hard-coded Python arrays, poster figures, and prose notes may guide rewriting but cannot validate a result.
-- [ ] Add a dry-run PACS env0 chain proving raw replay artifact \(\rightarrow\) lineage row \(\rightarrow\) table/figure \(\rightarrow\) manuscript claim.
+<!-- Skipped 2026-04-30: formal evidence-builder script is overkill before final runs. Keep raw artifacts and `misc/results/cda_results_tracking.csv` organized instead. Original step: `Write scripts/build_result_evidence.py to populate misc/evidence/result_evidence.csv from raw results.jsonl, replay_manifest.json, diagnostics JSON, and generated CSV files.` -->
+<!-- Skipped 2026-04-30: formal validator is deferred. Final claims still need raw locations, commands, seeds, target domains, and source-only selection notes in the tracker. Original step: `Write scripts/validate_result_evidence.py and make it fail if any final claim lacks raw artifacts, commit hash, command, seed, target domain, or source-only selection proof.` -->
+<!-- Skipped 2026-04-30: manuscript-number scanning only matters after a manuscript draft exists. Original step: `Write scripts/scan_manuscript_numbers.py to scan src/**/*.tex and fail if any reported number lacks a matching claim_id.` -->
+<!-- Skipped 2026-04-30: aggregation can be done when final result CSVs exist. Original step: `Write scripts/aggregate_results.py to compute mean, standard deviation, paired deltas, win/loss counts, and uncertainty convention from validated evidence only.` -->
+<!-- Skipped 2026-04-30: table and figure scripts should be written after final experiment outputs exist, not before. Original step: `Write scripts/generate_tables.py and scripts/generate_figures.py so every manuscript table and figure is generated from validated CSV/JSON artifacts.` -->
+<!-- Skipped 2026-04-30: replaced by the simpler rule that tables, figures, and prose must cite real tracked results. Original step: `Forbid manual evidence sources: .tex tables, hard-coded Python arrays, poster figures, and prose notes may guide rewriting but cannot validate a result.` -->
+<!-- Skipped 2026-04-30: dry-run evidence chain is not the current blocker. Original step: `Add a dry-run PACS env0 chain proving raw replay file -> evidence record -> table/figure -> manuscript claim.` -->
 
 ## Phase 3: Decide the Real Experimental Scope
 
-- [ ] Pick the minimum publishable claim after the artifact audit.
-- [ ] If five-benchmark artifacts already exist and are reproducible, pursue the full DomainBed-style claim.
-- [ ] If five-benchmark artifacts do not exist, make PACS the main mechanistic testbed and present broader benchmarks only after reruns finish.
-- [ ] Freeze the method before final runs: selector, weighting rule, hyperparameters, BN refresh, checkpoint frequency, and seed protocol.
-- [ ] Freeze baselines before final runs: `ERM`, `SWAD`, late-window uniform, best source-validation singleton, `VSC+uniform`, `CDA-Piv`, `CDA-BD`.
-- [ ] Decide whether DiWA is reproduced under the same protocol or cited as literature-only. If literature-only, phrase comparisons accordingly.
-- [ ] Decide whether EoA/model soups are reproduced or discussed only in related work.
-- [ ] Cut ImageNet robustness unless core DG results are already complete.
+- [x] Freeze the paper-facing CDA method identity:
+  \[
+  \text{CDA}=\text{VSC}+\text{CDA-BD}.
+  \]
+- [x] Record the final method in `misc/method/final_method.md`.
+- [x] Map the paper method to implementation labels: `version_space_compression_selector__margin_eps_0p5_0p05` plus `blackwell_dual_target_weights__entropy_lambda_0p02`.
+- [x] Set the publication target as the full DomainBed-style evaluation package, not a PACS-only fallback:
+  \[
+  \text{PACS}+\text{VLCS}+\text{OfficeHome}+\text{TerraIncognita}+\text{DomainNet}
+  \]
+  with CDA defined as \(\text{VSC}+\text{CDA-BD}\), plus the ablations and diagnostic figures planned below.
+- [x] Treat five-benchmark DomainBed results as required for the paper, whether recovered from existing artifacts or produced by reruns.
+<!-- Skipped 2026-04-30: PACS-only is no longer the paper scope. Original step: `If five-benchmark artifacts do not exist, make PACS the main mechanistic testbed and present broader benchmarks only after reruns finish.` -->
+- [x] Use the best recorded CDA settings from `claude_workspace/results/results_ledger.md` for final runs, rather than reopening protocol selection:
+  \[
+  \text{selector}=\texttt{version\_space\_compression\_selector\_\_margin\_eps\_0p5\_0p05},
+  \]
+  \[
+  \text{weigher}=\texttt{blackwell\_dual\_target\_weights\_\_entropy\_lambda\_0p02}.
+  \]
+  Use the same replay-bank construction and BN/evaluation settings that produced the accepted ledger results unless a benchmark requires a documented mechanical adaptation.
+- [x] Use this final comparison set for the full DomainBed run package: ERM/ERM++, CORAL, SAM/DGSAM if available, SWAD, best source-validation singleton, `VSC+uniform`, `VSC+CDA-Piv`, `VSC+CDA-BD`, and CDA-on-base-method variants such as `CDA+ERM++`, `CDA+CORAL`, and `CDA+SAM` if those checkpoint banks are produced. Treat EoA-SMA/MA, DNA, and ERM++-MPA as optional same-budget additions only if they can be reproduced cleanly without delaying the core package.
+- [x] Treat DiWA as related work/literature-only unless a later explicit decision adds a same-budget reproduction.
+- [x] Treat full EoA and model soups as related work/literature-only because their standard setting uses multiple runs or multiple models.
+- [x] Cut ImageNet robustness from the required paper package.
 
 ## Phase 3A: Benchmark Scope Gate
 
-- [ ] Define the minimum publishable package before final runs: PACS all four target domains, at least \(3\) seeds, fixed protocol, and all methods run from the same checkpoint-bank construction.
-- [ ] Permit a five-benchmark headline only if PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet all have complete lineage for every reproduced method under matched seeds and matched source-only selection.
-- [ ] If any benchmark is incomplete, remove the grand average and report the incomplete package only as future work or an appendix-in-progress item.
-- [ ] Decide whether uncertainty is computed over seeds, domains, or seed-domain cells, and use the same convention in every table.
-- [ ] Add paired comparisons against the strongest matched baseline, including per-split deltas and win/loss counts.
-- [ ] State whether each comparison is reproduced, reanalyzed from public artifacts, or literature-only.
+- [x] Create fill-in tracking rows for PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet target domains.
+- [x] Define the minimum publishable package before final runs: PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet, at least \(3\) seeds where feasible, fixed protocol, and all methods run from the same checkpoint-bank construction.
+- [x] Require the five-benchmark headline to cover PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet for every reproduced method under matched seeds and matched source-only selection.
+- [x] If any required benchmark is incomplete, the paper is not publication-ready; do not downscope to a PACS-only main claim without an explicit later decision.
+- [x] Use this uncertainty convention in every table: report per-target mean \(\pm\) standard deviation over seeds when seeds are available; report each dataset mean as the average of its target-domain means; report the final DomainBed average as the average of dataset means, not a pooled seed-domain-cell average.
+- [x] Include paired deltas against the strongest matched reproduced baseline, with per-split deltas and win/loss counts in the main or appendix tables.
+- [x] Label each comparison as reproduced, reanalyzed from public artifacts, or literature-only.
 
 ## Phase 4: Generate Real Result Packages
 
 - [ ] Run the artifact-audited replay package on all existing checkpoint banks.
-- [ ] Run PACS high-resolution tests on all four target domains.
-- [ ] Use at least \(3\) seeds; use \(5\) seeds for PACS if compute permits.
-- [ ] Run the canonical DomainBed package across PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet only after the PACS package is stable.
+- [ ] Run high-resolution tests on all target domains for PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet.
+- [ ] Use at least \(3\) seeds where feasible; use \(5\) seeds for PACS if compute permits.
+- [ ] Run the canonical DomainBed package across PACS, VLCS, OfficeHome, TerraIncognita, and DomainNet for the final method, matched baselines, and ablations.
 - [ ] For each final method, record:
   \[
   \bar z(w),\quad
@@ -155,16 +182,17 @@ No introduction, related work, or results prose should be drafted until these ga
 
 ## Phase 4A: Replay Tooling Audit
 
-- [ ] Audit `domaingen/replay_methods.py` and confirm final method names exactly match manuscript methods: `late-window uniform`, `VSC+uniform`, `CDA-Piv`, and `CDA-BD`.
-- [ ] Rename or wrap old `D-COLA` replay outputs so final artifacts use CDA terminology consistently without changing historical raw files.
+- [ ] Audit `domaingen/replay_methods.py` and confirm final method names exactly match manuscript methods: `VSC+uniform`, `CDA-Piv`, and `CDA-BD`.
+- [ ] Use old replay outputs only if they exactly match the final CDA method definition; otherwise exclude them from final result evidence.
 - [ ] Add replay manifests that record environment, dependency versions, GPU/CPU device, data root, checkpoint list, BN refresh mode, and exact command.
-- [ ] Add one dry-run replay on a PACS split that produces `results.jsonl`, diagnostics JSON, lineage CSV rows, a generated table, and a generated figure from the same artifacts.
+- [ ] Add one dry-run replay on a PACS split that produces `results.jsonl`, diagnostics JSON, evidence CSV rows, a generated table, and a generated figure from the same artifacts.
 - [ ] Fail the run package if any method uses target labels or target-domain validation during selection.
 
 ## Phase 5: Ablations and Diagnostics
 
+- [x] Create blank tracking rows for main stack ablations, VSC tolerance ablations, entropy ablation, and BN-refresh ablations.
 - [ ] Run Priority A ablations:
-  - [ ] best singleton versus late-window uniform versus `VSC+uniform` versus `VSC+CDA-BD`;
+  - [ ] best singleton versus `VSC+uniform` versus `VSC+CDA-BD`;
   - [ ] `VSC+uniform` versus `VSC+CDA-Piv` versus `VSC+CDA-BD`;
   - [ ] fixed selector with varied weights;
   - [ ] fixed weighting with varied selectors;
@@ -189,14 +217,14 @@ No introduction, related work, or results prose should be drafted until these ga
 - [ ] Rebuild figure scripts so every plotted value comes from raw result artifacts.
 - [ ] Generate main benchmark table with mean \(\pm\) standard deviation.
 - [ ] Generate PACS per-domain table.
+- [ ] Generate CDA-on-base-method table for ERM++, CORAL, SAM/DGSAM if available, and any other stable checkpoint-bank producer.
 - [ ] Generate component ablation table.
-- [ ] Generate source-average underidentification figure.
-- [ ] Generate selector-weight heatmap.
-- [ ] Generate certificate decomposition bar plot.
-- [ ] Generate certificate-vs-OOD scatter.
-- [ ] Generate mergeability plot comparing \(z(w)\) and \(L(\bar\theta(w))\).
-- [ ] Generate source-mixture residual plot for \(\epsilon_{\mathrm{app}}\).
-- [ ] Generate family-size/entropy scatter against OOD accuracy.
+- [ ] Generate Figure 1: source-evidence underidentification, including \(\bar L\) versus \(\|P_\perp L\|_2\) and certificate contours.
+- [ ] Generate Figure 2: CDA selection geometry, including VSC-retained family, CDA-BD weights, final soup, and checkpoint-step inset.
+- [ ] Generate Figure 3: domain-risk cancellation diagram for nontrivially weighted CDA-BD checkpoints.
+- [ ] Generate Figure 4: local deployment geometry, including source-loss contour plot and flatness-versus-radius curves for representative single-run models by role, not only SWAD.
+- [ ] Generate Figure 5: assumption audit comparing \(z(w)\), \(L(\bar\theta(w))\), \(M(w)\), and \(\epsilon_{\mathrm{app}}\) for CDA variants and CDA-on-base-method variants.
+- [ ] Generate optional appendix figures only if nonredundant: source-risk heatmap, prediction-diversity map, BN refresh sensitivity, and per-seed uncertainty.
 - [ ] Export every final figure as `.pdf`, `.png`, and `.svg`.
 - [ ] Visually inspect every PDF figure in the compiled manuscript.
 
@@ -221,7 +249,7 @@ No introduction, related work, or results prose should be drafted until these ga
   - [ ] Paragraph 5 states source-domain composition robustness as one conditional scalarization of that vector, then introduces the local source-mixture certificate and mergeability issue.
   - [ ] Paragraph 6 gives CDA and contributions.
   - [ ] No paragraph says what CDA is "not" unless defining scope in one sentence.
-- [ ] Write `03_related_work.tex` from the downloaded corpus, web-checked current literature, and `misc/modern_literature_refresh.md`.
+- [ ] Write `03_related_work.tex` from the downloaded corpus, web-checked current literature, and `misc/literature_notes/modern_literature_refresh.md`.
 - [ ] Related work acceptance criteria:
   - [ ] Organize by mechanism, not chronology.
   - [ ] Explicitly cite multi-source adaptation, QRM/EQRM, DRO/WDRDG, DomainBed, SWAD, DiWA, EoA, model soups, MIRO, DGSAM, and pretraining-era DG.
@@ -241,7 +269,7 @@ No introduction, related work, or results prose should be drafted until these ga
   - [ ] Complexity and implementation details are concise.
 - [ ] Write `06_experiments.tex` only after real generated tables exist.
 - [ ] Experiments acceptance criteria:
-  - [ ] Every table is generated from validated lineage.
+  - [ ] Every table is generated from validated evidence.
   - [ ] Every comparison states reproduced versus literature-only.
   - [ ] Every uncertainty statistic defines its aggregation unit.
 - [ ] Write `07_analysis_ablations.tex` only after real diagnostics exist.
@@ -286,7 +314,7 @@ No introduction, related work, or results prose should be drafted until these ga
 - [ ] Fix all warnings that affect references, citations, floats, fonts, or overfull boxes.
 - [ ] Confirm all citations resolve.
 - [ ] Confirm all figures are readable in grayscale and color.
-- [ ] Confirm every result has provenance.
+- [ ] Confirm every result has source files and evidence records.
 - [ ] Confirm all results use target-domain-safe selection.
 - [ ] Confirm all reported comparisons specify whether they are reproduced or literature-only.
 - [ ] Confirm source files contain no provisional macros.

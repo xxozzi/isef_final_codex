@@ -1,5 +1,5 @@
 # Stable IDs for planned CDA manuscript claims.
-# Validation must fail if a required row is missing from result_lineage.csv.
+# Validation must fail if a required row is missing from misc/evidence/result_evidence.csv.
 
 artifact_roots:
   raw_runs: artifacts/raw_runs
@@ -13,6 +13,10 @@ global_requirements:
   immutable_final_artifacts: true
   require_sha256: true
   require_source_only_audit: true
+  final_cda_method:
+    paper_name: VSC + CDA-BD
+    selector_impl: version_space_compression_selector__margin_eps_0p5_0p05
+    weight_impl: blackwell_dual_target_weights__entropy_lambda_0p02
   forbid_manual_evidence:
     - tex_tables
     - hard_coded_python_arrays
@@ -30,16 +34,13 @@ claims:
     required_seeds_min: 3
     required_methods:
       - ERM
-      - SWAD
       - best_source_val_singleton
-      - late_window_uniform
       - VSC_uniform
-      - CDA_Piv
-      - CDA_BD
+      - VSC_CDA_BD
     required_metrics: [target_acc, source_val_acc]
     generating_scripts:
-      - scripts/build_result_lineage.py
-      - scripts/validate_result_lineage.py
+      - scripts/build_result_evidence.py
+      - scripts/validate_result_evidence.py
       - scripts/aggregate_results.py
       - scripts/generate_tables.py
     expected_outputs:
@@ -55,22 +56,19 @@ claims:
   - claim_id: MAIN-DOMAINBED-ACC
     table_or_figure: main_domainbed_results
     status: incomplete
-    description: Five-benchmark DomainBed-style results, allowed only after complete lineage.
+    description: Five-benchmark DomainBed-style results, allowed only after complete evidence records.
     required_datasets: [PACS, VLCS, OfficeHome, TerraIncognita, DomainNet]
     required_target_domains: all_official_leave_one_domain_out_splits
     required_seeds_min: 3
     required_methods:
       - ERM
-      - SWAD
       - best_source_val_singleton
-      - late_window_uniform
       - VSC_uniform
-      - CDA_Piv
-      - CDA_BD
+      - VSC_CDA_BD
     required_metrics: [target_acc, source_val_acc]
     generating_scripts:
-      - scripts/build_result_lineage.py
-      - scripts/validate_result_lineage.py
+      - scripts/build_result_evidence.py
+      - scripts/validate_result_evidence.py
       - scripts/aggregate_results.py
       - scripts/generate_tables.py
     expected_outputs:
@@ -92,10 +90,9 @@ claims:
     required_seeds_min: 3
     required_methods:
       - best_source_val_singleton
-      - late_window_uniform
       - VSC_uniform
       - CDA_Piv
-      - CDA_BD
+      - VSC_CDA_BD
       - CDA_no_entropy
       - CDA_no_sensitivity
     required_metrics: [target_acc, certificate_value, family_size, entropy]
@@ -124,7 +121,7 @@ claims:
       - artifacts/figures/certificate_vs_ood.png
       - artifacts/figures/certificate_vs_ood.svg
     pass_fail_gates:
-      - plotted_values_from_lineage_only
+      - plotted_values_from_evidence_only
       - no_hard_coded_arrays
 
   - claim_id: DIAG-MERGEABILITY

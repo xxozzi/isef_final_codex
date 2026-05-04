@@ -29,5 +29,5 @@ Blocked manuscript drafting; approved the direction of the workspace.
 - Updated `narrative.md` with a literature-backed source-mixture warrant and reviewer-2 motivation test.
 - Updated `finalization.md` with modern literature refresh, reproducibility spine, benchmark scope gate, replay tooling audit, evidence-generated figures/tables, and section acceptance criteria.
 - Updated `fixes.md` with reviewer-2 traps and concrete writing mechanics.
-- Added `modern_literature_refresh.md`, `result_lineage_schema.md`, and `result_registry.yml`.
-- Added validity caveats to `literature_style_audit.md`.
+- Added `misc/literature_notes/modern_literature_refresh.md`, `misc/evidence/result_evidence_schema.md`, and `misc/results/result_registry.yml`.
+- Added validity caveats to `misc/literature_notes/literature_style_audit.md`.

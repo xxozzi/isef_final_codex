@@ -10,11 +10,11 @@ Date: 2026-04-30.
 
 ## Integrated Revisions
 
-- Replaced `misc/modern_literature_refresh.md` with a source-by-source matrix and explicit gap-boundary proof.
+- Replaced `misc/literature_notes/modern_literature_refresh.md` with a source-by-source matrix and explicit gap-boundary proof.
 - Updated `narrative.md` to cite the matrix and name the source-specific warrant.
 - Tightened `finalization.md` so the modern literature matrix tasks are complete while manuscript prose remains blocked by later gates.
-- Expanded `misc/result_lineage_schema.md` with `run_id`, `artifact_id`, artifact hashes, raw/derived artifact roots, selector code paths, selection inputs, source domains, split IDs, target-use flags, and immutability requirements.
-- Rebuilt `misc/result_registry.yml` with claim-level expected datasets, target domains, seed counts, methods, metrics, generating scripts, output files, and pass/fail gates.
+- Expanded `misc/evidence/result_evidence_schema.md` with `run_id`, `artifact_id`, artifact hashes, raw/derived artifact roots, selector code paths, selection inputs, source domains, split IDs, target-use flags, and immutability requirements.
+- Rebuilt `misc/results/result_registry.yml` with claim-level expected datasets, target domains, seed counts, methods, metrics, generating scripts, output files, and pass/fail gates.
 
 ## Final Narrow Re-Review
 

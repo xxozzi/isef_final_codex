@@ -8,7 +8,7 @@ This audit is generated from downloaded/local TeX sources and is meant to guide 
 - `wilds` is not currently valid as writing-style evidence because the extracted source has too little usable section prose.
 - `diwa` is usable only as partial structural evidence until its PDF or full source is parsed more cleanly.
 - Planning files may use `fad`, `wilds`, and `diwa` as topical literature references only after their actual paper claims are checked from PDF or authoritative pages; they should not be used to infer professional prose style from this audit.
-- The rewrite must not rely on this audit alone for current coverage. Use `misc/modern_literature_refresh.md` and the literature matrix required in `finalization.md`.
+- The rewrite must not rely on this audit alone for current coverage. Use `misc/literature_notes/modern_literature_refresh.md` and the literature matrix required in `finalization.md`.
 
 ## current_cda
 - TeX files scanned: `1`

@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LITERATURE_DIR = ROOT / "literature"
 MISC_DIR = ROOT / "misc"
+LITERATURE_NOTES_DIR = MISC_DIR / "literature_notes"
 CURRENT_DRAFT = ROOT.parent / "cda_final_v2" / "main.tex"
 
 PAPER_TEX = {
@@ -80,7 +81,7 @@ def tone_hits(text: str) -> dict[str, int]:
 
 
 def main() -> None:
-    MISC_DIR.mkdir(parents=True, exist_ok=True)
+    LITERATURE_NOTES_DIR.mkdir(parents=True, exist_ok=True)
     lines = [
         "# Literature Style Audit",
         "",
@@ -113,7 +114,7 @@ def main() -> None:
             lines.append(f"- {clipped}")
         lines.append("")
 
-    (MISC_DIR / "literature_style_audit.md").write_text("\n".join(lines), encoding="utf-8")
+    (LITERATURE_NOTES_DIR / "literature_style_audit.md").write_text("\n".join(lines), encoding="utf-8")
 
 
 if __name__ == "__main__":

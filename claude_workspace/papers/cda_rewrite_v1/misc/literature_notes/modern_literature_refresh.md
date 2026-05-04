@@ -22,7 +22,7 @@ The allowed CDA gap is narrow:
 |---|---:|---|---|---|---|---|
 | Mansour, Mohri, Rostamizadeh, *Domain Adaptation with Multiple Sources* | 2008 / NeurIPS | Multi-source adaptation with source distributions and target mixture | Distribution-weighted combining rules can guarantee small loss for target mixtures of sources under assumptions | Direct theoretical warrant for source-supported target mixtures | Not about neural checkpoint banks or post-hoc weight soups | CDA must cite source mixtures as old prior art; CDA may only use a local loss-vector analogue for deployment. |
 | Sun et al., *A Two-Stage Weighting Framework for Multi-Source Domain Adaptation* | 2011 / NeurIPS | Multi-source domain adaptation with marginal and conditional shifts | Two-stage source weighting using target-domain data | Shows that source weighting must account for different shift types | Uses target data; not source-only checkpoint deployment | CDA must not borrow target-aware weighting language; it must show source-only selection. |
-| DomainBed | 2021 / ICLR | Standardized DG evaluation and model selection | Training-domain validation and leave-one-domain-out protocols | Source validation is part of the DG problem | Not a post-hoc checkpoint-weighting method | CDA must obey source-only model selection and report protocol lineage. |
+| DomainBed | 2021 / ICLR | Standardized DG evaluation and model selection | Training-domain validation and leave-one-domain-out protocols | Source validation is part of the DG problem | Not a post-hoc checkpoint-weighting method | CDA must obey source-only model selection and report the exact protocol and result files. |
 | WILDS | 2021 / ICML | Real-world distribution-shift benchmarks | Dataset-level robustness with explicit split metadata | Shows that benchmark shift structure matters | Not about checkpoint soups | CDA should include failure cases and avoid overclaiming from synthetic or small benchmarks. |
 | GroupDRO | 2020 / ICLR | Worst-group robustness | Minimax risk over predefined groups with regularization | Robustness over group weights is established prior art | Training-time objective, not post-hoc deployment | CDA cannot claim novelty in domain/group robustness; it can use group-risk logic only for fixed-bank selection. |
 | VREx / risk extrapolation family | 2021 / ICML area | Domain-risk invariance | Penalizes variability of risk across environments | Source-domain risk vector variation is already a major object | Training-time objective | CDA must distinguish deployment-time weighting from training-time risk penalties. |
@@ -83,4 +83,4 @@ CDA may not claim:
 - that target domains are generally source mixtures;
 - that CDA estimates the target mixture;
 - that prior work ignores source mixtures, domain robustness, flatness, or checkpoint averaging;
-- that broad benchmark gains exist until reproduced lineage proves them.
+- that broad benchmark gains exist until reproduced result files prove them.

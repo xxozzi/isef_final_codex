@@ -23,7 +23,7 @@ This sequence prevents the false argument that SWAD, DiWA, EoA, or model soups a
 ## Active Files Confirmed
 
 - `narrative.md`
-- `misc/modern_literature_refresh.md`
+- `misc/literature_notes/modern_literature_refresh.md`
 - `finalization.md`
 - `fixes.md`
 - `src/02_introduction.tex`

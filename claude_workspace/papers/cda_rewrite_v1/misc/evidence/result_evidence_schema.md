@@ -1,6 +1,6 @@
-# Result Lineage Schema
+# Result Evidence Schema
 
-Every reported manuscript number must map to a row in `misc/result_lineage.csv`. A result is not reportable if any required field is missing, manually typed, or derived from a non-artifact source.
+Every reported manuscript number must map to a row in `misc/evidence/result_evidence.csv`. A result is not reportable if any required field is missing, manually typed, or derived from a non-result file.
 
 ## Primary Key
 
@@ -53,11 +53,11 @@ The primary key is:
 - `target_labels_used`
 - `target_samples_used`
 - `target_metadata_used`
-- `artifact_status`
+- `evidence_status`
 - `created_utc`
 - `immutable`
 
-## Allowed Artifact Status Values
+## Allowed Evidence Status Values
 
 - `verified`
 - `literature_only`
@@ -66,9 +66,9 @@ The primary key is:
 
 Only `verified` rows may support CDA result claims. `literature_only` rows may support related-work comparisons only if clearly labeled.
 
-## Artifact Roots
+## Evidence Roots
 
-Raw and derived artifacts must be separated.
+Raw and derived files must be separated.
 
 - `artifacts/raw_runs/`: immutable training or replay outputs copied from execution roots.
 - `artifacts/replays/`: immutable replay outputs with manifests.
@@ -76,7 +76,7 @@ Raw and derived artifacts must be separated.
 - `artifacts/tables/`: generated `.csv`, `.tex`, and `.md` tables.
 - `artifacts/figures/`: generated `.pdf`, `.png`, and `.svg` figures.
 
-No artifact may be overwritten. A new run creates a new `run_id`; a new derived file creates a new `artifact_id`. Validators must fail if `immutable` is not `true` for a final result row.
+No file may be overwritten. A new run creates a new `run_id`; a new derived file creates a new `artifact_id`. Validators must fail if `immutable` is not `true` for a final result row.
 
 ## Source-Only Selection Audit
 
@@ -101,4 +101,4 @@ For every source-only claim, validators must verify:
 - Any missing `source_domains`, `selection_inputs`, `selection_artifact_id`, or `selector_code_path`.
 - Any result copied from `.tex`, manually typed notes, poster figures, screenshots, or hard-coded plotting arrays.
 - Any reported number in `src/**/*.tex` with no matching `claim_id`.
-- Any table or figure whose generation script contains typed metric arrays instead of artifact loaders.
+- Any table or figure whose generation script contains typed metric arrays instead of loaders from result files.
